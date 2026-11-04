@@ -1,0 +1,99 @@
+---
+title: verify
+description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
+owner: Kevin
+version: "1.0"
+updated: "2026-11-04"
+status: draft
+---
+
+# Stage 6 · `verify`
+
+**Mode:** delegated · **Gate:** none
+
+## What it is
+
+The product judge of the delegated block. **Another session, with another model than `build`**,
+reviews what was built against the spec and the foundations, gathers the evidence of each criterion,
+and builds the **`Acceptance Report`**: the only thing the person reads next. What does not pass goes
+back to `build` on its own.
+
+## Inputs
+
+| What | From |
+|---|---|
+| The PRs in scope, with their Spec section | `build` |
+| The spec in scope and the traceability matrix | `plan` |
+| Every delta of the change | `plan` and `build` |
+
+## Context pack
+
+Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff of its PRs ·
+`Security Policy` · `Quality Standards` · `Architecture Rules` · `Roles & Permissions`. Budget:
+**20,000 tokens per area**.
+
+## Procedure
+
+1. **Against the spec**: every `FR` does what it says, every exception flow exists, every permission holds, every contract matches.
+2. **Against the foundations**: security (OWASP ASVS), quality, architecture, accessibility.
+3. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC`**, with the test data.
+4. **Drift**: whatever the code does that the spec does not say (an extra screen, an extra field) is a `finding`.
+5. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
+6. **Confirms what is serious**: every high finding is reviewed by a second judge, `judge_confirm`, before it counts.
+7. **Decides**: with high findings, back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)).
+
+## The `Acceptance Report`
+
+| Section | Holds |
+|---|---|
+| Summary | The scope, how many `FR`s and `NFR`s, how many deltas of each type |
+| Per `FR` | Its `AC`, its test (green), its screenshot |
+| Assumptions | What was assumed, where, the alternative |
+| Deviations | What could not be done as written, why, the alternative |
+| Open findings | The medium and low ones that did not go back to `build` |
+| Impact | Which derived artifacts go stale if each delta is accepted |
+
+Budget: **3,000 tokens without screenshots**. A person reads it: it must be readable in ten minutes.
+
+## Outputs
+
+| What | Status |
+|---|---|
+| `Acceptance Report` | In `changes/<CHG>/reports/` |
+| `finding` deltas | In the change |
+| One screenshot per `AC` | In `changes/<CHG>/evidence/` |
+| The PRD | → `in_review` |
+
+## Judge
+
+| Agent | Checks | Passes when |
+|---|---|---|
+| `verify-judge` | Everything above, with the `judge` model | No high findings; every `AC` green |
+| `confirm-judge` | Each high finding, with the `judge_confirm` model | Confirmed or dismissed |
+
+## Keep in mind
+
+- **`verify` does not fix.** It finds and reports; fixing belongs to `build`.
+- **It is not the same session or model as `build`** ([`RULE-12`](../../foundations/rules/cycle.md#rule-12)).
+- **The report decides, it does not narrate.** Each delta comes with what has to be decided.
+
+## Skills, agents and tools
+
+| Kind | Name | For |
+|---|---|---|
+| Skill | `/verify` | The whole stage: splits by area and builds the report |
+| Agent | `verify-judge` · `confirm-judge` | The judges |
+| MCP | `get_context_for` · `get_freshness` · `propose_delta` | Read and report |
+
+## Per track
+
+| Track | What changes |
+|---|---|
+| `full` · `story` | Everything |
+| `fix` | Only the bug's area and its criteria |
+| `chore` | Foundations only (security, architecture). No acceptance report |
+
+## Sources
+
+ODD (acceptance evidence) · Spec Kit (`/converge`) · Spec Growth Engine (drift gate) · V-Model ·
+OWASP ASVS · Reclee Spec (`/revisar` with a second agent).

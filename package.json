@@ -1,0 +1,10 @@
+{
+  "name": "openpedd",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check-links.mjs && node scripts/check-size.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:size": "node scripts/check-size.mjs"
+  }
+}

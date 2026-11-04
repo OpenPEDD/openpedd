@@ -1,0 +1,22 @@
+# OpenPEDD workspace — see spec/foundations/architecture/workspace.md (ARCH-03)
+project: openpedd
+mode: mono                              # DEC-11: spec in spec/, code and docs alongside
+language: en
+repos:
+  main: openpedd/openpedd               # this repo, public at trademark filing
+paths:
+  spec: spec
+  docs: docs                            # created at first publish
+referenced_by:
+  - openpedd/openpedd-cloud             # private; its spec references this one, never redefines it
+models:
+  profile: balanced                     # DEC-07
+stages:
+  architect:
+    mode: guided                        # DEC-08
+budgets:                                # tokens, RULE-04
+  product: 4000
+  foundations: 2000
+  glossary: 4000
+  decisions: 1000
+  open: 2000
