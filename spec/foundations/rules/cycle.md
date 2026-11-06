@@ -2,8 +2,8 @@
 title: Cycle rules
 description: The rules every stage of the cycle follows, interactive or delegated
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-06"
 ---
 
 ## RULE-10 · Only `specify` writes the spec [#rule-10]
@@ -60,3 +60,22 @@ remembers to update. A state set by hand fails the check. See
 ## RULE-19 · A stage starts only with the previous judge green [#rule-19]
 
 Each stage has an exit condition. The next one does not start until it is met.
+
+## RULE-20 · To a person, say what it says, not its ID [#rule-20]
+
+When an agent talks to a person (in the chat, in a question, in a report, in a tracker task), it
+states each item **as it is written**: the question, the requirement, the decision, the rule. The ID
+may go next to it, in parentheses, so it can be found; never alone.
+
+| Not this | This |
+|---|---|
+| *Shall we close Q-14?* | *Shall we close the scope of the MVP: which stages and adapters ship first? (`Q-14`)* |
+| *DEC-11 applies here* | *The Cloud stays in a private repo; only the framework is public (`DEC-11`)* |
+| *Accept DLT-0142?* | *The design added a confirmation step before deleting a job post. Keep it? (`DLT-0142`)* |
+
+**Why:** an ID means nothing to someone who does not have the spec open. A person cannot answer a
+question about `Q-14` without looking it up, and a decision made without reading what it decides is
+not a decision. IDs are for documents and agents; people get the content.
+
+For a long item, the agent quotes its title or its governing sentence, not a paraphrase: a paraphrase
+can say something the spec does not.

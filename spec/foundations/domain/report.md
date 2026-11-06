@@ -2,8 +2,8 @@
 title: Report
 description: ENT-08 · What a person reads to decide on deltas
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-06"
 ---
 
 # ENT-08 · Report
@@ -17,4 +17,6 @@ conversations**. If deciding needs any of those, the report is badly built.
 | `Acceptance Report` | `verify`, on close | **The whole delegated block**: each `FR` with its `AC`, test and screenshot; assumptions; deviations; open findings; impact | `acceptance-merge` | 3,000 tokens, without screenshots |
 
 A report decides, it does not narrate: each delta comes with what has to be decided, not the story of
-how it got there. Reports live in `changes/<CHG>/reports/`.
+how it got there. **Every item is shown as it is written, with its ID only in parentheses**
+([`RULE-20`](../rules/cycle.md#rule-20)): the person reads the requirement, not `FR-JOB-03`. Reports
+live in `changes/<CHG>/reports/`.

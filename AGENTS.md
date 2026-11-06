@@ -34,6 +34,7 @@ anything. It does not repeat the rules: it points to where each one lives.
 | A `Q` closes only with a new `DEC` | [`RULE-08`](spec/foundations/rules/writing.md#rule-08) |
 | A contradiction is resolved on the spot | [`RULE-09`](spec/foundations/rules/writing.md#rule-09) |
 | Only `specify` writes the spec; everything else proposes deltas | [`RULE-10`](spec/foundations/rules/cycle.md#rule-10) |
+| **To a person, say what an item says, not its ID**: the ID only in parentheses | [`RULE-20`](spec/foundations/rules/cycle.md#rule-20) |
 
 ## Language
 

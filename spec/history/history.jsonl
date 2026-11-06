@@ -56,3 +56,5 @@
 {"path":"product/tracks/prd.md","version":"1.0","date":"2026-11-04","change":"CHG-001","story":"RECLEE-1212","stage":"specify","summary":"Initial version, migrated from the framework working drafts"}
 {"path":"product/verify/prd.md","version":"1.0","date":"2026-11-04","change":"CHG-001","story":"RECLEE-1212","stage":"specify","summary":"Initial version, migrated from the framework working drafts"}
 {"path":"product/workspace/prd.md","version":"1.0","date":"2026-11-04","change":"CHG-001","story":"RECLEE-1212","stage":"specify","summary":"Initial version, migrated from the framework working drafts"}
+{"path":"foundations/rules/cycle.md","id":"RULE-20","version":"1.0 → 1.1","date":"2026-11-06","change":"CHG-002","story":null,"stage":"specify","summary":"Added RULE-20: to a person, state an item as written, with its ID only in parentheses"}
+{"path":"foundations/domain/report.md","version":"1.0 → 1.1","date":"2026-11-06","change":"CHG-002","story":null,"stage":"specify","summary":"Reports show every item as written, per RULE-20"}
