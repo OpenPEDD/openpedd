@@ -81,3 +81,8 @@
 {"path":"decisions/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How decisions and ADRs are written"}
 {"path":"open/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How questions, ideas and the roadmap are written"}
 {"path":"open/questions.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Q-21 north-star metric"}
+{"path":"foundations/marketing/README.md","version":"1.0","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing as an optional foundation: messages, channels, format rules"}
+{"path":"foundations/domain/foundation.md","version":"1.1 → 1.2","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing added, apart from Voice & Tone"}
+{"path":"foundations/artifacts.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing document row"}
+{"path":"foundations/glossary.md","version":"1.1 → 1.2","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing and MKG"}
+{"path":"foundations/domain/spec.md","version":"1.1 → 1.2","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"MKG in the foundations IDs"}

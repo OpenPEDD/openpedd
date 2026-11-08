@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-08"
 ---
 
@@ -26,7 +26,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | **Module** | A part of the product that stands on its own: ATS, Talent pool | [`ENT-21`](domain/module.md) |
 | **PRD** | Product Requirements Document: the document of a module. *Product* names the kind of requirements, not the scope | [`ENT-21`](domain/module.md) |
 | **Requirement** · **Acceptance Criterion** | A row of a PRD | [`ENT-03`](domain/requirement.md) · [`ENT-04`](domain/acceptance-criterion.md) |
-| **Business** · **Market** | What we decided · what we measured outside | [Business](business/README.md) · [Market](market/README.md) |
+| **Business** · **Market** · **Marketing** | What we decided · what we measured outside · how we speak to people who do not know the product yet | [Business](business/README.md) · [Market](market/README.md) |
 
 ## Traceability
 
@@ -78,7 +78,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 
 | Prefix | Is |
 |---|---|
-| `BIZ-nn` · `MKT-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations |
+| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations |
 | `FR-<MOD>-nn` · `NFR-<MOD>-nn` · `FR-<MOD>-nn.ACn` | Requirements and criteria |
 | `DEC-nn` · `ADR-nn` | Decisions |
 | `Q-nn` | Open questions |

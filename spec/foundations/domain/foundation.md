@@ -2,7 +2,7 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-08"
 ---
 
@@ -20,7 +20,8 @@ includes.
 | `Glossary` | What each thing is called in code and on screen, per language; names no longer used | All |
 | `Roles & Permissions` | Which role performs which action | `specify` · `design` · `verify` |
 | `Brand System` | Colors, type, tokens, components, UI libraries and preferences | `design` · `build` |
-| `Voice & Tone` | How the product speaks to its users | `design` · `publish` |
+| `Voice & Tone` | How the product speaks to its users, inside the product | `design` · `publish` |
+| `Marketing` (optional) | How the product speaks to people who do not know it yet: messages, channels and the rules of each format | `specify` · `publish` |
 | `Architecture Rules` | Layers, conventions, patterns, the stack | `architect` · `plan` · `build` · `verify` |
 | `Security Policy` | Security rules that always hold | `architect` · `verify` |
 | `Quality Standards` | Performance, accessibility and i18n budgets | `architect` · `verify` |

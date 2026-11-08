@@ -2,7 +2,7 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-08"
 ---
 
@@ -15,6 +15,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 |---|---|---|---|---|---|---|
 | Business document | What we decided about the product as a business: problem, audience, pricing, north star | `foundations/business/` | `BIZ-nn` | `specify` | 2,000 | [Business](business/README.md) |
 | Market document | What we measured outside, with its survey date | `foundations/market/` | `MKT-nn` | `specify` | 2,000 | [Market](market/README.md) |
+| Marketing document (optional) | How the product speaks to people who do not know it yet: messages, channels, the rules of each format | `foundations/marketing/` | `MKG-nn` | `specify` | 2,000 | [Marketing](marketing/README.md) |
 | Entity | What a concept is: fields, states, transitions | `foundations/domain/` | `ENT-nn` | `specify` | 2,000 | [Domain](domain/index.md) |
 | Rule | What every module or document must follow | `foundations/rules/` | `RULE-nn` | `specify` | 2,000 per file | [Rules](rules/README.md) |
 | Glossary | What each thing is called, in code and on screen | `foundations/glossary.md` | — | `specify` | 4,000 | [Glossary](glossary.md) |

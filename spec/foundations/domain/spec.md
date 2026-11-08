@@ -2,7 +2,7 @@
 title: Spec
 description: ENT-01 · The single source of truth of a product
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-08"
 ---
 
@@ -21,7 +21,7 @@ PRD → Requirement**: what applies to the whole product lives in the foundation
 
 | Layer | Folder | Holds | IDs |
 |---|---|---|---|
-| Foundations | `foundations/` | What applies to the whole product, read before every stage ([`ENT-02`](foundation.md)) | `BIZ` · `MKT` · `ENT` · `RULE` · `ARCH` · `SEC` · `INT` · `EVT` |
+| Foundations | `foundations/` | What applies to the whole product, read before every stage ([`ENT-02`](foundation.md)) | `BIZ` · `MKT` · `MKG` · `ENT` · `RULE` · `ARCH` · `SEC` · `INT` · `EVT` |
 | Modules | `modules/<module>/` | One or more PRDs per module: flows, requirements, criteria, contracts | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
 | Decisions | `decisions/` | Records that close questions, and architecture decisions | `DEC-nn` · `ADR-nn` |
 | Open | `open/` | What does not govern yet ([`ENT-19`](open-item.md)) | `Q-nn` |
