@@ -10,7 +10,7 @@ updated: "2026-11-04"
 
 A track is the path a [`Change`](change.md) takes. **Every change goes through the same cycle, with no
 exceptions to the rules**; the track only says which stages have something to do. Which stages run,
-per track and per kind of impact, is in [`product/tracks`](../../product/tracks/prd.md).
+per track and per kind of impact, is in [`modules/tracks`](../../modules/tracks/prd.md).
 
 | Track | Is | Human gates |
 |---|---|---|

@@ -1,0 +1,25 @@
+---
+title: Market
+description: How market documents are written — outside facts that expire
+owner: Kevin
+version: "1.0"
+updated: "2026-11-08"
+---
+
+**Market holds what we measured outside**: competitors, tools, market size, studies, prices others
+charge. **Business holds what we decided.** The difference matters because outside facts expire:
+a market document carries the date it was surveyed and is reviewed when it goes stale.
+
+| Document | ID | Holds |
+|---|---|---|
+| [The landscape](landscape.md) | `MKT-01` | The methods and tools around OpenPEDD, and where it stands |
+
+## How a market document is written
+
+| Rule | Why |
+|---|---|
+| The `description` ends with `Surveyed <date>` | It is the fact that tells whether to trust it |
+| Every figure names its source | An unsourced figure cannot be checked again |
+| It describes; it does not decide | A decision taken from it goes to Business, a module PRD or a `DEC`, citing the `MKT` |
+| A change outside is recorded as a change | Here, unlike the rest of the spec, what changed outside is the content |
+| Budget: 2,000 tokens | [`RULE-04`](../rules/writing.md#rule-04) |

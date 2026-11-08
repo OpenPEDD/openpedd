@@ -21,4 +21,4 @@ screenshot of it. A concrete case needs nobody to test it by hand.
 | `data` | The `Test Data` it uses |
 
 Every flow of a PRD has at least one `AC`. The tests written from them are part of the contract:
-`build` cannot change them ([`product/build`](../../product/build/prd.md)).
+`build` cannot change them ([`modules/build`](../../modules/build/prd.md)).

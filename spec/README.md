@@ -6,18 +6,23 @@ mockups, tests, API Reference, Help Center, tasks) knows whether it is still up 
 
 OpenPEDD is specified with OpenPEDD. This folder follows the format it defines, in `mono` mode: the spec lives next to the code ([`DEC-11`](decisions/DEC-11-visibility.md)).
 
+The hierarchy is **Product → Module → PRD → Requirement** ([`ENT-20`](foundations/domain/product.md)).
+Every kind of artifact, what it defines and how it is written, is in
+[**Artifacts**](foundations/artifacts.md).
+
 ## Reading order
 
 | # | Where | What it holds | IDs |
 |---|---|---|---|
-| 1 | [`foundations/business/`](foundations/business/) | The problem, the landscape, what we borrow, the open-core model | `BIZ-nn` |
-| 2 | [`foundations/domain/`](foundations/domain/) | Every concept the framework is made of, defined once | `ENT-nn` |
-| 3 | [`foundations/glossary.md`](foundations/glossary.md) | What each thing is called, and names no longer used | — |
-| 4 | [`foundations/rules/`](foundations/rules/) | Rules that apply to every stage and every document | `RULE-nn` |
-| 5 | [`foundations/architecture/`](foundations/architecture/) | How it is built | `ARCH-nn` |
-| 6 | [`product/`](product/) | One module per stage, plus the cycle, tracks and workspace | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
-| 7 | [`decisions/`](decisions/) | Closed questions | `DEC-nn` |
-| 8 | [`open/`](open/) | Questions, ideas and roadmap: what does not govern yet | `Q-nn` |
+| 1 | [`foundations/business/`](foundations/business/README.md) | What we decided: the problem, what we borrow, open core, audience | `BIZ-nn` |
+| 2 | [`foundations/market/`](foundations/market/README.md) | What we measured outside, with its survey date | `MKT-nn` |
+| 3 | [`foundations/domain/`](foundations/domain/index.md) | Every concept the framework is made of, defined once | `ENT-nn` |
+| 4 | [`foundations/glossary.md`](foundations/glossary.md) | What each thing is called, and names no longer used | — |
+| 5 | [`foundations/rules/`](foundations/rules/README.md) | Rules that apply to every stage and every document | `RULE-nn` |
+| 6 | [`foundations/architecture/`](foundations/architecture/README.md) | How it is built | `ARCH-nn` |
+| 7 | [`modules/`](modules/README.md) | One module per stage, plus the cycle, tracks, workspace and trace | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
+| 8 | [`decisions/`](decisions/README.md) | Closed questions | `DEC-nn` · `ADR-nn` |
+| 9 | [`open/`](open/README.md) | Questions, ideas and roadmap: what does not govern yet | `Q-nn` |
 | — | `changes/` · `history/` · `designs/` | Deltas in flight · version history · mockups | `CHG-nnn` · `DLT-nnnn` |
 
 ## Status

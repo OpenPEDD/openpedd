@@ -14,7 +14,7 @@ the search and the MCP do not see it by default. Whoever reads a document reads 
 
 | Field | Example |
 |---|---|
-| `path` | `product/specify/prd.md` |
+| `path` | `modules/specify/prd.md` |
 | `id` | `FR-SPC-03`, when the change touches one ID |
 | `version` | `1.3 → 1.4` |
 | `date` | `2026-11-04` |

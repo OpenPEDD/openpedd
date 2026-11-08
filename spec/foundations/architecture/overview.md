@@ -17,7 +17,7 @@ updated: "2026-11-04"
                     spec repo       tracker       design tool     code repos    help/docs
                          │
  ┌──────────────────────────────────── OpenPEDD (open source) ──────────────────────────────────┐
- │ 1. Format      foundations/ · product/ · decisions/ · open/ · changes/ · history/          │
+ │ 1. Format      foundations/ · modules/ · decisions/ · open/ · changes/ · history/          │
  │ 2. Index       pedd index → .pedd/spec-graph.json (IDs, hashes, references, anchors)       │
  │ 3. CLI         init · check · index · status · impact · trace · change · archive · gen     │
  │ 4. Stages      skills and judges per agent: /specify /architect /design /plan /build …    │
@@ -32,7 +32,7 @@ updated: "2026-11-04"
 |---|---|---|
 | Format | The folders, frontmatter, IDs and blocks of a spec | [`ENT-01`](../domain/spec.md) |
 | Index | Extracts every ID, computes its hash, records references and anchors | [`ARCH-02`](freshness.md) |
-| CLI `pedd` | Everything that runs when asked | [`product/workspace`](../../product/workspace/prd.md) and each stage |
+| CLI `pedd` | Everything that runs when asked | [`modules/workspace`](../../modules/workspace/prd.md) and each stage |
 | Stages | Skills, agents and tools per stage, generated for each supported agent | [`ARCH-04`](agents.md) |
 | MCP | How agents read and propose against the spec | [`ARCH-04`](agents.md#mcp-tools) |
 | Reader | The site people read the spec in | — |

@@ -20,7 +20,7 @@ It is generated and never edited.
 {
   "FR-JOB-03": {
     "hash": "3fa9c1",
-    "doc": "product/job-posts/prd.md",
+    "doc": "modules/job-posts/prd.md",
     "refs": ["ENT-17", "RULE-05"],
     "criteria": ["FR-JOB-03.AC1", "FR-JOB-03.AC2"],
     "anchors": {

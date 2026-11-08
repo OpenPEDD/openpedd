@@ -2,8 +2,8 @@
 title: Domain
 description: Every concept OpenPEDD is made of, each defined once
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-08"
 ---
 
 The domain names every concept the framework works with. A PRD that needs one of these references
@@ -30,3 +30,7 @@ it; it never redefines it ([`RULE-01`](../rules/writing.md#rule-01)).
 | `ENT-17` | [History Entry](history-entry.md) | One line per version of a document |
 | `ENT-18` | [Decision](decision.md) | A record that closes a question |
 | `ENT-19` | [Open Item](open-item.md) | What does not govern yet: questions, ideas, roadmap |
+| `ENT-20` | [Product](product.md) | What one spec describes; the top of Product → Module → PRD → Requirement |
+| `ENT-21` | [Module](module.md) | A part of the product that stands on its own, with its PRDs |
+| `ENT-22` | [Trace Link](trace-link.md) | One link in a requirement's chain, with its current state |
+| `ENT-23` | [Trace Event](trace-event.md) | One state change of a trace link, appended and never edited |

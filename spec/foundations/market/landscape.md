@@ -1,17 +1,17 @@
 ---
 title: The landscape
-description: BIZ-02 · Why each existing method falls short, and where OpenPEDD stands
+description: MKT-01 · Why each existing method falls short, and where OpenPEDD stands. Surveyed 2026-11-04
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-08"
 ---
 
-# BIZ-02 · The landscape
+# MKT-01 · The landscape
 
 Surveyed on 2026-11-04. Each method solves one stretch: product methods stop at the PRD, SDD tools
 stop at the code, documentation tools start from the code. **None covers idea to maintenance with one
 source of truth, and none knows which derived artifact went stale.** Problem IDs are those of
-[`BIZ-01`](problem.md).
+[`BIZ-01`](../business/problem.md).
 
 | Method | Solves | Leaves out | We take |
 |---|---|---|---|

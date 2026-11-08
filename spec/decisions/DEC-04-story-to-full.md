@@ -14,7 +14,7 @@ A story moves to `full` when any of these holds: it creates a new entity or modu
 than **5** `FR`/`NFR` or more than **1** module; it touches permissions, billing, data deletion or
 outbound communication; it breaks a public contract. A `fix` the spec did not cover becomes a
 `story`. The table, with the reason for each criterion, is in
-[`product/tracks`](../product/tracks/prd.md#when-a-story-becomes-full).
+[`modules/tracks`](../modules/tracks/prd.md#when-a-story-becomes-full).
 
 **Why:** beyond those limits it is no longer a thin slice, or it is irreversible or costly, and it
 needs the gates of the full track.

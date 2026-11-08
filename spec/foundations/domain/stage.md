@@ -8,8 +8,8 @@ updated: "2026-11-04"
 
 # ENT-10 · Stage
 
-A stage is one step of the cycle, with one responsibility. Each one is a module in `product/`, and
-the order and the gates between them are in [`product/cycle`](../../product/cycle/prd.md).
+A stage is one step of the cycle, with one responsibility. Each one is a module in `modules/`, and
+the order and the gates between them are in [`modules/cycle`](../../modules/cycle/prd.md).
 
 | Field | What it holds |
 |---|---|

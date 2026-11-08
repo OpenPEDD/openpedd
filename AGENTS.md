@@ -6,7 +6,7 @@ anything. It does not repeat the rules: it points to where each one lives.
 ## Before writing
 
 1. **Search the whole spec first.** If the thing already exists, reference it by ID; never define it twice ([`RULE-01`](spec/foundations/rules/writing.md#rule-01)).
-2. **Find where it goes**, top to bottom, and stop at the first match:
+2. **Find where it goes**, top to bottom, and stop at the first match. Every kind of artifact, and how each is written, is in [Artifacts](spec/foundations/artifacts.md):
 
 | If it is… | It goes in | ID |
 |---|---|---|
@@ -14,8 +14,9 @@ anything. It does not repeat the rules: it points to where each one lives.
 | What a concept *is*, used by two or more modules | `spec/foundations/domain/` | `ENT-nn` |
 | A rule for every stage or every document | `spec/foundations/rules/` | `RULE-nn` |
 | How OpenPEDD is built | `spec/foundations/architecture/` | `ARCH-nn` |
-| Why OpenPEDD exists, who it is for, what it borrows | `spec/foundations/business/` | `BIZ-nn` |
-| What a module does | `spec/product/<module>/prd.md` | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
+| What we decided about the product as a business: problem, audience, pricing, north star | `spec/foundations/business/` | `BIZ-nn` |
+| What we measured outside: competitors, tools, studies, with a survey date | `spec/foundations/market/` | `MKT-nn` |
+| What a module does | `spec/modules/<module>/prd.md` | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
 | Something not decided yet | `spec/open/questions.md` | `Q-nn` |
 | A loose idea | `spec/open/ideas.md` | — |
 | A name, or a name no longer used | `spec/foundations/glossary.md` | — |
@@ -52,7 +53,7 @@ description: <one line>
 owner: Kevin
 version: "1.0"
 updated: "YYYY-MM-DD"
-status: draft | live          # spec/product/ only, see ENT-03
+status: draft | live          # spec/modules/ only, see ENT-03
 ---
 ```
 

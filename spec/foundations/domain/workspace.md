@@ -10,7 +10,7 @@ updated: "2026-11-04"
 
 A workspace is the set of repos of one project, declared in `workspace.yaml` at the root of the spec repo (`split`) or of the product repo (`mono`). Each
 repo has one audience. How the repos are created and published is in
-[`ARCH-03`](../architecture/workspace.md) and [`product/workspace`](../../product/workspace/prd.md).
+[`ARCH-03`](../architecture/workspace.md) and [`modules/workspace`](../../modules/workspace/prd.md).
 
 | Field | What it holds |
 |---|---|

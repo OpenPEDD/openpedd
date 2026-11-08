@@ -2,8 +2,8 @@
 title: Spec
 description: ENT-01 · The single source of truth of a product
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-08"
 ---
 
 # ENT-01 · Spec
@@ -13,12 +13,16 @@ Everything else (code, mockups, tests, API Reference, Help Center, tasks) is a
 [`Derived Artifact`](derived-artifact.md) of it. It lives in its own repo (`split`) or in a `spec/` folder of the product repo (`mono`)
 ([`ENT-16`](workspace.md)) and is read by people through the reader and by agents through the MCP.
 
+One spec describes one [`Product`](product.md). Inside it, the hierarchy is **Product → Module →
+PRD → Requirement**: what applies to the whole product lives in the foundations; what applies to one
+[`Module`](module.md) lives in its PRDs.
+
 ## Layers
 
 | Layer | Folder | Holds | IDs |
 |---|---|---|---|
-| Foundations | `foundations/` | What every stage reads first ([`ENT-02`](foundation.md)) | `BIZ` · `ENT` · `RULE` · `ARCH` · `SEC` · `INT` · `EVT` |
-| Product | `product/<module>/prd.md` | One PRD per module: flows, requirements, criteria, contracts | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
+| Foundations | `foundations/` | What applies to the whole product, read before every stage ([`ENT-02`](foundation.md)) | `BIZ` · `MKT` · `ENT` · `RULE` · `ARCH` · `SEC` · `INT` · `EVT` |
+| Modules | `modules/<module>/` | One or more PRDs per module: flows, requirements, criteria, contracts | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
 | Decisions | `decisions/` | Records that close questions, and architecture decisions | `DEC-nn` · `ADR-nn` |
 | Open | `open/` | What does not govern yet ([`ENT-19`](open-item.md)) | `Q-nn` |
 | Changes | `changes/<CHG>/` | Work in flight: deltas and reports. `archive/` when done | `CHG-nnn` · `DLT-nnnn` |
@@ -33,7 +37,7 @@ Everything else (code, mockups, tests, API Reference, Help Center, tasks) is a
 | `owner` | Who answers for it |
 | `version` | Bumps with every merged change |
 | `updated` | The real date of the last merge |
-| `status` | In `product/` only: the lifecycle of [`ENT-03`](requirement.md#lifecycle) |
+| `status` | In `modules/` only: the lifecycle of [`ENT-03`](requirement.md#lifecycle) |
 
 ## Invariants
 

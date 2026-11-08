@@ -10,7 +10,7 @@ import { ROOT, green, read, red, specFiles, tokens, yellow } from './lib.mjs';
 /** The first rule whose prefix matches wins. */
 const BUDGETS = [
   ['spec/foundations/glossary.md', 4000],
-  ['spec/product/', 4000],
+  ['spec/modules/', 4000],
   ['spec/foundations/', 2000],
   ['spec/decisions/', 1000],
   ['spec/open/', 2000],

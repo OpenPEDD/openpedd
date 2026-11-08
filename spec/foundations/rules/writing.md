@@ -40,7 +40,7 @@ means two topics share a file. **Split by topic, not by size.**
 
 | Document | Budget |
 |---|---|
-| A module PRD (`product/`) | 4,000 |
+| A module PRD (`modules/`) | 4,000 |
 | An entity, rule file, architecture document or business document | 2,000 |
 | The glossary | 4,000; split by module beyond that |
 | A decision | 1,000 |

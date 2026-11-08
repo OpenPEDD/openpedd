@@ -58,3 +58,26 @@
 {"path":"product/workspace/prd.md","version":"1.0","date":"2026-11-04","change":"CHG-001","story":"RECLEE-1212","stage":"specify","summary":"Initial version, migrated from the framework working drafts"}
 {"path":"foundations/rules/cycle.md","id":"RULE-20","version":"1.0 → 1.1","date":"2026-11-06","change":"CHG-002","story":null,"stage":"specify","summary":"Added RULE-20: to a person, state an item as written, with its ID only in parentheses"}
 {"path":"foundations/domain/report.md","version":"1.0 → 1.1","date":"2026-11-06","change":"CHG-002","story":null,"stage":"specify","summary":"Reports show every item as written, per RULE-20"}
+{"path":"modules/","version":"—","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"product/ renamed to modules/: Product is now the top level of the hierarchy"}
+{"path":"foundations/domain/product.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ENT-20 Product: the hierarchy Product → Module → PRD → Requirement"}
+{"path":"foundations/domain/module.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ENT-21 Module: a part of the product with one or more PRDs"}
+{"path":"foundations/domain/trace-link.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ENT-22 Trace Link: the kinds of link in a requirement chain and their states"}
+{"path":"foundations/domain/trace-event.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ENT-23 Trace Event: one state change, appended, open format"}
+{"path":"foundations/domain/spec.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Hierarchy, Market layer, modules/ folder"}
+{"path":"foundations/domain/foundation.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Market added as a foundation"}
+{"path":"foundations/domain/index.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ENT-20 to ENT-23"}
+{"path":"foundations/market/landscape.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Moved from Business as MKT-01; BIZ-02 retired"}
+{"path":"foundations/market/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How market documents are written"}
+{"path":"foundations/business/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How business documents are written"}
+{"path":"foundations/business/audience.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"BIZ-05 Audience"}
+{"path":"foundations/business/open-core.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Traceability, way back and hotspots in the free/paid line"}
+{"path":"foundations/artifacts.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Every artifact: what it defines, where, who writes it, how"}
+{"path":"foundations/rules/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How rules are written"}
+{"path":"foundations/architecture/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How architecture documents are written"}
+{"path":"foundations/architecture/traceability.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ARCH-05 Traceability: local on demand, Cloud always"}
+{"path":"foundations/glossary.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Hierarchy, traceability, MKT, retired names"}
+{"path":"modules/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How a module and its PRDs are written"}
+{"path":"modules/trace/prd.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"pedd trace and pedd status"}
+{"path":"decisions/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How decisions and ADRs are written"}
+{"path":"open/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How questions, ideas and the roadmap are written"}
+{"path":"open/questions.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Q-21 north-star metric"}

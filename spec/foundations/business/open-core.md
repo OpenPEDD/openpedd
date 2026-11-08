@@ -30,6 +30,9 @@ The paid plan's value is that **nobody has to remember to run it**.
 | Local generators | Multi-repo and multi-product |
 | `measure` by hand ([`DEC-03`](../../decisions/DEC-03-measure.md)) | `measure` on its own, with analytics connectors |
 | Creating repos with the CLI | Creating repos from the dashboard; hosting spec, help and docs |
+| The traceability model and event format; `pedd trace` and `pedd status` on demand ([`ARCH-05`](../architecture/traceability.md)) | **Traceability always on**: every tool and environment connected, the event history kept, the graph from product to requirement |
+| — | **The way back**: tracker issues turned into candidate stories on the right PRD |
+| — | **Hotspots**: stories per module and PRD, per week |
 | — | SSO, roles, audit, history retention |
 
 Someone can build their own CI job that runs `pedd status` and opens issues: that is the cost of an

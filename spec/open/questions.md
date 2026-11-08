@@ -2,8 +2,8 @@
 title: Open questions
 description: What is still to be decided. Each closes only with a DEC
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-08"
 ---
 
 Each question closes only with a new `DEC` that names it ([`RULE-08`](../foundations/rules/writing.md#rule-08)).
@@ -20,3 +20,4 @@ Closed so far: `Q-01` to `Q-06`, `Q-10` and `Q-20` (`DEC-01` to `DEC-06`, `DEC-1
 | Q-17 | CLI telemetry: none, opt-in or opt-out | — | The first release |
 | Q-18 | Project governance: CLA, `CONTRIBUTING`, code of conduct, who merges | — | Going public |
 | Q-19 | Trackers besides Linear (Jira, GitHub Issues), and when | — | — |
+| Q-21 | OpenPEDD's north-star metric | Products whose spec stays `fresh` week over week, or bugs found at acceptance that the spec already covered | `BIZ-05` |

@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-08"
 ---
 
 # ENT-02 · Foundation
@@ -14,7 +14,8 @@ includes.
 
 | Foundation | What it defines | Read by |
 |---|---|---|
-| `Business Context` | Product goal, audience, pricing, north-star metric | `specify` |
+| `Business Context` | Product goal, audience, pricing, north-star metric, positioning: what we decided | `specify` |
+| `Market` | Competitors, tools, market size, studies: what we measured outside, each with its survey date | `specify` |
 | `Domain Model` | Each entity (`ENT`), once: fields, states, transitions | All |
 | `Glossary` | What each thing is called in code and on screen, per language; names no longer used | All |
 | `Roles & Permissions` | Which role performs which action | `specify` · `design` · `verify` |
@@ -29,4 +30,4 @@ includes.
 | `Test Data` | Sample data shared by mockups, tests and the final check | `design` · `plan` · `verify` |
 
 A foundation that does not exist yet is marked empty, not invented. `map` fills what it can infer
-from existing code ([`product/map`](../../product/map/prd.md)).
+from existing code ([`modules/map`](../../modules/map/prd.md)).
