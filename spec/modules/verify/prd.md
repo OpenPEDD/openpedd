@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 status: draft
 ---
 
@@ -41,6 +41,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 5. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
 6. **Confirms what is serious**: every high finding is reviewed by a second judge, `judge_confirm`, before it counts.
 7. **Decides**: with high findings, back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)).
+8. **Opens the PR to the base**: merges the base into the change branch, solves the conflicts there, runs the pipeline again and opens the PR with the whole change's **Spec** section ([`ARCH-06`](../../foundations/architecture/branches.md)). It merges at `acceptance-merge`.
 
 ## The `Acceptance Report`
 

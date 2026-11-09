@@ -2,8 +2,8 @@
 title: Context Pack
 description: ENT-13 · The only thing an agent reads while it works
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 ---
 
 # ENT-13 · Context Pack
@@ -17,7 +17,7 @@ the spec that the stage names, in one call to the MCP (`get_context_for`).
 | `for` | The stage, or the task (`plan` builds one per task) |
 | `ids` | The requirements, criteria and contracts in scope |
 | `foundations` | The foundations the stage names ([`ENT-02`](foundation.md)) |
-| `designs` | The mockups that apply, as references |
+| `designs` | The mockups that apply: their files on the change branch, and screenshots |
 | `decisions` | The `ADR`s and `DEC`s that affect it |
 | `tokens` | Its size |
 

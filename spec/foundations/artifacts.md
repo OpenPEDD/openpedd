@@ -2,8 +2,8 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.1"
-updated: "2026-11-08"
+version: "1.2"
+updated: "2026-11-09"
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -47,11 +47,11 @@ How each is written in detail lives in the guide of its folder (*How* column).
 
 | Artifact | Comes from | Lives in | Produced by | Anchor |
 |---|---|---|---|---|
-| Mockup | `FR` | `designs/` | `design` | Frontmatter |
+| Mockup | `FR` | The code, built on the design branch | `design` | `@spec`, like code |
 | Test | `AC` · contract | The code | `plan` | The criterion ID in the test name |
 | Code | `FR` · `NFR` | The code | `build` | `spec.lock` or `@spec` |
-| Task | `FR` · `NFR` | The tracker | `plan` | Issue attachment |
-| Pull request | The task | The code host | `build` | Its **Spec** section |
+| Task | `FR` · `NFR` | The tracker, a sub-issue of the change | `plan` | Issue attachment |
+| Pull request | The task, or the whole change | The code host: to the change branch, or to the base | `build` · `verify` | Its **Spec** section |
 | API Reference | Contracts | `docs/` or `<project>-docs` | `publish` | Generated |
 | Help Center article | `FR` | `help/` or `<project>-help` | `publish` | `sources` in frontmatter |
 | Release Notes entry | The change | `help/` or `<project>-help` | `publish` | The change ID |

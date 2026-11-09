@@ -86,3 +86,21 @@
 {"path":"foundations/artifacts.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing document row"}
 {"path":"foundations/glossary.md","version":"1.1 → 1.2","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"Marketing and MKG"}
 {"path":"foundations/domain/spec.md","version":"1.1 → 1.2","date":"2026-11-08","change":"CHG-004","story":null,"stage":"specify","summary":"MKG in the foundations IDs"}
+{"path":"foundations/architecture/branches.md","version":"1.0","date":"2026-11-09","change":"CHG-005","story":null,"stage":"architect","summary":"Branches and tasks: change, design and task branches; sub-issues; PR to the base"}
+{"path":"foundations/architecture/README.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"architect","summary":"ARCH-06 in the index"}
+{"path":"foundations/architecture/freshness.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"architect","summary":"The mockup is anchored like code"}
+{"path":"foundations/architecture/traceability.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"architect","summary":"Design read from the design branch; tasks are sub-issues"}
+{"path":"foundations/artifacts.md","version":"1.1 → 1.2","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Mockup in code; task as sub-issue; PR to the change branch or the base"}
+{"path":"foundations/domain/change.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Branch field; parent issue with sub-issues"}
+{"path":"foundations/domain/context-pack.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Mockups as files on the change branch"}
+{"path":"foundations/domain/derived-artifact.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Mockup lives in the code repo"}
+{"path":"foundations/domain/merge-gate.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"What each gate merges"}
+{"path":"foundations/domain/spec.md","version":"1.2 → 1.3","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"designs/ holds reference images only"}
+{"path":"foundations/glossary.md","version":"1.2 → 1.3","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Branch and sub-issue names"}
+{"path":"modules/accept/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"The PR to the base merges at acceptance-merge, on the preview"}
+{"path":"modules/build/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Task branch from the change branch; PR to the change branch"}
+{"path":"modules/design/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"The mockup is built in code, on the design branch"}
+{"path":"modules/plan/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Tasks as sub-issues of the change"}
+{"path":"modules/tracks/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Branches per track"}
+{"path":"modules/verify/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Opens the PR to the base after merging the base in"}
+{"path":"modules/workspace/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"branches in workspace.yaml"}

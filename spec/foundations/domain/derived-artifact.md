@@ -2,8 +2,8 @@
 title: Derived Artifact
 description: ENT-15 · Anything produced from the spec
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 ---
 
 # ENT-15 · Derived Artifact
@@ -13,10 +13,10 @@ the spec, the spec wins, and the disagreement is a delta or a bug.
 
 | Artifact | Produced by | Anchored to | Lives in |
 |---|---|---|---|
-| Mockup | `design` | `FR` | `<project>-spec/designs/` |
+| Mockup | `design` | `FR` | The code repo, built on the design branch with the real components |
 | Test | `plan` | `AC` · contract | The code repo |
 | Code | `build` | `FR` · `NFR` | The code repo, with `spec.lock` |
-| Task | `plan` | `FR` · `NFR` | The tracker |
+| Task | `plan` | `FR` · `NFR` | The tracker, a sub-issue of the change |
 | API Reference | `publish` | Contracts | `<project>-docs` |
 | Help Center article | `publish` | `FR` | `<project>-help` |
 | Release Notes entry | `publish` | The change | `<project>-help`, or an adapter |

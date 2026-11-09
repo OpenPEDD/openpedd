@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.2"
-updated: "2026-11-08"
+version: "1.3"
+updated: "2026-11-09"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -47,6 +47,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Mode: `interactive` · `delegated` · `human` | How a stage runs | [`ENT-10`](domain/stage.md) |
 | `architect.mode`: `guided` · `delegated` | How architecture runs | [`DEC-08`](../decisions/DEC-08-architect-mode.md) |
 | Track: `full` · `story` · `fix` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
+| Change branch · design branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
+| Parent issue · sub-issue | The change and its tasks in the tracker | [`ARCH-06`](architecture/branches.md) |
 | `Merge Gate`: `spec-approval` · `architecture-merge` · `design-merge` · `acceptance-merge` | The way into the spec | [`ENT-09`](domain/merge-gate.md) |
 | `Delta`, with `op` `ADDED` · `MODIFIED` · `REMOVED` | A proposed change | [`ENT-07`](domain/delta.md) |
 | Delta type: `proposal` · `assumption` · `deviation` · `finding` | Why a delta exists | [`ENT-07`](domain/delta.md) |

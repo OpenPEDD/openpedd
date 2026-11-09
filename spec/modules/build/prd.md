@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 status: draft
 ---
 
@@ -32,13 +32,14 @@ opens to work.
 
 ## Procedure
 
+0. **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged.
 1. **Reads the pack**, nothing else. If something is missing to build, it is an `assumption` (product) or a technical question to whoever runs the stage (technical).
 2. **Red → green → refactor**: makes the tests pass, one by one, and cleans up.
 3. **Anchors the code** to the IDs it implements: `@spec FR-JOB-03@<hash>`, or a line in `spec.lock`.
 4. **Runs the `Delivery Pipeline` checks**: lint, types, tests, fitness functions.
 5. **Records deltas**: a `deviation` when the spec cannot be met as written (with the technical reason and the alternative); an `assumption` when it had to fill a gap.
-6. **Opens the PR** with the **Spec** section: IDs covered, deviations, assumptions. Even if it says there are none.
-7. **Moves the task** to review in the tracker.
+6. **Opens the PR against the change branch**, never the base, with the **Spec** section: IDs covered, deviations, assumptions. Even if it says there are none.
+7. **Moves the task** to review in the tracker. The sub-issue closes when the PR merges into the change branch.
 
 ## Outputs
 

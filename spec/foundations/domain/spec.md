@@ -2,8 +2,8 @@
 title: Spec
 description: ENT-01 · The single source of truth of a product
 owner: Kevin
-version: "1.2"
-updated: "2026-11-08"
+version: "1.3"
+updated: "2026-11-09"
 ---
 
 # ENT-01 · Spec
@@ -27,7 +27,7 @@ PRD → Requirement**: what applies to the whole product lives in the foundation
 | Open | `open/` | What does not govern yet ([`ENT-19`](open-item.md)) | `Q-nn` |
 | Changes | `changes/<CHG>/` | Work in flight: deltas and reports. `archive/` when done | `CHG-nnn` · `DLT-nnnn` |
 | History | `history/` | One line per version of each document ([`ENT-17`](history-entry.md)) | — |
-| Designs | `designs/` | Mockups, with their anchors | — |
+| Designs | `designs/` | Reference images only: the mockups live in the code ([`ARCH-06`](../architecture/branches.md)) | — |
 
 ## Fields of a document
 

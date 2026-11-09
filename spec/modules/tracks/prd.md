@@ -2,8 +2,8 @@
 title: Tracks
 description: Which stages each change runs, by the IDs it touches, and when a story becomes full
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 status: draft
 ---
 
@@ -28,6 +28,12 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 | A contract | Delta | ✓ | If visible | ✓ | ✓ | API Reference |
 | A bug the spec already covered (`fix`) | — | — | — | `build` → `verify` | Light | — |
 | Technical work with no product ID (`chore`) | — | — | — | `build` → `verify` | — | — |
+
+## Branches
+
+Every track gets its own branch from the base, and the stages it runs decide what is cut from it: a
+design branch only if `design` runs, one task branch per task. A change with one task is one branch
+and one PR ([`ARCH-06`](../../foundations/architecture/branches.md)).
 
 ## The `story` track
 

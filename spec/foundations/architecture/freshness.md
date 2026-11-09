@@ -2,8 +2,8 @@
 title: Freshness
 description: ARCH-02 · The index, the hash of each ID and where anchors are written
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 ---
 
 # ARCH-02 · Freshness
@@ -25,7 +25,7 @@ It is generated and never edited.
     "criteria": ["FR-JOB-03.AC1", "FR-JOB-03.AC2"],
     "anchors": {
       "code":   [{ "repo": "scout", "path": "app/jobs/create.ts", "at": "3fa9c1" }],
-      "design": [{ "path": "designs/job-create.html", "at": "1b22e0" }],
+      "design": [{ "repo": "scout", "path": "app/jobs/new/page.tsx", "at": "1b22e0" }],
       "help":   [{ "path": "articles/create-job.mdx", "at": "3fa9c1" }],
       "tracker":[{ "issue": "REC-412", "at": "3fa9c1" }],
       "tests":  [{ "path": "e2e/job-create.spec.ts", "ac": "FR-JOB-03.AC1", "at": "3fa9c1" }]
@@ -47,7 +47,7 @@ within the configured depth, not everything that cites the domain.
 |---|---|
 | Code | A comment `// @spec FR-JOB-03@3fa9c1`, or `spec.lock` in the code repo (file → IDs) to keep the code clean |
 | Tests | The criterion ID in the test name: `test("FR-JOB-03.AC1 …")` |
-| Mockup | Its frontmatter, or a frame property in the design tool (adapter) |
+| Mockup | Like code: the mockup is code, built on the design branch. A frame property when exploring in a design tool (adapter) |
 | Help article | `sources: [FR-JOB-03@3fa9c1]` in its frontmatter |
 | API Reference | Written by the generator from the contracts |
 | Tracker issue | An attachment or field: `FR-JOB-03@3fa9c1` |

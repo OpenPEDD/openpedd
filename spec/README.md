@@ -23,7 +23,7 @@ Every kind of artifact, what it defines and how it is written, is in
 | 7 | [`modules/`](modules/README.md) | One module per stage, plus the cycle, tracks, workspace and trace | `FR-<MOD>-nn` · `NFR-<MOD>-nn` |
 | 8 | [`decisions/`](decisions/README.md) | Closed questions | `DEC-nn` · `ADR-nn` |
 | 9 | [`open/`](open/README.md) | Questions, ideas and roadmap: what does not govern yet | `Q-nn` |
-| — | `changes/` · `history/` · `designs/` | Deltas in flight · version history · mockups | `CHG-nnn` · `DLT-nnnn` |
+| — | `changes/` · `history/` · `designs/` | Deltas in flight · version history · reference images (the mockups live in the code) | `CHG-nnn` · `DLT-nnnn` |
 
 ## Status
 

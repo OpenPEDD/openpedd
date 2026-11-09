@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init — creating or connecting a project's repos and installing the framework
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-09"
 status: draft
 ---
 
@@ -41,6 +41,11 @@ publish:
   help: { generator: fumadocs, url: https://help.reclee.com }
   docs: { generator: openapi, url: https://docs.reclee.com }
   release_notes: { target: help }
+branches:
+  base: dev
+  change: "{prefix}/{slug}"
+  design: "design/{slug}"
+  task: tracker
 models:
   profile: balanced
 stages:
