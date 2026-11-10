@@ -2,7 +2,7 @@
 title: architect
 description: Stage 2 · Decides how to build what specify defined, after reading the spec, the code, the design and those who solved it before
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-10"
 status: draft
 ---
@@ -15,7 +15,9 @@ status: draft
 
 Where **how** to build what `specify` defined is decided. Most of it is thinking about the possible
 improvements: performance, optimization, good practice, and what each option costs. It runs in
-parallel with `design`. It does not write the spec: it leaves `ARCH` documents, `ADR`s and deltas.
+parallel with `design`. It does not write the spec: it leaves `ARCH` documents, `ADR`s and deltas,
+on the change's architecture branch ([`ARCH-06`](../../foundations/architecture/branches.md)). Each
+decision is written there as soon as it closes, because `design` reads them while it works.
 
 **It reads before it proposes.** A proposal tied to what already exists, checked against the code
 and against those who solved the problem before, is decided in minutes; one built on assumptions

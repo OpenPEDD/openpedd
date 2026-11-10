@@ -2,8 +2,8 @@
 title: Tracks
 description: Which stages each change runs, by the IDs it touches, and when a story becomes full
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -32,7 +32,8 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 ## Branches
 
 Every track gets its own branch from the base, and the stages it runs decide what is cut from it: a
-design branch only if `design` runs, one task branch per task. A change with one task is one branch
+design branch only if `design` runs, an architecture branch only if `architect` runs, one task branch
+per task. A change with one task is one branch
 and one PR ([`ARCH-06`](../../foundations/architecture/branches.md)).
 
 ## The `story` track

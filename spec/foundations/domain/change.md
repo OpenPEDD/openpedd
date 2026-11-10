@@ -2,8 +2,8 @@
 title: Change
 description: ENT-06 · One unit of work moving through the cycle
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 ---
 
 # ENT-06 · Change
@@ -25,5 +25,5 @@ it.
 | `decisions` | One per delta, from `accept` |
 
 The track is computed from the scope, and a person can force `full`. One change has **one parent issue**
-in the tracker that gathers it; its design and each of its tasks are sub-issues of it
+in the tracker that gathers it; its design, its architecture and each of its tasks are sub-issues of it
 ([`ARCH-06`](../architecture/branches.md)).

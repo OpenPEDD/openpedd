@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-10"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -29,6 +29,17 @@ Copilot, Codex and others through the same templates, the way Spec Kit does).
 
 Both Claude Code forms use the team's subscription. Models are configured per profile, per stage and
 per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
+
+## How agents work
+
+| Practice | Why |
+|---|---|
+| **One writer per set of files.** Two run in parallel only if they do not touch the same files; in a shared file (translations), each touches only its keys | Two writers on one file overwrite each other |
+| **The brief** has the goal, the rules, the checks, the report format and what not to touch | The agent knows only what the brief says |
+| **Scoped checks while working**: lint, types and the tests of what was touched. The full pipeline once, at the end | A full run per round spends without finding more |
+| **One commit per round** | Each round can be reviewed or reverted alone |
+| **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person | A report sounds equally sure when it is wrong |
+| **Each agent opens its own browser tab**; the person's are not touched | The person keeps working |
 
 ## MCP tools [#mcp-tools]
 

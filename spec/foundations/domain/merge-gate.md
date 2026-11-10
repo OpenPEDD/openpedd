@@ -2,8 +2,8 @@
 title: Merge Gate
 description: ENT-09 · The only way into the spec
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 ---
 
 # ENT-09 · Merge Gate
@@ -13,7 +13,7 @@ A merge gate is **the only place where something enters the spec**. There are fo
 | Gate | At the end of | Decided by |
 |---|---|---|
 | `spec-approval` | `specify` | A person |
-| `architecture-merge` | `architect` | A person; automatic in `delegated` mode when the deltas touch only the how ([`RULE-16`](../rules/cycle.md#rule-16)) |
+| `architecture-merge` | `architect` | A person; automatic in `delegated` mode when the deltas touch only the how ([`RULE-16`](../rules/cycle.md#rule-16)). The architecture branch merges into the change branch |
 | `design-merge` | `design` | A person. The design branch merges into the change branch |
 | `acceptance-merge` | `accept` | A person. The change branch merges into the base ([`ARCH-06`](../architecture/branches.md)) |
 

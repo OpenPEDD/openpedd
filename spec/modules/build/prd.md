@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -32,7 +32,7 @@ opens to work.
 
 ## Procedure
 
-0. **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged.
+0. **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged, and wires it by replacing the seam: the one file its data goes through.
 1. **Reads the pack**, nothing else. If something is missing to build, it is an `assumption` (product) or a technical question to whoever runs the stage (technical).
 2. **Red → green → refactor**: makes the tests pass, one by one, and cleans up.
 3. **Anchors the code** to the IDs it implements: `@spec FR-JOB-03@<hash>`, or a line in `spec.lock`.

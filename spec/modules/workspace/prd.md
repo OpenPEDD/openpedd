@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init — creating or connecting a project's repos and installing the framework
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -45,6 +45,7 @@ branches:
   base: dev
   change: "{prefix}/{slug}"
   design: "design/{slug}"
+  architecture: "arch/{slug}"
   task: tracker
 models:
   profile: balanced

@@ -2,7 +2,7 @@
 title: Cycle rules
 description: The rules every stage of the cycle follows, interactive or delegated
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-10"
 ---
 
@@ -86,3 +86,9 @@ Every assumption a stage makes about what already exists (a table, a window, a l
 does) names the file that proves it. One that cannot be proved is a question, not an assumption.
 
 **Why:** an unverified assumption about the system becomes a silent bug in production.
+
+## RULE-22 · A check that did not run is reported as not run [#rule-22]
+
+An agent that could not run, open or look at something says so, in the place where the result would
+have gone. A check with no result is not a pass. **A verification that did not verify, reported as
+done, is worse than none: nobody looks again.**

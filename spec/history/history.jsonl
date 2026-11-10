@@ -111,3 +111,16 @@
 {"path":"foundations/market/README.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"Provider prices and architecture references, dated"}
 {"path":"foundations/rules/cycle.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"RULE-21: a claim about the current system cites the code"}
 {"path":"foundations/rules/README.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"RULE-21 in the index"}
+{"path":"modules/design/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Walks the sources, sets the seam, simulates every state, closing passes in a fixed order, four more judge checks"}
+{"path":"modules/architect/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Works on the architecture branch and writes each decision as it closes"}
+{"path":"modules/build/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Wires the mockup by replacing the seam"}
+{"path":"modules/workspace/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture branch in the configuration"}
+{"path":"modules/tracks/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture branch only if architect runs"}
+{"path":"foundations/architecture/branches.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture branch and sub-issue; the base is fetched by name"}
+{"path":"foundations/architecture/agents.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"How agents work"}
+{"path":"foundations/domain/merge-gate.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"architecture-merge merges the architecture branch"}
+{"path":"foundations/domain/change.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture sub-issue"}
+{"path":"foundations/domain/foundation.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Brand System holds patterns and widths; Quality Standards holds the contract for writes"}
+{"path":"foundations/glossary.md","version":"1.3 → 1.4","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture branch, seam, closing passes"}
+{"path":"foundations/rules/cycle.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"RULE-22: a check that did not run is reported as not run"}
+{"path":"foundations/rules/README.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"RULE-22 in the index"}
