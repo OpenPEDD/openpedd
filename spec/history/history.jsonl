@@ -72,7 +72,7 @@
 {"path":"foundations/business/audience.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"BIZ-05 Audience"}
 {"path":"foundations/business/open-core.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Traceability, way back and hotspots in the free/paid line"}
 {"path":"foundations/artifacts.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Every artifact: what it defines, where, who writes it, how"}
-{"path":"foundations/rules/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How rules are written"}
+{"path":"foundations/rules/README.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How rules are written"}
 {"path":"foundations/architecture/README.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"How architecture documents are written"}
 {"path":"foundations/architecture/traceability.md","version":"1.0","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"ARCH-05 Traceability: local on demand, Cloud always"}
 {"path":"foundations/glossary.md","version":"1.0 → 1.1","date":"2026-11-08","change":"CHG-003","story":null,"stage":"specify","summary":"Hierarchy, traceability, MKT, retired names"}
@@ -104,3 +104,10 @@
 {"path":"modules/tracks/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Branches per track"}
 {"path":"modules/verify/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"Opens the PR to the base after merging the base in"}
 {"path":"modules/workspace/prd.md","version":"1.0 → 1.1","date":"2026-11-09","change":"CHG-005","story":null,"stage":"specify","summary":"branches in workspace.yaml"}
+{"path":"modules/architect/prd.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"Reads spec, code and design in parallel; references, reuse, verified assumptions, real prices, failure checks, use cases, one question at a time"}
+{"path":"decisions/README.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"ADR status; where an architecture decision goes; the decisions table"}
+{"path":"foundations/domain/decision.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"ADR status; local decisions as table rows"}
+{"path":"foundations/architecture/README.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"Each area document ends with its decisions table"}
+{"path":"foundations/market/README.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"Provider prices and architecture references, dated"}
+{"path":"foundations/rules/cycle.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"RULE-21: a claim about the current system cites the code"}
+{"path":"foundations/rules/README.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-006","story":null,"stage":"specify","summary":"RULE-21 in the index"}

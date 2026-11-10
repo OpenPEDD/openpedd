@@ -2,8 +2,8 @@
 title: Cycle rules
 description: The rules every stage of the cycle follows, interactive or delegated
 owner: Kevin
-version: "1.1"
-updated: "2026-11-06"
+version: "1.2"
+updated: "2026-11-10"
 ---
 
 ## RULE-10 · Only `specify` writes the spec [#rule-10]
@@ -79,3 +79,10 @@ not a decision. IDs are for documents and agents; people get the content.
 
 For a long item, the agent quotes its title or its governing sentence, not a paraphrase: a paraphrase
 can say something the spec does not.
+
+## RULE-21 · A claim about the current system cites the code [#rule-21]
+
+Every assumption a stage makes about what already exists (a table, a window, a limit, what a function
+does) names the file that proves it. One that cannot be proved is a question, not an assumption.
+
+**Why:** an unverified assumption about the system becomes a silent bug in production.

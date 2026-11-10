@@ -2,8 +2,8 @@
 title: Decisions
 description: How decisions and architecture decisions are written
 owner: Kevin
-version: "1.0"
-updated: "2026-11-08"
+version: "1.1"
+updated: "2026-11-10"
 ---
 
 One file per record, named `<ID>-<slug>.md` ([`ENT-18`](../foundations/domain/decision.md)).
@@ -11,7 +11,7 @@ One file per record, named `<ID>-<slug>.md` ([`ENT-18`](../foundations/domain/de
 | Kind | ID | Closes | Written by |
 |---|---|---|---|
 | Decision | `DEC-nn` | A `Q-nn` about the product, the business or the framework | `specify`, or `accept` when a delta needs one |
-| Architecture decision | `ADR-nn` | A technical choice | `architect` |
+| Architecture decision | `ADR-nn` | A technical choice with real alternatives; smaller ones are rows in the area's decisions table ([below](#where-an-architecture-decision-goes)) | `architect` |
 
 ## A decision
 
@@ -30,13 +30,29 @@ One file per record, named `<ID>-<slug>.md` ([`ENT-18`](../foundations/domain/de
 ```markdown
 # ADR-nn · <the decision, as a sentence>
 
-**Date:** YYYY-MM-DD · **Answers:** <the NFR IDs>
+**Status:** proposed · accepted · superseded by ADR-nn · **Date:** YYYY-MM-DD · **Answers:** <the NFR IDs>
 
 | Option | Cost | Risk | Meets |
 |---|---|---|---|
 
 **Decision:** <which option>. **Consequences:** <what it makes easier and harder>.
 ```
+
+## Where an architecture decision goes
+
+A feature can close dozens of technical decisions. One file each would bury the few that matter.
+
+| The decision | Goes | Example |
+|---|---|---|
+| Has real alternatives and lasting consequences: hard to undo, or it shapes other modules | An `ADR` file | Store the workflow as a JSON graph, not as node tables |
+| Is local, or follows from an `ADR` | A row in the **decisions table** of the area's `ARCH` document | Retry a failed step three times with backoff |
+
+The decisions table has the same columns everywhere:
+
+| # | Decision | Discarded, and why | Status | Date |
+|---|---|---|---|---|
+
+A row that grows a second option worth a table becomes an `ADR`, and the row points to it.
 
 ## Rules
 

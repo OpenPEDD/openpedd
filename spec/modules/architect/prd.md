@@ -1,9 +1,9 @@
 ---
 title: architect
-description: Stage 2 · Decides how to build what specify defined
+description: Stage 2 · Decides how to build what specify defined, after reading the spec, the code, the design and those who solved it before
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -17,37 +17,50 @@ Where **how** to build what `specify` defined is decided. Most of it is thinking
 improvements: performance, optimization, good practice, and what each option costs. It runs in
 parallel with `design`. It does not write the spec: it leaves `ARCH` documents, `ADR`s and deltas.
 
+**It reads before it proposes.** A proposal tied to what already exists, checked against the code
+and against those who solved the problem before, is decided in minutes; one built on assumptions
+becomes a bug in production.
+
 ## Inputs
 
 | What | From |
 |---|---|
 | The approved `NFR`s and `FR`s in scope | `specify` |
-| The current code of the area | The repo |
+| The current code: the modules it touches and the ones it could reuse | The repo |
+| The design branch: the data the screens assume | `design`, in progress ([`ARCH-06`](../../foundations/architecture/branches.md)) |
+| Outside facts already surveyed: competitors, tools, prices | `Market` |
 
 ## Context pack
 
 The `NFR`s and `FR`s in scope · `Architecture Rules` · `Security Policy` · `Domain Model` ·
-`Integrations` · `Quality Standards` · the area's existing `ARCH` and `ADR`. Budget:
-**15,000 tokens**.
+`Integrations` · `Quality Standards` · the area's existing `ARCH` and `ADR` · the `Market` documents
+it cites. Budget: **15,000 tokens**; the code and the references are opened by the agent, not packed.
 
 ## Procedure
 
-1. **Reads the `NFR`s** and turns them into quality scenarios: stimulus, response, measure.
-2. **Researches options.** At least two for every non-obvious decision, with cost, risk and which `NFR` each meets.
-3. **Decides**, or proposes for the person to decide (`guided`).
-4. **Writes one `ADR` per decision**: context, options, decision, consequences.
-5. **Updates the `ARCH` documents**: the area's diagram at the right C4 level, the data model, migrations, integrations.
-6. **Turns each measurable `NFR` into a check**: a fitness function (a performance test, a size limit, a dependency rule) that `plan` loads into the pipeline.
-7. **Records deltas.** If the architecture finds that a `FR` or `NFR` cannot be met as written, or that one is missing, that is a `proposal` delta. **The PRD is not edited.**
-8. **Builds the `Delta Report`.**
+1. **Reads three things in parallel**: the spec in scope, the code it touches, and the design branch. The proposal starts from what exists.
+2. **Turns the `NFR`s into quality scenarios**: stimulus, response, measure.
+3. **Looks at who solved it before**: at least **three references** (products, libraries, engines), and **one open-source one read in its code and its issues**. The docs say what a tool does; the code and the issues say where it breaks. What is found outside, with its date, goes to `Market`.
+4. **Looks for what to reuse** before building: what the code already does that solves part of the problem. Reusing is the default; building is justified.
+5. **Verifies every assumption about the current system against the code** ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)).
+6. **Does the numbers with real prices**: cost and capacity per run, per account and per plan, from the provider's current price, with source and date. A limit is decided from the numbers.
+7. **Compares options in a table**: at least two for every non-obvious decision, with cost, risk and which `NFR` each meets. The discarded option stays, with its reason.
+8. **Designs how it fails**: every reuse and every contract between modules gets a check that fails before production, at the moment that catches it first: compile, CI, publish or runtime. Each measurable `NFR` becomes a fitness function that `plan` loads into the pipeline.
+9. **Walks one or two real use cases** through the design, from the PRD's flows. A concrete case finds the gaps a list of requirements does not.
+10. **Decides**, or in `guided` **asks the person one decision at a time**: the question as written, the options table and a recommendation.
+11. **Records each decision** where it belongs ([decisions](../../decisions/README.md#where-an-architecture-decision-goes)): a row in the area's decisions table, or an `ADR` when it has real alternatives and lasting consequences.
+12. **Updates the `ARCH` documents**: the area's diagram at the right C4 level, the data model, migrations, integrations.
+13. **Records deltas.** A `FR` or `NFR` that cannot be met as written, or one that is missing, is a `proposal` delta. **The PRD is not edited**: a contradiction found here is corrected in the spec through the gate, never noted on the side.
+14. **Builds the `Delta Report`.**
 
 ## Outputs
 
 | What | Anchored to |
 |---|---|
-| New `ADR`s | The `NFR`s they answer |
+| Decisions: rows in the area's table, and `ADR`s | The `NFR`s they answer |
 | Updated `ARCH` documents | The `NFR`s and `ENT`s they cover |
-| Fitness functions | Their `NFR` |
+| Fitness functions and contract checks | Their `NFR` or contract |
+| `Market` entries: references and prices, dated | — |
 | `proposal` deltas | `changes/<CHG>/deltas/` |
 | `Delta Report` | `changes/<CHG>/reports/` |
 
@@ -55,7 +68,7 @@ The `NFR`s and `FR`s in scope · `Architecture Rules` · `Security Policy` · `D
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `architecture-judge` | Consistency with `Architecture Rules`, `Security Policy` and `Domain Model`; every `NFR` answered and measurable; no product decision hidden in an `ADR` | All green |
+| `architecture-judge` | Consistency with `Architecture Rules`, `Security Policy` and `Domain Model`; every `NFR` answered and measurable; no product decision hidden in an `ADR`; **every decision names the option it discarded and why; every assumption about the current system cites the code; every cost cites its source and date; every reuse and contract has its failure check** | All green |
 
 Then **`architecture-merge`**:
 
@@ -72,7 +85,8 @@ in the story (label `architect:delegated`) or in `workspace.yaml`; the most spec
 
 - **Hardest-first.** The riskiest part is solved first, because it changes the rest the most.
 - **The how does not change the what.** If meeting a `NFR` needs changing what the user sees, it is a delta, and a person decides.
-- **One decision, one `ADR`.** The reason goes in the `ADR`, not in the chat.
+- **The reason goes in the decision, not in the chat.**
+- **What pays the most**: reading a competitor's code, reusing instead of building, verifying against the code, and real prices.
 - **If it touches the same ID as `design`**, whichever merges second sees the conflict.
 
 ## Skills, agents and tools
@@ -80,9 +94,10 @@ in the story (label `architect:delegated`) or in `workspace.yaml`; the most spec
 | Kind | Name | For |
 |---|---|---|
 | Skill | `/architect` | The whole stage |
-| Skill | `/architect-research` | Researching options for a decision |
-| Skill | `/architect-adr` | Writing an `ADR` |
-| Skill | `/architect-fitness` | Turning a `NFR` into a check |
+| Skill | `/architect-research` | The references for a decision, and the `Market` entries |
+| Skill | `/architect-teardown` | Reading one open-source reference: its data model, its API and its issues |
+| Skill | `/architect-adr` | Recording a decision |
+| Skill | `/architect-fitness` | Turning a `NFR` or a contract into a check |
 | Agent | `architecture-judge` | The judge |
 | MCP | `get_context_for` · `propose_delta` | The pack and the deltas |
 
@@ -91,10 +106,11 @@ in the story (label `architect:delegated`) or in `workspace.yaml`; the most spec
 | Track | What changes |
 |---|---|
 | `full` | Everything |
-| `story` | Only if it touches a `NFR` or a contract |
-| `fix` · `chore` | Does not run. A `chore` that changes the architecture writes an `ADR` in its PR |
+| `story` | Only if it touches a `NFR` or a contract. Steps 3 and 9 only for a new decision |
+| `fix` · `chore` | Does not run. A `chore` that changes the architecture records its decision in its PR |
 
 ## Sources
 
 C4 · ADR / MADR · arc42 · fitness functions · Spec Growth Engine · Spec Kit (`/plan`) · BMAD
-(architect) · OWASP ASVS.
+(architect) · OWASP ASVS · the architecture of Reclee's Automations, where this procedure was first
+run end to end.

@@ -36,6 +36,7 @@ anything. It does not repeat the rules: it points to where each one lives.
 | A contradiction is resolved on the spot | [`RULE-09`](spec/foundations/rules/writing.md#rule-09) |
 | Only `specify` writes the spec; everything else proposes deltas | [`RULE-10`](spec/foundations/rules/cycle.md#rule-10) |
 | **To a person, say what an item says, not its ID**: the ID only in parentheses | [`RULE-20`](spec/foundations/rules/cycle.md#rule-20) |
+| A claim about the current system cites the code that proves it | [`RULE-21`](spec/foundations/rules/cycle.md#rule-21) |
 
 ## Language
 
