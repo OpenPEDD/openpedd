@@ -10,6 +10,8 @@ The hierarchy is **Product → Module → PRD → Requirement** ([`ENT-20`](foun
 Every kind of artifact, what it defines and how it is written, is in
 [**Artifacts**](foundations/artifacts.md).
 
+**To see what the framework can do, start with [What OpenPEDD can do](capabilities.md).**
+
 ## Reading order
 
 | # | Where | What it holds | IDs |

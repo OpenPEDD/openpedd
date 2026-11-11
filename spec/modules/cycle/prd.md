@@ -2,7 +2,7 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-10"
 status: draft
 ---
@@ -29,7 +29,7 @@ first touches, until every module has its PRD.
 | 5 | `build` | Delegated | Each task until its tests pass; what cannot be done as written becomes a `deviation` | [build](../build/prd.md) |
 | 6 | `verify` | Delegated | Another session reviews against the spec and writes the `Acceptance Report` | [verify](../verify/prd.md) |
 | 7 | `accept` | Human | A person decides every assumption and deviation | [accept](../accept/prd.md) |
-| 8 | `publish` | Delegated | Merges what was accepted, generates API Reference and Help Center, re-anchors, goes `live` | [publish](../publish/prd.md) |
+| 8 | `publish` | Delegated | Prepares what people read when a change is accepted, and publishes it at launch, going `live` | [publish](../publish/prd.md) |
 | 9 | `measure` | Delegated, asynchronous | On the review date, checks the metric against its target | [measure](../measure/prd.md) |
 
 ## The two kinds of 10-80-10

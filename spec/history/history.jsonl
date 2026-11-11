@@ -183,3 +183,6 @@
 {"path":"decisions/DEC-15-launch.md","version":"1.0","date":"2026-11-11","change":"CHG-011","story":null,"stage":"specify","summary":"Deploying is not launching"}
 {"path":"decisions/DEC-16-walkthrough.md","version":"1.0","date":"2026-11-11","change":"CHG-011","story":null,"stage":"specify","summary":"The name Walkthrough"}
 {"path":"open/backlog.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-011","story":null,"stage":"specify","summary":"Written into the spec; Reclee items remain"}
+{"path":"capabilities.md","version":"1.0","date":"2026-11-11","change":"CHG-012","story":null,"stage":"specify","summary":"What the framework can do"}
+{"path":"open/backlog.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-012","story":null,"stage":"specify","summary":"Open questions"}
+{"path":"modules/cycle/prd.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-012","story":null,"stage":"specify","summary":"publish in two moments"}

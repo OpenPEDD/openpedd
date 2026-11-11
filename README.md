@@ -14,6 +14,7 @@ reviewed at its gates, before any code.
 
 | Where | What |
 |---|---|
+| [`spec/capabilities.md`](spec/capabilities.md) | **What the framework can do**: capabilities, procedures and tools |
 | [`spec/`](spec/README.md) | The spec: problem, domain, rules, architecture, one module per stage, decisions |
 | `scripts/` | The checks that run on the spec today, and the seed of the `pedd` CLI |
 | `workspace.yaml` | OpenPEDD's own workspace, in `mono` mode |
