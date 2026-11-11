@@ -2,7 +2,7 @@
 title: Backlog
 description: What was agreed or proposed for the framework and is not written in the spec yet
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-11"
 ---
 
@@ -28,3 +28,7 @@ Adopting the framework's latest decisions in Reclee's own spec and code.
 | Onboarding PRD | Say that *"No hay tour por módulo"* does not cover a Walkthrough |
 | `open_screen` | Opens four screens; *Take there* needs more |
 | Walkthrough button | To choose: *Ver cómo*, *Muéstrame*, *Guíame* |
+| `scout` on Windows | `test/integration/isolation.mjs` builds paths with `\`; a full `vitest run` segfaults |
+| Mocks | A `vi.mock` of a whole module uses `importOriginal`; no module reads another's schema when it loads |
+| pgTAP filter | Commit `pnpm test:db <word>` and note it in `AGENTS.md` |
+| Automations spec | Settle: the job post's *Automatizaciones* tab; free API reads against no automations on `FREE`; whether choosing Shortlist with `STAGE_CHANGED` fires; the `CORE` plan scout lacks |

@@ -2,7 +2,7 @@
 title: Testing
 description: ARCH-10 · What is tested at which level, and how permissions, contracts, languages, AI features and quality are proved
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-11"
 ---
 
@@ -86,3 +86,4 @@ An `AC` over a model cannot expect exact output. It is an `eval`:
 | A test that passes only on retry fails, or is quarantined with a task and a date | A suite people rerun until green proves nothing |
 | Mutation score, coverage and baselines only move one way | What is won is not lost by accident |
 | What a tool can decide, a tool decides, not a reviewer | What is done by hand gets skipped |
+| Agents running `integration` at the same time each get their own database, or wait for a lock | Two runs on one database fail each other, and a false red costs a rerun |

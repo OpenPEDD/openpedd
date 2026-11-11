@@ -2,7 +2,7 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 status: draft
 ---
@@ -43,7 +43,8 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 8. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
 9. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it and the foundations it names. If it does not fit in 20,000 tokens, the task is badly cut.
 10. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
-11. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
+11. **Lists the contradictions.** Crosses the plan and the architecture decisions against the spec in scope. Each clash (a limit, a retry, a role) goes to the person before `build`, with what each one says. The spec wins ([`RULE-23`](../../foundations/rules/cycle.md#rule-23)); the person decides whether the spec is what changes.
+12. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 
 ## Outputs
 
@@ -71,7 +72,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; **every test fails on an assertion, and no acceptance test runs on the sample data; every cell of the permission matrix has its test**; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan** | All green |
+| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; **every test fails on an assertion, and no acceptance test runs on the sample data; every cell of the permission matrix has its test**; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan; no clash between the plan, the architecture and the spec left without a person's decision** | All green |
 
 ## Keep in mind
 

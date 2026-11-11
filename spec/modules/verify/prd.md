@@ -2,7 +2,7 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 status: draft
 ---
@@ -38,7 +38,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 1. **Against the spec**: every `FR` does what it says, every exception flow exists, every permission holds, every contract matches.
 2. **Against the foundations**: security (OWASP ASVS), quality, architecture, accessibility.
 3. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC` with a screen**, with the test data. With `locales`, renders each one and fails on a raw key. With a Walkthrough declared, drafts it from the green tests' steps and walks it in the browser ([`ARCH-07`](../../foundations/architecture/walkthroughs.md)).
-4. **Tests that can catch**: runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
+4. **Tests that can catch**, **only in the last round**: once no high finding is left, with the whole suite run once and green, and nothing else changing. Runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
 5. **Drift**: whatever the code does that the spec does not say (an extra screen, an extra field) is a `finding`.
 6. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
 7. **Confirms what is serious**: every high finding is reviewed by a second judge, `judge_confirm`, before it counts.
@@ -78,6 +78,7 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 ## Keep in mind
 
 - **`verify` does not fix.** It finds and reports; fixing belongs to `build`.
+- **The order is fixed: review, fix, the whole suite once, mutation last.** Every round of fixes changes the code, and a suite or a mutation run before it is repeated. A red test outside the change stops mutation before it starts, not halfway.
 - **It is not the same session or model as `build`** ([`RULE-12`](../../foundations/rules/cycle.md#rule-12)).
 - **A green test is a claim, not proof.** An agent can pass a test without meeting the criterion, so `verify` checks that the tests can fail.
 - **The report decides, it does not narrate.** Each delta comes with what has to be decided.

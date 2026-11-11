@@ -2,7 +2,7 @@
 title: architect
 description: Stage 2 · Decides how to build what specify defined, after reading the spec, the code, the design and those who solved it before
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 status: draft
 ---
@@ -51,7 +51,7 @@ it cites. Budget: **15,000 tokens**; the code and the references are opened by t
 9. **Walks one or two real use cases** through the design, from the PRD's flows. A concrete case finds the gaps a list of requirements does not.
 10. **Decides**, or in `guided` **asks the person one decision at a time**: the question as written, the options table and a recommendation.
 11. **Records each decision** where it belongs ([decisions](../../decisions/README.md#where-an-architecture-decision-goes)): a row in the area's decisions table, or an `ADR` when it has real alternatives and lasting consequences.
-12. **Updates the `ARCH` documents**: the area's diagram at the right C4 level, the data model, migrations that work with both versions of the code, integrations, the policies that enforce each role on the data, and retention and deletion.
+12. **Updates the `ARCH` documents**: the area's diagram at the right C4 level, the data model, migrations that work with both versions of the code, integrations, the policies that enforce each role on the data, **down to the field: who writes each column, from what the PRD says**, every table the plan will need, working tables included, and retention and deletion.
 13. **Records deltas.** A `FR` or `NFR` that cannot be met as written, or one that is missing, is a `proposal` delta. **The PRD is not edited**: a contradiction found here is corrected in the spec through the gate, never noted on the side.
 14. **Builds the `Delta Report`.**
 

@@ -2,8 +2,8 @@
 title: Cycle rules
 description: The rules every stage of the cycle follows, interactive or delegated
 owner: Kevin
-version: "1.3"
-updated: "2026-11-10"
+version: "1.4"
+updated: "2026-11-11"
 ---
 
 ## RULE-10 · Only `specify` writes the spec [#rule-10]
@@ -92,3 +92,11 @@ does) names the file that proves it. One that cannot be proved is a question, no
 An agent that could not run, open or look at something says so, in the place where the result would
 have gone. A check with no result is not a pass. **A verification that did not verify, reported as
 done, is worse than none: nobody looks again.**
+
+## RULE-23 · When they disagree, the spec wins [#rule-23]
+
+The spec wins over the architecture, and the architecture over the plan. A clash is not settled in the
+lower one: it goes to the person, who decides whether the spec is what changes.
+
+**Why:** one order for every topic. Deciding precedence case by case costs a round per clash, and
+the answer depends on who settled it.
