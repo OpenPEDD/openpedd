@@ -2,7 +2,7 @@
 title: Testing
 description: ARCH-10 · What is tested at which level, and how permissions, contracts, languages, AI features and quality are proved
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-11"
 ---
 
@@ -78,6 +78,13 @@ An `AC` over a model cannot expect exact output. It is an `eval`:
 | Performance | The `NFR`s as budgets, in CI | Numbers from `Quality Standards` |
 | Visual changes | Screenshot comparison, nightly | Optional |
 | Privacy | Deleting an account removes what the `Privacy` foundation lists | An `integration` test |
+
+## Covering what exists [#covering-what-exists]
+
+A test written for behavior already in production passes from the start, so seeing it fail first
+proves nothing. On the `cover` track, a test counts once **mutation over the code it covers turns it
+red**: the code is broken on purpose, and the test must catch it. A test that stays green with the code
+broken covers nothing, and is rewritten.
 
 ## Keeping the suite honest
 

@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-11"
 ---
 
@@ -20,6 +20,7 @@ updated: "2026-11-11"
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
+| Take a running product to the full framework | `pedd adopt`: its gaps per module, as small `cover` changes; an existing spec imported | [Adopting](modules/workspace/prd.md#adopting-a-running-product) |
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
@@ -76,6 +77,7 @@ Each change runs only what applies to it ([tracks](modules/tracks/prd.md)):
 | `story` | A thin slice of an existing PRD |
 | `fix` | A bug the spec already covered |
 | `hotfix` | A production bug that cannot wait |
+| `cover` | Criteria, tests and docs for what already works, changing none of it |
 | `chore` | Technical work with no product ID |
 
 Branches: one per change, with design, architecture and task branches inside it
@@ -93,9 +95,10 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd install` | Sets up whoever clones the project |
 | `pedd index` | Builds the spec graph |
 | `pedd check` | Runs the checks |
-| `pedd status` | Where the product stands; `--stale`, `--cost`, `--time` |
+| `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption` |
 | `pedd trace <id>` | One requirement's chain |
 | `pedd impact` | What a change affects; `--tests` selects tests |
+| `pedd adopt` | What a running product lacks, as changes |
 | `pedd launch` | Launches an accepted change |
 | `pedd workspace split` | Moves from `mono` to `split` |
 

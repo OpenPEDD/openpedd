@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -37,6 +37,7 @@ Per module, never the whole repo: the module's files, its routes and its data sc
 
 ## Procedure
 
+0. **If the product already has a spec**, imports it instead of inferring one: converts its documents to the framework's layers, keeps its IDs (mapped to the new ones in `.pedd/id-map.json`) and its history, and checks every requirement against the code. What the code does not do, or does differently, becomes a `Q`; nothing is rewritten from scratch. `/map --from-spec <path>`.
 1. Builds the index of the modules, across every code repo and component, and confirms it with the person. Each module starts `unmapped`.
 2. Extracts the `Domain Model`: entities, fields, states.
 3. Extracts the `Roles & Permissions` the code enforces.
@@ -66,7 +67,7 @@ approves.
 - **It describes what the code does, not what it should do.** What is wrong becomes a `Q`; it is not fixed in the map.
 - It goes module by module so the context does not explode.
 - **`unmapped` is a debt, not a state to stay in.** `pedd status` shows how many remain.
-- Existing docs are reading material: what they say is checked against the code, not copied.
+- Existing docs are reading material: what they say is checked against the code, not copied. **An existing spec is the exception**: it is imported, because it holds decisions the code cannot show.
 - It reads the code; it never runs it.
 
 ## Skills, agents and tools
@@ -75,6 +76,7 @@ approves.
 |---|---|---|
 | Skill | `/map` | The foundations and the index; `--all` for every PRD |
 | Skill | `/map-module` | One module |
+| Skill | `/map --from-spec` | Importing an existing spec |
 | Agent | `map-judge` | Coverage |
 | MCP | `propose_delta` | Everything enters as deltas of the initial change |
 

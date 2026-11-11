@@ -2,7 +2,7 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.5"
+version: "1.6"
 updated: "2026-11-11"
 status: draft
 ---
@@ -78,7 +78,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 ## Keep in mind
 
 - **If the plan decides product, it is an `assumption`**, not a line in a task.
-- **Tests must fail** when `plan` ends, for the right reason. A test that already passes proves nothing new, and one that does not compile is not red: it says nothing about the behavior.
+- **Tests must fail** when `plan` ends, for the right reason, except on the `cover` track, where each one is proved by breaking the code ([`ARCH-10`](../../foundations/architecture/testing.md#covering-what-exists)). A test that already passes proves nothing new, and one that does not compile is not red: it says nothing about the behavior.
 - **Only open tasks may be red.** On the change branch, the pipeline requires the tests of every merged task and expects the rest to fail; the PR to the base requires them all.
 - **Technical tasks** (migrations, configuration) exist, are marked `technical`, and say which product task they unblock.
 

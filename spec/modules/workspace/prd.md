@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-11"
 status: draft
 ---
@@ -27,6 +27,7 @@ pedd init reclee
 | `pedd doctor` | What each stage has and lacks. Reads only | Any time |
 | `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
 | `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, without asking again | Whoever clones the project |
+| `pedd adopt` | Lists what a running product lacks, per module, and turns each gap into a change ([adopting](#adopting-a-running-product)) | After `init`, on a product already in production |
 | `pedd launch` | Launches an accepted change ([`ARCH-08`](../../foundations/architecture/release.md)) | When it should reach customers |
 
 ## Main flow
@@ -143,6 +144,27 @@ missing tool never stops `init`.
 
 MCP servers go in the project's config only without secrets; credentials stay in each person's
 environment.
+
+## Adopting a running product [#adopting-a-running-product]
+
+`init` leaves the project ready to work; `adopt` takes it to the framework as defined, in small
+changes ([`DEC-17`](../../decisions/DEC-17-adopt-in-slices.md)). It reads only, and proposes.
+
+| Step | Does |
+|---|---|
+| 1 | **Finds the existing spec**, if there is one, and imports it through `map`: converted and checked against the code, not rewritten |
+| 2 | **Lists the gaps per module**: no PRD; a `FR` without an `AC`; an `AC` without a test; a screen without help or Walkthrough, where the project declares them; code with no anchor; a stage without its tool, from `doctor` |
+| 3 | **Orders them**: first what is riskiest (permissions, billing, personal data, deletion), then what changes most often in git, then what a planned change will touch next |
+| 4 | **Proposes one change per module and kind of gap**, on the `cover` track ([tracks](../tracks/prd.md#the-cover-track)), and creates them in the tracker once the person confirms |
+
+`pedd status --adoption` shows how much is left: modules, criteria, tests, docs and anchors, each as
+a count and a percentage.
+
+| Rule | Why |
+|---|---|
+| A gap is never filled outside a change | Each piece is reviewed, and the trace records it |
+| What `cover` finds wrong is not fixed there | It opens a `Q` or a `fix`; covering and changing are kept apart |
+| The order is a proposal; the person may change it | They know what the business needs first |
 
 ## Alternate flows
 

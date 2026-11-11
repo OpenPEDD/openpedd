@@ -216,3 +216,12 @@
 {"path":"foundations/architecture/testing.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Equivalent mutants, mutation over covered lines, clock and crash tests"}
 {"path":"foundations/domain/delta.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"revert: where an assumption lives and how to undo it"}
 {"path":"modules/verify/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"How each assumption and deviation reverts"}
+{"path":"decisions/DEC-17-adopt-in-slices.md","version":"1.0","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"A running product is adopted in small changes, from a list of its gaps"}
+{"path":"modules/workspace/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"pedd adopt: gaps per module, ordered, as cover changes"}
+{"path":"modules/tracks/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"The cover track"}
+{"path":"foundations/architecture/testing.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"Covering what exists: tests proved by breaking the code"}
+{"path":"modules/plan/prd.md","version":"1.5 → 1.6","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"cover tests are proved by breaking the code"}
+{"path":"modules/map/prd.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"Importing an existing spec with --from-spec"}
+{"path":"capabilities.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"adopt, cover, --adoption"}
+{"path":"foundations/domain/track.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"The cover track"}
+{"path":"foundations/glossary.md","version":"1.7 → 1.8","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"cover and hotfix among the tracks"}

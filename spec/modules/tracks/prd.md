@@ -2,7 +2,7 @@
 title: Tracks
 description: Which stages each change runs, by the IDs it touches, and when a story becomes full
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 status: draft
 ---
@@ -29,6 +29,7 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 | A bug the spec already covered (`fix`) | — | — | — | `build` → `verify` | Light | — |
 | A bug in production that cannot wait (`hotfix`) | — | — | — | `build` → `verify`, from production | One approval | If the user notices |
 | Retiring a feature | `REMOVED` deltas and a `DEC` | If data changes | — | `build` → `verify` | ✓ | Note, help, Walkthrough |
+| Covering what already works: criteria, tests, docs, anchors (`cover`) | Only `AC`s, if missing | — | — | `plan` → `verify` | Light | What is `uncovered` |
 | Technical work with no product ID (`chore`) | — | — | — | `build` → `verify` | — | — |
 
 ## Branches
@@ -44,6 +45,16 @@ and merges back into the base ([`ARCH-08`](../../foundations/architecture/releas
 1. **The person writes the story in the tracker**: *As a…, I want…, so that…*, with its acceptance criteria. That is the starting 10.
 2. `specify` in delta mode: the AI writes the **delta** against the IDs it touches, not the whole PRD. It passes the cold read.
 3. `spec-approval` of the delta. From here on, the same as the full cycle.
+
+## The `cover` track [#the-cover-track]
+
+For a product already running, from `pedd adopt` ([`DEC-17`](../../decisions/DEC-17-adopt-in-slices.md)).
+**It describes and proves what the product does today; it changes none of it.**
+
+1. `specify` writes the missing `AC`s from what the code does, and `spec-approval` takes them.
+2. `plan` writes their tests. They pass from the start, because the behavior exists: **each one is proved by breaking the code it covers and seeing it go red**, not by seeing it fail first ([`ARCH-10`](../../foundations/architecture/testing.md#covering-what-exists)).
+3. `publish` writes the help, Walkthrough or API Reference that is `uncovered`, and the code is anchored.
+4. Whatever turns out wrong opens a `Q` or a `fix`. A test that encodes a bug is not written: the bug is.
 
 ## When a story becomes `full`
 
