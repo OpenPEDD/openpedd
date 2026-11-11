@@ -54,7 +54,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 | Assumptions | What was assumed, where, the alternative |
 | Deviations | What could not be done as written, why, the alternative |
 | Open findings | The medium and low ones that did not go back to `build` |
-| Improvements | What the agents of every stage would improve, deduplicated, none applied ([`RULE-25`](../../foundations/rules/cycle.md#rule-25)); and how long each stage took |
+| Improvements | What the agents of every stage would improve, deduplicated, none applied ([`RULE-25`](../../foundations/rules/cycle.md#rule-25)); and each stage's work, wait and rounds, from the trace |
 | Impact | Which derived artifacts go stale if each delta is accepted |
 
 Budget: **3,000 tokens without screenshots**. A person reads it: it must be readable in ten minutes.

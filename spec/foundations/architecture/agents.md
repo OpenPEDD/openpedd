@@ -42,7 +42,7 @@ per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
 | **The brief** has the goal, the rules, the checks, the report format and what not to touch. It never contradicts `AGENTS.md`: what the project already says is not repeated or changed in it | The agent knows only what the brief says |
 | **Scoped checks while working**: lint, types and the tests of what was touched. The full pipeline once, at the end | A full run per round spends without finding more |
 | **One commit per round** | Each round can be reviewed or reverted alone |
-| **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person. It ends with improvements not applied and the time of each step ([`RULE-25`](../rules/cycle.md#rule-25)) | A report sounds equally sure when it is wrong |
+| **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person. It ends with improvements not applied ([`RULE-25`](../rules/cycle.md#rule-25)) | A report sounds equally sure when it is wrong |
 | **Each agent opens its own browser tab**; the person's are not touched | The person keeps working |
 
 ## MCP tools [#mcp-tools]
@@ -58,6 +58,7 @@ per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
 | `changes_since` | Which IDs changed since a date, commit or hash | `plan` · `publish` |
 | `get_freshness` | For a file, task or article: its anchors and which are stale | `verify` · `publish` |
 | `list_stale` | Every stale or uncovered derived artifact in a scope | `publish` · the dashboard |
+| `start_step` · `deliver_step` | Records that a step started or is delivered, with the tool's clock ([`ENT-23`](../domain/trace-event.md#steps)) | Every stage |
 | `propose_delta` | Creates a delta in `changes/<CHG>/deltas/`. Never touches the spec | Every stage but `specify` |
 | `get_change` | A change with its deltas and reports | `accept` · `publish` |
 

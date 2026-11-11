@@ -2,7 +2,7 @@
 title: Trace Link
 description: ENT-22 · One link in a requirement's chain, with its current state
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-11"
 ---
 
@@ -35,6 +35,7 @@ now. Together they answer *where is this requirement, and what is holding it*.
 | `deploy` | Where it runs | `preview` · `staging` · `production` | The deploy provider |
 | `flag` | Whether customers see it | `off` · `partial` · `on` | The feature-flag provider |
 | `docs` | A help article, a Walkthrough, the API Reference, a release note | `fresh` · `stale` · `uncovered` | The help and docs repos |
+| `step` | A stage of a change, or one step of it | `started` · `delivered` · `passed` · `rejected` | The tool, on the agent's call ([`ENT-23`](trace-event.md#steps)) |
 | `metric` | The PRD's success metric | `pending` · `met` · `missed` · `no_data` | Analytics |
 
 ## Rolling up

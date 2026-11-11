@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -77,3 +77,21 @@ is generated once, in `publish`, from the spec that already passed `accept`.**
 
 **Bugs found in `accept` that the spec already covered.** The target is zero. Each one is recorded
 with the judge that let it through, and that judge is fixed: the 80 improves with use.
+
+## Process metrics
+
+Measured from the trace ([`ENT-23`](../../foundations/domain/trace-event.md#steps)), per change and per
+stage, to improve the process: `pedd status --time` and the Cloud dashboard.
+
+| Metric | Shows |
+|---|---|
+| Lead time | From the approved spec to production |
+| Work and wait | Of each stage's time, how much was work and how much waiting |
+| Rounds | How many times each judge rejected, and how many findings went back to `build` |
+| Agent cost | Tokens and cost per stage |
+| Pipeline | CI time, and reruns of unstable tests |
+| Assumptions per task | Many means the spec came incomplete |
+| Delivery | Deploy frequency, change lead time, change failure rate and time to restore, from `publish` and Launch |
+
+**They measure the process, not people.** Waiting at a gate is shown per stage, never ranked by
+person: once used to compare people, people learn to hide the wait.

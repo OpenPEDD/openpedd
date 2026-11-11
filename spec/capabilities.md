@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-11"
 ---
 
@@ -18,6 +18,7 @@ updated: "2026-11-11"
 | Keep one source of truth for the whole product | Product → Module → PRD → Requirement, with stable IDs | [Domain](foundations/domain/index.md) |
 | Know whether anything derived is still up to date | Every derived artifact is anchored to a hash: `fresh`, `stale` or `uncovered` | [Freshness](foundations/architecture/freshness.md) |
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
+| Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
@@ -92,7 +93,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd install` | Sets up whoever clones the project |
 | `pedd index` | Builds the spec graph |
 | `pedd check` | Runs the checks |
-| `pedd status` | Where the product stands; `--stale`, `--cost` |
+| `pedd status` | Where the product stands; `--stale`, `--cost`, `--time` |
 | `pedd trace <id>` | One requirement's chain |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd launch` | Launches an accepted change |

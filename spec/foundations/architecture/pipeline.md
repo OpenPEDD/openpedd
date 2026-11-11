@@ -2,7 +2,7 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, and what each change costs
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-11"
 ---
 
@@ -53,7 +53,7 @@ skipping is decided inside a job.
 
 ## Cost per change
 
-Agents report what they spend. With the telemetry of each agent tagged by repo and branch, the cost of
+Agents report what they spend. With the telemetry of each agent tagged by repo, branch and step, the cost of
 a change is the sum over its branches: `pedd status --cost`.
 
 | Rule | Why |

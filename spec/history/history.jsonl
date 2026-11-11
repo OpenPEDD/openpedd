@@ -199,3 +199,11 @@
 {"path":"foundations/architecture/agents.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Coordinator is not a model; small scope; checklist as output; brief never contradicts AGENTS.md"}
 {"path":"modules/verify/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Improvements and time per stage in the Acceptance Report"}
 {"path":"modules/accept/prd.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Decides each improvement; accepted ones go to the backlog"}
+{"path":"foundations/domain/trace-link.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"step kind: started, delivered, passed, rejected"}
+{"path":"foundations/domain/trace-event.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Stages and steps: the checklist is the clock, stamped by the tool"}
+{"path":"modules/cycle/prd.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Process metrics, of the process and not of people"}
+{"path":"foundations/architecture/pipeline.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Agent telemetry tagged by step"}
+{"path":"foundations/architecture/agents.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"start_step and deliver_step MCP tools"}
+{"path":"foundations/rules/cycle.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-25: time is measured by the tool, not reported"}
+{"path":"modules/verify/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Work, wait and rounds per stage, from the trace"}
+{"path":"capabilities.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Measuring how long each stage takes"}

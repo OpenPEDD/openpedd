@@ -118,8 +118,8 @@ brief, closer, said otherwise.
 ## RULE-25 · An agent notes improvements; it does not make them [#rule-25]
 
 Every agent, in any stage, closes its report with **what it would improve** (the process, the spec,
-the code, the tools), each with the problem it solves, and **how long each step took**. It acts on
-none of them. `verify` gathers them in the `Acceptance Report`, and `accept` decides them.
+the code, the tools), each with the problem it solves. It acts on none of them. How long each step
+took is not its to say: the tool measures it ([`ENT-23`](../domain/trace-event.md#steps)). `verify` gathers them in the `Acceptance Report`, and `accept` decides them.
 
 **Why:** an agent that improves on its own way widens the scope (a button with no spec behind it); one
 told to keep quiet loses what only it saw. Seeing and doing are kept apart.
