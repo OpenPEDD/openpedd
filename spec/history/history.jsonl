@@ -124,3 +124,9 @@
 {"path":"foundations/glossary.md","version":"1.3 → 1.4","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"Architecture branch, seam, closing passes"}
 {"path":"foundations/rules/cycle.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"RULE-22: a check that did not run is reported as not run"}
 {"path":"foundations/rules/README.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-007","story":null,"stage":"specify","summary":"RULE-22 in the index"}
+{"path":"modules/plan/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Empty contracts; acceptance tests on the real seam; each test seen failing on an assertion; tests.lock"}
+{"path":"modules/build/prd.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Small steady steps instead of a prescribed red-green-refactor; tests protected by the pipeline"}
+{"path":"modules/verify/prd.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Mutation testing and each criterion run again with data build did not see"}
+{"path":"foundations/domain/acceptance-criterion.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Fails on an assertion, against the real backend; verified with other data"}
+{"path":"foundations/domain/foundation.md","version":"1.3 → 1.4","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Delivery Pipeline holds the test protection and the mutation tool"}
+{"path":"foundations/glossary.md","version":"1.4 → 1.5","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"tests.lock; the seam has a real version"}

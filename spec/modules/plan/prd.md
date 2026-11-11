@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -37,17 +37,20 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 2. **Cut into vertical slices**, hardest-first: each task crosses whatever it needs (data, logic, UI) for a piece of behavior that works on its own.
 3. **Check each task with INVEST**: independent, negotiable, valuable, estimable, small, testable.
 4. **Order**: `blocks` / `blocked by` between tasks. What depends on nothing runs in parallel.
-5. **Write the tests, failing**: one per `AC` (acceptance), one per contract (contract test), and the `NFR` fitness functions. **Tests are part of the contract**: `build` cannot change them.
-6. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it and the foundations it names. If it does not fit in 20,000 tokens, the task is badly cut.
-7. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
-8. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
+5. **Leaves the contracts empty**: the signatures, the endpoints and the real version of the seam, answering *not implemented*. The tests compile against them, and `build` fills them.
+6. **Write the tests, failing**: one per `AC` (acceptance), one per contract (contract test), and the `NFR` fitness functions. **Acceptance tests run against the real version of the seam, never the sample data**: the mockup already shows the right screen, so a test on it passes with nothing built. Each test is run and **seen failing on an assertion**, for the reason its criterion states.
+7. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
+8. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it and the foundations it names. If it does not fit in 20,000 tokens, the task is badly cut.
+9. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
+10. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 
 ## Outputs
 
 | What | Anchored to |
 |---|---|
 | Tasks in the tracker, sub-issues of the change, with dependencies | Their `FR` / `NFR` |
-| Red tests | Their `AC`s and contracts |
+| Red tests, and `tests.lock` | Their `AC`s and contracts |
+| The empty contracts and the real version of the seam | Their contracts |
 | A context pack per task | The IDs it gathers |
 | The traceability matrix | In the change |
 | `assumption` deltas | In the change |
@@ -67,12 +70,13 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan** | All green |
+| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; **every test fails on an assertion, and no acceptance test runs on the sample data**; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan** | All green |
 
 ## Keep in mind
 
 - **If the plan decides product, it is an `assumption`**, not a line in a task.
-- **Tests must fail** when `plan` ends. A test that already passes proves nothing new.
+- **Tests must fail** when `plan` ends, for the right reason. A test that already passes proves nothing new, and one that does not compile is not red: it says nothing about the behavior.
+- **Only open tasks may be red.** On the change branch, the pipeline requires the tests of every merged task and expects the rest to fail; the PR to the base requires them all.
 - **Technical tasks** (migrations, configuration) exist, are marked `technical`, and say which product task they unblock.
 
 ## Skills, agents and tools

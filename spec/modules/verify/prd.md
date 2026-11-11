@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -29,7 +29,8 @@ back to `build` on its own.
 ## Context pack
 
 Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff of its PRs ·
-`Security Policy` · `Quality Standards` · `Architecture Rules` · `Roles & Permissions`. Budget:
+`Security Policy` · `Quality Standards` · `Architecture Rules` · `Roles & Permissions` ·
+`Delivery Pipeline`. Budget:
 **20,000 tokens per area**.
 
 ## Procedure
@@ -37,11 +38,12 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 1. **Against the spec**: every `FR` does what it says, every exception flow exists, every permission holds, every contract matches.
 2. **Against the foundations**: security (OWASP ASVS), quality, architecture, accessibility.
 3. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC`**, with the test data.
-4. **Drift**: whatever the code does that the spec does not say (an extra screen, an extra field) is a `finding`.
-5. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
-6. **Confirms what is serious**: every high finding is reviewed by a second judge, `judge_confirm`, before it counts.
-7. **Decides**: with high findings, back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)).
-8. **Opens the PR to the base**: merges the base into the change branch, solves the conflicts there, runs the pipeline again and opens the PR with the whole change's **Spec** section ([`ARCH-06`](../../foundations/architecture/branches.md)). It merges at `acceptance-merge`.
+4. **Tests that can catch**: runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
+5. **Drift**: whatever the code does that the spec does not say (an extra screen, an extra field) is a `finding`.
+6. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
+7. **Confirms what is serious**: every high finding is reviewed by a second judge, `judge_confirm`, before it counts.
+8. **Decides**: with high findings, back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)).
+9. **Opens the PR to the base**: merges the base into the change branch, solves the conflicts there, runs the pipeline again and opens the PR with the whole change's **Spec** section ([`ARCH-06`](../../foundations/architecture/branches.md)). It merges at `acceptance-merge`.
 
 ## The `Acceptance Report`
 
@@ -76,6 +78,7 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 
 - **`verify` does not fix.** It finds and reports; fixing belongs to `build`.
 - **It is not the same session or model as `build`** ([`RULE-12`](../../foundations/rules/cycle.md#rule-12)).
+- **A green test is a claim, not proof.** An agent can pass a test without meeting the criterion, so `verify` checks that the tests can fail.
 - **The report decides, it does not narrate.** Each delta comes with what has to be decided.
 
 ## Skills, agents and tools
@@ -97,4 +100,5 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 ## Sources
 
 ODD (acceptance evidence) · Spec Kit (`/converge`) · Spec Growth Engine (drift gate) · V-Model ·
-OWASP ASVS · Reclee Spec (`/revisar` with a second agent).
+OWASP ASVS · Reclee Spec (`/revisar` with a second agent) · mutation testing · ImpossibleBench (how
+agents exploit tests).
