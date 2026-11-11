@@ -4,7 +4,8 @@
 truth, and everything derived from it (code, mockups, tests, API Reference, Help Center, tasks)
 knows whether it is still up to date.
 
-> Status: pre-release. The framework is being specified; there is no code to install yet.
+> **0.1.0 · beta.** The framework is specified; there is no code to install yet. Versions follow
+> [SemVer](https://semver.org): while the major is 0, any minor may change the format. See the [changelog](CHANGELOG.md).
 
 ## OpenPEDD is built with OpenPEDD
 
