@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.5"
-updated: "2026-11-10"
+version: "1.6"
+updated: "2026-11-11"
 ---
 
 # ENT-02 · Foundation
@@ -24,11 +24,12 @@ includes.
 | `Marketing` (optional) | How the product speaks to people who do not know it yet: messages, channels and the rules of each format | `specify` · `publish` |
 | `Architecture Rules` | Layers, conventions and patterns, why each exists, why the stack was chosen, and what must not be touched | `architect` · `plan` · `build` · `verify` |
 | `Security Policy` | Security rules that always hold | `architect` · `verify` |
-| `Quality Standards` | Performance, accessibility and i18n budgets; the contract every write follows | `architect` · `design` · `verify` |
+| `Privacy` | Which data is personal, why it is held, how long it is kept, who processes it and how it is deleted | `specify` · `architect` · `verify` |
+| `Quality Standards` | Performance, accessibility and i18n budgets; eval thresholds; the contract every write follows | `architect` · `design` · `verify` |
 | `Integrations` | Each external provider: what is used, its sandbox, its limits | `architect` · `build` |
-| `Delivery Pipeline` | CI/CD: checks (among them the one that rejects a change to `plan`'s tests), the mutation tool, environments, feature flags, rollout | `plan` · `build` · `verify` · `publish` |
+| `Delivery Pipeline` | CI/CD: checks (among them the one that rejects a change to `plan`'s tests), the mutation tool, what runs at each moment, environments, feature flags, the watch window, rollout | `plan` · `build` · `verify` · `publish` |
 | `Tracking Plan` | The analytics events each metric is measured with | `specify` · `build` · `measure` |
-| `Test Data` | Sample data shared by mockups, tests and the final check | `design` · `plan` · `verify` |
+| `Test Data` | Sample data shared by mockups, tests and the final check; the golden sets of evals | `design` · `plan` · `verify` |
 
 A foundation that does not exist yet is marked empty, not invented. `map` fills what it can infer
 from existing code ([`modules/map`](../../modules/map/prd.md)).

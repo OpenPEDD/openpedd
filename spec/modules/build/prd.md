@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.3"
-updated: "2026-11-10"
+version: "1.4"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -60,6 +60,8 @@ is `verify`. Passes when everything is green.
 - **The tests from `plan` are not touched**, and the pipeline rejects a PR that touches them. If a test is wrong, it is a `deviation` explaining why, and the test and its line in `tests.lock` change only if `accept` decides so.
 - **Make the rule pass, not the example.** Code that answers a test's exact data instead of what the criterion says fails in `verify`.
 - **Contracts are not touched.** The agent works inside them.
+- **A flag goes at the entry points and in the contract**: route, menu, assistant tool. Hiding a screen is not enough ([`ARCH-09`](../../foundations/architecture/flags.md)).
+- **A migration works with the previous version of the code and the next** ([`ARCH-08`](../../foundations/architecture/release.md#migrations)).
 - **A technical question goes to whoever runs the stage; a product question is assumed.** The person who defines is not in the middle.
 - **Only the irreversible or the costly stops the work** ([`RULE-14`](../../foundations/rules/cycle.md#rule-14)): a migration that deletes data, a charge, a real email.
 - **Integrations are tested against each provider's sandbox**, from `Integrations`.
@@ -77,7 +79,7 @@ is `verify`. Passes when everything is green.
 | Track | What changes |
 |---|---|
 | `full` · `story` | Everything |
-| `fix` | First writes the test that reproduces the bug, red; then fixes it. If the spec did not cover it, it is not a `fix`: it is a `story` |
+| `fix` · `hotfix` | First writes the test that reproduces the bug, red; then fixes it. If the spec did not cover it, it is not a `fix`: it is a `story` |
 | `chore` | No product IDs and no deltas. The pipeline checks still run |
 
 ## Sources

@@ -2,8 +2,8 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.3"
-updated: "2026-11-10"
+version: "1.4"
+updated: "2026-11-11"
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -56,6 +56,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Pull request | The task, or the whole change | The code host: to the change branch, or to the base | `build` · `verify` | Its **Spec** section |
 | API Reference | Contracts | `docs/` or `<project>-docs` | `publish` | Generated |
 | Help Center article | `FR` | `help/` or `<project>-help` | `publish` | `sources` in frontmatter |
+| Walkthrough (optional) | `FR` | `help/walkthroughs/` or `<project>-help` | `verify` · `publish` | `sources` in the file |
 | Release Notes entry | The change | `help/` or `<project>-help` | `publish` | The change ID |
 
 Each derived artifact is `fresh`, `stale` or `uncovered` ([`ENT-14`](domain/anchor.md#freshness)), and

@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their sub-issues in the tracker
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-11"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -59,12 +59,15 @@ itself, and the sub-issue ties the task to the change. Dependencies between task
 3. A person accepts on the change branch's preview ([accept](../../modules/accept/prd.md)).
 4. It merges at **`acceptance-merge`**. The parent issue stays open until `publish`.
 
+From the base to production is a promotion, through the project's environments ([`ARCH-08`](release.md)).
+
 ## Smaller changes
 
 | Change | Branches |
 |---|---|
 | A `story` with screens | The same tree: change branch, design branch, task branches. An architecture branch only if `architect` runs |
 | A `story` without screens | No design branch: tasks go straight onto the change branch |
+| A `hotfix` | `hotfix/{slug}`, cut from production; it merges there and back into the base ([`ARCH-08`](release.md)) |
 | A `story`, `fix` or `chore` with **one** task | The change branch is the task branch: one branch, one PR to the base |
 
 ## Configuration

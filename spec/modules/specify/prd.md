@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -28,7 +28,7 @@ complete the PRD, the fewer assumptions in the middle.**
 ## Context pack
 
 `Business Context` · `Domain Model` (the entities in scope) · `Glossary` · `Roles & Permissions` ·
-`Tracking Plan` · the current PRD for a change. Budget: **12,000 tokens**.
+`Tracking Plan` · `Privacy` · the current PRD for a change. Budget: **12,000 tokens**.
 
 ## Procedure
 
@@ -37,13 +37,13 @@ complete the PRD, the fewer assumptions in the middle.**
 3. **Appetite and `Out of scope`.** How much it is worth spending, and what is not built. The risks.
 4. **Flows.** The `Main flow`, then the `Alternate flows` (they branch and return) and the `Exception flows` (they end the flow).
 5. **Requirements.** From the flows: `FR` (what the user does or sees) and `NFR` (what the system does), in EARS ([`ENT-03`](../../foundations/domain/requirement.md)). A `NFR` with a time or a volume carries the number.
-6. **Permissions.** Which role performs each action of the flow.
+6. **Permissions and data.** A matrix of role × action, allowed and denied. Which fields are personal, how long they are kept and how they are deleted, from `Privacy`.
 7. **States.** The transitions the flow touches, valid and invalid, cited from the domain.
 8. **Contracts.** For each action: input, output, errors ([`ENT-05`](../../foundations/domain/contract.md)).
-9. **Screens and copy.** Each state (empty, error, loading, no permission, no quota) with its text, from the glossary.
+9. **Screens and copy.** Each state (empty, error, loading, no permission, no quota) with its text, from the glossary, per locale.
 10. **Criteria.** At least one `AC` per flow, in `Given / When / Then`, each with its `FR` ([`ENT-04`](../../foundations/domain/acceptance-criterion.md)).
 11. **Test data.** The same data for the mockup, the tests and the final check.
-12. **Variations.** Where it works in more than one way: a flag, a plan, an A/B test.
+12. **Variations.** Where it works in more than one way: a flag, a plan, an A/B test. Whether the change ships behind a flag.
 13. **Judges**, and back to whichever step they point to.
 
 If an entity or a cross-module rule needs defining along the way, **it goes in the foundations, not

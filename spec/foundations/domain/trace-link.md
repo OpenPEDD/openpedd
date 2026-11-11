@@ -2,8 +2,8 @@
 title: Trace Link
 description: ENT-22 · One link in a requirement's chain, with its current state
 owner: Kevin
-version: "1.0"
-updated: "2026-11-08"
+version: "1.1"
+updated: "2026-11-11"
 ---
 
 # ENT-22 · Trace Link
@@ -25,7 +25,7 @@ now. Together they answer *where is this requirement, and what is holding it*.
 
 | Kind | Is | States | Source |
 |---|---|---|---|
-| `spec` | The requirement itself | `draft` · `designing` · `ready` · `building` · `in_review` · `live` · `changing` · `deprecated` | The spec ([`ENT-03`](requirement.md#lifecycle)) |
+| `spec` | The requirement itself | `draft` · `designing` · `ready` · `building` · `in_review` · `accepted` · `live` · `changing` · `deprecated` | The spec ([`ENT-03`](requirement.md#lifecycle)) |
 | `origin` | The story or issue that asked for it | `candidate` · `accepted` · `discarded` | The tracker |
 | `change` | The change in flight, and its deltas | `open` · `accepted` · `archived` | `changes/` |
 | `design` | A mockup | `fresh` · `stale` · `uncovered` | The spec repo or a design tool |
@@ -34,7 +34,7 @@ now. Together they answer *where is this requirement, and what is holding it*.
 | `test` | A criterion's test | `missing` · `red` · `green` | CI |
 | `deploy` | Where it runs | `preview` · `staging` · `production` | The deploy provider |
 | `flag` | Whether customers see it | `off` · `partial` · `on` | The feature-flag provider |
-| `docs` | A help article, the API Reference, a release note | `fresh` · `stale` · `uncovered` | The help and docs repos |
+| `docs` | A help article, a Walkthrough, the API Reference, a release note | `fresh` · `stale` · `uncovered` | The help and docs repos |
 | `metric` | The PRD's success metric | `pending` · `met` · `missed` · `no_data` | Analytics |
 
 ## Rolling up

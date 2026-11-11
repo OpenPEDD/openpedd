@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -38,11 +38,12 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 3. **Check each task with INVEST**: independent, negotiable, valuable, estimable, small, testable.
 4. **Order**: `blocks` / `blocked by` between tasks. What depends on nothing runs in parallel.
 5. **Leaves the contracts empty**: the signatures, the endpoints and the real version of the seam, answering *not implemented*. The tests compile against them, and `build` fills them.
-6. **Write the tests, failing**: one per `AC` (acceptance), one per contract (contract test), and the `NFR` fitness functions. **Acceptance tests run against the real version of the seam, never the sample data**: the mockup already shows the right screen, so a test on it passes with nothing built. Each test is run and **seen failing on an assertion**, for the reason its criterion states.
-7. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
-8. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it and the foundations it names. If it does not fit in 20,000 tokens, the task is badly cut.
-9. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
-10. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
+6. **Write the tests, failing**, each at the cheapest level that proves it ([`ARCH-10`](../../foundations/architecture/testing.md)): one per `AC` with its `level`; one per **contract × error × role**; one per cell of the permission matrix, allowed and denied; the `NFR` fitness functions; and `eval`s over a golden set for what varies between runs. **Acceptance tests run against the real version of the seam, never the sample data**: the mockup already shows the right screen, so a test on it passes with nothing built. Each test is run and **seen failing on an assertion**, for the reason its criterion states.
+7. **Creates the flag**, off, if the change has one, with its removal task ([`ARCH-09`](../../foundations/architecture/flags.md)).
+8. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
+9. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it and the foundations it names. If it does not fit in 20,000 tokens, the task is badly cut.
+10. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
+11. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 
 ## Outputs
 
@@ -70,7 +71,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; **every test fails on an assertion, and no acceptance test runs on the sample data**; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan** | All green |
+| `analyze-judge` | Every `FR` and `NFR` in scope has a task; every `AC` has a test; **every test fails on an assertion, and no acceptance test runs on the sample data; every cell of the permission matrix has its test**; every task has IDs, except those marked `technical`; no pack over budget; **no product decided in the plan** | All green |
 
 ## Keep in mind
 

@@ -2,8 +2,8 @@
 title: Workspace
 description: ENT-16 · The repos of a project and how they connect
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-11"
 ---
 
 # ENT-16 · Workspace
@@ -22,7 +22,9 @@ repo has one audience. How the repos are created and published is in
 | `run` | How to run it locally, and the name of the test user's variable |
 | `tools` | The tool chosen for each capability a stage needs |
 | `references` | Other specs this one builds on, read-only |
-| `publish` | Where each audience's repo is published |
+| `publish` | Which artifacts the project has, and where each is published |
+| `locales` | The languages of the product, if more than one |
+| `environments` | Where code runs, in order; one marked `public` |
 | `models` | The model profile and overrides ([`DEC-07`](../../decisions/DEC-07-models.md)) |
 | `stages` | Per-stage settings, such as `architect.mode` |
 | `budgets` | Token budgets per layer |

@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.3"
-updated: "2026-11-10"
+version: "1.4"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -27,6 +27,7 @@ pedd init reclee
 | `pedd doctor` | What each stage has and lacks. Reads only | Any time |
 | `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
 | `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, without asking again | Whoever clones the project |
+| `pedd launch` | Launches an accepted change ([`ARCH-08`](../../foundations/architecture/release.md)) | When it should reach customers |
 
 ## Main flow
 
@@ -75,6 +76,10 @@ publish:
   help: { generator: fumadocs, url: https://help.reclee.com }
   docs: { generator: openapi, url: https://docs.reclee.com }
   release_notes: { target: help }
+  walkthroughs: { target: help }   # only what is declared is generated
+locales: [es, en]
+environments:
+  - { name: production, branch: main, public: true }
 branches:
   base: dev
   change: "{prefix}/{slug}"
@@ -90,6 +95,8 @@ tools:
   browser: playwright
   e2e: playwright
   mutation: stryker
+  flags: openfeature-table
+  observability: sentry
   tracker: linear
 models:
   profile: balanced
@@ -111,13 +118,15 @@ never their values.
 
 ## The tools of each stage
 
-Each capability is **required** for its stage (the stage cannot run) or **recommended** (it runs, and
-says what it lost). `init` offers what is missing and installs only what the person confirms. A
+**`doctor` asks for a capability, never for a brand**, so OpenPEDD fits whatever the project uses;
+`tools` records which tool fills each one. Each capability is **required** for its stage (the stage
+cannot run), **recommended** (it runs, and says what it lost), or applies only **if the project has
+it**. `init` offers what is missing and installs only what the person confirms. A
 missing tool never stops `init`.
 
 | Stage | Capability | Level | Without it |
 |---|---|---|---|
-| `specify` · `architect` | Web research: Firecrawl or similar | Recommended | Fewer references, and the `Delta Report` says so |
+| `specify` · `architect` | Web research | Recommended | Fewer references, and the `Delta Report` says so |
 | `design` | Design system: `Brand System` filled, components in code | Required | It is defined first: extracted from the code, or chosen |
 | `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
 | `plan` · `build` | Unit and end-to-end test runners; running locally with a test user | Required | No red tests |
@@ -126,6 +135,11 @@ missing tool never stops `init`.
 | Tracker | One with sub-issues | Required | No trace per task |
 | `publish` | A help generator | Required with users | Help is not published |
 | `measure` | Analytics | Required to measure | The stage does not run |
+| Launch | Feature flags | If the project has them | What is on the base launches together |
+| After launch | Observability | Recommended | Regressions are found by users |
+| `plan` · `verify` | Row-level security tests | If the project has it | Roles are proved in the application only |
+| `plan` · `verify` | Translation checks | If there are `locales` | Missing text reaches users |
+| `plan` · `verify` | Evals | If the product uses AI | Those criteria cannot be tested |
 
 MCP servers go in the project's config only without secrets; credentials stay in each person's
 environment.

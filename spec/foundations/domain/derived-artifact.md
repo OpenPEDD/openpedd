@@ -2,8 +2,8 @@
 title: Derived Artifact
 description: ENT-15 · Anything produced from the spec
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-11"
 ---
 
 # ENT-15 · Derived Artifact
@@ -19,6 +19,7 @@ the spec, the spec wins, and the disagreement is a delta or a bug.
 | Task | `plan` | `FR` · `NFR` | The tracker, a sub-issue of the change |
 | API Reference | `publish` | Contracts | `<project>-docs` |
 | Help Center article | `publish` | `FR` | `<project>-help` |
+| Walkthrough (optional) | `verify` drafts it, `publish` publishes it | `FR` | `<project>-help` |
 | Release Notes entry | `publish` | The change | `<project>-help`, or an adapter |
 
 Every derived artifact is in one [freshness](anchor.md#freshness) state: `fresh`, `stale` or

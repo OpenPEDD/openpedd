@@ -2,8 +2,8 @@
 title: Tracks
 description: Which stages each change runs, by the IDs it touches, and when a story becomes full
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -27,6 +27,8 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 | `FR` and `NFR` (`story`) | Delta | ✓ | ✓ | ✓ | ✓ | Help, and API if it changes |
 | A contract | Delta | ✓ | If visible | ✓ | ✓ | API Reference |
 | A bug the spec already covered (`fix`) | — | — | — | `build` → `verify` | Light | — |
+| A bug in production that cannot wait (`hotfix`) | — | — | — | `build` → `verify`, from production | One approval | If the user notices |
+| Retiring a feature | `REMOVED` deltas and a `DEC` | If data changes | — | `build` → `verify` | ✓ | Note, help, Walkthrough |
 | Technical work with no product ID (`chore`) | — | — | — | `build` → `verify` | — | — |
 
 ## Branches
@@ -34,7 +36,8 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 Every track gets its own branch from the base, and the stages it runs decide what is cut from it: a
 design branch only if `design` runs, an architecture branch only if `architect` runs, one task branch
 per task. A change with one task is one branch
-and one PR ([`ARCH-06`](../../foundations/architecture/branches.md)).
+and one PR ([`ARCH-06`](../../foundations/architecture/branches.md)). A `hotfix` branches from production
+and merges back into the base ([`ARCH-08`](../../foundations/architecture/release.md)).
 
 ## The `story` track
 

@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.6"
-updated: "2026-11-10"
+version: "1.7"
+updated: "2026-11-11"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -16,7 +16,12 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | **Product Engineering Driven Development** (PEDD) | The methodology | [`BIZ-01`](business/problem.md) |
 | **OpenPEDD** | The open framework | [`BIZ-04`](business/open-core.md) |
 | **OpenPEDD Cloud** | The paid plan | [`BIZ-04`](business/open-core.md) |
-| `pedd init` · `pedd doctor` · `pedd update` · `pedd install` | Onboarding, what each stage lacks, refreshing the framework's files, setting up after cloning | [workspace](../modules/workspace/prd.md) |
+| `pedd init` · `pedd doctor` · `pedd update` · `pedd install` · `pedd launch` | Onboarding, what each stage lacks, refreshing the framework's files, setting up after cloning, launching | [workspace](../modules/workspace/prd.md) |
+| Walkthrough | How to do one thing, on the real screen, on request. Not a tour | [`ARCH-07`](architecture/walkthroughs.md) |
+| Answer · Point · Take there · Act | The levels of help inside a product | [`ARCH-07`](architecture/walkthroughs.md) |
+| Launch | The moment customers get a feature. Not the deploy | [`ARCH-08`](architecture/release.md) |
+| `hotfix` | The track for a production bug that cannot wait | [`ARCH-08`](architecture/release.md) |
+| Level: `unit` · `integration` · `contract` · `e2e` · `eval` | Where a criterion is proved | [`ARCH-10`](architecture/testing.md) |
 | `unmapped` | A module in the index with no PRD yet | [`ENT-21`](domain/module.md) |
 | `pedd` | The CLI, and the short form of the name | [`ARCH-01`](architecture/overview.md) |
 

@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -37,7 +37,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 
 1. **Against the spec**: every `FR` does what it says, every exception flow exists, every permission holds, every contract matches.
 2. **Against the foundations**: security (OWASP ASVS), quality, architecture, accessibility.
-3. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC`**, with the test data.
+3. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC` with a screen**, with the test data. With `locales`, renders each one and fails on a raw key. With a Walkthrough declared, drafts it from the green tests' steps and walks it in the browser ([`ARCH-07`](../../foundations/architecture/walkthroughs.md)).
 4. **Tests that can catch**: runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
 5. **Drift**: whatever the code does that the spec does not say (an extra screen, an extra field) is a `finding`.
 6. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
@@ -64,7 +64,8 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 |---|---|
 | `Acceptance Report` | In `changes/<CHG>/reports/` |
 | `finding` deltas | In the change |
-| One screenshot per `AC` | In `changes/<CHG>/evidence/` |
+| One screenshot per `AC` with a screen | In `changes/<CHG>/evidence/` |
+| The Walkthrough draft | In the change |
 | The PRD | → `in_review` |
 
 ## Judge
@@ -94,7 +95,7 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 | Track | What changes |
 |---|---|
 | `full` · `story` | Everything |
-| `fix` | Only the bug's area and its criteria |
+| `fix` · `hotfix` | Only the bug's area and its criteria |
 | `chore` | Foundations only (security, architecture). No acceptance report |
 
 ## Sources

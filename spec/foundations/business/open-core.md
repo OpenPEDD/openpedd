@@ -2,8 +2,8 @@
 title: Open core
 description: BIZ-04 · What is free, what is paid, and the rule that draws the line
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-11"
 ---
 
 # BIZ-04 · Open core
@@ -32,6 +32,7 @@ The paid plan's value is that **nobody has to remember to run it**.
 | Creating repos with the CLI | Creating repos from the dashboard; hosting spec, help and docs |
 | The traceability model and event format; `pedd trace` and `pedd status` on demand ([`ARCH-05`](../architecture/traceability.md)) | **Traceability always on**: every tool and environment connected, the event history kept, the graph from product to requirement |
 | — | **The way back**: tracker issues turned into candidate stories on the right PRD |
+| `pedd launch`, by hand | **Launch**: what is ready, what each change lacks, and one action to promote, turn on and announce, watching what happens after |
 | — | **Hotspots**: stories per module and PRD, per week |
 | — | SSO, roles, audit, history retention |
 

@@ -2,8 +2,8 @@
 title: design
 description: Stage 3 · Turns the spec into screens; another implementation of the spec, with its own judge and its closing passes
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -49,7 +49,7 @@ reference images aside.
 4. **Sets the seam.** Every read and every write goes through **one file**. `build` replaces that file, not the feature.
 5. **Diverge.** Two or three options for the key screens, with the real components and the test data, on the design branch. Each piece follows the app's pattern from the `Brand System`; a piece of its own is justified.
 6. **The person picks** the winner and adjusts it with small prompts, with the product running. Each round of adjustments is one commit.
-7. **Converge.** The winner is completed in every state of the inventory, each reachable from a **development menu**, which includes a switch that makes every write fail. The menu renders only in development.
+7. **Converge.** The winner is completed in every state of the inventory, each reachable from a **development menu**, which includes a switch that makes every write fail. The menu renders only in development. What a Walkthrough would point at gets its `data-guide`.
 8. **Reads `architect`'s decisions before each round**, so a screen is not built against a model that already changed.
 9. **Closing passes**, in order ([below](#closing-passes)).
 10. **Record deltas.** Everything the design changes in the PRD (a step too many, a missing field, a state that was not there, copy that does not work) is a `proposal` delta with its reason. **A color change is not a delta; a change to what a `FR` says is.**
@@ -64,7 +64,7 @@ refactor comes late so it is not redone.
 
 | # | Pass | What it does | Done when |
 |---|---|---|---|
-| 1 | **Mobile** | Each screen at the `Brand System` widths: what overflows, headers that do not fit, tables, side panels, floating controls, touch areas | No horizontal scroll, and every action can be reached |
+| 1 | **Mobile** | Each screen at the `Brand System` widths: what overflows, headers that do not fit, tables, side panels, floating controls, touch areas. With `locales`, again on a pseudo-locale, for long text | No horizontal scroll, and every action can be reached |
 | 2 | **Skeletons** | The loading state draws what the real screen draws: columns, header, tabs, cards | Each skeleton matches the final layout |
 | 3 | **Writes** | **First lists every write**, then compares each with the contract in `Quality Standards` | With the switch on, every write goes back and says so |
 | 4 | **Refactor** | In order: copies of something shared, the same thing written twice in the feature, reads that skip the seam, dead code and copy keys, inline types in sample data. Extracts only what has **two real uses**, without changing behavior | Nothing left on the list |

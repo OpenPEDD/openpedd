@@ -2,8 +2,8 @@
 title: accept
 description: Stage 7 · A person decides everything the AI decided without them, from one report
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-11"
 status: draft
 ---
 
@@ -34,7 +34,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 
 ## Procedure
 
-1. **The person reads the report** and, if they want, tries the feature in the test environment.
+1. **The person reads the report** and, if they want, tries the feature in the test environment, with its Walkthrough if it has one.
 2. **Decides each delta**:
 
 | Decision | What happens |
@@ -62,7 +62,7 @@ None: the person is the gate. Passes when **nothing is left undecided**.
 ## Keep in mind
 
 - **It is the only human review of the delegated block.** If the person has to read code, PRs or conversations to decide, the report is badly built, and `verify` is fixed.
-- **Merging a task is not acceptance.** Task PRs merge into the change branch earlier; **the PR from the change branch to the base merges here**, at `acceptance-merge`, after the person tried it on the branch's preview ([`ARCH-06`](../../foundations/architecture/branches.md)). In production it ships **off for customers** until it is released.
+- **Merging a task is not acceptance.** Task PRs merge into the change branch earlier; **the PR from the change branch to the base merges here**, at `acceptance-merge`, after the person tried it on the branch's preview ([`ARCH-06`](../../foundations/architecture/branches.md)). In production it ships **off for customers** until it is launched ([`ARCH-08`](../../foundations/architecture/release.md)).
 - **The cycle metric** is the bugs the person finds here that the spec already covered. The target is zero.
 
 ## Skills, agents and tools
@@ -79,6 +79,7 @@ None: the person is the gate. Passes when **nothing is left undecided**.
 |---|---|
 | `full` · `story` | Everything |
 | `fix` | Light: confirm the bug does not come back and there are no deltas |
+| `hotfix` | One person approves, before the merge to production |
 | `chore` | Does not run |
 
 ## Sources

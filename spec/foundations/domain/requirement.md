@@ -2,8 +2,8 @@
 title: Requirement
 description: ENT-03 · A functional or non-functional requirement, and its lifecycle
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-11"
 ---
 
 # ENT-03 · Requirement
@@ -43,7 +43,8 @@ advanced requirement. A user story touches two requirements, not the whole PRD.
 | `ready` | Architecture and design merged | The last of the two merge gates |
 | `building` | Planned and under construction | `plan` |
 | `in_review` | Built and verified; waiting for `accept` | `verify` |
-| `live` | What is in production | `publish` |
+| `accepted` | Accepted and on the base, not launched | `publish`, on prepare |
+| `live` | What customers have | `publish`, at launch |
 | `changing` | Was `live`; a story is changing it. Back to `live` on publish | The story's `spec-approval` |
 | `deprecated` | Retired. The ID stays dead | Whoever retires it, with a `DEC` |
 

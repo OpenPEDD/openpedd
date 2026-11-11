@@ -2,8 +2,8 @@
 title: Contract
 description: ENT-05 · What an action receives, returns and fails with
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-11"
 ---
 
 # ENT-05 · Contract
@@ -21,6 +21,6 @@ pass (interface-driven development).
 | `roles` | Who may call it |
 | `requirements` | The `FR` and `NFR` it serves |
 
-The API Reference is generated from the contracts in `publish`, and each contract has a contract
-test written in `plan`. A breaking change to a public contract moves a story to the `full` track
+The API Reference is generated from the contracts in `publish`, and each contract has a test per
+error and role, written in `plan`. A contract without `roles` fails the pipeline. A breaking change to a public contract moves a story to the `full` track
 ([`DEC-04`](../../decisions/DEC-04-story-to-full.md)).
