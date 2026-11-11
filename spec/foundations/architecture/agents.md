@@ -2,7 +2,7 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 ---
 
@@ -40,7 +40,7 @@ per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
 | **The checklist is the output**: the agent delivers each item, and the judge checks it | An agent that ticks its own list can tick and skip |
 | **One writer per set of files.** Two run in parallel only if they do not touch the same files; in a shared file (translations), each touches only its keys | Two writers on one file overwrite each other |
 | **The brief** has the goal, the rules, the checks, the report format and what not to touch. It never contradicts `AGENTS.md`: what the project already says is not repeated or changed in it | The agent knows only what the brief says |
-| **Scoped checks while working**: lint, types and the tests of what was touched. The full pipeline once, at the end | A full run per round spends without finding more |
+| **Scoped checks while working**: lint, types, the tests of what was touched, and **every cheap check the project has** (conventions, parity, enums) over it. The full pipeline once, at the end | A full run per round spends without finding more; a project check that fails only at the end costs one more round |
 | **One commit per round** | Each round can be reviewed or reverted alone |
 | **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person. It ends with improvements not applied ([`RULE-25`](../rules/cycle.md#rule-25)) | A report sounds equally sure when it is wrong |
 | **Each agent opens its own browser tab**; the person's are not touched | The person keeps working |

@@ -2,7 +2,7 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-11"
 status: draft
 ---
@@ -58,6 +58,7 @@ is `verify`. Passes when everything is green.
 ## Keep in mind
 
 - **The tests from `plan` are not touched**, and the pipeline rejects a PR that touches them. If a test is wrong, it is a `deviation` explaining why, and the test and its line in `tests.lock` change only if `accept` decides so.
+- **Time is a parameter.** Code that depends on the time takes the clock as an input, never reads it inside; its tests cover a daylight-saving change and another time zone.
 - **Make the rule pass, not the example.** Code that answers a test's exact data instead of what the criterion says fails in `verify`.
 - **Contracts are not touched.** The agent works inside them.
 - **A flag goes at the entry points and in the contract**: route, menu, assistant tool. Hiding a screen is not enough ([`ARCH-09`](../../foundations/architecture/flags.md)).

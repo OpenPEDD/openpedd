@@ -2,8 +2,8 @@
 title: Delta
 description: ENT-07 · A proposed change to the spec, per ID
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-11"
 ---
 
 # ENT-07 · Delta
@@ -22,6 +22,7 @@ the spec itself ([`RULE-10`](../rules/cycle.md#rule-10)). A delta enters the spe
 | `change` | Its [`Change`](change.md) |
 | `reason` | Why, in one line |
 | `alternative` | The other option there was |
+| `revert` | For an `assumption` or a `deviation`: where it lives (file, function, migration) and what to change to undo it |
 | `impact` | The derived artifacts that go `stale` if it merges. Computed |
 | `decision` | `keep` · `change` · `reject`, set at its gate |
 

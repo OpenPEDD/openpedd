@@ -2,7 +2,7 @@
 title: Requirement
 description: ENT-03 · A functional or non-functional requirement, and its lifecycle
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-11"
 ---
 
@@ -28,6 +28,7 @@ with a time or a volume carries the number. Every `FR` has at least one
 | `reason` | Why, in one line, in the same cell ([`RULE-06`](../rules/writing.md#rule-06)) |
 | `roles` | Who may trigger it, from `Roles & Permissions` |
 | `criteria` | Its `AC` IDs |
+| `depends_on` | The IDs in other modules it needs to work: a table, a tool, an event. `plan` checks they are `live` |
 | `hash` | The content hash, recomputed on merge |
 | `status` | Its place in the lifecycle below |
 

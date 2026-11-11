@@ -2,7 +2,7 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-11"
 status: draft
 ---
@@ -51,8 +51,8 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 |---|---|
 | Summary | The scope, how many `FR`s and `NFR`s, how many deltas of each type |
 | Per `FR` | Its `AC`, its test (green), its screenshot |
-| Assumptions | What was assumed, where, the alternative |
-| Deviations | What could not be done as written, why, the alternative |
+| Assumptions | What was assumed, where, the alternative, how it reverts |
+| Deviations | What could not be done as written, why, the alternative, how it reverts |
 | Open findings | The medium and low ones that did not go back to `build` |
 | Improvements | What the agents of every stage would improve, deduplicated, none applied ([`RULE-25`](../../foundations/rules/cycle.md#rule-25)); and each stage's work, wait and rounds, from the trace |
 | Impact | Which derived artifacts go stale if each delta is accepted |

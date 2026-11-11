@@ -207,3 +207,12 @@
 {"path":"foundations/rules/cycle.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-25: time is measured by the tool, not reported"}
 {"path":"modules/verify/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Work, wait and rounds per stage, from the trace"}
 {"path":"capabilities.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Measuring how long each stage takes"}
+{"path":"foundations/domain/requirement.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"depends_on: what a requirement needs from another module"}
+{"path":"modules/specify/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Each requirement names what it needs from another module"}
+{"path":"modules/architect/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Every operation with more than one write says how it survives a crash"}
+{"path":"modules/plan/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Checks dependencies; crash tests; the project checks in the pack"}
+{"path":"modules/build/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Time is a parameter"}
+{"path":"foundations/architecture/agents.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Cheap project checks while working"}
+{"path":"foundations/architecture/testing.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"Equivalent mutants, mutation over covered lines, clock and crash tests"}
+{"path":"foundations/domain/delta.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"revert: where an assumption lives and how to undo it"}
+{"path":"modules/verify/prd.md","version":"1.4 → 1.5","date":"2026-11-11","change":"CHG-014","story":null,"stage":"specify","summary":"How each assumption and deviation reverts"}

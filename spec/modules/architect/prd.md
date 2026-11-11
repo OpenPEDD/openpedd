@@ -2,7 +2,7 @@
 title: architect
 description: Stage 2 · Decides how to build what specify defined, after reading the spec, the code, the design and those who solved it before
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-11"
 status: draft
 ---
@@ -47,7 +47,7 @@ it cites. Budget: **15,000 tokens**; the code and the references are opened by t
 5. **Verifies every assumption about the current system against the code** ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)).
 6. **Does the numbers with real prices**: cost and capacity per run, per account and per plan, from the provider's current price, with source and date. A limit is decided from the numbers.
 7. **Compares options in a table**: at least two for every non-obvious decision, with cost, risk and which `NFR` each meets. The discarded option stays, with its reason.
-8. **Designs how it fails**: every reuse and every contract between modules gets a check that fails before production, at the moment that catches it first: compile, CI, publish or runtime. Each measurable `NFR` becomes a fitness function that `plan` loads into the pipeline.
+8. **Designs how it fails**: every reuse and every contract between modules gets a check that fails before production, at the moment that catches it first: compile, CI, publish or runtime. **Every operation with more than one write** (charge and record, claim and process, save and update) says how it survives a crash between them: one transaction, an idempotent retry, or a compensation. Each measurable `NFR` becomes a fitness function that `plan` loads into the pipeline.
 9. **Walks one or two real use cases** through the design, from the PRD's flows. A concrete case finds the gaps a list of requirements does not.
 10. **Decides**, or in `guided` **asks the person one decision at a time**: the question as written, the options table and a recommendation.
 11. **Records each decision** where it belongs ([decisions](../../decisions/README.md#where-an-architecture-decision-goes)): a row in the area's decisions table, or an `ADR` when it has real alternatives and lasting consequences.
@@ -70,7 +70,7 @@ it cites. Budget: **15,000 tokens**; the code and the references are opened by t
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `architecture-judge` | Consistency with `Architecture Rules`, `Security Policy` and `Domain Model`; every `NFR` answered and measurable; no product decision hidden in an `ADR`; **every decision names the option it discarded and why; every assumption about the current system cites the code; every cost cites its source and date; every reuse and contract has its failure check** | All green |
+| `architecture-judge` | Consistency with `Architecture Rules`, `Security Policy` and `Domain Model`; every `NFR` answered and measurable; no product decision hidden in an `ADR`; **every decision names the option it discarded and why; every assumption about the current system cites the code; every cost cites its source and date; every reuse and contract has its failure check; every operation with more than one write says how it survives a crash** | All green |
 
 Then **`architecture-merge`**:
 

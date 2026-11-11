@@ -2,7 +2,7 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-11"
 status: draft
 ---
@@ -36,7 +36,7 @@ complete the PRD, the fewer assumptions in the middle.**
 2. **Class and metric.** New, improvement or debt. The `Success metric` with `baseline`, `target` and `review date`, and the `Tracking Plan` event that measures it.
 3. **Appetite and `Out of scope`.** How much it is worth spending, and what is not built. The risks.
 4. **Flows.** The `Main flow`, then the `Alternate flows` (they branch and return) and the `Exception flows` (they end the flow).
-5. **Requirements.** From the flows: `FR` (what the user does or sees) and `NFR` (what the system does), in EARS ([`ENT-03`](../../foundations/domain/requirement.md)). A `NFR` with a time or a volume carries the number.
+5. **Requirements.** From the flows: `FR` (what the user does or sees) and `NFR` (what the system does), in EARS ([`ENT-03`](../../foundations/domain/requirement.md)). A `NFR` with a time or a volume carries the number. Each one names **what it needs from another module**, in `depends_on`.
 6. **Permissions and data.** A matrix of role × action, allowed and denied. **Who writes each field, and through which door**: the screen, the API, the assistant, a trigger or only the system. Which fields are personal, how long they are kept and how they are deleted, from `Privacy`.
 7. **States.** The transitions the flow touches, valid and invalid, cited from the domain. **Also those that come from outside the flow**: a plan that goes down, a parent that closes, a subject that is deleted. Each with what happens to the work in progress.
 8. **Contracts.** For each action: input, output, errors ([`ENT-05`](../../foundations/domain/contract.md)).
