@@ -95,8 +95,31 @@ done, is worse than none: nobody looks again.**
 
 ## RULE-23 · When they disagree, the spec wins [#rule-23]
 
-The spec wins over the architecture, and the architecture over the plan. A clash is not settled in the
-lower one: it goes to the person, who decides whether the spec is what changes.
+While `architect` runs with the person, a clash is settled there: the decision changes, or the spec
+does, through a `proposal` delta that `architecture-merge` decides. **After it**, the spec wins over
+the architecture, and the architecture over the plan. A clash found later is not settled in the lower
+one: it goes to the person, who decides whether the spec is what changes.
 
-**Why:** one order for every topic. Deciding precedence case by case costs a round per clash, and
-the answer depends on who settled it.
+**Why:** the architecture is still a conversation, and it may still move the spec. Once merged, one
+order for every topic: deciding precedence case by case costs a round per clash, and the answer
+depends on who settled it.
+
+## RULE-24 · The tool keeps the order, not the prompt [#rule-24]
+
+Each stage's procedure is a list of steps the tool runs, one agent per step, with its pack. A step
+runs only once its precondition is checked: mutation, for instance, only with the review closed and
+the whole suite green. The stage's checklist is **what the agent delivers**, and its judge checks each
+item; the agent does not tick its own. **Whatever coordinates is not a model** ([`ARCH-04`](../architecture/agents.md#how-agents-work)).
+
+**Why:** a rule in a prompt competes with every other text in it, and weighs less as the context
+grows. A session coordinating for sixteen hours skipped one written in `AGENTS.md`, because its own
+brief, closer, said otherwise.
+
+## RULE-25 · An agent notes improvements; it does not make them [#rule-25]
+
+Every agent, in any stage, closes its report with **what it would improve** (the process, the spec,
+the code, the tools), each with the problem it solves, and **how long each step took**. It acts on
+none of them. `verify` gathers them in the `Acceptance Report`, and `accept` decides them.
+
+**Why:** an agent that improves on its own way widens the scope (a button with no spec behind it); one
+told to keep quiet loses what only it saw. Seeing and doing are kept apart.

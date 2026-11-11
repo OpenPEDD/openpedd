@@ -194,3 +194,8 @@
 {"path":"foundations/rules/cycle.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-23: when they disagree, the spec wins"}
 {"path":"foundations/rules/README.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-23 in the index"}
 {"path":"open/backlog.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Reclee items from the automations report"}
+{"path":"foundations/rules/cycle.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-23 lets architect still change the spec; RULE-24 the tool keeps the order; RULE-25 agents note improvements without making them"}
+{"path":"foundations/rules/README.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"RULE-24 and RULE-25 in the index"}
+{"path":"foundations/architecture/agents.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Coordinator is not a model; small scope; checklist as output; brief never contradicts AGENTS.md"}
+{"path":"modules/verify/prd.md","version":"1.3 → 1.4","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Improvements and time per stage in the Acceptance Report"}
+{"path":"modules/accept/prd.md","version":"1.2 → 1.3","date":"2026-11-11","change":"CHG-013","story":null,"stage":"specify","summary":"Decides each improvement; accepted ones go to the backlog"}

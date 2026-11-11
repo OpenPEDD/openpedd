@@ -2,7 +2,7 @@
 title: accept
 description: Stage 7 · A person decides everything the AI decided without them, from one report
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-11"
 status: draft
 ---
@@ -43,8 +43,9 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 | `change` | Not like this: it becomes a new task, goes back to `build`, and the delta is dropped |
 | `reject` | Neither kept nor changed now: it is dropped, and a `Q` opens if needed |
 
-3. **A bug the spec already covered** is recorded with the judge that let it through: it is the cycle metric, and that judge gets fixed.
-4. With everything decided, **`acceptance-merge`**: the `keep`s are ready for `publish`.
+3. **Decides each improvement** the agents noted: accepted, it goes to the backlog with its problem; otherwise it is dropped.
+4. **A bug the spec already covered** is recorded with the judge that let it through: it is the cycle metric, and that judge gets fixed.
+5. With everything decided, **`acceptance-merge`**: the `keep`s are ready for `publish`.
 
 ## Outputs
 
@@ -54,6 +55,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 | A new task for each `change` | In the tracker, back to `build` |
 | A new `Q` for each `reject` that needs one | Open |
 | The bugs the spec covered, with their judge | In the cycle metric |
+| The accepted improvements | In the backlog |
 
 ## Judge
 

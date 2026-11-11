@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-11"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -35,11 +35,14 @@ per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
 
 | Practice | Why |
 |---|---|
+| **Whatever coordinates is not a model.** `pedd`, or a workflow script, launches one agent per step and checks the precondition before the next ([`RULE-24`](../rules/cycle.md#rule-24)) | A model coordinating for hours forgets the order it was given |
+| **Small scope**: one agent per task or step, with its pack and nothing else. A task is cut by vertical slice that fits a reviewable PR, never by layer | Less text makes each rule weigh more; cutting smaller than that costs more in coordination than it saves |
+| **The checklist is the output**: the agent delivers each item, and the judge checks it | An agent that ticks its own list can tick and skip |
 | **One writer per set of files.** Two run in parallel only if they do not touch the same files; in a shared file (translations), each touches only its keys | Two writers on one file overwrite each other |
-| **The brief** has the goal, the rules, the checks, the report format and what not to touch | The agent knows only what the brief says |
+| **The brief** has the goal, the rules, the checks, the report format and what not to touch. It never contradicts `AGENTS.md`: what the project already says is not repeated or changed in it | The agent knows only what the brief says |
 | **Scoped checks while working**: lint, types and the tests of what was touched. The full pipeline once, at the end | A full run per round spends without finding more |
 | **One commit per round** | Each round can be reviewed or reverted alone |
-| **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person | A report sounds equally sure when it is wrong |
+| **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person. It ends with improvements not applied and the time of each step ([`RULE-25`](../rules/cycle.md#rule-25)) | A report sounds equally sure when it is wrong |
 | **Each agent opens its own browser tab**; the person's are not touched | The person keeps working |
 
 ## MCP tools [#mcp-tools]
