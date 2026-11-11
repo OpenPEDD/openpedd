@@ -147,3 +147,5 @@
 {"path":"decisions/DEC-12-stack-derived.md","version":"1.0","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"The list of technologies is derived"}
 {"path":"decisions/DEC-13-map-on-demand.md","version":"1.0","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Mapped module by module until every module has its PRD"}
 {"path":"open/questions.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Q-22: how the stack is detected"}
+{"path":"open/backlog.md","version":"1.0","date":"2026-11-11","change":"CHG-010","story":null,"stage":"specify","summary":"What was agreed and is not written yet"}
+{"path":"open/README.md","version":"1.0 → 1.1","date":"2026-11-11","change":"CHG-010","story":null,"stage":"specify","summary":"Backlog in the index"}
