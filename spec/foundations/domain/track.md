@@ -18,7 +18,7 @@ per track and per kind of impact, is in [`modules/tracks`](../../modules/tracks/
 | `story` | A user story: a thin vertical slice of an existing PRD | 2 or 3 |
 | `fix` | A bug the spec already covered | 1 |
 | `hotfix` | A bug in production that cannot wait | 1 |
-| `cover` | Criteria, tests and docs for what already works, from `pedd adopt`; it changes none of it | 1 |
+| `cover` | Criteria, tests and docs for what already works, from `pedd adopt`; it changes none of it | 1 or 2 |
 | `chore` | Technical work with no product ID | 0 |
 
 The track is computed from the IDs the change touches, and a person can force `full`. A `fix` that
