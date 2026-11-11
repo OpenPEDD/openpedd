@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -16,11 +16,12 @@ status: draft
  (human)  (interactive, in parallel)
 ```
 
-`map` runs once, before everything, when the product already exists.
+`map` runs before everything when the product already exists, and again for each module a change
+first touches, until every module has its PRD.
 
 | # | Stage | Mode | Does | PRD |
 |---|---|---|---|---|
-| 0 | `map` | Interactive, once | Reads existing code and builds the initial spec | [map](../map/prd.md) |
+| 0 | `map` | Interactive, per module | Reads existing code and builds the spec | [map](../map/prd.md) |
 | 1 | `specify` | Interactive | The PRD, or the delta of a story, with its cold-read judge | [specify](../specify/prd.md) |
 | 2 | `architect` | `guided` (default) or `delegated` | Researches and decides the how; leaves a `Delta Report` | [architect](../architect/prd.md) |
 | 3 | `design` | Interactive | Mockups on the brand system; the winner is chosen; leaves a `Delta Report` | [design](../design/prd.md) |

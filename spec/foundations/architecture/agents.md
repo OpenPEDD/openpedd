@@ -2,7 +2,7 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-10"
 ---
 
@@ -16,7 +16,8 @@ Three pieces, never mixed:
 | **Agent** | A **judge**: another session, another model, without the generator's conversation | `.claude/agents/<name>.md`, with `model:` in its frontmatter | `<what-it-checks>-judge` |
 | **MCP tool** | How agents read and propose against the spec | The OpenPEDD MCP | `snake_case` |
 
-`pedd init` generates the skills and agents for every agent it finds (Claude Code first; Cursor,
+`pedd init` generates the skills and agents for every agent it finds, recording each file and its
+hash in `.pedd/manifest.json` so `pedd update` can tell what was edited by hand (Claude Code first; Cursor,
 Copilot, Codex and others through the same templates, the way Spec Kit does).
 
 ## How judges run

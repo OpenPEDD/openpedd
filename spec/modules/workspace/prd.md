@@ -1,42 +1,76 @@
 ---
 title: Workspace
-description: pedd init — creating or connecting a project's repos and installing the framework
+description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-10"
 status: draft
 ---
 
 # Workspace
 
-`pedd init <project>` sets up a [`Workspace`](../../foundations/domain/workspace.md): it creates or
-connects the project's repos and installs the framework in the agents it finds. The repo layout and
-why each repo exists are in [`ARCH-03`](../../foundations/architecture/workspace.md).
+`pedd init <project>` **onboards a project** to the framework: from zero or on software already
+running, in one repo or many. It sets up a [`Workspace`](../../foundations/domain/workspace.md),
+installs the documentation structure, finds out what the project is built with, and says what each
+stage still needs to work. The repo layout is in
+[`ARCH-03`](../../foundations/architecture/workspace.md).
+
+**It asks before it changes anything, and never rewrites what is there.**
 
 ```bash
 pedd init reclee
 ```
 
+| Command | Does | When |
+|---|---|---|
+| `pedd init` | The whole onboarding | Once per project |
+| `pedd doctor` | What each stage has and lacks. Reads only | Any time |
+| `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
+| `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, without asking again | Whoever clones the project |
+
 ## Main flow
 
 | Step | Does |
 |---|---|
-| 1 | Asks for the mode (`split` or `mono`) and whether the repos already exist |
-| 2 | Creates the missing ones with the project prefix (`reclee-spec`, `reclee-help`, `reclee-docs`), or connects the existing ones |
-| 3 | Connects the code repos, one or many |
-| 4 | Writes `workspace.yaml` at the root of the spec repo (`split`) or of the repo (`mono`), and in `split` a `link.yaml` in each other repo pointing back to the spec |
-| 5 | Installs the skills, the judges and the MCP in the agents it detects |
-| 6 | If there is code, offers to run `map` |
+| 1 | **Reads the situation**: an empty folder, code already there, or OpenPEDD already installed (then it runs `doctor` and offers `update`) |
+| 2 | **Settles the layout**, on two axes ([below](#the-layout)): detects what it can and confirms |
+| 3 | Creates the missing repos with the project prefix (`reclee-spec`, `reclee-help`, `reclee-docs`), or connects the existing ones, and in `split` writes a `link.yaml` in each pointing back to the spec |
+| 4 | **Installs the documentation structure**: `spec/` with its foundations marked empty, `workspace.yaml`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
+| 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers. Nothing outside them is touched |
+| 6 | **Finds out the stack** ([below](#the-stack)) |
+| 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
+| 8 | **Checks the tools of each stage** ([below](#the-tools-of-each-stage)) and offers what is missing |
+| 9 | Installs the skills, the judges and the MCP in the agents it detects, and records each file and its hash in `.pedd/manifest.json` |
+| 10 | **Reports which stages are ready** and what each lacks |
+| 11 | Offers the next step: `map` if there is code, `specify` if there is none |
+
+## The layout
+
+Two separate questions: where the documentation lives, and how the code is organized.
+
+| Code | Documentation `mono` (folders in the repo) | Documentation `split` (one repo per audience) |
+|---|---|---|
+| **One app** | `spec/`, `help/`, `docs/` next to the code | `-spec`, `-help`, `-docs` |
+| **Monorepo** (packages) | The same folders at the root | The same repos; the monorepo is one code repo |
+| **Several repos** | Not offered: the spec would live inside one part | `-spec`, `-help`, `-docs`, and each code repo |
+
+There is **one spec per product**, whatever the layout. Each component maps to the modules it
+implements, so an agent working on a change knows which code to open. `init` detects the components
+from the workspace manager (pnpm, Turborepo, Nx and the like).
 
 ```yaml
 # reclee-spec/workspace.yaml
 project: reclee
 mode: split
+language: es
 repos:
   spec: Reclee-team/reclee-spec
   help: Reclee-team/reclee-help
   docs: Reclee-team/reclee-docs
   code: [Reclee-team/scout]
+components:
+  - { repo: Reclee-team/scout, path: apps/web, modules: [ats, talent-pool] }
+  - { repo: Reclee-team/scout, path: apps/api, modules: [ats, talent-pool] }
 publish:
   help: { generator: fumadocs, url: https://help.reclee.com }
   docs: { generator: openapi, url: https://docs.reclee.com }
@@ -47,20 +81,64 @@ branches:
   design: "design/{slug}"
   architecture: "arch/{slug}"
   task: tracker
+run:
+  command: pnpm dev
+  test_user: E2E_TEST_USER   # the name of the variable, never its value
+tools:
+  research: firecrawl
+  design_system: shadcn
+  browser: playwright
+  e2e: playwright
+  mutation: stryker
+  tracker: linear
 models:
   profile: balanced
 stages:
   architect: { mode: guided }
 ```
 
+## The stack
+
+| Project | How it is settled | Where it goes |
+|---|---|---|
+| **Running** | Detected from the manifests and config: language, framework, package manager, database, auth, unit and end-to-end tests, CI, deploy, analytics, flags, design system. Each one names the file that proves it ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)) | `.pedd/stack.json`, recalculated by `doctor` |
+| **New** | Asked one decision at a time, with the options and a recommendation | `ADR`s of the initial change, and `.pedd/stack.json` once it exists in the code |
+
+**The list of technologies is not written into the spec**: the code already says it, and a copy goes
+stale. The spec holds what the code cannot say: why it was chosen ([`DEC-12`](../../decisions/DEC-12-stack-derived.md)).
+Detection reads files and never runs code; of the environment it reads the names of the variables,
+never their values.
+
+## The tools of each stage
+
+Each capability is **required** for its stage (the stage cannot run) or **recommended** (it runs, and
+says what it lost). `init` offers what is missing and installs only what the person confirms. A
+missing tool never stops `init`.
+
+| Stage | Capability | Level | Without it |
+|---|---|---|---|
+| `specify` · `architect` | Web research: Firecrawl or similar | Recommended | Fewer references, and the `Delta Report` says so |
+| `design` | Design system: `Brand System` filled, components in code | Required | It is defined first: extracted from the code, or chosen |
+| `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
+| `plan` · `build` | Unit and end-to-end test runners; running locally with a test user | Required | No red tests |
+| `verify` | Mutation testing | Recommended | Tests are not checked for being able to fail |
+| Pipeline | CI, and a preview per branch | Required | Tests are not protected; nothing to accept on |
+| Tracker | One with sub-issues | Required | No trace per task |
+| `publish` | A help generator | Required with users | Help is not published |
+| `measure` | Analytics | Required to measure | The stage does not run |
+
+MCP servers go in the project's config only without secrets; credentials stay in each person's
+environment.
+
 ## Alternate flows
 
 | Flow | What changes |
 |---|---|
-| `mono` | One repo with `spec/`, `help/` and `docs/` folders; no `link.yaml` |
 | Repos already exist | Connects them and only writes the config files |
 | A private spec on top of a public one | Adds `references` in `workspace.yaml` ([`ARCH-03`](../../foundations/architecture/workspace.md#several-specs)) |
 | Moving from `mono` to `split` | `pedd workspace split` moves the folders and updates the references |
+| Without a person at the keyboard | `--yes` takes the detected values and `--json` prints the report |
+| `update` finds a file edited by hand | Stops and shows the difference; `--force` overwrites it. The spec is never touched |
 
 ## Exception flows
 
@@ -68,3 +146,11 @@ stages:
 |---|---|
 | No GitHub CLI or no permission to create repos | Prints the repos to create by hand and continues with config |
 | No supported agent found | Installs for Claude Code and Codex, and says so |
+| Uncommitted changes in the repo | Warns and asks, so what it writes can be reviewed apart |
+| A technology it cannot identify | Asks, and records the answer |
+
+## Sources
+
+Spec Kit (manifest, `check`) · OpenSpec (`update --dry-run`) · BMAD (adopting `AGENTS.md`) · Agent OS
+(asking why) · Tessl (`install`) · Nx (`init`) · Copier (recorded answers) · `flutter doctor`, surveyed
+in [`MKT-02`](../../foundations/market/onboarding.md).

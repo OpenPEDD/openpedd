@@ -2,8 +2,8 @@
 title: Workspace repos
 description: ARCH-03 · One repo per audience, the two modes, several specs, and hosting
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-10"
 ---
 
 # ARCH-03 · Workspace repos
@@ -16,7 +16,7 @@ A [`Workspace`](../domain/workspace.md) has **one repo per audience**, prefixed 
 | `<project>-spec` | The spec and `workspace.yaml` | The team and the agents | A private site, and the MCP |
 | `<project>-help` | The Help Center and the Release Notes (`/changelog`) | Product users | `help.<domain>` |
 | `<project>-docs` | The generated API Reference and developer guides | Integrators | `docs.<domain>` |
-| Code repos | The code, with `spec.lock` | The team | Wherever they already deploy |
+| Code repos | The code, with `spec.lock`. An `AGENTS.md` per component only if the agents in use read it there | The team | Wherever they already deploy |
 
 | Why apart | What happens together |
 |---|---|
@@ -34,6 +34,11 @@ without depending on OpenPEDD.
 |---|---|---|
 | `split` (default) | One repo per audience | Teams, and any product with outside users |
 | `mono` | One repo with the code and `spec/`, `help/`, `docs/` folders | One person, an open-source project where code and spec are both public, or a project that does not publish yet |
+
+How the code is organized is a separate question: one app, a monorepo with packages, or several
+repos, declared as `components`, each mapped to its modules. Several code repos need `split`: in
+`mono` the spec would live inside one part. There is **one spec per product** in every case
+([`modules/workspace`](../../modules/workspace/prd.md#the-layout)).
 
 In `mono`, `workspace.yaml` sits at the repo root. `mono` can move to `split` later: the CLI moves
 the folders to their repos and updates the references.

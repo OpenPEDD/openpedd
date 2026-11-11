@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -69,6 +69,7 @@ Then **`spec-approval`**: the person approves.
 
 ## Keep in mind
 
+- **A change on an `unmapped` module maps it first**: `/map-module` writes what the code does today, and the change is a delta over that ([`DEC-13`](../../decisions/DEC-13-map-on-demand.md)).
 - **The body states what governs** ([`RULE-02`](../../foundations/rules/writing.md#rule-02)). In a change, the PRD is written as if it had always said the new thing.
 - **Search the whole spec before writing.**
 - **A contradiction is resolved on the spot** ([`RULE-09`](../../foundations/rules/writing.md#rule-09)).

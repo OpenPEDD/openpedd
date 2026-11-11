@@ -2,8 +2,8 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.2"
-updated: "2026-11-09"
+version: "1.3"
+updated: "2026-11-10"
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -41,6 +41,8 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Delta | A proposed change to one ID | `changes/<CHG>/deltas/` | `DLT-nnnn` | Every stage but `specify` | [`ENT-07`](domain/delta.md) |
 | Delta Report · Acceptance Report | What a person reads to decide | `changes/<CHG>/reports/` | — | `architect` · `design` · `verify` | [`ENT-08`](domain/report.md) |
 | History entry | One version of one document | `history/` | — | `publish` | [`ENT-17`](domain/history-entry.md) |
+| Detected stack | The technologies in the code, each with the file that proves it | `.pedd/stack.json` | — | The CLI | [`DEC-12`](../decisions/DEC-12-stack-derived.md) |
+| Install manifest | Each file the framework installed, and its hash | `.pedd/manifest.json` | — | The CLI | [workspace](../modules/workspace/prd.md) |
 | Trace event | One state change of a link in the chain | `.pedd/trace/` | — | The CLI, or the Cloud | [`ENT-23`](domain/trace-event.md) |
 
 ## Derived artifacts: produced from the spec

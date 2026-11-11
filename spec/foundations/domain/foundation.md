@@ -2,7 +2,7 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-10"
 ---
 
@@ -22,7 +22,7 @@ includes.
 | `Brand System` | Colors, type, tokens, components, UI libraries and preferences; the pattern each recurring piece follows (filters, badges, toasts, settings, paywalls); the widths a screen is checked at | `design` · `build` |
 | `Voice & Tone` | How the product speaks to its users, inside the product | `design` · `publish` |
 | `Marketing` (optional) | How the product speaks to people who do not know it yet: messages, channels and the rules of each format | `specify` · `publish` |
-| `Architecture Rules` | Layers, conventions, patterns, the stack | `architect` · `plan` · `build` · `verify` |
+| `Architecture Rules` | Layers, conventions and patterns, why each exists, why the stack was chosen, and what must not be touched | `architect` · `plan` · `build` · `verify` |
 | `Security Policy` | Security rules that always hold | `architect` · `verify` |
 | `Quality Standards` | Performance, accessibility and i18n budgets; the contract every write follows | `architect` · `design` · `verify` |
 | `Integrations` | Each external provider: what is used, its sandbox, its limits | `architect` · `build` |

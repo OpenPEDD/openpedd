@@ -2,7 +2,7 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-10"
 ---
 
@@ -13,6 +13,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | Document | ID | Holds |
 |---|---|---|
 | [The landscape](landscape.md) | `MKT-01` | The methods and tools around OpenPEDD, and where it stands |
+| [How tools onboard a project](onboarding.md) | `MKT-02` | How others start on a new or existing project, and detect its stack |
 
 ## How a market document is written
 

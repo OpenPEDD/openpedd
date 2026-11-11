@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.5"
+version: "1.6"
 updated: "2026-11-10"
 ---
 
@@ -16,6 +16,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | **Product Engineering Driven Development** (PEDD) | The methodology | [`BIZ-01`](business/problem.md) |
 | **OpenPEDD** | The open framework | [`BIZ-04`](business/open-core.md) |
 | **OpenPEDD Cloud** | The paid plan | [`BIZ-04`](business/open-core.md) |
+| `pedd init` · `pedd doctor` · `pedd update` · `pedd install` | Onboarding, what each stage lacks, refreshing the framework's files, setting up after cloning | [workspace](../modules/workspace/prd.md) |
+| `unmapped` | A module in the index with no PRD yet | [`ENT-21`](domain/module.md) |
 | `pedd` | The CLI, and the short form of the name | [`ARCH-01`](architecture/overview.md) |
 
 ## The hierarchy

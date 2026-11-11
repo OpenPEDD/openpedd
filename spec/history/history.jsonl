@@ -130,3 +130,20 @@
 {"path":"foundations/domain/acceptance-criterion.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Fails on an assertion, against the real backend; verified with other data"}
 {"path":"foundations/domain/foundation.md","version":"1.3 → 1.4","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"Delivery Pipeline holds the test protection and the mutation tool"}
 {"path":"foundations/glossary.md","version":"1.4 → 1.5","date":"2026-11-10","change":"CHG-008","story":null,"stage":"specify","summary":"tests.lock; the seam has a real version"}
+{"path":"modules/workspace/prd.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Onboarding: new or running project, two layout axes, documentation structure, stack, tools per stage, doctor, update, install"}
+{"path":"modules/map/prd.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Foundations and index first; each PRD when a change touches its module; every module ends with its PRD"}
+{"path":"modules/cycle/prd.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"map runs per module"}
+{"path":"modules/specify/prd.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"A change on an unmapped module maps it first"}
+{"path":"modules/trace/prd.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"status shows unmapped modules"}
+{"path":"foundations/domain/module.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"unmapped"}
+{"path":"foundations/domain/workspace.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"components, run, tools"}
+{"path":"foundations/domain/foundation.md","version":"1.4 → 1.5","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Architecture Rules holds why, not the list of technologies"}
+{"path":"foundations/architecture/workspace.md","version":"1.0 → 1.1","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"How the code is organized, apart from where the documentation lives"}
+{"path":"foundations/architecture/agents.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Install manifest"}
+{"path":"foundations/artifacts.md","version":"1.2 → 1.3","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Detected stack and install manifest"}
+{"path":"foundations/glossary.md","version":"1.5 → 1.6","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"CLI onboarding commands; unmapped"}
+{"path":"foundations/market/README.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"MKT-02 in the index"}
+{"path":"foundations/market/onboarding.md","version":"1.0","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"MKT-02: how tools onboard a project"}
+{"path":"decisions/DEC-12-stack-derived.md","version":"1.0","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"The list of technologies is derived"}
+{"path":"decisions/DEC-13-map-on-demand.md","version":"1.0","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Mapped module by module until every module has its PRD"}
+{"path":"open/questions.md","version":"1.1 → 1.2","date":"2026-11-10","change":"CHG-009","story":null,"stage":"specify","summary":"Q-22: how the stack is detected"}

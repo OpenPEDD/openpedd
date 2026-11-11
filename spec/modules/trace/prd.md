@@ -2,8 +2,8 @@
 title: trace
 description: pedd trace and pedd status — where every requirement stands, built on demand
 owner: Kevin
-version: "1.0"
-updated: "2026-11-08"
+version: "1.1"
+updated: "2026-11-10"
 status: draft
 ---
 
@@ -25,7 +25,7 @@ Watching continuously, the graph and the way back from the tracker: those are Op
 | Flow | Is |
 |---|---|
 | `F1` · Trace one ID | `pedd trace FR-JOB-03`: its chain, link by link, with the blocker marked |
-| `F2` · Status of the product | `pedd status`: product → modules → PRDs, each with its position and blocker; `--module`, `--prd` to narrow |
+| `F2` · Status of the product | `pedd status`: product → modules → PRDs, each with its position and blocker, and how many modules are still `unmapped`; `--module`, `--prd` to narrow |
 | `F3` · Stale and uncovered | `pedd status --stale`: every derived artifact that is `stale` or `uncovered` |
 | Alternate · No tracker or code host token | Shows the links it can read, and marks the rest as unknown |
 | Exception · ID not found | Says so, and suggests the closest IDs |
