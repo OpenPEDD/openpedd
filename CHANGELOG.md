@@ -3,6 +3,10 @@
 Versions follow [SemVer](https://semver.org). While the major is `0`, any minor version may change
 the format; the spec of each version is the tag `v<version>`.
 
+## Unreleased
+
+- At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.
+
 ## 0.1.0 · 2026-11-11 · beta
 
 The first versioned spec of the framework. Nothing to install yet.

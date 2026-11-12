@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their sub-issues in the tracker
 owner: Kevin
-version: "1.2"
-updated: "2026-11-11"
+version: "1.3"
+updated: "2026-11-12"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -43,10 +43,24 @@ written there before each round. A decision that arrives late makes a screen get
 
 | Issue | Is | Created by | Closes |
 |---|---|---|---|
-| **Parent**: the change | *Automations*, or the user story | `specify` | At `publish` |
-| Sub-issue: design | The mockup of every screen and state in scope | `design` | At `design-merge` |
-| Sub-issue: architecture | The decisions of the change | `architect` | At `architecture-merge` |
-| Sub-issue: one per task | A vertical slice, with its IDs, pack and tests | `plan` | When its PR merges into the change branch |
+| **Parent**: the change | *Automations*, or the user story | `specify`, when it starts, or the story itself | When every sub-issue is closed |
+| Sub-issue: architecture | The decisions of the change | `specify`, at `spec-approval` | At `architecture-merge` |
+| Sub-issue: design and mockup | The mockup of every screen and state in scope | `specify`, at `spec-approval` | At `design-merge` |
+| Sub-issue: plan | The tasks, the red tests and the packs. **Blocked by** architecture and design | `specify`, at `spec-approval` | When `analyze-judge` passes |
+| Sub-issue: implementation | `build` and `verify`, and the parent of the tasks. **Blocked by** plan | `specify`, at `spec-approval` | At `acceptance-merge` |
+| Sub-issue of implementation: one per task | A vertical slice, with its IDs, pack and tests | `plan` | When its PR merges into the change branch |
+| Sub-issue: launch | `publish` and the launch. **Blocked by** implementation | `specify`, at `spec-approval` | When the change is on for its whole audience ([`ARCH-08`](release.md)) |
+
+**The stage sub-issues are created at `spec-approval`, not before**: a spec that is dropped would
+leave them orphaned. Only the stages the change's track runs get one
+([tracks](../../modules/tracks/prd.md#which-stages-each-change-runs)): a `story` touching only `FR`
+has no architecture; a `fix` or a `chore` has only implementation. Architecture and design do not
+block each other: they run at the same time.
+
+They are created **unassigned, in the backlog and in no cycle**. Assigning them and putting them in
+a cycle is a person's call, when planning. Each one moving to in progress and to done adds its stage's
+start and end to the trace ([`ENT-23`](../domain/trace-event.md#steps)). A full change adds six
+issues before its tasks: in a tracker with a cap on active issues, closed ones are archived often.
 
 Each task's branch takes **its sub-issue's branch name**, so the tracker ties the PR to the task by
 itself, and the sub-issue ties the task to the change. Dependencies between tasks are `blocks` /

@@ -225,3 +225,7 @@
 {"path":"capabilities.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"adopt, cover, --adoption"}
 {"path":"foundations/domain/track.md","version":"1.1 → 1.2","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"The cover track"}
 {"path":"foundations/glossary.md","version":"1.7 → 1.8","date":"2026-11-11","change":"CHG-015","story":null,"stage":"specify","summary":"cover and hotfix among the tracks"}
+{"path":"foundations/architecture/branches.md","version":"1.2 → 1.3","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Stage sub-issues created at spec-approval, with blocks, unassigned"}
+{"path":"modules/specify/prd.md","version":"1.4 → 1.5","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Creates the stage sub-issues on approval"}
+{"path":"modules/plan/prd.md","version":"1.6 → 1.7","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Tasks hang from the implementation sub-issue"}
+{"path":"foundations/domain/trace-event.md","version":"1.1 → 1.2","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Stage sub-issues add start and end to the trace"}

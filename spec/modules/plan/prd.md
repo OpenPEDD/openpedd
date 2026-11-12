@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.6"
-updated: "2026-11-11"
+version: "1.7"
+updated: "2026-11-12"
 status: draft
 ---
 
@@ -43,7 +43,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 8. **Creates the flag**, off, if the change has one, with its removal task ([`ARCH-09`](../../foundations/architecture/flags.md)).
 9. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
 10. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it, the foundations it names, and **what the project's own checks will ask of it** (a REST route per action, an integration test per file, enums matching the database). If it does not fit in 20,000 tokens, the task is badly cut.
-11. **Create the tasks in the tracker as sub-issues of the change's issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
+11. **Create the tasks in the tracker as sub-issues of the change's implementation sub-issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
 12. **Lists the contradictions.** Crosses the plan and the architecture decisions against the spec in scope. Each clash (a limit, a retry, a role) goes to the person before `build`, with what each one says. The spec wins ([`RULE-23`](../../foundations/rules/cycle.md#rule-23)); the person decides whether the spec is what changes.
 13. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 
@@ -51,7 +51,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 | What | Anchored to |
 |---|---|
-| Tasks in the tracker, sub-issues of the change, with dependencies | Their `FR` / `NFR` |
+| Tasks in the tracker, sub-issues of the implementation sub-issue, with dependencies | Their `FR` / `NFR` |
 | Red tests, and `tests.lock` | Their `AC`s and contracts |
 | The empty contracts and the real version of the seam | Their contracts |
 | A context pack per task | The IDs it gathers |

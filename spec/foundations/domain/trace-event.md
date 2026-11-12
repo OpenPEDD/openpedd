@@ -2,8 +2,8 @@
 title: Trace Event
 description: ENT-23 · One state change of a trace link, appended and never edited
 owner: Kevin
-version: "1.1"
-updated: "2026-11-11"
+version: "1.2"
+updated: "2026-11-12"
 ---
 
 # ENT-23 · Trace Event
@@ -40,7 +40,7 @@ time, never the agent**, and appends one `step` event each time:
 
 Between `started` and `delivered` is the work; between `delivered` and `passed`, the review;
 between one step's `passed` and the next one's `started`, the wait. Steps that run in parallel each
-keep their own clock. git, the tracker and the deploy provider add PRs, reviews and deploys; agent
+keep their own clock. git, the tracker and the deploy provider add PRs, reviews and deploys, and the start and end of each stage's sub-issue; agent
 telemetry adds tokens and cost, joined by change and step ([`ARCH-11`](../architecture/pipeline.md#cost-per-change)).
 Work done outside the tool is reported by the agent, and recorded as **reported, not measured**.
 
