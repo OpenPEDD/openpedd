@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-12"
 status: draft
 ---
 
@@ -88,7 +88,7 @@ stage, to improve the process: `pedd status --time` and the Cloud dashboard.
 | Lead time | From the approved spec to production |
 | Work and wait | Of each stage's time, how much was work and how much waiting |
 | Rounds | How many times each judge rejected, and how many findings went back to `build` |
-| Agent cost | Tokens and cost per stage |
+| Agent cost | Tokens and cost per stage, and the context each call rereads: the first number to look at when a task cost too much |
 | Pipeline | CI time, and reruns of unstable tests |
 | Assumptions per task | Many means the spec came incomplete |
 | Delivery | Deploy frequency, change lead time, change failure rate and time to restore, from `publish` and Launch |

@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.2"
-updated: "2026-11-11"
+version: "1.3"
+updated: "2026-11-12"
 ---
 
 # What OpenPEDD can do
@@ -20,6 +20,7 @@ updated: "2026-11-11"
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
+| Run implementation in parallel in the cloud | One session per task, set per stage in `workspace.yaml`, with a quota guard | [Where agents run](foundations/architecture/agents.md#where-agents-run) |
 | Take a running product to the full framework | `pedd adopt`: its gaps per module, as small `cover` changes; an existing spec imported | [Adopting](modules/workspace/prd.md#adopting-a-running-product) |
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |

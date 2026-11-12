@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.5"
-updated: "2026-11-11"
+version: "1.6"
+updated: "2026-11-12"
 status: draft
 ---
 
@@ -32,7 +32,7 @@ opens to work.
 
 ## Procedure
 
-0. **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
+0. **Runs where the workspace says**: by default, one cloud session per task, launched by `pedd` once the quota allows ([`ARCH-04`](../../foundations/architecture/agents.md#where-agents-run)). **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
 1. **Reads the pack**, nothing else. If something is missing to build, it is an `assumption` (product) or a technical question to whoever runs the stage (technical).
 2. **Makes the tests pass in small, steady steps**, one criterion at a time, and cleans up. Unit tests are its call: where the logic deserves them, without a ritual around them.
 3. **Anchors the code** to the IDs it implements: `@spec FR-JOB-03@<hash>`, or a line in `spec.lock`.

@@ -2,7 +2,7 @@
 title: Backlog
 description: What was agreed or proposed for the framework and is not written in the spec yet
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-12"
 ---
 
@@ -32,4 +32,5 @@ Adopting the framework's latest decisions in Reclee's own spec and code.
 | Mocks | A `vi.mock` of a whole module uses `importOriginal`; no module reads another's schema when it loads |
 | pgTAP filter | Commit `pnpm test:db <word>` and note it in `AGENTS.md` |
 | Stage sub-issues | `/flujo` creates, at approval, the sub-issues of architecture, design, plan, implementation and launch, with their blocks |
+| Cloud pilot | One small task in a cloud session once the weekly quota resets: setup time, Supabase in 16 GB, cost per task with a small pack |
 | Automations spec | Settle: the job post's *Automatizaciones* tab; free API reads against no automations on `FREE`; whether choosing Shortlist with `STAGE_CHANGED` fires; the `CORE` plan scout lacks |

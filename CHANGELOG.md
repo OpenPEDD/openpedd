@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
 - At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.
 
 ## 0.1.0 · 2026-11-11 · beta

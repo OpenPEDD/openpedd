@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.4"
-updated: "2026-11-11"
+version: "1.5"
+updated: "2026-11-12"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -44,6 +44,42 @@ per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
 | **One commit per round** | Each round can be reviewed or reverted alone |
 | **A writer's report is read before committing**: what changed is looked at, and its assumptions go to the person. It ends with improvements not applied ([`RULE-25`](../rules/cycle.md#rule-25)) | A report sounds equally sure when it is wrong |
 | **Each agent opens its own browser tab**; the person's are not touched | The person keeps working |
+
+## Where agents run [#where-agents-run]
+
+Each stage runs where `workspace.yaml` says ([`DEC-18`](../../decisions/DEC-18-runners.md)):
+
+| Runner | Is | Default for |
+|---|---|---|
+| `local` | A session on the person's machine | `specify`, `architect`, `design`, `plan`: they run with the person, or prepare what the cloud uses |
+| `cloud` | One session per task in the agent provider's cloud: a fresh VM, the repo from GitHub, the project's setup script | `build` and `verify` |
+| `self-hosted` | The same sessions, routed to the project's own machine | When the cloud's resources fall short |
+
+```yaml
+runners:
+  build: { runner: cloud, environment: reclee, parallel: 4 }
+  verify: { runner: cloud, environment: reclee }
+```
+
+To launch a cloud task, `pedd`:
+
+1. **Pushes the change branch**: a cloud session sees only what is on the code host.
+2. **Checks the quota** (below).
+3. **Launches one session per unblocked task**, up to `parallel`, and writes each session's link on the task's sub-issue.
+4. **Opens each PR from outside the session** when the agent pushes, because the session's access to the code host may not open PRs.
+
+| Rule | Why |
+|---|---|
+| The environment's setup script installs and starts what the tests need (the database, the services), and holds **only test credentials** | Anyone who can use the environment can read its variables |
+| A cloud session costs the same tokens as a local one | The model runs in the same place; what changes is only the machine running the tools |
+| **The pack decides the cost**, not the runner: a task stays within its 20,000-token pack | Each call rereads the whole context; on Reclee's automations it was 275,000 tokens a call, and 95 % of the cost |
+
+### The quota guard
+
+Before a batch, `pedd` reads how much of the plan's window and week is used, and estimates the batch
+from the measured cost of similar tasks in the trace ([`ENT-23`](../domain/trace-event.md#steps)). If it
+does not fit, it launches fewer tasks or waits for the reset, and says so. **A batch is never started
+that the quota cannot finish**: tasks stopped halfway cost a round to pick up.
 
 ## MCP tools [#mcp-tools]
 

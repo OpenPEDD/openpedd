@@ -230,3 +230,10 @@
 {"path":"modules/plan/prd.md","version":"1.6 → 1.7","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Tasks hang from the implementation sub-issue"}
 {"path":"foundations/domain/trace-event.md","version":"1.1 → 1.2","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Stage sub-issues add start and end to the trace"}
 {"path":"open/backlog.md","version":"1.4","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Reclee: stage sub-issues from /flujo"}
+{"path":"decisions/DEC-18-runners.md","version":"1.0","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Where each stage runs; implementation in the cloud; measured cost of automations"}
+{"path":"foundations/architecture/agents.md","version":"1.4 → 1.5","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Where agents run, and the quota guard"}
+{"path":"foundations/domain/workspace.md","version":"1.2 → 1.3","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"runners"}
+{"path":"modules/build/prd.md","version":"1.5 → 1.6","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Runs where the workspace says"}
+{"path":"modules/cycle/prd.md","version":"1.3 → 1.4","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Context reread per call in agent cost"}
+{"path":"capabilities.md","version":"1.2 → 1.3","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Parallel implementation in the cloud"}
+{"path":"open/backlog.md","version":"1.4 → 1.5","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Cloud pilot for Reclee"}
