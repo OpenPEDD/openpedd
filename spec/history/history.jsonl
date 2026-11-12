@@ -229,3 +229,4 @@
 {"path":"modules/specify/prd.md","version":"1.4 → 1.5","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Creates the stage sub-issues on approval"}
 {"path":"modules/plan/prd.md","version":"1.6 → 1.7","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Tasks hang from the implementation sub-issue"}
 {"path":"foundations/domain/trace-event.md","version":"1.1 → 1.2","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Stage sub-issues add start and end to the trace"}
+{"path":"open/backlog.md","version":"1.4","date":"2026-11-12","change":"CHG-016","story":null,"stage":"specify","summary":"Reclee: stage sub-issues from /flujo"}
