@@ -2,8 +2,8 @@
 title: Backlog
 description: What was agreed or proposed for the framework and is not written in the spec yet
 owner: Kevin
-version: "1.5"
-updated: "2026-11-12"
+version: "1.6"
+updated: "2026-11-13"
 ---
 
 Agreed in conversation, waiting to be written. None of this governs
@@ -16,6 +16,12 @@ Each one lives in [questions.md](questions.md) with its ID, and closes there wit
 | Pending | Proposal |
 |---|---|
 | How does `pedd init` detect the stack: Specfy's Stack Analyser or its own rules? (`Q-22`) | Stack Analyser, tried on Reclee first |
+
+## Deferred
+
+| Item | Proposal |
+|---|---|
+| The model per task | Mechanical tasks (types, enums, a REST route) on a cheaper model. Kept on the selected model for now |
 
 ## For Reclee
 
@@ -32,5 +38,6 @@ Adopting the framework's latest decisions in Reclee's own spec and code.
 | Mocks | A `vi.mock` of a whole module uses `importOriginal`; no module reads another's schema when it loads |
 | pgTAP filter | Commit `pnpm test:db <word>` and note it in `AGENTS.md` |
 | Stage sub-issues | `/flujo` creates, at approval, the sub-issues of architecture, design, plan, implementation and launch, with their blocks |
+| Agents' context | A `test:agent` script in `scout` (vitest with the minimal reporter, pgTAP showing only failures), permission rules for migrations and generated code, and the read hook |
 | Cloud pilot | One small task in a cloud session once the weekly quota resets: setup time, Supabase in 16 GB, cost per task with a small pack |
 | Automations spec | Settle: the job post's *Automatizaciones* tab; free API reads against no automations on `FREE`; whether choosing Shortlist with `STAGE_CHANGED` fires; the `CORE` plan scout lacks |

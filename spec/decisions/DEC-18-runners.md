@@ -13,7 +13,7 @@ updated: "2026-11-12"
 `workspace.yaml` says where each stage runs: `local`, `cloud` or `self-hosted`. By default the
 stages run with the person (`specify`, `architect`, `design`) and `plan` run locally, and `build`
 and `verify` run in the cloud, one session per task. Before launching a batch, `pedd` checks the plan's
-quota. The detail is in [`ARCH-04`](../foundations/architecture/agents.md#where-agents-run).
+quota. The detail is in [`ARCH-12`](../foundations/architecture/running.md#where-agents-run).
 
 | Option | Why not |
 |---|---|

@@ -237,3 +237,11 @@
 {"path":"modules/cycle/prd.md","version":"1.3 → 1.4","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Context reread per call in agent cost"}
 {"path":"capabilities.md","version":"1.2 → 1.3","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Parallel implementation in the cloud"}
 {"path":"open/backlog.md","version":"1.4 → 1.5","date":"2026-11-12","change":"CHG-017","story":null,"stage":"specify","summary":"Cloud pilot for Reclee"}
+{"path":"foundations/architecture/agents.md","version":"1.5 → 1.6","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"Keeping the context small"}
+{"path":"modules/plan/prd.md","version":"1.7 → 1.8","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"The pack names the files and line ranges"}
+{"path":"modules/build/prd.md","version":"1.6 → 1.7","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"One task per session"}
+{"path":"modules/workspace/prd.md","version":"1.5 → 1.6","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"install sets permission rules and the read hook; doctor checks a test script for agents"}
+{"path":"modules/cycle/prd.md","version":"1.4","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"A task over 100,000 tokens is marked as badly cut"}
+{"path":"open/backlog.md","version":"1.5 → 1.6","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"Model per task deferred; Reclee context adoption"}
+{"path":"foundations/architecture/running.md","version":"1.0","summary":"ARCH-12: where agents run, the quota guard, keeping the context small, moved out of ARCH-04","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify"}
+{"path":"foundations/architecture/README.md","version":"1.3","summary":"ARCH-12 in the index","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify"}

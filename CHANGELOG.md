@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- Keeping agents' context small: one task per session, tests that report only failures, the pack pointing at the code, denied paths and a read hook; a task over 100,000 tokens is marked as badly cut.
 - Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
 - At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.
 

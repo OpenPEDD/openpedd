@@ -22,6 +22,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Feature flags](flags.md) | `ARCH-09` | OpenFeature, the flags table, and launching with one change |
 | [Testing](testing.md) | `ARCH-10` | Levels, permissions, contracts, languages, AI, measured quality |
 | [Pipeline](pipeline.md) | `ARCH-11` | What runs at each moment, selection by the spec, cost per change |
+| [Running agents](running.md) | `ARCH-12` | Where agents run, the quota guard, keeping their context small |
 
 ## How an architecture document is written
 

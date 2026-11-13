@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.5"
-updated: "2026-11-11"
+version: "1.6"
+updated: "2026-11-13"
 status: draft
 ---
 
@@ -26,7 +26,7 @@ pedd init reclee
 | `pedd init` | The whole onboarding | Once per project |
 | `pedd doctor` | What each stage has and lacks. Reads only | Any time |
 | `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
-| `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, without asking again | Whoever clones the project |
+| `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, and the permission rules and read hook that keep agents' context small, without asking again | Whoever clones the project |
 | `pedd adopt` | Lists what a running product lacks, per module, and turns each gap into a change ([adopting](#adopting-a-running-product)) | After `init`, on a product already in production |
 | `pedd launch` | Launches an accepted change ([`ARCH-08`](../../foundations/architecture/release.md)) | When it should reach customers |
 
@@ -131,6 +131,7 @@ missing tool never stops `init`.
 | `design` | Design system: `Brand System` filled, components in code | Required | It is defined first: extracted from the code, or chosen |
 | `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
 | `plan` · `build` | Unit and end-to-end test runners; running locally with a test user | Required | No red tests |
+| `build` · `verify` | A test script for agents that prints only the failures | Recommended | Every passing test is reread on every call |
 | `verify` | Mutation testing | Recommended | Tests are not checked for being able to fail |
 | Pipeline | CI, and a preview per branch | Required | Tests are not protected; nothing to accept on |
 | Tracker | One with sub-issues | Required | No trace per task |
