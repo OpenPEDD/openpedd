@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-14"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -16,7 +16,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Workspace repos](workspace.md) | `ARCH-03` | One repo per audience, the modes, several specs |
 | [Skills, agents and tools](agents.md) | `ARCH-04` | What each stage runs with, and the MCP tools |
 | [Traceability](traceability.md) | `ARCH-05` | How the chain of each requirement is built and kept |
-| [Branches and tasks](branches.md) | `ARCH-06` | The branch of each change, its design and task branches, and their sub-issues |
+| [Branches and tasks](branches.md) | `ARCH-06` | The branch of each change, its design and task branches, and their issues |
 | [Walkthroughs](walkthroughs.md) | `ARCH-07` | The levels of help inside the product, and how a Walkthrough stays fresh |
 | [Release](release.md) | `ARCH-08` | Environments, deploying and launching, hotfix, rollback, retiring |
 | [Feature flags](flags.md) | `ARCH-09` | OpenFeature, the flags table, and launching with one change |
