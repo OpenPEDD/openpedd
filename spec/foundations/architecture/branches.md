@@ -1,9 +1,9 @@
 ---
 title: Branches and tasks
-description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their sub-issues in the tracker
+description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their issues in the tracker
 owner: Kevin
-version: "1.3"
-updated: "2026-11-12"
+version: "1.4"
+updated: "2026-11-14"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -11,15 +11,15 @@ updated: "2026-11-12"
 Every change gets **one branch**, cut from the base. Everything the change needs (the mockup, the
 architecture, each task) is built on branches cut from it and merged back into it. **Only the finished change reaches
 the base**, once, through one pull request. The tracker mirrors the same tree: the change is the
-parent issue, and the design, the architecture and each task are its sub-issues.
+parent issue, each stage it runs is a sub-issue, and the tasks are a checklist in the implementation sub-issue.
 
 ```
 dev ────────────────────────────────────────────────────────────────────────●── (merge at acceptance-merge)
   └─ feat/automations ──────────●──────●──────●──────●──── dev merged in ───┘
         ├─ design/automations ──┘      │      │      │      PR to dev: opened when verify passes
         ├─ arch/automations ───────────┘      │      │
-        ├─ reclee-1301-triggers ──────────────┘      │
-        └─ reclee-1302-actions ──────────────────────┘
+        ├─ task/automations-triggers ─────────┘      │
+        └─ task/automations-actions ─────────────────┘
 ```
 
 ## The branches
@@ -29,7 +29,7 @@ dev ─────────────────────────�
 | **Change branch**: `feat/automations` | The base (`dev`) | The whole change | The base, through **one PR** | At `acceptance-merge` |
 | **Design branch**: `design/automations` | The change branch | The mockup, built in code ([design](../../modules/design/prd.md)) | The change branch | At `design-merge` |
 | **Architecture branch**: `arch/automations` | The change branch | The `ARCH` documents, the `ADR`s and the deltas, as they are decided ([architect](../../modules/architect/prd.md)) | The change branch | At `architecture-merge` |
-| **Task branch**: the tracker's branch name, `reclee-1301-triggers` | The change branch, after the design and the architecture merged | One task from `plan` | The change branch, through its own PR | When the task's tests and the pipeline checks pass |
+| **Task branch**: `task/automations-triggers` | The change branch, after the design and the architecture merged | One task from `plan` | The change branch, through its own PR | When the task's tests and the pipeline checks pass |
 
 The prefix of the change branch follows the track: `feat/` for `full` and `story`, `fix/`, `chore/`.
 The design branch cannot be `feat/automations/design`: git does not allow a branch under a name that
@@ -47,8 +47,7 @@ written there before each round. A decision that arrives late makes a screen get
 | Sub-issue: architecture | The decisions of the change | `specify`, at `spec-approval` | At `architecture-merge` |
 | Sub-issue: design and mockup | The mockup of every screen and state in scope | `specify`, at `spec-approval` | At `design-merge` |
 | Sub-issue: plan | The tasks, the red tests and the packs. **Blocked by** architecture and design | `specify`, at `spec-approval` | When `analyze-judge` passes |
-| Sub-issue: implementation | `build` and `verify`, and the parent of the tasks. **Blocked by** plan | `specify`, at `spec-approval` | At `acceptance-merge` |
-| Sub-issue of implementation: one per task | A vertical slice, with its IDs, pack and tests | `plan` | When its PR merges into the change branch |
+| Sub-issue: implementation | `build` and `verify`, with the tasks as a checklist. **Blocked by** plan | `specify`, at `spec-approval` | At `acceptance-merge` |
 | Sub-issue: launch | `publish` and the launch. **Blocked by** implementation | `specify`, at `spec-approval` | When the change is on for its whole audience ([`ARCH-08`](release.md)) |
 
 **The stage sub-issues are created at `spec-approval`, not before**: a spec that is dropped would
@@ -60,11 +59,20 @@ block each other: they run at the same time.
 They are created **unassigned, in the backlog and in no cycle**. Assigning them and putting them in
 a cycle is a person's call, when planning. Each one moving to in progress and to done adds its stage's
 start and end to the trace ([`ENT-23`](../domain/trace-event.md#steps)). A full change adds six
-issues before its tasks: in a tracker with a cap on active issues, closed ones are archived often.
+issues, however many tasks it has.
 
-Each task's branch takes **its sub-issue's branch name**, so the tracker ties the PR to the task by
-itself, and the sub-issue ties the task to the change. Dependencies between tasks are `blocks` /
-`blocked by` between sub-issues.
+### The tasks
+
+**Each task is one item of a checklist in the implementation sub-issue, not an issue.** The item
+holds the task's name, its IDs, what blocks it and its pack. `plan` writes the list; `build` writes
+each session's link next to its item and ticks it when the task's PR merges into the change branch.
+An issue adds nothing a task needs: its state is its PR, its order is in the plan, and its trace
+comes from git. One issue per task would put ten or fifteen issues that live for a day into every
+change, in trackers with a cap on active issues (Linear's is 250).
+
+Each task PR names the implementation sub-issue with a **non-closing word** in its description
+(`Part of RECLEE-1230`): the tracker links every PR to it, and the first merge does not close it.
+For the same reason the task branch carries no issue ID.
 
 ## The pull request to the base
 
@@ -93,7 +101,7 @@ branches:
   change: "{prefix}/{slug}" # feat/, fix/ or chore/, by track
   design: "design/{slug}"
   architecture: "arch/{slug}"
-  task: tracker             # the sub-issue's branch name
+  task: "task/{slug}-{task}" # one per checklist item
 ```
 
 ## Rules

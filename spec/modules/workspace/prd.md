@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.6"
-updated: "2026-11-13"
+version: "1.7"
+updated: "2026-11-14"
 status: draft
 ---
 
@@ -134,7 +134,7 @@ missing tool never stops `init`.
 | `build` · `verify` | A test script for agents that prints only the failures | Recommended | Every passing test is reread on every call |
 | `verify` | Mutation testing | Recommended | Tests are not checked for being able to fail |
 | Pipeline | CI, and a preview per branch | Required | Tests are not protected; nothing to accept on |
-| Tracker | One with sub-issues | Required | No trace per task |
+| Tracker | One with sub-issues | Required | No trace per stage |
 | `publish` | A help generator | Required with users | Help is not published |
 | `measure` | Analytics | Required to measure | The stage does not run |
 | Launch | Feature flags | If the project has them | What is on the base launches together |

@@ -2,8 +2,8 @@
 title: Traceability
 description: ARCH-05 · How each requirement's chain is gathered, stored and kept, locally and in the Cloud
 owner: Kevin
-version: "1.1"
-updated: "2026-11-09"
+version: "1.2"
+updated: "2026-11-14"
 ---
 
 # ARCH-05 · Traceability
@@ -18,7 +18,7 @@ all the time is the Cloud.
 | Kind | Read from | How it is tied to the ID |
 |---|---|---|
 | `spec` · `change` | The spec repo | The ID itself |
-| `origin` · `task` | The tracker, through its API | The anchor on the issue; each task is a sub-issue of the change |
+| `origin` · `task` | The tracker, through its API | The anchor on the issue; each task is an item of the implementation sub-issue's checklist |
 | `design` | The code host: the design branch and its merge | The mockup's anchor |
 | `code` | The code host: branches and pull requests | The PR's **Spec** section, and `spec.lock` |
 | `test` | CI results | The criterion ID in the test name |
