@@ -2,7 +2,7 @@
 title: Backlog
 description: What was agreed or proposed for the framework and is not written in the spec yet
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-17"
 ---
 
@@ -37,6 +37,9 @@ Adopting the framework's latest decisions in Reclee's own spec and code.
 | `scout` on Windows | `test/integration/isolation.mjs` builds paths with `\`; a full `vitest run` segfaults |
 | Mocks | A `vi.mock` of a whole module uses `importOriginal`; no module reads another's schema when it loads |
 | pgTAP filter | Commit `pnpm test:db <word>` and note it in `AGENTS.md` |
+| Component catalog in CI | `pnpm test:stories` and `test:stories:dark` as a required check, with Chromium in the job; screenshot baselines taken on the CI's Linux (scout#244) |
+| Extract the copies | The 21 class sets `check:duplicates` lists: the screen height under the Copilot bar (17 files), the CRM detail panes, the Copilot panel body |
+| Accessibility debt | The 38 stories still marked `a11y.test: "todo"`, each with its rule; `e2e/a11y-baseline.json` drops `ats` once the e2e confirm the new tokens |
 | Stage sub-issues | `/flujo` creates, at approval, the sub-issues of architecture, design and implementation, with their blocks and the `Spec:` anchor; it looks the anchor up first and reuses the story's issue as the parent |
 | Statuses from git | Linear's per-team workflow: draft PR → In progress, review requested → Pending approval, merge → Done. Stage PRs say `Closes`, task PRs `Part of`. The skills stop moving statuses by hand |
 | Definition of done | The template in the implementation sub-issue, ticked from the CI result |

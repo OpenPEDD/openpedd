@@ -267,3 +267,9 @@
 {"path":"modules/plan/prd.md","version":"1.9 → 1.10","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"A task item is one line; the pack is served by get_context_for"}
 {"path":"modules/specify/prd.md","version":"1.5 → 1.6","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Reuses the existing issue as parent, sub-issues with anchors, created once"}
 {"path":"open/backlog.md","version":"1.6 → 1.7","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"For Reclee: three sub-issues with anchors, statuses from git, definition of done, a first tidy run"}
+{"path":"foundations/market/component-catalogs.md","version":"1.0","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"MKT-06: Storybook MCP, Chromatic, shadcn registry; what Reclee's first catalog measured"}
+{"path":"foundations/market/README.md","version":"1.4 → 1.5","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"MKT-06 in the index"}
+{"path":"foundations/domain/foundation.md","version":"1.6 → 1.7","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"Brand System holds the component catalog"}
+{"path":"modules/design/prd.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"Diverge from the catalog; refactor reads the whole code; stories as an output; judge checks catalog, duplicates and axe in both themes"}
+{"path":"modules/workspace/prd.md","version":"1.7 → 1.8","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"Component catalog and duplicate check as recommended capabilities"}
+{"path":"open/backlog.md","version":"1.7 → 1.8","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"For Reclee: stories in CI, extract the copies, accessibility debt"}

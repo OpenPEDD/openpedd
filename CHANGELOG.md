@@ -6,6 +6,7 @@ the format; the spec of each version is the tag `v<version>`.
 ## Unreleased
 
 - A change's tasks are a checklist in the implementation sub-issue, not one issue each; task PRs link to it with `Part of`, which does not close it.
+- `design` builds from the product's component catalog: each screen is listed as the pieces it is made of before drawing, a piece of its own says why none fits and enters the catalog with its story, the refactor pass reads copies across the whole code, and `design-judge` checks the catalog, the duplicates and axe in light and dark (MKT-06).
 - Keeping agents' context small: one task per session, tests that report only failures, the pack pointing at the code, denied paths and a read hook; a task over 100,000 tokens is marked as badly cut.
 - Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
 - At `spec-approval`, one tracker sub-issue per stage with a branch and a gate (architecture, design, implementation), with their blocks, unassigned and in the backlog; `plan` is the first item of the implementation checklist and the launch is the parent's last status.

@@ -2,8 +2,8 @@
 title: design
 description: Stage 3 · Turns the spec into screens; another implementation of the spec, with its own judge and its closing passes
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -36,7 +36,8 @@ back when it fails, and the data enters through one file.
 
 ## Context pack
 
-The flows and `FR`s in scope · `Brand System` (tokens, components, libraries, patterns) ·
+The flows and `FR`s in scope · `Brand System` (tokens, components, libraries, patterns), and its
+**component catalog** through its MCP ([`MKT-06`](../../foundations/market/component-catalogs.md)) ·
 `Voice & Tone` · `Glossary` · `Roles & Permissions` · `Quality Standards` · the `Test Data` · the
 area's `ARCH` documents as they stand on the architecture branch. Budget: **12,000 tokens**,
 reference images aside.
@@ -47,7 +48,7 @@ reference images aside.
 2. **Screen inventory.** A list of every screen and state the scope needs: screen × empty, loading, error, no permission, no quota, with data. It goes in the design sub-issue.
 3. **Decides the big pieces first**: the visual base of the large ones (a canvas, an editor), and, for new navigation, where each new entry leads, confirmed with the person. These are the ones that get rebuilt when decided late.
 4. **Sets the seam.** Every read and every write goes through **one file**. `build` replaces that file, not the feature.
-5. **Diverge.** Two or three options for the key screens, with the real components and the test data, on the design branch. Each piece follows the app's pattern from the `Brand System`; a piece of its own is justified.
+5. **Diverge, from the catalog.** Before drawing, each screen is listed as the catalog pieces it is made of: a list of records is the product's table, a confirmation is its dialog, an empty state is its own. Then two or three options for the key screens, with those pieces and the test data, on the design branch. **A piece of its own says why no piece in the catalog fits**, and enters the catalog with its story.
 6. **The person picks** the winner and adjusts it with small prompts, with the product running. Each round of adjustments is one commit.
 7. **Converge.** The winner is completed in every state of the inventory, each reachable from a **development menu**, which includes a switch that makes every write fail. The menu renders only in development. What a Walkthrough would point at gets its `data-guide`.
 8. **Reads `architect`'s decisions before each round**, so a screen is not built against a model that already changed.
@@ -67,7 +68,7 @@ refactor comes late so it is not redone.
 | 1 | **Mobile** | Each screen at the `Brand System` widths: what overflows, headers that do not fit, tables, side panels, floating controls, touch areas. With `locales`, again on a pseudo-locale, for long text | No horizontal scroll, and every action can be reached |
 | 2 | **Skeletons** | The loading state draws what the real screen draws: columns, header, tabs, cards | Each skeleton matches the final layout |
 | 3 | **Writes** | **First lists every write**, then compares each with the contract in `Quality Standards` | With the switch on, every write goes back and says so |
-| 4 | **Refactor** | In order: copies of something shared, the same thing written twice in the feature, reads that skip the seam, dead code and copy keys, inline types in sample data. Extracts only what has **two real uses**, without changing behavior | Nothing left on the list |
+| 4 | **Refactor** | In order: copies of something shared, the same thing written twice **anywhere in the product** (the duplicate check reads the whole code, not the change), reads that skip the seam, dead code and copy keys, inline types in sample data. Extracts only what has **two real uses**, without changing behavior; each extracted piece gets its story | Nothing left on the list, and the duplicate check has nothing new |
 | 5 | **Improvements** | Only the small and safe. Anything larger is a suggestion in the design sub-issue | — |
 
 The contract for writes says when the change applies, what happens when it fails and who announces
@@ -79,6 +80,7 @@ success. A product that does not have it yet proposes it as a delta to `Quality 
 |---|---|
 | The screens in code, every state of the inventory, on the test data and with no backend | Its `FR`s, with `@spec` like any code |
 | The seam: the one file the data goes through | Its `FR`s |
+| A story for each new reusable piece: one per state, with a docblock that says **when to use it and when not**, which is what an agent reads to pick it | The piece |
 | The discarded options | Screenshots, archived in the change, no anchor |
 | `proposal` deltas | `changes/<CHG>/deltas/` |
 | `Delta Report` | `changes/<CHG>/reports/` |
@@ -87,7 +89,7 @@ success. A product that does not have it yet proposes it as a delta to `Quality 
 
 | Agent | Checks | Passes when |
 |---|---|---|
-| `design-judge` | **Coverage**: every `FR` has a screen, every state of the inventory is there, the copy comes from the glossary, the brand tokens are respected, every action respects the permissions. **Nielsen** heuristics and **WCAG 2.2 AA**. **In the browser**: opens every screen and uses every menu. **Data**: no read or write skips the seam. **Failure**: with the switch on, every write goes back. **Skeletons**: each matches its screen | All green |
+| `design-judge` | **Coverage**: every `FR` has a screen, every state of the inventory is there, the copy comes from the glossary, the brand tokens are respected, every action respects the permissions. **Nielsen** heuristics and **WCAG 2.2 AA**. **In the browser**: opens every screen and uses every menu. **Data**: no read or write skips the seam. **Failure**: with the switch on, every write goes back. **Skeletons**: each matches its screen. **Catalog**: each recurring piece is the catalog's own, no copy is new in the duplicate check, every new piece has its story, and every story passes axe in light and dark | All green |
 
 Then **`design-merge`**: the person reads the `Delta Report` and decides what enters.
 
@@ -97,6 +99,8 @@ Then **`design-merge`**: the person reads the `Delta Report` and decides what en
 - **Copy comes from the glossary.** A new word on screen is a delta to the glossary.
 - **Every state is designed**, not only the one with data: empty and error are where it fails most.
 - **A new component** not in the brand system is a delta to the brand system.
+- **A piece the catalog does not show does not exist for an agent.** Its story's docblock is what makes it findable; one without it is a name and props.
+- **Contrast fails in the theme, not the component.** When axe flags the same colour in many stories, the token is fixed once.
 - **The mockup has no backend.** It runs on the test data through the seam; wiring it is `build`'s work, on the same files.
 - **If it touches the same ID as `architect`**, whichever merges second sees the conflict.
 - **What pays the most**: the switch that fails every write, listing the writes before reviewing them, copying the app's patterns, reading `architect`'s decisions, and using every menu in the browser.
@@ -113,6 +117,7 @@ Then **`design-merge`**: the person reads the `Delta Report` and decides what en
 | Agent | `design-judge` | The judge |
 | MCP | `get_context_for` · `propose_delta` | The pack and the deltas |
 | Tool | The product's code and components | Where the mockup is built |
+| Tool | The component catalog and its MCP (Storybook, or equivalent) | Finding the piece before drawing one; its stories run as tests with axe |
 | Tool | Claude Design, or a design tool through an adapter | Exploring options before building them |
 
 ## Per track
@@ -127,4 +132,4 @@ Then **`design-merge`**: the person reads the `Delta Report` and decides what en
 
 Double Diamond · design tokens (W3C DTCG) · Nielsen · WCAG 2.2 · BMAD (UX expert) · Reclee Spec
 (design as another implementation, with its judge) · the design of Reclee's Automations, where the
-closing passes were first run end to end.
+closing passes were first run end to end · Storybook MCP and Reclee's first component catalog ([`MKT-06`](../../foundations/market/component-catalogs.md)).
