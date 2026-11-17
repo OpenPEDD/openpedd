@@ -1,12 +1,12 @@
 ---
 title: Landing parallel changes
-description: ARCH-16 · Seeing early which changes in flight overlap, keeping them close to the base, and the order they land in
+description: ARCH-17 · Seeing early which changes in flight overlap, keeping them close to the base, and the order they land in
 owner: Kevin
 version: "1.0"
 updated: "2026-11-17"
 ---
 
-# ARCH-16 · Landing parallel changes
+# ARCH-17 · Landing parallel changes
 
 With delegated stages, many change branches finish within hours of each other, and each one met the
 base only when its PR opened ([`ARCH-06`](branches.md#the-pull-request-to-the-base)). The conflicts

@@ -129,7 +129,7 @@ told to keep quiet loses what only it saw. Seeing and doing are kept apart.
 An agent that needs the person gathers **every question it has** and asks them in one sheet: each with
 what breaks if it is guessed, its options and a recommendation. It never asks one question, waits, and
 asks the next. Before the delegated stages, a sweep asks what every stage ahead still lacks
-([`ARCH-15`](../architecture/sweep.md)); after it, a gap is assumed, not asked ([`RULE-13`](#rule-13)).
+([`ARCH-16`](../architecture/sweep.md)); after it, a gap is assumed, not asked ([`RULE-13`](#rule-13)).
 
 **Why:** a question asked alone costs the person a wait per question, and the work stops at each one.
 With a recommendation, most answers are one word.

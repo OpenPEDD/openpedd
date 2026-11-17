@@ -1,12 +1,12 @@
 ---
 title: Sweep
-description: ARCH-15 · Every question a change still has, from specify, architect, design and plan, asked at once with a recommendation each
+description: ARCH-16 · Every question a change still has, from specify, architect, design and plan, asked at once with a recommendation each
 owner: Kevin
 version: "1.0"
 updated: "2026-11-17"
 ---
 
-# ARCH-15 · Sweep: every question at once
+# ARCH-16 · Sweep: every question at once
 
 A change that asks as it goes keeps the person waiting: one question, an answer, ten minutes of work,
 the next question. **A sweep finds every question the change still has, in every stage ahead, and

@@ -1,16 +1,16 @@
 ---
 title: Asking and landing
-description: MKT-05 · How tools ask the person what is missing, and how merge queues order and land parallel PRs. Surveyed 2026-11-17
+description: MKT-07 · How tools ask the person what is missing, and how merge queues order and land parallel PRs. Surveyed 2026-11-17
 owner: Kevin
 version: "1.0"
 updated: "2026-11-17"
 ---
 
-# MKT-05 · Asking and landing
+# MKT-07 · Asking and landing
 
 Surveyed on 2026-11-17 from what was already known of each tool's docs. **Not re-read for this
 survey** ([`RULE-22`](../rules/cycle.md#rule-22)): each row is to be checked against the current docs,
-code and issues before `ARCH-15` or `ARCH-16` is implemented.
+code and issues before `ARCH-16` or `ARCH-17` is implemented.
 
 ## How tools ask the person
 

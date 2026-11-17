@@ -16,7 +16,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [How tools onboard a project](onboarding.md) | `MKT-02` | How others start on a new or existing project, and detect its stack |
 | [Delivery and in-product help](delivery.md) | `MKT-03` | Guided help, flags, releases and testing tools |
 | [Agent setups and AI review](agent-tooling.md) | `MKT-04` | Tools that configure coding agents and review their changes with AI |
-| [Asking and landing](asking-and-landing.md) | `MKT-05` | How tools ask the person, and how merge queues order and land parallel PRs |
+| [Asking and landing](asking-and-landing.md) | `MKT-07` | How tools ask the person, and how merge queues order and land parallel PRs |
 
 ## How a market document is written
 
