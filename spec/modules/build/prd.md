@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.8"
-updated: "2026-11-13"
+version: "1.10"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -32,14 +32,14 @@ opens to work.
 
 ## Procedure
 
-0. **Runs where the workspace says**: by default, one cloud session per task, launched by `pedd` once the quota allows ([`ARCH-12`](../../foundations/architecture/running.md#where-agents-run)). **Cuts the task branch** from the change branch, with the sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
+0. **Runs where the workspace says**: by default, one cloud session per task, launched by `pedd` once the quota allows ([`ARCH-12`](../../foundations/architecture/running.md#where-agents-run)). **Cuts the task branch** from the change branch, named after the task ([`ARCH-06`](../../foundations/architecture/tracker.md#the-tasks)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
 1. **Reads the pack**, nothing else, and **one task per session**: never the next one in the same context ([`ARCH-12`](../../foundations/architecture/running.md#keeping-the-context-small)). If something is missing to build, it is an `assumption` (product) or a technical question to whoever runs the stage (technical).
 2. **Makes the tests pass in small, steady steps**, one criterion at a time, and cleans up. Unit tests are its call: where the logic deserves them, without a ritual around them.
 3. **Anchors the code** to the IDs it implements: `@spec FR-JOB-03@<hash>`, or a line in `spec.lock`.
 4. **Runs the `Delivery Pipeline` checks**: lint, types, tests, fitness functions.
 5. **Records deltas**: a `deviation` when the spec cannot be met as written (with the technical reason and the alternative); an `assumption` when it had to fill a gap.
 6. **Opens the PR against the change branch**, never the base, with the **Spec** section: IDs covered, deviations, assumptions. Even if it says there are none.
-7. **Moves the task** to review in the tracker. The sub-issue closes when the PR merges into the change branch.
+7. **Ticks the task** in the implementation sub-issue's checklist when the PR merges into the change branch. The PR names that sub-issue with a non-closing word (`Part of …`), so the merge does not close it.
 
 ## When findings come back [#when-findings-come-back]
 
@@ -87,7 +87,7 @@ is `verify`. Passes when everything is green.
 | Skill | `/build` | One whole task |
 | Skill | `/build-batch` | Several tasks with no dependencies between them, each in its own session |
 | Skill | `/build-findings` | The findings that came back: fix, answer or stop ([above](#when-findings-come-back)) |
-| MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas and the status |
+| MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas, and ticking the task. Statuses move from the PRs ([`ARCH-15`](../../foundations/architecture/tracker.md#what-moves-a-status)) |
 
 ## Per track
 

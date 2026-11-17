@@ -2,8 +2,8 @@
 title: Running agents
 description: ARCH-12 · Where each stage's agents run, the quota guard, and keeping their context small
 owner: Kevin
-version: "1.1"
-updated: "2026-11-13"
+version: "1.2"
+updated: "2026-11-17"
 ---
 
 # ARCH-12 · Running agents
@@ -30,7 +30,7 @@ To launch a cloud task, `pedd`:
 
 1. **Pushes the change branch**: a cloud session sees only what is on the code host.
 2. **Checks the quota** (below).
-3. **Launches one session per unblocked task**, up to `parallel`, and writes each session's link on the task's sub-issue.
+3. **Launches one session per unblocked task**, up to `parallel`, and writes each session's link next to its task in the implementation sub-issue's checklist.
 4. **Opens each PR from outside the session** when the agent pushes, because the session's access to the code host may not open PRs.
 
 | Rule | Why |

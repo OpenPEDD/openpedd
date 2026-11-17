@@ -2,8 +2,8 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.4"
-updated: "2026-11-11"
+version: "1.5"
+updated: "2026-11-14"
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -52,7 +52,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Mockup | `FR` | The code, built on the design branch | `design` | `@spec`, like code |
 | Test | `AC` · contract | The code | `plan` | The criterion ID in the test name |
 | Code | `FR` · `NFR` | The code | `build` | `spec.lock` or `@spec` |
-| Task | `FR` · `NFR` | The tracker, a sub-issue of the change | `plan` | Issue attachment |
+| Task | `FR` · `NFR` | The tracker, an item of the implementation sub-issue's checklist | `plan` | Its IDs on the item |
 | Pull request | The task, or the whole change | The code host: to the change branch, or to the base | `build` · `verify` | Its **Spec** section |
 | API Reference | Contracts | `docs/` or `<project>-docs` | `publish` | Generated |
 | Help Center article | `FR` | `help/` or `<project>-help` | `publish` | `sources` in frontmatter |

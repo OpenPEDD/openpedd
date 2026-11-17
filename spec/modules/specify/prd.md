@@ -2,7 +2,7 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.6"
+version: "1.7"
 updated: "2026-11-17"
 status: draft
 ---
@@ -56,7 +56,7 @@ in the PRD** ([`RULE-01`](../../foundations/rules/writing.md#rule-01)).
 | The PRD or the delta | `draft` → `designing` on approval |
 | New `Q`s | Open; none blocking |
 | The hash of each ID | Computed on approval |
-| The change's issue, and on approval **one sub-issue per stage its track runs**, with their blocks, unassigned and in the backlog ([`ARCH-06`](../../foundations/architecture/branches.md#the-tracker)) | Anchored to the IDs |
+| The change's issue (the one that already exists, if any), and on approval **one sub-issue per stage with a branch and a gate that its track runs**, with their blocks and anchors, unassigned and in the backlog. Created once: it looks up the anchor and updates before creating ([`ARCH-15`](../../foundations/architecture/tracker.md)) | Anchored to the IDs |
 
 ## Judge
 

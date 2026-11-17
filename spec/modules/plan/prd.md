@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.9"
-updated: "2026-11-13"
+version: "1.11"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -37,13 +37,13 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 2. **Checks dependencies.** A requirement whose `depends_on` is not `live` is left out of the change, or its tasks wait blocked by it. **It is never built halfway**, with a node that saves but cannot run.
 3. **Cut into vertical slices**, hardest-first: each task crosses whatever it needs (data, logic, UI) for a piece of behavior that works on its own.
 4. **Check each task with INVEST**: independent, negotiable, valuable, estimable, small, testable.
-5. **Order**: `blocks` / `blocked by` between tasks. What depends on nothing runs in parallel.
+5. **Order**: what blocks each task. What depends on nothing runs in parallel.
 6. **Leaves the contracts empty**: the signatures, the endpoints and the real version of the seam, answering *not implemented*. The tests compile against them, and `build` fills them.
 7. **Write the tests, failing**, each at the cheapest level that proves it ([`ARCH-10`](../../foundations/architecture/testing.md)): one per `AC` with its `level`; one per **contract × error × role**; one per cell of the permission matrix, allowed and denied; the `NFR` fitness functions; one per operation with more than one write, **cut in the middle**, from `architect`'s design; and `eval`s over a golden set for what varies between runs. **Acceptance tests run against the real version of the seam, never the sample data**: the mockup already shows the right screen, so a test on it passes with nothing built. Each test is run and **seen failing on an assertion**, for the reason its criterion states.
 8. **Creates the flag**, off, if the change has one, with its removal task ([`ARCH-09`](../../foundations/architecture/flags.md)).
 9. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
 10. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it, the foundations it names, **the files it will touch and their relevant line ranges**, and **what the project's own checks will ask of it** (a REST route per action, an integration test per file, enums matching the database). If it does not fit in 20,000 tokens, the task is badly cut.
-11. **Create the tasks in the tracker as sub-issues of the change's implementation sub-issue**, each with its IDs, its pack, its dependencies and its anchor. Each task's branch takes its sub-issue's branch name ([`ARCH-06`](../../foundations/architecture/branches.md)).
+11. **Write the tasks as a checklist in the change's implementation sub-issue**, one line per task with its name, its IDs and what blocks it; the pack is served by `get_context_for`, not copied there ([`ARCH-15`](../../foundations/architecture/tracker.md#the-tasks)).
 12. **Lists the contradictions.** Crosses the plan and the architecture decisions against the spec in scope. Each clash (a limit, a retry, a role) goes to the person before `build`, with what each one says. The spec wins ([`RULE-23`](../../foundations/rules/cycle.md#rule-23)); the person decides whether the spec is what changes.
 13. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 
@@ -51,7 +51,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 | What | Anchored to |
 |---|---|
-| Tasks in the tracker, sub-issues of the implementation sub-issue, with dependencies | Their `FR` / `NFR` |
+| The tasks, a checklist in the implementation sub-issue, with what blocks each | Their `FR` / `NFR` |
 | Red tests, and `tests.lock` | Their `AC`s and contracts |
 | The empty contracts and the real version of the seam | Their contracts |
 | A context pack per task | The IDs it gathers |

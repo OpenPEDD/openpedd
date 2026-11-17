@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.10"
+version: "1.12"
 updated: "2026-11-17"
 ---
 
@@ -57,7 +57,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
 | Footprint · overlap · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
-| Parent issue · sub-issue | The change and its tasks in the tracker | [`ARCH-06`](architecture/branches.md) |
+| Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-15`](architecture/tracker.md) |
+| Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |
 | Seam | The one file a mockup's data goes through; `plan` leaves its real version empty and `build` fills it | [design](../modules/design/prd.md) |
 | Closing passes | Mobile, skeletons, writes, refactor, improvements, in that order | [design](../modules/design/prd.md#closing-passes) |

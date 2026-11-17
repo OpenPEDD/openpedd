@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.7"
-updated: "2026-11-13"
+version: "1.9"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -132,12 +132,14 @@ missing tool never stops `init`.
 |---|---|---|---|
 | `specify` · `architect` | Web research | Recommended | Fewer references, and the `Delta Report` says so |
 | `design` | Design system: `Brand System` filled, components in code | Required | It is defined first: extracted from the code, or chosen |
+| `design` · `build` | A component catalog agents can query: a story per reusable piece, its MCP, its stories run as tests with axe | Recommended | Agents redraw pieces that exist, and contrast is checked by hand |
+| `design` · `verify` | A duplicate check over the whole code: the same markup written by hand in 3+ files | Recommended | Copies are found only inside the change |
 | `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
 | `plan` · `build` | Unit and end-to-end test runners; running locally with a test user | Required | No red tests |
 | `build` · `verify` | A test script for agents that prints only the failures | Recommended | Every passing test is reread on every call |
 | `verify` | Mutation testing | Recommended | Tests are not checked for being able to fail |
 | Pipeline | CI, and a preview per branch | Required | Tests are not protected; nothing to accept on |
-| Tracker | One with sub-issues | Required | No trace per task |
+| Tracker | One with sub-issues | Required | No trace per stage |
 | `publish` | A help generator | Required with users | Help is not published |
 | `measure` | Analytics | Required to measure | The stage does not run |
 | Launch | Feature flags | If the project has them | What is on the base launches together |

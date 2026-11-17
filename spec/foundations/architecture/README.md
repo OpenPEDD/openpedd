@@ -2,7 +2,7 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.5"
+version: "1.7"
 updated: "2026-11-17"
 ---
 
@@ -16,7 +16,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Workspace repos](workspace.md) | `ARCH-03` | One repo per audience, the modes, several specs |
 | [Skills, agents and tools](agents.md) | `ARCH-04` | What each stage runs with, and the MCP tools |
 | [Traceability](traceability.md) | `ARCH-05` | How the chain of each requirement is built and kept |
-| [Branches and tasks](branches.md) | `ARCH-06` | The branch of each change, its design and task branches, and their sub-issues |
+| [Branches and tasks](branches.md) | `ARCH-06` | The branch of each change, and its design, architecture and task branches |
 | [Walkthroughs](walkthroughs.md) | `ARCH-07` | The levels of help inside the product, and how a Walkthrough stays fresh |
 | [Release](release.md) | `ARCH-08` | Environments, deploying and launching, hotfix, rollback, retiring |
 | [Feature flags](flags.md) | `ARCH-09` | OpenFeature, the flags table, and launching with one change |
@@ -25,6 +25,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Running agents](running.md) | `ARCH-12` | Where agents run, the quota guard, keeping their context small |
 | [Reviewing a change](review.md) | `ARCH-13` | The layers of review, what blocks, the judges in CI, the person's approval |
 | [Review lenses](review-lenses.md) | `ARCH-14` | What each hunter looks at, and the default checklist |
+| [The tracker](tracker.md) | `ARCH-15` | The issues of a change, its tasks, what moves their status, keeping it clean |
 | [Sweep](sweep.md) | `ARCH-16` | Every open question of a change, from every stage ahead, asked at once |
 | [Landing parallel changes](landing.md) | `ARCH-17` | The overlap of changes in flight, syncing them, and the order they land in |
 
