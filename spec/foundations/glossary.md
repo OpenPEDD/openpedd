@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.9"
-updated: "2026-11-13"
+version: "1.10"
+updated: "2026-11-17"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -55,6 +55,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | `architect.mode`: `guided` · `delegated` | How architecture runs | [`DEC-08`](../decisions/DEC-08-architect-mode.md) |
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
+| Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-15`](architecture/sweep.md) |
+| Footprint · overlap · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, and the order changes reach the base | [`ARCH-16`](architecture/landing.md) |
 | Parent issue · sub-issue | The change and its tasks in the tracker | [`ARCH-06`](architecture/branches.md) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |
 | Seam | The one file a mockup's data goes through; `plan` leaves its real version empty and `build` fills it | [design](../modules/design/prd.md) |

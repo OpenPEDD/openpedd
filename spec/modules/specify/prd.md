@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.5"
-updated: "2026-11-12"
+version: "1.6"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -32,7 +32,7 @@ complete the PRD, the fewer assumptions in the middle.**
 
 ## Procedure
 
-1. **Frame.** Who, what triggers it, in what state it ends. The goal as the job the user hires the product for.
+1. **Frame.** Who, what triggers it, in what state it ends. The goal as the job the user hires the product for. Then **a sweep** asks, in one sheet, everything the rest of the change still lacks ([`ARCH-15`](../../foundations/architecture/sweep.md)); the steps below write the answers.
 2. **Class and metric.** New, improvement or debt. The `Success metric` with `baseline`, `target` and `review date`, and the `Tracking Plan` event that measures it.
 3. **Appetite and `Out of scope`.** How much it is worth spending, and what is not built. The risks.
 4. **Flows.** The `Main flow`, then the `Alternate flows` (they branch and return) and the `Exception flows` (they end the flow).
@@ -85,6 +85,7 @@ Then **`spec-approval`**: the person approves.
 | Skill | `/specify-story` | The delta of a story |
 | Skill | `/specify-define` | Placing a loose definition in the right layer |
 | Skill | `/specify-fix-doc` | Correcting, splitting, moving or retiring a document |
+| Skill | `/sweep` | Every open question of the change, at any stage, in one sheet ([`ARCH-15`](../../foundations/architecture/sweep.md)) |
 | Skill | `/idea` | Sending something to `open/ideas.md` without breaking the work |
 | Agent | `cold-read-judge` · `prd-judge` | The judges |
 | MCP | `search_spec` · `resolve_id` · `get_history` | Read before writing |

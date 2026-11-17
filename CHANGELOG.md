@@ -13,6 +13,8 @@ the format; the spec of each version is the tag `v<version>`.
 - `/build-findings`: fix the real findings, answer the rest, stop where the spec is wrong.
 - Writing safely: `--dry-run`, backups, sensitive paths denied, the agent never installed. Personal settings that can only spend less than the team's.
 - Skills through `npx skills add`, and a catalog of extensions by GitHub topic.
+- `pedd sweep`: every open question of a change, from every stage ahead, asked at once with a recommendation each; `architect` in `guided` asks through it (RULE-26).
+- Landing parallel changes: `pedd overlap` warns early, `pedd sync` keeps changes in flight close to the base, `pedd land` computes the order and lands them one at a time.
 - Keeping agents' context small: one task per session, tests that report only failures, the pack pointing at the code, denied paths and a read hook; a task over 100,000 tokens is marked as badly cut.
 - Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
 - At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.

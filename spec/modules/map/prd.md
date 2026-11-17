@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD
 owner: Kevin
-version: "1.2"
-updated: "2026-11-11"
+version: "1.3"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -41,7 +41,7 @@ Per module, never the whole repo: the module's files, its routes and its data sc
 1. Builds the index of the modules, across every code repo and component, and confirms it with the person. Each module starts `unmapped`.
 2. Extracts the `Domain Model`: entities, fields, states.
 3. Extracts the `Roles & Permissions` the code enforces.
-4. Writes the foundations it can infer (conventions, patterns, the `Brand System` from the components) and marks the rest empty. For each convention it finds, **asks why it exists**, one at a time. The list of technologies stays in `.pedd/stack.json` ([`DEC-12`](../../decisions/DEC-12-stack-derived.md)).
+4. Writes the foundations it can infer (conventions, patterns, the `Brand System` from the components) and marks the rest empty. For the conventions it finds, **asks why each exists**, all in one sheet ([`RULE-26`](../../foundations/rules/cycle.md#rule-26)). The list of technologies stays in `.pedd/stack.json` ([`DEC-12`](../../decisions/DEC-12-stack-derived.md)).
 5. **Per module, when a change first touches it** or with `/map --all`: writes the PRD **of what the code does today**: flows, `FR`, `NFR`, contracts.
 6. Opens a `Q` for what the code cannot answer: why something exists, what should happen in an uncovered case.
 7. Anchors the module's code to the new IDs, and the module moves from `unmapped` to `live`.

@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.4"
-updated: "2026-11-13"
+version: "1.5"
+updated: "2026-11-17"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -25,6 +25,8 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Running agents](running.md) | `ARCH-12` | Where agents run, the quota guard, keeping their context small |
 | [Reviewing a change](review.md) | `ARCH-13` | The layers of review, what blocks, the judges in CI, the person's approval |
 | [Review lenses](review-lenses.md) | `ARCH-14` | What each hunter looks at, and the default checklist |
+| [Sweep](sweep.md) | `ARCH-15` | Every open question of a change, from every stage ahead, asked at once |
+| [Landing parallel changes](landing.md) | `ARCH-16` | The overlap of changes in flight, syncing them, and the order they land in |
 
 ## How an architecture document is written
 
