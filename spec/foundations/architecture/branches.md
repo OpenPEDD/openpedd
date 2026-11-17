@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their issues in the tracker
 owner: Kevin
-version: "1.4"
-updated: "2026-11-14"
+version: "1.5"
+updated: "2026-11-17"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -11,7 +11,8 @@ updated: "2026-11-14"
 Every change gets **one branch**, cut from the base. Everything the change needs (the mockup, the
 architecture, each task) is built on branches cut from it and merged back into it. **Only the finished change reaches
 the base**, once, through one pull request. The tracker mirrors the same tree: the change is the
-parent issue, each stage it runs is a sub-issue, and the tasks are a checklist in the implementation sub-issue.
+parent issue, each stage with a branch and a gate is a sub-issue, and the tasks are a checklist in the implementation
+sub-issue ([`ARCH-15`](tracker.md)).
 
 ```
 dev ────────────────────────────────────────────────────────────────────────●── (merge at acceptance-merge)
@@ -41,38 +42,10 @@ written there before each round. A decision that arrives late makes a screen get
 
 ## The tracker
 
-| Issue | Is | Created by | Closes |
-|---|---|---|---|
-| **Parent**: the change | *Automations*, or the user story | `specify`, when it starts, or the story itself | When every sub-issue is closed |
-| Sub-issue: architecture | The decisions of the change | `specify`, at `spec-approval` | At `architecture-merge` |
-| Sub-issue: design and mockup | The mockup of every screen and state in scope | `specify`, at `spec-approval` | At `design-merge` |
-| Sub-issue: plan | The tasks, the red tests and the packs. **Blocked by** architecture and design | `specify`, at `spec-approval` | When `analyze-judge` passes |
-| Sub-issue: implementation | `build` and `verify`, with the tasks as a checklist. **Blocked by** plan | `specify`, at `spec-approval` | At `acceptance-merge` |
-| Sub-issue: launch | `publish` and the launch. **Blocked by** implementation | `specify`, at `spec-approval` | When the change is on for its whole audience ([`ARCH-08`](release.md)) |
-
-**The stage sub-issues are created at `spec-approval`, not before**: a spec that is dropped would
-leave them orphaned. Only the stages the change's track runs get one
-([tracks](../../modules/tracks/prd.md#which-stages-each-change-runs)): a `story` touching only `FR`
-has no architecture; a `fix` or a `chore` has only implementation. Architecture and design do not
-block each other: they run at the same time.
-
-They are created **unassigned, in the backlog and in no cycle**. Assigning them and putting them in
-a cycle is a person's call, when planning. Each one moving to in progress and to done adds its stage's
-start and end to the trace ([`ENT-23`](../domain/trace-event.md#steps)). A full change adds six
-issues, however many tasks it has.
-
-### The tasks
-
-**Each task is one item of a checklist in the implementation sub-issue, not an issue.** The item
-holds the task's name, its IDs, what blocks it and its pack. `plan` writes the list; `build` writes
-each session's link next to its item and ticks it when the task's PR merges into the change branch.
-An issue adds nothing a task needs: its state is its PR, its order is in the plan, and its trace
-comes from git. One issue per task would put ten or fifteen issues that live for a day into every
-change, in trackers with a cap on active issues (Linear's is 250).
-
-Each task PR names the implementation sub-issue with a **non-closing word** in its description
-(`Part of RECLEE-1230`): the tracker links every PR to it, and the first merge does not close it.
-For the same reason the task branch carries no issue ID.
+The change is a parent issue, each stage with a branch and a gate is a sub-issue, and the tasks are
+a checklist in the implementation sub-issue: who creates them, what moves their status and how the
+tracker is kept clean are in [`ARCH-15`](tracker.md). Each task PR names the implementation
+sub-issue with a non-closing word, so the task branch carries no issue ID.
 
 ## The pull request to the base
 

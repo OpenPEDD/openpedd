@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.9"
-updated: "2026-11-14"
+version: "1.10"
+updated: "2026-11-17"
 status: draft
 ---
 
@@ -43,7 +43,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 8. **Creates the flag**, off, if the change has one, with its removal task ([`ARCH-09`](../../foundations/architecture/flags.md)).
 9. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
 10. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it, the foundations it names, **the files it will touch and their relevant line ranges**, and **what the project's own checks will ask of it** (a REST route per action, an integration test per file, enums matching the database). If it does not fit in 20,000 tokens, the task is badly cut.
-11. **Write the tasks as a checklist in the change's implementation sub-issue**, one item per task with its IDs, its pack and what blocks it ([`ARCH-06`](../../foundations/architecture/branches.md#the-tasks)).
+11. **Write the tasks as a checklist in the change's implementation sub-issue**, one line per task with its name, its IDs and what blocks it; the pack is served by `get_context_for`, not copied there ([`ARCH-15`](../../foundations/architecture/tracker.md#the-tasks)).
 12. **Lists the contradictions.** Crosses the plan and the architecture decisions against the spec in scope. Each clash (a limit, a retry, a role) goes to the person before `build`, with what each one says. The spec wins ([`RULE-23`](../../foundations/rules/cycle.md#rule-23)); the person decides whether the spec is what changes.
 13. **Record assumptions.** If planning needs a product decision the spec does not make, the reasonable option is picked and recorded as an `assumption` ([`RULE-13`](../../foundations/rules/cycle.md#rule-13)).
 

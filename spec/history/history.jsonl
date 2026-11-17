@@ -256,3 +256,14 @@
 {"path":"modules/build/prd.md","version":"1.7 → 1.8","date":"2026-11-14","change":"CHG-020","story":null,"stage":"specify","summary":"Task branch named after the task; ticks the checklist item; PR says Part of"}
 {"path":"modules/plan/prd.md","version":"1.8 → 1.9","date":"2026-11-14","change":"CHG-020","story":null,"stage":"specify","summary":"Tasks as a checklist in the implementation sub-issue"}
 {"path":"modules/workspace/prd.md","version":"1.6 → 1.7","date":"2026-11-14","change":"CHG-020","story":null,"stage":"specify","summary":"Without sub-issues there is no trace per stage"}
+{"path":"foundations/architecture/tracker.md","version":"1.0","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"ARCH-15: three stage sub-issues, created once by specify with an anchor, a one-line task checklist and a definition of done ticked from CI, statuses moved by PR events, /tracker-tidy"}
+{"path":"foundations/market/trackers.md","version":"1.0","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"MKT-05: Linear statuses from PR events, closing and non-closing words, duplicates"}
+{"path":"foundations/architecture/branches.md","version":"1.4 → 1.5","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"The tracker moved to ARCH-15"}
+{"path":"foundations/architecture/README.md","version":"1.4 → 1.5","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"ARCH-15 in the index; ARCH-06 row is branches only"}
+{"path":"foundations/market/README.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"MKT-05 in the index"}
+{"path":"foundations/domain/change.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Sub-issues are the stages with a branch and a gate"}
+{"path":"foundations/glossary.md","version":"1.9 → 1.10","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Parent issue points at ARCH-15; anchor line"}
+{"path":"modules/build/prd.md","version":"1.8 → 1.9","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Statuses move from the PRs, not from build"}
+{"path":"modules/plan/prd.md","version":"1.9 → 1.10","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"A task item is one line; the pack is served by get_context_for"}
+{"path":"modules/specify/prd.md","version":"1.5 → 1.6","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Reuses the existing issue as parent, sub-issues with anchors, created once"}
+{"path":"open/backlog.md","version":"1.6 → 1.7","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"For Reclee: three sub-issues with anchors, statuses from git, definition of done, a first tidy run"}
