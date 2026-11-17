@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.8"
-updated: "2026-11-11"
+version: "1.9"
+updated: "2026-11-13"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -65,6 +65,9 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Decision on a delta: `keep` · `change` · `reject` | What `accept` decides | [`modules/accept`](../modules/accept/prd.md) |
 | `Delta Report` · `Acceptance Report` | What a person reads | [`ENT-08`](domain/report.md) |
 | `Judge` | The reviewer of a stage | [`ENT-12`](domain/judge.md) |
+| Lens · hunter · refuter | What one judge session looks at · a judge session on one lens · `confirm-judge`, trying to prove a finding wrong | [`ARCH-13`](architecture/review.md) |
+| Review signals · `/approve` · `/pedd recheck` · `/pedd override` | What a person reads first on a PR · a person's approval · rerun the judges · let one commit through | [`ARCH-13`](architecture/review.md) |
+| Blocking · advisory | Whether a finding stops the change, decided by `pedd`, never by the judge | [`ARCH-13`](architecture/review.md) |
 | `Context Pack` | What an agent reads | [`ENT-13`](domain/context-pack.md) |
 | `Anchor` · `fresh` · `stale` · `uncovered` | Freshness | [`ENT-14`](domain/anchor.md) |
 | `Foundations` · `Derived Artifacts` · `Records` | The three kinds of objects | [`ENT-02`](domain/foundation.md) · [`ENT-15`](domain/derived-artifact.md) |

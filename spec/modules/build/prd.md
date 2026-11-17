@@ -2,7 +2,7 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-13"
 status: draft
 ---
@@ -41,6 +41,19 @@ opens to work.
 6. **Opens the PR against the change branch**, never the base, with the **Spec** section: IDs covered, deviations, assumptions. Even if it says there are none.
 7. **Moves the task** to review in the tracker. The sub-issue closes when the PR merges into the change branch.
 
+## When findings come back [#when-findings-come-back]
+
+`verify`'s blocking findings, and the judges' in CI, come back as tasks. `/build-findings` takes them
+one at a time:
+
+| The finding is | The agent |
+|---|---|
+| Real, and fixable in the code | Fixes it, test first, and answers the finding with the commit |
+| Wrong | Answers why, citing the code ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)); the finding goes back to `confirm-judge`, never closed by the agent |
+| Real, but the spec or the architecture is what is wrong | **Stops on that finding**: records a `deviation` with the alternative, and a person decides it in `accept`. It does not fix around the spec |
+
+Every finding gets an answer in its thread; one left unanswered keeps the check red.
+
 ## Outputs
 
 | What | Anchored to |
@@ -73,6 +86,7 @@ is `verify`. Passes when everything is green.
 |---|---|---|
 | Skill | `/build` | One whole task |
 | Skill | `/build-batch` | Several tasks with no dependencies between them, each in its own session |
+| Skill | `/build-findings` | The findings that came back: fix, answer or stop ([above](#when-findings-come-back)) |
 | MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas and the status |
 
 ## Per track
@@ -86,4 +100,5 @@ is `verify`. Passes when everything is green.
 ## Sources
 
 TDD · ODD (contracts are not changed) · OpenSpec (`/opsx:apply`) · Spec Kit (`/implement`) · Reclee
-Spec (the PR's Spec section).
+Spec (the PR's Spec section) · Crysk (`crysk-loop`: fix, answer each thread, stop on design),
+surveyed in [`MKT-04`](../../foundations/market/agent-tooling.md).

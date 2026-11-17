@@ -2,8 +2,8 @@
 title: Overview
 description: ARCH-01 · The pieces of OpenPEDD and OpenPEDD Cloud, and how they connect
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-13"
 ---
 
 # ARCH-01 · Overview
@@ -11,7 +11,7 @@ updated: "2026-11-04"
 ```
                   ┌──────────────────────── OpenPEDD Cloud (paid) ────────────────────────┐
                   │ Sync engine · Freshness dashboard · Two-way tracker · Auto-PRs         │
-                  │ Judges as a service · Hosted MCP · Multi-repo · SSO · Cycle metric     │
+                  │ Hosted MCP · Multi-repo · SSO                                          │
                   └──────▲──────────────▲──────────────▲──────────────▲──────────────▲─────┘
                          │ webhooks     │ API          │ API          │ GitHub App   │
                     spec repo       tracker       design tool     code repos    help/docs
@@ -23,7 +23,7 @@ updated: "2026-11-04"
  │ 4. Stages      skills and judges per agent: /specify /architect /design /plan /build …    │
  │ 5. MCP         search · get_doc · resolve_id · get_context_for · changes_since · …        │
  │ 6. Reader      static site, history folded, llms.txt                                       │
- │ 7. CI action   pedd check + pedd status on every PR                                        │
+ │ 7. CI action   pedd check + pedd status + the judges on every PR (ARCH-13)                 │
  │ 8. Adapters    public API for trackers, design tools, docs generators, analytics           │
  └──────────────────────────────────────────────────────────────────────────────────────────────┘
 ```

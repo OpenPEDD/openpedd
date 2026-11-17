@@ -5,6 +5,14 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- How a change is reviewed, in six layers: gates, project rules as lint, hunters per lens, a refuter, `pedd` deciding what blocks, and a person approving from the review signals. A finding confirmed in two changes becomes a rule.
+- Default review lenses with their checklist, from the corrections of Reclee's PRs.
+- The judges are part of the method: free, on every PR in the CI action, on the team's own subscription. The Cloud runs no judges.
+- `pedd judges bench` and judge precision as a process metric.
+- Small work is not delegated: a `small` task builds in one local session.
+- `/build-findings`: fix the real findings, answer the rest, stop where the spec is wrong.
+- Writing safely: `--dry-run`, backups, sensitive paths denied, the agent never installed. Personal settings that can only spend less than the team's.
+- Skills through `npx skills add`, and a catalog of extensions by GitHub topic.
 - Keeping agents' context small: one task per session, tests that report only failures, the pack pointing at the code, denied paths and a read hook; a task over 100,000 tokens is marked as badly cut.
 - Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
 - At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.

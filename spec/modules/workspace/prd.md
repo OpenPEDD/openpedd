@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.6"
+version: "1.7"
 updated: "2026-11-13"
 status: draft
 ---
@@ -103,6 +103,9 @@ models:
   profile: balanced
 stages:
   architect: { mode: guided }
+review:
+  blocking: high       # the lowest severity that blocks (ARCH-13)
+  ci: true             # the judges run on every PR (ARCH-04)
 ```
 
 ## The stack
@@ -146,6 +149,29 @@ missing tool never stops `init`.
 MCP servers go in the project's config only without secrets; credentials stay in each person's
 environment.
 
+## Writing safely [#writing-safely]
+
+`init`, `install`, `update` and `adopt` write into the project and into each agent's settings:
+
+| Rule | Why |
+|---|---|
+| **`--dry-run` on every command that writes**: it prints each file it would create or change, and the difference | What it will touch is seen before it is touched |
+| **A backup before overwriting** any file outside `spec/`, in `.pedd/backups/<date>/`; the last five are kept | An agent's settings broken by a write are restored in one step |
+| **Sensitive paths are denied** to every agent: `.env*`, `*.pem`, `*.key`, `~/.ssh`, `~/.aws`, and what the project adds, as permission rules next to the ones that keep context small ([`ARCH-12`](../../foundations/architecture/running.md#keeping-the-context-small)) | An agent that never reads a secret cannot leak it |
+| **It never installs an agent**: if one is missing, it prints the command to install it | Installing software on someone's machine is their call |
+
+## Personal settings [#personal-settings]
+
+Two files, read in this order:
+
+| File | Holds | Can change |
+|---|---|---|
+| `workspace.yaml` | The team's settings, versioned | Everything |
+| `~/.pedd/config.yaml` | One person's settings | Their runners, their models within the profile, their editor. **What spends can only be lowered**: fewer parallel sessions, a smaller budget. What blocks (`review.blocking`) is set only by the team |
+
+**Why:** a person can spend less than the team agreed, never more, and never let through what the team
+blocks.
+
 ## Adopting a running product [#adopting-a-running-product]
 
 `init` leaves the project ready to work; `adopt` takes it to the framework as defined, in small
@@ -182,7 +208,7 @@ a count and a percentage.
 | Flow | What happens |
 |---|---|
 | No GitHub CLI or no permission to create repos | Prints the repos to create by hand and continues with config |
-| No supported agent found | Installs for Claude Code and Codex, and says so |
+| No supported agent found | Writes the files for Claude Code and Codex, prints how to install each, and says so |
 | Uncommitted changes in the repo | Warns and asks, so what it writes can be reviewed apart |
 | A technology it cannot identify | Asks, and records the answer |
 
@@ -190,4 +216,5 @@ a count and a percentage.
 
 Spec Kit (manifest, `check`) · OpenSpec (`update --dry-run`) · BMAD (adopting `AGENTS.md`) · Agent OS
 (asking why) · Tessl (`install`) · Nx (`init`) · Copier (recorded answers) · `flutter doctor`, surveyed
-in [`MKT-02`](../../foundations/market/onboarding.md).
+in [`MKT-02`](../../foundations/market/onboarding.md) · gentle-ai (backups, deny-list, never installing
+the agent) · Crysk (personal and team settings), surveyed in [`MKT-04`](../../foundations/market/agent-tooling.md).

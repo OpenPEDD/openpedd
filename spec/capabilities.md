@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.3"
-updated: "2026-11-12"
+version: "1.4"
+updated: "2026-11-13"
 ---
 
 # What OpenPEDD can do
@@ -27,6 +27,10 @@ updated: "2026-11-12"
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
 | Let agents work without bending the spec | Only `specify` writes it; everything else proposes deltas, decided at a gate | [Merge Gate](foundations/domain/merge-gate.md) |
 | Have the AI reviewed by something other than itself | A judge per stage, in another session and model | [Judge](foundations/domain/judge.md) |
+| Review by lens, with few false alarms | Hunters in parallel, one per lens; each serious finding must survive a refuter; the tool, not a model, decides what blocks | [Reviewing a change](foundations/architecture/review.md) |
+| Run the judges on every PR, on your own subscription | The CI action: one required check, one comment edited in place, `/pedd recheck` and `/pedd override` | [Judges in CI](foundations/architecture/review.md#the-judges-in-ci) |
+| Know whether a judge got worse | `pedd judges bench` over past changes; precision as a process metric | [Measuring judges](foundations/architecture/agents.md#measuring-judges) |
+| Let the agent install safely | `--dry-run`, backups, sensitive paths denied, the agent never installed for you | [Writing safely](modules/workspace/prd.md#writing-safely) |
 | Decide only what nobody defined | One report with each assumption and deviation | [accept](modules/accept/prd.md) |
 | Design with the real brand | A mockup in code, with real components and every state | [design](modules/design/prd.md) |
 | Define what is acceptable before code exists | Tests written red from the criteria, locked from `build` | [plan](modules/plan/prd.md) |
@@ -101,9 +105,13 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd adopt` | What a running product lacks, as changes |
 | `pedd launch` | Launches an accepted change |
+| `pedd judges bench` | Each judge over past changes with known findings |
 | `pedd workspace split` | Moves from `mono` to `split` |
 
 ### Skills
+
+Installed by `pedd init`, or without the CLI with `npx skills add openpedd/openpedd`. Others publish
+theirs as [extensions](foundations/business/open-core.md#extensions).
 
 | Stage | Skills |
 |---|---|
@@ -112,7 +120,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `architect` | `/architect` · `/architect-research` · `/architect-teardown` · `/architect-adr` · `/architect-fitness` |
 | `design` | `/design` · `/design-inventory` · `/design-variants` · `/design-complete` · `/design-close` |
 | `plan` | `/plan` · `/plan-slice` · `/plan-tests` · `/plan-pack` |
-| `build` | `/build` · `/build-batch` |
+| `build` | `/build` · `/build-batch` · `/build-findings` |
 | `verify` | `/verify` |
 | `accept` | `/accept` |
 | `publish` | `/publish` · `/publish-api` · `/publish-help` · `/publish-notes` · `/publish-walkthrough` |
@@ -127,7 +135,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `architect` | `architecture-judge` | Decisions, evidence and failure checks |
 | `design` | `design-judge` | Coverage, heuristics, accessibility, behavior in the browser |
 | `plan` | `analyze-judge` | Every requirement has a task and a real red test |
-| `verify` | `verify-judge` · `confirm-judge` | The product against the spec; each serious finding confirmed |
+| `verify` | `verify-judge`, one per lens · `confirm-judge` | The product against the spec, by lens; each serious finding must survive a refutation |
 | `publish` | `freshness-judge` | Everything in scope `fresh` |
 
 ### MCP

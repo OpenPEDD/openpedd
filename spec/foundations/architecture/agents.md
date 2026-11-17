@@ -2,7 +2,7 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.6"
+version: "1.7"
 updated: "2026-11-13"
 ---
 
@@ -20,16 +20,34 @@ Three pieces, never mixed:
 hash in `.pedd/manifest.json` so `pedd update` can tell what was edited by hand (Claude Code first; Cursor,
 Copilot, Codex and others through the same templates, the way Spec Kit does).
 
-## How judges run
+The skills are also published to the `skills.sh` registry, so `npx skills add openpedd/openpedd`
+installs them without the CLI. `pedd doctor` finds skills installed that way and records them in the
+manifest.
+
+## How judges run [#how-judges-run]
 
 | Form | How | When |
 |---|---|---|
 | **Subagent** | An agent with its own `model:`. It starts without the caller's conversation and receives only the spec and the output | Default |
-| **Headless** | `claude -p --model <model>` as a separate process | From scripts or CI |
+| **Headless** | `claude -p --model <model>` as a separate process | From scripts |
+| **CI** | The OpenPEDD action runs the headless form on a PR ([`ARCH-13`](review.md#the-judges-in-ci)) | On every PR, when `review.ci` is on |
 | **Other provider** | An adapter (Codex, Gemini) | Optional, never required |
 
-Both Claude Code forms use the team's subscription. Models are configured per profile, per stage and
+The Claude Code forms use the team's subscription. Models are configured per profile, per stage and
 per command ([`DEC-07`](../../decisions/DEC-07-models.md)).
+
+## Measuring judges [#measuring-judges]
+
+A judge is code: it gets a test. **`pedd judges bench`** runs each judge over a fixed set of past
+changes with known findings, kept in `.pedd/bench/`, and reports what it found, what it missed and
+what it made up. It runs when a judge's prompt or model changes, and a judge that loses precision is
+not shipped.
+
+| Measure | From |
+|---|---|
+| False positives | Findings `confirm-judge` or `accept` dismissed |
+| Misses | Bugs found in `accept` that the spec covered: the cycle metric ([`cycle`](../../modules/cycle/prd.md#the-cycle-metric)) |
+| Cost and time per review | The trace |
 
 ## How agents work
 

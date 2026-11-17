@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.4"
-updated: "2026-11-12"
+version: "1.5"
+updated: "2026-11-13"
 status: draft
 ---
 
@@ -88,6 +88,8 @@ stage, to improve the process: `pedd status --time` and the Cloud dashboard.
 | Lead time | From the approved spec to production |
 | Work and wait | Of each stage's time, how much was work and how much waiting |
 | Rounds | How many times each judge rejected, and how many findings went back to `build` |
+| Judge precision | Per judge, the findings it raised that `confirm-judge` or `accept` dismissed, and its score on the bench ([`ARCH-04`](../../foundations/architecture/agents.md#measuring-judges)) |
+| Overrides | How many blocking findings a person let through in CI, and which judge raised them |
 | Agent cost | Tokens and cost per stage, and the context each call rereads: the first number to look at when a task cost too much. A task over 100,000 tokens is marked as badly cut |
 | Pipeline | CI time, and reruns of unstable tests |
 | Assumptions per task | Many means the spec came incomplete |

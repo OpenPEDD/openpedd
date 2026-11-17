@@ -2,8 +2,8 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, and what each change costs
 owner: Kevin
-version: "1.1"
-updated: "2026-11-11"
+version: "1.2"
+updated: "2026-11-13"
 ---
 
 # ARCH-11 · Pipeline
@@ -42,7 +42,7 @@ rule read through configuration); imports catch what the spec does not name (a s
 | A new push cancels the old run on a PR, never on the production branch | A canceled run there does not deploy its migrations |
 | Caching dependencies and service images | Starting the database stack is usually the slowest step |
 | The cheapest level per criterion | Fewer browsers ([`ARCH-10`](testing.md)) |
-| One command that runs the same gates locally | A red in CI reproduces on the machine |
+| One command that runs the same gates locally, runs them all even when one fails, and ends with the list of what is red | A red in CI reproduces on the machine, and one run shows every red, not the first |
 
 ## Merge queue
 

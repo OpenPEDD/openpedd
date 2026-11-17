@@ -2,7 +2,7 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.8"
+version: "1.9"
 updated: "2026-11-13"
 status: draft
 ---
@@ -68,6 +68,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 | It compiles and passes its tests on its own | Its tests do not depend on another open task |
 | Its context fits | Context pack ≤ 20,000 tokens |
 | It says what it depends on | `blocks` / `blocked by` in the tracker |
+| It says whether it is `small` | One area, no migration, no permissions, billing or personal data: it runs locally, without delegating ([`ARCH-12`](../../foundations/architecture/running.md#where-agents-run)) |
 
 ## Judge
 

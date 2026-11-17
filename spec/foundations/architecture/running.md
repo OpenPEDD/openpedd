@@ -2,7 +2,7 @@
 title: Running agents
 description: ARCH-12 · Where each stage's agents run, the quota guard, and keeping their context small
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-13"
 ---
 
@@ -38,6 +38,7 @@ To launch a cloud task, `pedd`:
 | The environment's setup script installs and starts what the tests need (the database, the services), and holds **only test credentials** | Anyone who can use the environment can read its variables |
 | A cloud session costs the same tokens as a local one | The model runs in the same place; what changes is only the machine running the tools |
 | **The context decides the cost**, not the runner: it is kept small ([below](#keeping-the-context-small)) | Each call rereads the whole context; on Reclee's automations it was 275,000 tokens a call, and 95 % of the cost |
+| **Small work is not delegated**: a task marked `small` (one area, no migration, no permissions, billing or personal data; marked by `plan`, or for a `fix` or `chore` by whoever opens it) runs `build` in one local session, with no cloud launch and no subagent. `verify` still runs in another session | Starting a session costs more than a small task: gentle-ai measured a 3-line task at 335 s and USD 0.34 delegated, 77 s and USD 0.11 inline ([`MKT-04`](../market/agent-tooling.md)). What is delegated is chosen by reason (parallel work, a separate judge, a context that would grow), not by size |
 
 ### The quota guard
 
