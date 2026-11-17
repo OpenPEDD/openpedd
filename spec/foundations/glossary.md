@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.9"
-updated: "2026-11-14"
+version: "1.10"
+updated: "2026-11-17"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -55,7 +55,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | `architect.mode`: `guided` · `delegated` | How architecture runs | [`DEC-08`](../decisions/DEC-08-architect-mode.md) |
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
-| Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-06`](architecture/branches.md) |
+| Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-15`](architecture/tracker.md) |
+| Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |
 | Seam | The one file a mockup's data goes through; `plan` leaves its real version empty and `build` fills it | [design](../modules/design/prd.md) |
 | Closing passes | Mobile, skeletons, writes, refactor, improvements, in that order | [design](../modules/design/prd.md#closing-passes) |

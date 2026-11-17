@@ -8,7 +8,8 @@ the format; the spec of each version is the tag `v<version>`.
 - A change's tasks are a checklist in the implementation sub-issue, not one issue each; task PRs link to it with `Part of`, which does not close it.
 - Keeping agents' context small: one task per session, tests that report only failures, the pack pointing at the code, denied paths and a read hook; a task over 100,000 tokens is marked as badly cut.
 - Where each stage runs (`local`, `cloud`, `self-hosted`), set in `workspace.yaml`; implementation in the cloud by default, one session per task, with a quota guard.
-- At `spec-approval`, one tracker sub-issue per stage the track runs (architecture, design, plan, implementation, launch), with their blocks, unassigned and in the backlog.
+- At `spec-approval`, one tracker sub-issue per stage with a branch and a gate (architecture, design, implementation), with their blocks, unassigned and in the backlog; `plan` is the first item of the implementation checklist and the launch is the parent's last status.
+- The tracker in its own document (ARCH-15): only `specify` creates issues, once, found again by their `Spec:` anchor and under the issue that already existed; statuses move from pull request events, never by hand; a definition of done ticked from CI; `/tracker-tidy` proposes the duplicates against the spec and the roadmap.
 
 ## 0.1.0 · 2026-11-11 · beta
 
