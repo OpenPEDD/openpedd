@@ -2,7 +2,7 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-17"
 ---
 
@@ -16,6 +16,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [How tools onboard a project](onboarding.md) | `MKT-02` | How others start on a new or existing project, and detect its stack |
 | [Delivery and in-product help](delivery.md) | `MKT-03` | Guided help, flags, releases and testing tools |
 | [Trackers driven by git](trackers.md) | `MKT-05` | What a tracker moves on its own from pull requests, and how it marks duplicates |
+| [Component catalogs for agents](component-catalogs.md) | `MKT-06` | How a product's components reach agents, and what Reclee's first catalog found |
 
 ## How a market document is written
 
