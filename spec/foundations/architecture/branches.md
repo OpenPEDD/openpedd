@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their sub-issues in the tracker
 owner: Kevin
-version: "1.3"
-updated: "2026-11-12"
+version: "1.4"
+updated: "2026-11-17"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -72,6 +72,8 @@ itself, and the sub-issue ties the task to the change. Dependencies between task
 2. Before opening it, **the base is fetched by name and merged into the change branch**, and conflicts are solved there, never on the base. The pipeline runs again on the result.
 3. A person accepts on the change branch's preview ([accept](../../modules/accept/prd.md)).
 4. It merges at **`acceptance-merge`**. The parent issue stays open until `publish`.
+
+When several changes are in flight at once, which overlap, how they stay close to the base and the order they land in is [`ARCH-16`](landing.md).
 
 From the base to production is a promotion, through the project's environments ([`ARCH-08`](release.md)).
 

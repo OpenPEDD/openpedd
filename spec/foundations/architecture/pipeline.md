@@ -2,8 +2,8 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, and what each change costs
 owner: Kevin
-version: "1.1"
-updated: "2026-11-11"
+version: "1.2"
+updated: "2026-11-17"
 ---
 
 # ARCH-11 · Pipeline
@@ -49,7 +49,7 @@ rule read through configuration); imports catch what the spec does not name (a s
 Each PR is validated against the latest base plus what is ahead of it, so two PRs that pass alone
 cannot break it together. Optional: worth it when several PRs reach the base each day. Workflows must
 also run on the queue's event, and a required check skipped by a path filter stays pending, so
-skipping is decided inside a job.
+skipping is decided inside a job. The order changes enter it in is [`ARCH-16`](landing.md#at-the-end-the-landing-order).
 
 ## Cost per change
 

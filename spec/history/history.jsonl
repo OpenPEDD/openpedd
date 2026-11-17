@@ -245,3 +245,17 @@
 {"path":"open/backlog.md","version":"1.5 → 1.6","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify","summary":"Model per task deferred; Reclee context adoption"}
 {"path":"foundations/architecture/running.md","version":"1.0","summary":"ARCH-12: where agents run, the quota guard, keeping the context small, moved out of ARCH-04","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify"}
 {"path":"foundations/architecture/README.md","version":"1.3","summary":"ARCH-12 in the index","date":"2026-11-13","change":"CHG-018","story":null,"stage":"specify"}
+{"path":"foundations/architecture/sweep.md","version":"— → 1.0","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"ARCH-15: every open question of a change asked at once"}
+{"path":"foundations/architecture/landing.md","version":"— → 1.0","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"ARCH-16: overlap, sync and landing order of parallel changes"}
+{"path":"foundations/market/asking-and-landing.md","version":"— → 1.0","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"MKT-05: how tools ask, and how merge queues land"}
+{"path":"foundations/rules/cycle.md","version":"1.4 → 1.5","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"RULE-26: ask everything at once, with a recommendation"}
+{"path":"foundations/rules/README.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"RULE-26 in the index"}
+{"path":"modules/architect/prd.md","version":"1.5 → 1.6","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"guided asks every open decision in one sheet"}
+{"path":"modules/map/prd.md","version":"1.2 → 1.3","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Conventions asked in one sheet"}
+{"path":"modules/specify/prd.md","version":"1.5 → 1.6","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"A sweep after framing; /sweep skill"}
+{"path":"foundations/architecture/branches.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Points to ARCH-16 for parallel changes"}
+{"path":"foundations/architecture/pipeline.md","version":"1.1 → 1.2","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Merge queue points to the landing order"}
+{"path":"foundations/architecture/README.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"ARCH-15 and ARCH-16 in the index"}
+{"path":"foundations/glossary.md","version":"1.8 → 1.9","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Sweep, footprint, overlap, landing order"}
+{"path":"capabilities.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"Sweep and landing: capabilities, CLI, skill"}
+{"path":"foundations/market/README.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-020","story":null,"stage":"specify","summary":"MKT-05 in the index"}

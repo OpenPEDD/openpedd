@@ -2,8 +2,8 @@
 title: Cycle rules
 description: The rules every stage of the cycle follows, interactive or delegated
 owner: Kevin
-version: "1.4"
-updated: "2026-11-11"
+version: "1.5"
+updated: "2026-11-17"
 ---
 
 ## RULE-10 · Only `specify` writes the spec [#rule-10]
@@ -123,3 +123,13 @@ took is not its to say: the tool measures it ([`ENT-23`](../domain/trace-event.m
 
 **Why:** an agent that improves on its own way widens the scope (a button with no spec behind it); one
 told to keep quiet loses what only it saw. Seeing and doing are kept apart.
+
+## RULE-26 · Ask everything at once, with a recommendation [#rule-26]
+
+An agent that needs the person gathers **every question it has** and asks them in one sheet: each with
+what breaks if it is guessed, its options and a recommendation. It never asks one question, waits, and
+asks the next. Before the delegated stages, a sweep asks what every stage ahead still lacks
+([`ARCH-15`](../architecture/sweep.md)); after it, a gap is assumed, not asked ([`RULE-13`](#rule-13)).
+
+**Why:** a question asked alone costs the person a wait per question, and the work stops at each one.
+With a recommendation, most answers are one word.

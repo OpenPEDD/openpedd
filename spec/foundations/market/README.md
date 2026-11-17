@@ -2,8 +2,8 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-17"
 ---
 
 **Market holds what we measured outside**: competitors, tools, market size, studies, prices others
@@ -15,6 +15,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [The landscape](landscape.md) | `MKT-01` | The methods and tools around OpenPEDD, and where it stands |
 | [How tools onboard a project](onboarding.md) | `MKT-02` | How others start on a new or existing project, and detect its stack |
 | [Delivery and in-product help](delivery.md) | `MKT-03` | Guided help, flags, releases and testing tools |
+| [Asking and landing](asking-and-landing.md) | `MKT-05` | How tools ask the person, and how merge queues order and land parallel PRs |
 
 ## How a market document is written
 

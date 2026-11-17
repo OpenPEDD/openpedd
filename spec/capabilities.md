@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.3"
-updated: "2026-11-12"
+version: "1.4"
+updated: "2026-11-17"
 ---
 
 # What OpenPEDD can do
@@ -25,6 +25,8 @@ updated: "2026-11-12"
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
+| Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each | [Sweep](foundations/architecture/sweep.md) |
+| Land many parallel changes without a pile of conflicts | `pedd overlap` warns early, `pedd sync` keeps them close to the base, `pedd land` computes the order | [Landing](foundations/architecture/landing.md) |
 | Let agents work without bending the spec | Only `specify` writes it; everything else proposes deltas, decided at a gate | [Merge Gate](foundations/domain/merge-gate.md) |
 | Have the AI reviewed by something other than itself | A judge per stage, in another session and model | [Judge](foundations/domain/judge.md) |
 | Decide only what nobody defined | One report with each assumption and deviation | [accept](modules/accept/prd.md) |
@@ -96,9 +98,13 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd install` | Sets up whoever clones the project |
 | `pedd index` | Builds the spec graph |
 | `pedd check` | Runs the checks |
-| `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption` |
+| `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption`, `--landing` |
 | `pedd trace <id>` | One requirement's chain |
 | `pedd impact` | What a change affects; `--tests` selects tests |
+| `pedd sweep` | Every open question of a change, at once, with recommendations; `--accept-recommended` |
+| `pedd overlap` | Which changes in flight touch the same IDs or files |
+| `pedd sync` | Merges the base into every change in flight that overlaps what just landed |
+| `pedd land` | The landing order of the ready changes, then lands them one at a time |
 | `pedd adopt` | What a running product lacks, as changes |
 | `pedd launch` | Launches an accepted change |
 | `pedd workspace split` | Moves from `mono` to `split` |
@@ -107,6 +113,7 @@ Branches: one per change, with design, architecture and task branches inside it
 
 | Stage | Skills |
 |---|---|
+| Any | `/sweep` |
 | `map` | `/map` · `/map-module` |
 | `specify` | `/specify` · `/specify-flow` · `/specify-story` · `/specify-define` · `/specify-fix-doc` · `/idea` |
 | `architect` | `/architect` · `/architect-research` · `/architect-teardown` · `/architect-adr` · `/architect-fitness` |
