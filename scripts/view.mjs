@@ -153,6 +153,18 @@ const cloud = cloudLines.join(' · ').split('·').map((s) => s.trim()).filter(Bo
 const openLayers = [...diagram.matchAll(/│\s*(\d+)\.\s+(\w[\w ]*?)\s{2,}(.+?)\s*│/g)].map(([, n, name, items]) => ({ n: Number(n), name: name.trim(), items: items.trim() }));
 const archDocs = docs.filter((d) => d.layer === 'architecture' && d.ids.length);
 const external = (diagram.match(/spec repo.*$/m)?.[0] || '').split(/\s{2,}/).map((s) => s.trim()).filter(Boolean);
+// The arrows from the Cloud to each external system, labeled on the line above the system names.
+const viaLine = diagram.split('\n').find((l) => /│\s*webhooks/.test(l)) || '';
+const via = viaLine.split('│').slice(1).map((s) => s.trim());
+const connections = external.map((name, i) => ({ name, via: via[i] || '' }));
+// Each piece of the overview, with the documents its "Detail" column points to.
+for (const p of pieces) p.docs = [...p.detail.matchAll(/\]\(([^)#\s]+)/g)].map(([, t]) => normalize(join('spec/foundations/architecture', t)).split(sep).join('/')).filter((t) => docPaths.has(t));
+
+// The reading order of the spec's layers, from its README.
+const readingOrder = tableWith(read('spec/README.md'), 'Where', 'What it holds').rows.map(([, where]) => {
+  const p = code(where)[0] || '';
+  return p === 'foundations/glossary.md' ? 'foundations' : p.replace(/\/$/, '').split('/').pop();
+});
 
 // ---------- Capabilities: the published skill and judge lists ----------
 
@@ -195,7 +207,7 @@ for (const d of docs) if (d.incoming === 0 && !/README|index|capabilities/.test(
 
 const data = {
   built: new Date().toISOString().slice(0, 10),
-  stages, flows, trackCols, changes, lenses, lensItems, docs, pieces, openLayers, cloud, external, archDocs, gaps,
+  stages, flows, trackCols, changes, lenses, lensItems, docs, pieces, openLayers, cloud, external, connections, readingOrder, archDocs, gaps,
 };
 const template = readFileSync(join(ROOT, 'scripts/view.html'), 'utf8');
 const out = join(ROOT, '.pedd/view/index.html');

@@ -56,52 +56,84 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .chip{font-family:var(--mono);font-size:.7rem;padding:2px 6px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
 .chip.j{background:var(--judge-soft);color:var(--judge)}
 .scroll{overflow-x:auto}
-/* Process */
-.stages{display:grid;grid-template-columns:repeat(10,150px);gap:18px;width:max-content;padding:2px}
-.stage{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:7px;
-  cursor:pointer;text-align:left;font:inherit;color:inherit;transition:opacity .2s}
-.stage:not(:last-child)::after{content:"";position:absolute;right:-17px;top:26px;width:16px;height:2px;background:var(--line)}
-.stage[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.stage.off{opacity:.3}.stage.outside{border-style:dashed}
-.stage .name{font-weight:700;font-family:var(--mono)}
+.sub{display:inline-flex;border:1px solid var(--line);border-radius:9px;padding:3px;background:var(--surface);gap:2px;align-self:flex-start}
+.sub button{font:inherit;font-size:.86rem;border:0;background:none;color:var(--muted);padding:5px 12px;border-radius:6px;cursor:pointer}
+.sub button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.toolbar{display:flex;flex-direction:column;gap:12px}
+/* Process: swimlanes */
+.lanes{display:grid;grid-template-columns:120px repeat(10,148px);width:max-content;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.lanes>div{border-top:1px solid var(--line);border-left:1px solid var(--line);padding:8px;display:flex;flex-direction:column;gap:5px;min-height:46px}
+.lanes .lh{border-left:0;background:var(--bg);font-size:.78rem;font-weight:600;color:var(--muted);justify-content:center}
+.lanes .lh small{font-weight:400;font-size:.72rem}
+.lanes .colh{border-top:0;cursor:pointer;background:var(--bg)}
+.lanes .colh b{font-family:var(--mono)}
+.lanes .colh.sel{background:var(--accent-soft)}
+.lanes .corner{border-top:0;border-left:0;background:var(--bg)}
+.lanes .off{opacity:.25}
+.lanes .note{font-size:.76rem;color:var(--muted)}
+.lanes .runs{font-size:.74rem;border:0;padding:0;margin:0}
+.chip.t{background:var(--bg);color:var(--muted);border:1px solid var(--line);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+[hidden]{display:none!important}
+.chip.p{background:var(--human-soft);color:var(--human)}
 .mode{font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:999px;align-self:flex-start;background:var(--accent-soft);color:var(--accent)}
 .mode.h{background:var(--human-soft);color:var(--human)}
-.runs{font-size:.75rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:auto}
+.runs{font-size:.75rem;color:var(--muted)}
 .runs.partial{color:var(--judge)}
-svg text{font-family:var(--display)}
-.arc{fill:none;stroke-width:1.6;opacity:.55;cursor:pointer}
-.arc:hover,.arc.hl{opacity:1;stroke-width:3}
+/* Matrices */
+.matrix{border-collapse:separate;border-spacing:3px;font-size:.8rem;width:auto}
+.matrix th{font-family:var(--mono);font-size:.74rem;text-transform:none;letter-spacing:0;padding:4px 6px;white-space:nowrap;color:var(--ink);font-weight:500}
+.matrix thead th{writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;vertical-align:bottom;height:96px}
+.matrix th.rh{text-align:right}
+.matrix td{width:46px;height:40px;text-align:center;border:0;border-radius:6px;background:var(--bg);cursor:pointer;font-family:var(--mono);font-variant-numeric:tabular-nums;padding:0}
+.matrix td.diag{background:var(--line);cursor:default}
+.matrix td.fwd{background:var(--accent-soft);color:var(--accent)}
+.matrix td.back{background:var(--judge-soft);color:var(--judge);font-weight:600}
+.matrix td.sel{outline:2px solid var(--ink)}
+.matrix td.empty{cursor:default;color:transparent}
+.mxwrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:900px){.mxwrap{grid-template-columns:minmax(0,1fr)}}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.panel.one{grid-template-columns:minmax(0,1fr)}
 @media (max-width:820px){.panel{grid-template-columns:minmax(0,1fr)}}
 .col{display:flex;flex-direction:column;gap:14px;min-width:0}
 table{border-collapse:collapse;width:100%;font-size:.86rem}
 th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;padding:4px 8px}
 td{padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}
 .tbl{overflow-x:auto}
-.flowhint{font-size:.85rem;color:var(--muted);min-height:1.4em}
-/* Concepts */
-.graphwrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
-@media (max-width:900px){.graphwrap{grid-template-columns:minmax(0,1fr)}}
-.graph{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;height:640px;touch-action:none}
-.graph svg{width:100%;height:100%;cursor:grab}
-.node circle{stroke:var(--surface);stroke-width:1.5;cursor:pointer}
-.node text{font-size:12px;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:var(--surface);stroke-width:3px}
-.edge{stroke:var(--line);stroke-width:1}
-.dim{opacity:.12}
-.edge.hl{stroke:var(--accent);stroke-width:1.6;opacity:1}
-.side{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;max-height:640px;overflow:auto;min-width:0}
-.side a{color:var(--accent);cursor:pointer;text-decoration:none}
-.side ul{margin:0;padding-left:18px;font-size:.86rem}
+/* Concepts: documents in columns */
+.cols{display:grid;grid-template-columns:repeat(var(--n),minmax(170px,1fr));gap:10px;width:max-content;min-width:100%}
+.lcol{display:flex;flex-direction:column;gap:3px;min-width:0}
+.lcol h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:flex;align-items:center;gap:6px;padding-bottom:4px;border-bottom:2px solid var(--line);margin-bottom:4px}
+.doc{font:inherit;font-size:.8rem;text-align:left;border:1px solid transparent;background:var(--surface);color:var(--ink);border-radius:6px;padding:4px 7px;cursor:pointer;display:flex;justify-content:space-between;gap:6px;width:170px}
+.doc span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc .c{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.cols.has .doc{opacity:.28}
+.cols.has .doc.me{opacity:1;border-color:var(--ink);font-weight:600}
+.cols.has .doc.out{opacity:1;background:var(--accent-soft);color:var(--accent)}
+.cols.has .doc.in{opacity:1;background:var(--judge-soft);color:var(--judge)}
+.cols.has .doc.out.in{background:var(--human-soft);color:var(--human)}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}
 input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:220px}
-.sw{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
-/* Architecture */
-.tier{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
-.tier.cloud{border-style:dashed}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.piece{border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:4px;min-width:0;background:var(--bg)}
-.piece b{font-family:var(--mono);font-size:.85rem}
-.ext{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;font-size:.85rem;color:var(--muted)}
-.ext span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);color:var(--ink)}
+.side a,.panel a{color:var(--accent);cursor:pointer;text-decoration:none}
+.panel ul{margin:0;padding-left:18px;font-size:.86rem}
+/* Architecture: context diagram */
+.c4{display:flex;flex-direction:column;align-items:stretch;gap:0}
+.sys{border:1.5px solid var(--ink);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
+.sys.cloud{border-style:dashed;border-color:var(--judge)}
+.sys h2 small{font-weight:400;color:var(--muted);font-size:.8rem;margin-left:8px}
+.wires{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:10px}
+.wire{display:flex;flex-direction:column;align-items:center}
+.wire .ln{width:2px;height:26px;background:var(--muted)}
+.wire .lbl{font-family:var(--mono);font-size:.7rem;color:var(--judge);background:var(--bg);padding:0 4px;margin-block:-2px}
+.wire .ext{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:.86rem;font-weight:600;text-align:center;width:100%}
+.wire .ext small{display:block;font-weight:400;color:var(--muted);font-size:.72rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.piece{border:1px solid var(--line);border-radius:9px;padding:11px;display:flex;flex-direction:column;gap:5px;min-width:0;background:var(--bg)}
+.piece b{font-family:var(--mono);font-size:.86rem}
+.piece ul{margin:2px 0 0;padding-left:16px;font-size:.8rem}
+.cross{display:flex;flex-direction:column;gap:8px}
 /* Gaps */
 .gap{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .gap .k{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--warn)}
@@ -124,8 +156,11 @@ const codes=s=>[...String(s||"").matchAll(/`([^`]+)`/g)].map(m=>m[1]);
 const table=(rows,head)=>rows.length?`<div class="tbl"><table>${head?`<tr>${head.map(h=>`<th>${h}</th>`).join("")}</tr>`:""}${rows.map(r=>`<tr>${r.map(c=>`<td>${md(c)}</td>`).join("")}</tr>`).join("")}</table></div>`:"";
 $("#built").textContent="Built from the spec on "+D.built;
 
+const sub=(key,opts,cur)=>`<div class="sub" role="group">${opts.map(([k,l])=>`<button data-sub="${key}:${k}" aria-pressed="${cur===k}">${l}</button>`).join("")}</div>`;
+const stageIdx=Object.fromEntries(D.stages.map((s,i)=>[s.id,i]));
+
 /* ---------------- Process ---------------- */
-const st={change:-1,sel:"specify"};
+const st={mode:"lanes",change:-1,sel:"specify",cell:null};
 function runOf(stage){
   if(st.change<0) return {txt:"",cls:""};
   const c=D.changes[st.change].cells;
@@ -137,49 +172,75 @@ function runOf(stage){
     if(v==="✓") return {txt:"Runs",cls:""};
     const order=D.stages.map(x=>x.id), r=v.match(/`(\w+)`\s*→\s*`(\w+)`/);
     if(r&&order.includes(r[1])&&order.includes(r[2])){const i=order.indexOf(stage);
-      return i>=order.indexOf(r[1])&&i<=order.indexOf(r[2])?{txt:v,cls:"partial"}:{txt:"Does not run",cls:"off"};}
+      return i>=order.indexOf(r[1])&&i<=order.indexOf(r[2])?{txt:"Runs",cls:""}:{txt:"Does not run",cls:"off"};}
     return {txt:v,cls:"partial"};
   }
   return {txt:"Not in the tracks table",cls:"outside"};
 }
 const isHuman=m=>/interactive|human|guided/i.test(m);
+const personOf=s=>{const out=[];
+  if(/human/i.test(s.mode)) out.push("Decides every assumption and deviation");
+  else if(/interactive/i.test(s.mode)) out.push("Works with the agent");
+  else if(/guided/i.test(s.mode)) out.push("Guides, or delegates");
+  if(/approv/i.test(s.judgeText)) out.push("Approves");
+  return out;};
 function process(){
-  const W=168, n=D.stages.length;
-  const idx=Object.fromEntries(D.stages.map((s,i)=>[s.id,i]));
-  const cx=i=>i*W+75;
-  const arcs=D.flows.map((f,k)=>{
-    const a=cx(idx[f.from]),b=cx(idx[f.to]),fwd=b>a,h=Math.min(118,24+Math.abs(b-a)*.16);
-    const y=fwd?125:125, d=`M${a},${y} C${a},${fwd?y-h:y+h} ${b},${fwd?y-h:y+h} ${b},${y}`;
-    return `<path class="arc" data-k="${k}" data-from="${f.from}" data-to="${f.to}" d="${d}" stroke="${fwd?"var(--accent)":"var(--judge)"}"><title>${esc(f.from+" → "+f.to+": "+f.what.replace(/`/g,""))}</title></path>`;
-  }).join("");
-  const dots=D.stages.map((s,i)=>`<circle cx="${cx(i)}" cy="125" r="5" fill="var(--ink)"/><text x="${cx(i)}" y="146" text-anchor="middle" font-size="11" fill="var(--muted)">${s.id}</text>`).join("");
   $("#main").innerHTML=`
   <section class="intro"><span class="label">Process · from modules/cycle, modules/tracks and each stage's PRD</span>
     <h1>The cycle, stage by stage</h1>
-    <p class="muted">Pick a kind of change to see which stages it runs. Pick a stage to see what it reads, what it leaves, who judges it and with which skills. The arcs below are the real inputs each stage declares: blue goes forward, orange goes back.</p></section>
-  <section class="chips" role="group" aria-label="Kind of change">
+    <p class="muted">Two ways to read the same cycle. <b>Lanes</b>: who does what in each stage, one row per actor. <b>Dependencies</b>: which stage feeds which, as a matrix; anything above the diagonal is work that goes back.</p></section>
+  <section class="toolbar">${sub("p",[["lanes","Lanes"],["dsm","Dependencies"]],st.mode)}
+  ${st.mode==="lanes"?`<div class="chips" role="group" aria-label="Kind of change">
     <button class="pill" data-c="-1" aria-pressed="${st.change<0}">Every stage</button>
-    ${D.changes.map((c,i)=>`<button class="pill" data-c="${i}" aria-pressed="${st.change===i}">${c.track?`<code>${c.track}</code> · `:""}${md(c.touches.replace(/\s*\(`[^)]*`\)/,""))}</button>`).join("")}
-  </section>
-  <div class="scroll"><div class="stages">${D.stages.map(s=>{const r=runOf(s.id);
-    const skills=s.tools.filter(t=>t[0]==="Skill").flatMap(t=>codes(t[1]));
-    const judges=[...s.judges.flatMap(j=>codes(j[0]))];
-    return `<button class="stage ${r.cls==="off"?"off":""} ${r.cls==="outside"?"outside":""}" data-s="${s.id}" aria-pressed="${s.id===st.sel}">
-      <span class="mono muted" style="font-size:.7rem">${String(s.n).padStart(2,"0")}</span>
-      <span class="name">${s.id}</span><span class="mode ${isHuman(s.mode)?"h":""}">${md(s.mode)}</span>
-      <span class="chips">${skills.map(k=>`<span class="chip">${esc(k)}</span>`).join("")}</span>
-      ${judges.length?`<span class="chips">${judges.map(k=>`<span class="chip j">${esc(k)}</span>`).join("")}</span>`:""}
-      ${r.txt?`<span class="runs ${r.cls==="partial"?"partial":""}">${md(r.txt)}</span>`:""}</button>`;}).join("")}</div>
-    <svg width="${n*W}" height="215" viewBox="0 0 ${n*W} 215" role="img" aria-label="Inputs between stages">${arcs}${dots}</svg>
-  </div>
-  <div class="flowhint" id="flowhint">Hover or tap an arc to read what flows.</div>
+    ${D.changes.map((c,i)=>`<button class="pill" data-c="${i}" aria-pressed="${st.change===i}">${c.track?`<code>${c.track}</code> · `:""}${md(c.touches.replace(/\s*\(`[^)]*`\)/,""))}</button>`).join("")}</div>`:""}</section>
+  <div class="scroll" id="pview"></div>
   <section class="panel" id="panel"></section>`;
+  st.mode==="lanes"?lanes():dsm();
+}
+function lanes(){
+  const S=D.stages, cls=s=>runOf(s.id).cls==="off"?"off":"";
+  const row=(head,fn)=>`<div class="lh">${head}</div>`+S.map(s=>`<div class="${cls(s)}">${fn(s)}</div>`).join("");
+  $("#pview").innerHTML=`<div class="lanes">
+    <div class="corner"></div>${S.map(s=>{const r=runOf(s.id);return `<div class="colh ${cls(s)} ${s.id===st.sel?"sel":""}" data-s="${s.id}" role="button" tabindex="0">
+      <span class="mono muted" style="font-size:.7rem">${String(s.n).padStart(2,"0")}</span><b>${s.id}</b><span class="mode ${isHuman(s.mode)?"h":""}">${md(s.mode)}</span>
+      ${r.txt?`<span class="runs ${r.cls==="partial"?"partial":""}">${md(r.txt)}</span>`:""}</div>`;}).join("")}
+    ${row("Person",s=>personOf(s).map(t=>`<span class="chip p" style="font-family:var(--display)">${t}</span>`).join(""))}
+    ${row("Agent<br><small>skills it runs</small>",s=>s.tools.filter(t=>t[0]==="Skill").flatMap(t=>codes(t[1])).map(k=>`<span class="chip">${esc(k)}</span>`).join(""))}
+    ${row("Judge<br><small>another session</small>",s=>s.judges.length?s.judges.flatMap(j=>codes(j[0])).map(k=>`<span class="chip j">${esc(k)}</span>`).join(""):`<span class="note">${md(s.judgeText.split(/[.:]/)[0])}</span>`)}
+    ${row("Tools<br><small>MCP and tools</small>",s=>s.tools.filter(t=>t[0]!=="Skill"&&t[0]!=="Agent").map(t=>`<span class="chip t" title="${esc(t[2].replace(/`/g,""))}">${md(t[0]==="MCP"?t[1]:t[1].replace(/\s*\(.*$/,"")).replace(/<\/?code>/g,"")}</span>`).join(""))}
+    ${row("Leaves",s=>`<span class="note">${s.outputs.length} outputs</span>${s.outputs.slice(0,3).map(o=>`<span class="note" style="color:var(--ink)">${md(o[0])}</span>`).join("")}`)}
+  </div>`;
   panel();
 }
+function dsm(){
+  const S=D.stages, m={};
+  D.flows.forEach(f=>{const k=f.to+"|"+f.from;(m[k]=m[k]||[]).push(f.what);});
+  const back=D.flows.filter(f=>stageIdx[f.from]>stageIdx[f.to]).length;
+  $("#pview").innerHTML=`<div class="mxwrap"><div class="tbl"><table class="matrix" aria-label="Which stage feeds which">
+    <thead><tr><th style="writing-mode:horizontal-tb;transform:none;vertical-align:bottom;font-family:var(--display);color:var(--muted);font-size:.72rem">receives ↓ · from →</th>${S.map(s=>`<th>${s.id}</th>`).join("")}</tr></thead>
+    ${S.map((r,i)=>`<tr><th class="rh">${r.id}</th>${S.map((c,j)=>{const k=r.id+"|"+c.id, v=m[k];
+      if(i===j) return `<td class="diag"></td>`;
+      if(!v) return `<td class="empty"></td>`;
+      return `<td class="${j>i?"back":"fwd"} ${st.cell===k?"sel":""}" data-cell="${k}" title="${esc(c.id+" → "+r.id)}">${v.length}</td>`;}).join("")}</tr>`).join("")}
+  </table></div>
+  <div class="col"><div class="legend"><span><i style="background:var(--accent-soft);border:1px solid var(--accent)"></i>Forward: an earlier stage feeds a later one</span><span><i style="background:var(--judge-soft);border:1px solid var(--judge)"></i>Back: a later stage feeds an earlier one</span></div>
+    <p class="muted" style="font-size:.88rem">${D.flows.length} inputs declared between stages, ${back} going back. A stage with an empty column feeds nobody by declaration; one with an empty row reads only from outside the cycle. Tap a cell to read what flows.</p>
+    <div id="cellinfo"></div></div></div>`;
+  cellInfo();
+  $("#panel").hidden=true;
+}
+function cellInfo(){
+  const el=$("#cellinfo");if(!el)return;
+  if(!st.cell){el.innerHTML="";return;}
+  const [to,from]=st.cell.split("|");
+  el.innerHTML=`<div class="panel one"><div class="col"><span class="label">${from} → ${to}</span>
+    <ul>${D.flows.filter(f=>f.from===from&&f.to===to).map(f=>`<li>${md(f.what)}</li>`).join("")}</ul></div></div>`;
+}
 function panel(){
+  const p=$("#panel");p.hidden=false;
   const s=D.stages.find(x=>x.id===st.sel), r=runOf(s.id);
-  const feeds=D.flows.filter(f=>f.from===s.id), gets=D.flows.filter(f=>f.to===s.id);
-  $("#panel").innerHTML=`<div class="col">
+  const feeds=D.flows.filter(f=>f.from===s.id);
+  p.innerHTML=`<div class="col">
       <div><span class="label">Stage ${s.n} · ${md(s.mode)}</span><h2 class="mono">${s.id}</h2></div>
       <p>${md(s.what||s.does)}</p>
       ${r.txt?`<p><span class="label">In this change</span><br>${md(r.txt)}</p>`:""}
@@ -193,99 +254,84 @@ function panel(){
       <div><span class="label">Per track</span>${s.perTrack===null?`<p class="muted" style="font-size:.86rem">This PRD has no "Per track" section.</p>`:table(s.perTrack,["Track","What changes"])}</div>
       <p class="muted" style="font-size:.8rem">Source: <code>${s.path}</code></p>
     </div>`;
-  document.querySelectorAll(".arc").forEach(a=>a.classList.toggle("hl",a.dataset.from===s.id||a.dataset.to===s.id));
 }
 
 /* ---------------- Concepts ---------------- */
-const layers=[...new Set(D.docs.map(d=>d.layer))];
+const known=new Set(D.docs.map(d=>d.layer));
+const layers=[...D.readingOrder.filter(l=>known.has(l)),...[...known].filter(l=>!D.readingOrder.includes(l))];
 const layerColor=Object.fromEntries(layers.map((l,i)=>[l,`var(--l${i%11+1})`]));
-const cs={hidden:new Set(),sel:null,q:"",pos:null,view:null};
-function layout(){
-  const N=D.docs.length, byPath=Object.fromEntries(D.docs.map((d,i)=>[d.path,i]));
-  const E=[];D.docs.forEach((d,i)=>d.links.forEach(l=>E.push([i,byPath[l.to],l.n])));
-  const centers=Object.fromEntries(layers.map((l,i)=>[l,[Math.cos(i/layers.length*6.283)*230,Math.sin(i/layers.length*6.283)*200]]));
-  let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
-  const P=D.docs.map(d=>{const c=centers[d.layer];return {x:c[0]+rnd()*80-40,y:c[1]+rnd()*80-40,vx:0,vy:0};});
-  for(let it=0;it<320;it++){
-    const t=1-it/320;
-    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
-      let dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d2=dx*dx+dy*dy+.01;if(d2>90000)continue;
-      const f=700/d2;P[i].vx+=dx*f;P[i].vy+=dy*f;P[j].vx-=dx*f;P[j].vy-=dy*f;}
-    for(const [a,b] of E){const dx=P[b].x-P[a].x,dy=P[b].y-P[a].y,d=Math.sqrt(dx*dx+dy*dy)+.01,f=(d-55)*.016;
-      P[a].vx+=dx/d*f*d*.05;P[a].vy+=dy/d*f*d*.05;P[b].vx-=dx/d*f*d*.05;P[b].vy-=dy/d*f*d*.05;}
-    D.docs.forEach((d,i)=>{const c=centers[d.layer];P[i].vx+=(c[0]-P[i].x)*.03;P[i].vy+=(c[1]-P[i].y)*.03;
-      const cap=12*t+1;P[i].x+=Math.max(-cap,Math.min(cap,P[i].vx));P[i].y+=Math.max(-cap,Math.min(cap,P[i].vy));P[i].vx*=.5;P[i].vy*=.5;});
-  }
-  const xs=P.map(p=>p.x),ys=P.map(p=>p.y),pad=60;
-  cs.view=[Math.min(...xs)-pad,Math.min(...ys)-pad,Math.max(...xs)-Math.min(...xs)+pad*2,Math.max(...ys)-Math.min(...ys)+pad*2];
-  cs.pos=P;cs.E=E;
-}
+const byPath=Object.fromEntries(D.docs.map(d=>[d.path,d]));
+const cs={mode:"layers",sel:null,cell:null,q:""};
 function concepts(){
-  if(!cs.pos) layout();
   $("#main").innerHTML=`
   <section class="intro"><span class="label">Concepts · every document of the spec and every link between them</span>
     <h1>How the spec holds together</h1>
-    <p class="muted">Each dot is a document; its size is how many others link to it. Drag to move, scroll or pinch to zoom, tap a dot to see what it is and what it touches.</p></section>
-  <section class="chips" role="group" aria-label="Layers">${layers.map(l=>`<button class="pill layer" data-l="${l}" aria-pressed="${!cs.hidden.has(l)}"><span class="sw" style="background:${layerColor[l]}"></span>${l}</button>`).join("")}
-    <input type="search" id="q" placeholder="Find a document or ID" value="${esc(cs.q)}" aria-label="Find a document or ID"></section>
-  <div class="graphwrap"><div class="graph" id="graph"></div><aside class="side" id="side"></aside></div>`;
-  drawGraph();side();
+    <p class="muted">Layers are in the spec's own reading order, from the business to the open questions. <b>Layers</b>: how many links go from each layer to each other. <b>Documents</b>: every document in its layer; pick one to light up what it cites and what cites it.</p></section>
+  <section class="toolbar">${sub("c",[["layers","Layers"],["docs","Documents"]],cs.mode)}</section>
+  <div id="cview"></div>`;
+  cs.mode==="layers"?layerMatrix():docCols();
 }
-function drawGraph(){
-  const P=cs.pos, q=cs.q.toLowerCase();
-  const vis=i=>!cs.hidden.has(D.docs[i].layer);
-  const match=i=>!q||(D.docs[i].title+" "+D.docs[i].ids.join(" ")+" "+D.docs[i].path).toLowerCase().includes(q);
-  const selI=cs.sel==null?-1:D.docs.findIndex(d=>d.path===cs.sel);
-  const near=new Set();if(selI>=0){near.add(selI);cs.E.forEach(([a,b])=>{if(a===selI)near.add(b);if(b===selI)near.add(a);});}
-  const edges=cs.E.filter(([a,b])=>vis(a)&&vis(b)).map(([a,b])=>{const hl=selI>=0&&(a===selI||b===selI);
-    return `<line class="edge ${hl?"hl":selI>=0?"dim":""}" x1="${P[a].x}" y1="${P[a].y}" x2="${P[b].x}" y2="${P[b].y}"/>`;}).join("");
-  const nodes=D.docs.map((d,i)=>{if(!vis(i))return"";const r=4+Math.sqrt(d.incoming)*2.2;
-    const dim=(selI>=0&&!near.has(i))||(q&&!match(i));
-    const label=d.incoming>=6||near.has(i)||(q&&match(i));
-    return `<g class="node ${dim?"dim":""}" data-p="${esc(d.path)}"><circle cx="${P[i].x}" cy="${P[i].y}" r="${r}" fill="${layerColor[d.layer]}"><title>${esc(d.title)}</title></circle>${label?`<text x="${P[i].x+r+3}" y="${P[i].y+3}">${esc(d.title)}</text>`:""}</g>`;}).join("");
-  $("#graph").innerHTML=`<svg viewBox="${cs.view.join(" ")}" id="gsvg" role="img" aria-label="Graph of the spec's documents">${edges}${nodes}</svg>`;
-  panzoom($("#gsvg"));
+function layerMatrix(){
+  const m={};D.docs.forEach(d=>d.links.forEach(l=>{const k=d.layer+"|"+byPath[l.to].layer;(m[k]=m[k]||[]).push([d.path,l.to]);}));
+  const max=Math.max(...Object.values(m).map(v=>v.length));
+  const shade=n=>`color-mix(in srgb, var(--accent) ${Math.round(12+n/max*70)}%, var(--surface))`;
+  $("#cview").innerHTML=`<div class="mxwrap"><div class="tbl"><table class="matrix" aria-label="Links between layers">
+    <thead><tr><th style="writing-mode:horizontal-tb;transform:none;vertical-align:bottom;font-family:var(--display);color:var(--muted);font-size:.72rem">from ↓ · to →</th>${layers.map(l=>`<th><span class="sw" style="background:${layerColor[l]}"></span> ${l}</th>`).join("")}</tr></thead>
+    ${layers.map(a=>`<tr><th class="rh">${a} <span class="sw" style="background:${layerColor[a]}"></span></th>${layers.map(b=>{const k=a+"|"+b,v=m[k]||[];
+      if(!v.length) return `<td class="empty"></td>`;
+      const dark=v.length/max>.55;
+      return `<td data-lcell="${k}" class="${cs.cell===k?"sel":""}" style="background:${shade(v.length)};color:${dark?"var(--surface)":"var(--ink)"}">${v.length}</td>`;}).join("")}</tr>`).join("")}
+  </table></div>
+  <div class="col"><p class="muted" style="font-size:.88rem">Each cell counts the links from documents of one layer to documents of another. Rows show what a layer leans on; columns show who leans on it. Tap a cell to list the links.</p><div id="lcellinfo"></div></div></div>`;
+  lcellInfo(m);
 }
-function panzoom(svg){
-  let drag=null;
-  svg.addEventListener("pointerdown",e=>{if(e.target.closest(".node"))return;drag={x:e.clientX,y:e.clientY,v:[...cs.view]};svg.setPointerCapture(e.pointerId);});
-  svg.addEventListener("pointermove",e=>{if(!drag)return;const k=cs.view[2]/svg.clientWidth;
-    cs.view[0]=drag.v[0]-(e.clientX-drag.x)*k;cs.view[1]=drag.v[1]-(e.clientY-drag.y)*k;svg.setAttribute("viewBox",cs.view.join(" "));});
-  svg.addEventListener("pointerup",()=>drag=null);
-  svg.addEventListener("wheel",e=>{e.preventDefault();const f=e.deltaY>0?1.12:1/1.12,rect=svg.getBoundingClientRect();
-    const mx=cs.view[0]+(e.clientX-rect.left)/rect.width*cs.view[2],my=cs.view[1]+(e.clientY-rect.top)/rect.height*cs.view[3];
-    cs.view=[mx-(mx-cs.view[0])*f,my-(my-cs.view[1])*f,cs.view[2]*f,cs.view[3]*f];svg.setAttribute("viewBox",cs.view.join(" "));},{passive:false});
+function lcellInfo(m){
+  const el=$("#lcellinfo");if(!el||!cs.cell){if(el)el.innerHTML="";return;}
+  const v=m[cs.cell]||[];const [a,b]=cs.cell.split("|");
+  el.innerHTML=`<div class="panel one"><div class="col"><span class="label">${a} → ${b} · ${v.length} links</span>
+    <ul>${v.map(([f,t])=>`<li><a data-go="${esc(f)}">${esc(byPath[f].title)}</a> → <a data-go="${esc(t)}">${esc(byPath[t].title)}</a></li>`).join("")}</ul></div></div>`;
 }
-function side(){
-  const d=D.docs.find(x=>x.path===cs.sel);
-  if(!d){const top=[...D.docs].sort((a,b)=>b.incoming-a.incoming).slice(0,10);
-    $("#side").innerHTML=`<span class="label">${D.docs.length} documents · ${cs.E.length} links</span><h3>Most linked</h3>
-    <ul>${top.map(t=>`<li><a data-go="${esc(t.path)}">${esc(t.title)}</a> <span class="muted">· ${t.incoming}</span></li>`).join("")}</ul>`;return;}
-  const inc=D.docs.filter(x=>x.links.some(l=>l.to===d.path));
-  $("#side").innerHTML=`<span class="label"><span class="sw" style="background:${layerColor[d.layer]}"></span>${d.layer}${d.status?" · "+d.status:""}</span>
-    <h3>${esc(d.title)}</h3><p style="font-size:.88rem">${md(d.description)}</p>
-    ${d.ids.length?`<div class="chips">${d.ids.map(i=>`<span class="chip">${i}</span>`).join("")}</div>`:""}
-    <p class="muted mono" style="font-size:.75rem">${esc(d.path)} · v${esc(d.version)} · ${esc(d.updated)}</p>
-    <span class="label">Links to ${d.links.length}</span><ul>${d.links.map(l=>{const t=D.docs.find(x=>x.path===l.to);return `<li><a data-go="${esc(l.to)}">${esc(t.title)}</a></li>`;}).join("")||"<li class='muted'>None</li>"}</ul>
-    <span class="label">Linked from ${inc.length}</span><ul>${inc.map(t=>`<li><a data-go="${esc(t.path)}">${esc(t.title)}</a></li>`).join("")||"<li class='muted'>None</li>"}</ul>
-    <a data-go="">Clear selection</a>`;
+function docCols(){
+  const d=byPath[cs.sel], outs=new Set(d?d.links.map(l=>l.to):[]), ins=new Set(d?D.docs.filter(x=>x.links.some(l=>l.to===d.path)).map(x=>x.path):[]);
+  const q=cs.q.toLowerCase();
+  const cols=layers.map(l=>{const ds=D.docs.filter(x=>x.layer===l).sort((a,b)=>b.incoming-a.incoming);
+    return `<div class="lcol"><h3><span class="sw" style="background:${layerColor[l]}"></span>${l} <span class="mono" style="font-weight:400">${ds.length}</span></h3>
+    ${ds.map(x=>{const hit=q&&(x.title+" "+x.ids.join(" ")).toLowerCase().includes(q);
+      const c=[x.path===cs.sel?"me":"",outs.has(x.path)?"out":"",ins.has(x.path)?"in":""].join(" ");
+      return `<button class="doc ${c}" data-go="${esc(x.path)}" title="${esc(x.title+" — "+x.description)}" ${hit?'style="outline:2px solid var(--accent)"':""}><span>${esc(x.title)}</span><span class="c">${x.incoming}</span></button>`;}).join("")}</div>`;}).join("");
+  $("#cview").innerHTML=`<div class="chips"><input type="search" id="q" placeholder="Find a document or ID" value="${esc(cs.q)}" aria-label="Find a document or ID">
+    <div class="legend"><span><i style="background:var(--accent-soft)"></i>It cites</span><span><i style="background:var(--judge-soft)"></i>Cites it</span><span><i style="background:var(--human-soft)"></i>Both</span><span class="mono">n = cited by</span></div></div>
+    <div class="scroll" style="margin-top:12px"><div class="cols ${d?"has":""}" style="--n:${layers.length}">${cols}</div></div>
+    ${d?`<section class="panel" style="margin-top:16px"><div class="col"><span class="label"><span class="sw" style="background:${layerColor[d.layer]}"></span> ${d.layer}${d.status?" · "+d.status:""}</span>
+      <h2>${esc(d.title)}</h2><p>${md(d.description)}</p>${d.ids.length?`<div class="chips">${d.ids.map(i=>`<span class="chip">${i}</span>`).join("")}</div>`:""}
+      <p class="muted mono" style="font-size:.75rem">${esc(d.path)} · v${esc(d.version)} · ${esc(d.updated)}</p><a data-go="">Clear selection</a></div>
+      <div class="col"><span class="label">Cites ${outs.size}</span><ul>${[...outs].map(p=>`<li><a data-go="${esc(p)}">${esc(byPath[p].title)}</a> <span class="muted">· ${byPath[p].layer}</span></li>`).join("")||"<li class='muted'>None</li>"}</ul>
+      <span class="label">Cited by ${ins.size}</span><ul>${[...ins].map(p=>`<li><a data-go="${esc(p)}">${esc(byPath[p].title)}</a> <span class="muted">· ${byPath[p].layer}</span></li>`).join("")||"<li class='muted'>None</li>"}</ul></div></section>`:""}`;
 }
 
 /* ---------------- Architecture ---------------- */
 function architecture(){
-  const doesOf=name=>D.pieces.find(p=>p.piece.replace(/`[^`]*`/g,"").trim().toLowerCase()===name.toLowerCase()||p.piece.toLowerCase().startsWith(name.toLowerCase()));
+  const pieceDocs=new Set(D.pieces.flatMap(p=>p.docs));
+  const home={};
+  D.archDocs.filter(d=>!pieceDocs.has(d.path)).forEach(d=>{
+    (home[""]=home[""]||[]).push(d);});
+  const pieceOf=name=>D.pieces.find(p=>p.piece.replace(/`[^`]*`/g,"").trim().toLowerCase()===name.toLowerCase());
   $("#main").innerHTML=`
-  <section class="intro"><span class="label">Architecture · from foundations/architecture/overview.md and the ARCH documents</span>
-    <h1>The pieces, and what each one does</h1>
-    <p class="muted">The open framework runs on your machine when you ask. The Cloud watches all the time, across systems. Both are drawn from the same overview.</p></section>
-  <section class="tier cloud"><span class="label">OpenPEDD Cloud · paid</span>
-    <div class="chips">${D.cloud.map(c=>`<span class="chip j">${esc(c)}</span>`).join("")}</div></section>
-  <div class="ext" aria-label="External systems"><span class="muted">connects to</span>${D.external.map(e=>`<span>${esc(e)}</span>`).join("")}</div>
-  <section class="tier"><span class="label">OpenPEDD · open source</span>
-    <div class="grid">${D.openLayers.map(l=>{const p=doesOf(l.name);return `<div class="piece"><span class="label">${l.n}</span><b>${esc(l.name)}</b>
-      ${p?`<span style="font-size:.86rem">${md(p.does)}</span>`:""}<span class="muted" style="font-size:.78rem">${md(l.items)}</span></div>`;}).join("")}</div></section>
-  <section style="display:flex;flex-direction:column;gap:10px"><h2>Architecture documents</h2>
-    <div class="grid">${D.archDocs.map(d=>`<div class="piece"><span class="label">${d.ids[0]}</span><b style="font-family:var(--display);font-size:.95rem">${esc(d.title)}</b><span style="font-size:.84rem" class="muted">${md(d.description)}</span></div>`).join("")}</div></section>`;
+  <section class="intro"><span class="label">Architecture · a context diagram, from foundations/architecture/overview.md</span>
+    <h1>The pieces, and what connects them</h1>
+    <p class="muted">Read it from the top: the Cloud watches the outside systems through the connection named on each wire. Below, the open framework, which runs on your machine when you ask. Each piece lists the document its row in the overview points to. The overview says which outside system the Cloud reaches and how; it does not yet say which open piece talks to which, so no wire is drawn there.</p></section>
+  <section class="c4">
+    <div class="sys cloud"><h2>OpenPEDD Cloud<small>paid · watches all the time, across systems</small></h2>
+      <div class="chips">${D.cloud.map(c=>`<span class="chip j">${esc(c)}</span>`).join("")}</div></div>
+    <div class="wires" style="--n:${D.connections.length}">${D.connections.map(c=>`<div class="wire"><span class="ln"></span>${c.via?`<span class="lbl">${esc(c.via)}</span>`:`<span class="lbl" style="color:var(--muted)">—</span>`}<span class="ln"></span>
+      <div class="ext">${esc(c.name)}<small>outside system</small></div></div>`).join("")}</div>
+    <div class="sys"><h2>OpenPEDD<small>open source · runs when you ask</small></h2>
+      <div class="grid">${D.openLayers.map(l=>{const p=pieceOf(l.name);const docs=[...(p?.docs||[]).map(x=>byPath[x]),...(p?home[p.piece]||[]:[])].filter(Boolean);
+        return `<div class="piece"><span class="label">${l.n}</span><b>${esc(l.name)}</b>${p?`<span style="font-size:.86rem">${md(p.does)}</span>`:""}
+        <span class="muted" style="font-size:.76rem">${md(l.items)}</span>
+        ${docs.length?`<ul>${docs.map(d=>`<li>${esc(d.title)}${d.ids[0]?` <span class="muted mono" style="font-size:.7rem">${d.ids[0]}</span>`:""}</li>`).join("")}</ul>`:""}</div>`;}).join("")}</div></div>
+  </section>
+  ${home[""]?.length?`<section class="cross"><h2>Other architecture documents</h2><p class="muted" style="font-size:.88rem">The overview does not tie these to a piece.</p><div class="grid">${home[""].map(d=>`<div class="piece"><span class="label">${d.ids[0]||""}</span><b style="font-family:var(--display);font-size:.95rem">${esc(d.title)}</b><span style="font-size:.84rem" class="muted">${md(d.description)}</span></div>`).join("")}</div></section>`:""}`;
 }
 
 /* ---------------- Gaps ---------------- */
@@ -306,16 +352,15 @@ function route(){
 }
 document.querySelector('nav a[href="#gaps"]').insertAdjacentHTML("beforeend",D.gaps.length?`<span class="n">${D.gaps.length}</span>`:"");
 document.addEventListener("click",e=>{
+  const sb=e.target.closest("[data-sub]");if(sb){const [k,v]=sb.dataset.sub.split(":");if(k==="p")st.mode=v;else cs.mode=v;route();return;}
   const c=e.target.closest("[data-c]");if(c){st.change=+c.dataset.c;process();return;}
-  const s=e.target.closest("[data-s]");if(s){st.sel=s.dataset.s;document.querySelectorAll(".stage").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===st.sel));panel();return;}
-  const l=e.target.closest("[data-l]");if(l){cs.hidden.has(l.dataset.l)?cs.hidden.delete(l.dataset.l):cs.hidden.add(l.dataset.l);l.setAttribute("aria-pressed",!cs.hidden.has(l.dataset.l));drawGraph();return;}
-  const n=e.target.closest(".node");if(n){cs.sel=n.dataset.p;drawGraph();side();return;}
-  const g=e.target.closest("[data-go]");if(g){cs.sel=g.dataset.go||null;drawGraph();side();return;}
+  const s=e.target.closest("[data-s]");if(s){st.sel=s.dataset.s;lanes();return;}
+  const cell=e.target.closest("[data-cell]");if(cell){st.cell=cell.dataset.cell;dsm();return;}
+  const lc=e.target.closest("[data-lcell]");if(lc){cs.cell=lc.dataset.lcell;layerMatrix();return;}
+  const g=e.target.closest("[data-go]");if(g){cs.sel=g.dataset.go||null;if(cs.mode!=="docs"&&cs.sel){cs.mode="docs";}concepts();return;}
 });
-document.addEventListener("input",e=>{if(e.target.id==="q"){cs.q=e.target.value;drawGraph();}});
-const hint=e=>{const a=e.target.closest(".arc");if(!a)return;const f=D.flows[a.dataset.k];
-  $("#flowhint").innerHTML=`<code>${f.from}</code> → <code>${f.to}</code>: ${md(f.what)}`;};
-document.addEventListener("mouseover",hint);document.addEventListener("click",hint);
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("[data-s]"))e.target.click();});
+document.addEventListener("input",e=>{if(e.target.id==="q"){cs.q=e.target.value;docCols();const q=$("#q");q.focus();q.setSelectionRange(q.value.length,q.value.length);}});
 addEventListener("hashchange",route);
 route();
 </script>
