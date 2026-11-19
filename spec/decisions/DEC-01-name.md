@@ -2,8 +2,8 @@
 title: "DEC-01 · The name: OpenPEDD"
 description: Closes Q-01
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 # DEC-01 · The name: OpenPEDD
@@ -13,9 +13,9 @@ updated: "2026-11-04"
 | What | Name |
 |---|---|
 | The methodology | **Product Engineering Driven Development** (PEDD) |
-| The open framework | **OpenPEDD** |
+| The open framework | **OpenPEDD**; since [`DEC-20`](DEC-20-framework-name.md), **OpenPEDD Framework**, and OpenPEDD is the brand |
 | The CLI and short form | **`pedd`** |
-| The paid plan | **OpenPEDD Cloud** |
+| The paid platform | **OpenPEDD Cloud** |
 
 Checked on 2026-11-04: free on npm (`openpedd`, `open-pedd`, `pedd`), on GitHub (`openpedd`) and as
 `openpedd.com`, `.dev`, `.ai` and `.org`. This is not a trademark search.

@@ -2,7 +2,7 @@
 title: Open core
 description: BIZ-04 · What is free, what is paid, and the rule that draws the line
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-19"
 ---
 
@@ -10,7 +10,7 @@ updated: "2026-11-19"
 
 | Product | Is | License |
 |---|---|---|
-| **OpenPEDD** | The framework: format, CLI `pedd`, skills, judges, local MCP, reader, CI action | Apache-2.0; the format and docs, CC BY 4.0 ([`DEC-02`](../../decisions/DEC-02-licenses.md)) |
+| **OpenPEDD Framework** | The framework: format, CLI `pedd`, skills, judges, local MCP, reader, CI action | Apache-2.0; the format and docs, CC BY 4.0 ([`DEC-02`](../../decisions/DEC-02-licenses.md)) |
 | **OpenPEDD Cloud** | Continuous sync and everything that watches across systems | Closed |
 
 ## The line
@@ -22,7 +22,7 @@ The paid plan's value is that **nobody has to remember to run it**.
 **The judges are the method, not a service**: every judge, in every stage and on every PR, is free
 and runs on the team's own subscription or API key. The Cloud runs none ([`DEC-19`](../../decisions/DEC-19-judges-in-ci.md)).
 
-| Free: OpenPEDD | Paid: OpenPEDD Cloud |
+| Free: OpenPEDD Framework | Paid: OpenPEDD Cloud |
 |---|---|
 | Format, layers, IDs, blocks, history | **Sync engine**: listens to the spec, code, tracker, design tool and help, and recomputes freshness on every change |
 | CLI: `check`, `index`, `status`, `impact`, `trace` | **Freshness dashboard** across repos, live |

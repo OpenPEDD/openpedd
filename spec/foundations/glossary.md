@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.12"
-updated: "2026-11-17"
+version: "1.13"
+updated: "2026-11-19"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -14,8 +14,9 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Name | Is | Defined in |
 |---|---|---|
 | **Product Engineering Driven Development** (PEDD) | The methodology | [`BIZ-01`](business/problem.md) |
-| **OpenPEDD** | The open framework | [`BIZ-04`](business/open-core.md) |
-| **OpenPEDD Cloud** | The paid plan | [`BIZ-04`](business/open-core.md) |
+| **OpenPEDD** | The brand, and the family of products under it. Alone in running text, the framework | [`DEC-20`](../decisions/DEC-20-framework-name.md) |
+| **OpenPEDD Framework** | The open framework | [`BIZ-04`](business/open-core.md) |
+| **OpenPEDD Cloud** | The paid platform | [`BIZ-04`](business/open-core.md) |
 | `pedd init` · `pedd doctor` · `pedd update` · `pedd install` · `pedd launch` | Onboarding, what each stage lacks, refreshing the framework's files, setting up after cloning, launching | [workspace](../modules/workspace/prd.md) |
 | Walkthrough | How to do one thing, on the real screen, on request. Not a tour | [`ARCH-07`](architecture/walkthroughs.md) |
 | Answer · Point · Take there · Act | The levels of help inside a product | [`ARCH-07`](architecture/walkthroughs.md) |
@@ -110,6 +111,7 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | Old name | Now |
 |---|---|
 | OpenSDD (working name) | OpenPEDD ([`DEC-01`](../decisions/DEC-01-name.md)) |
+| OpenPEDD, for the framework where the Cloud is also in play | OpenPEDD Framework ([`DEC-20`](../decisions/DEC-20-framework-name.md)) |
 | `RF` · `RNF` | `FR` · `NFR` |
 | `TR` (transversal rule) | `RULE` |
 | `D` (decision) | `DEC` |

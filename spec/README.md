@@ -1,6 +1,6 @@
 # OpenPEDD Spec
 
-The specification of **OpenPEDD**, the open framework for **Product Engineering Driven
+The specification of **OpenPEDD Framework**, the open framework for **Product Engineering Driven
 Development**: the spec is the single source of truth, and everything derived from it (code,
 mockups, tests, API Reference, Help Center, tasks) knows whether it is still up to date.
 

@@ -316,3 +316,7 @@
 {"path":"modules/specify/prd.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"EARS credited to Mavin et al."}
 {"path":"foundations/rules/writing.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"RULE-27: a borrowed source is cited, never copied"}
 {"path":"foundations/rules/README.md","version":"1.4 → 1.5","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"RULE-27 listed"}
+{"path":"decisions/DEC-20-framework-name.md","version":"1.0","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"OpenPEDD is the brand; the framework is OpenPEDD Framework"}
+{"path":"decisions/DEC-01-name.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"Framework name points to DEC-20; the Cloud is the paid platform"}
+{"path":"foundations/glossary.md","version":"1.12 → 1.13","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"OpenPEDD as the brand; OpenPEDD Framework added"}
+{"path":"foundations/business/open-core.md","version":"1.3 → 1.4","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"OpenPEDD Framework named in the table"}

@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- The framework is called OpenPEDD Framework; OpenPEDD is the brand that also holds OpenPEDD Cloud (DEC-20).
 - Licenses in the repo: `LICENSE` (Apache-2.0, the code), `LICENSE-docs` (CC BY 4.0, the spec and docs) and `NOTICE`. A borrowed source is cited, never copied (RULE-27).
 - How a change is reviewed, in six layers: gates, project rules as lint, hunters per lens, a refuter, `pedd` deciding what blocks, and a person approving from the review signals. A finding confirmed in two changes becomes a rule.
 - Default review lenses with their checklist, from the corrections of Reclee's PRs.
