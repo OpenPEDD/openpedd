@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- The first skill: `skills/specify-interview/SKILL.md`. Skills and judges live in `skills/` and `agents/`, each naming the spec documents it implements.
 - `/specify-interview` and the minimum map: what a product, a module or a request needs to be defined, who answers each item (the client, a proposal, or the team), and the conversation that fills it (ARCH-18).
 - A client defines a product in a conversation that runs until the definition is complete: questions computed first, two or three per turn, completeness counted per item, a summary to confirm (DEC-20, MKT-08).
 - Each skill says what it reads and what it leaves, in its stage's table; every stage input is read by a skill and every output is left by one. `verify` declares the tests as an input: the Walkthrough draft comes from their steps.

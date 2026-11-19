@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.7"
-updated: "2026-11-13"
+version: "1.8"
+updated: "2026-11-19"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -19,6 +19,10 @@ Three pieces, never mixed:
 `pedd init` generates the skills and agents for every agent it finds, recording each file and its
 hash in `.pedd/manifest.json` so `pedd update` can tell what was edited by hand (Claude Code first; Cursor,
 Copilot, Codex and others through the same templates, the way Spec Kit does).
+
+Their source is in the framework repo: `skills/<name>/SKILL.md` and `agents/<name>.md`, the layout the
+`skills.sh` registry reads; `pedd init` installs from there. Each one names the spec documents it
+implements, with their version, so it goes `stale` with them ([`ARCH-02`](freshness.md)).
 
 The skills are also published to the `skills.sh` registry, so `npx skills add openpedd/openpedd`
 installs them without the CLI. `pedd doctor` finds skills installed that way and records them in the

@@ -411,7 +411,7 @@ function skillsView(){
     ${bar("Skills whose stage has an agent judge",sk.filter(x=>x.checkedBy.length).length,sk.length,"The rest are checked by tests, by a person, or not at all")}
     ${bar("Judges with written checks",jd.filter(x=>x.checks).length,jd.length)}
     ${bar("Judges with a pass condition",jd.filter(x=>x.passes).length,jd.length)}
-    ${bar("Prompts written",K.filter(x=>x.prompt).length,K.length,"Expected in .claude/skills/ and .claude/agents/")}
+    ${bar("Prompts written",K.filter(x=>x.prompt).length,K.length,"Expected in skills/ and agents/")}
   </section>
   <section class="toolbar">${sub("k",[["all","All"],["skill","Skills"],["judge","Judges"]],ks.kind)}</section>
   <div class="scroll"><table class="big"><thead><tr><th>Name</th><th>What it does</th><th>Takes in</th><th>Leaves</th><th>Checked by · passes when</th><th>Prompt</th></tr></thead>

@@ -232,7 +232,7 @@ for (const a of artifacts) {
 
 const agentsDoc = read('spec/foundations/architecture/agents.md');
 const judgeInput = (tableWith(section(agentsDoc, 'How judges run'), 'Form', 'How')?.rows.find((r) => /subagent/i.test(r[0])) || [])[1] || '';
-const promptPath = (kind, name) => (kind === 'Skill' ? `.claude/skills/${name.replace(/^\//, '').split(' ')[0]}/SKILL.md` : `.claude/agents/${name}.md`);
+const promptPath = (kind, name) => (kind === 'Skill' ? `skills/${name.replace(/^\//, '').split(' ')[0]}/SKILL.md` : `agents/${name}.md`);
 const skills = [];
 for (const s of stages) for (const [kind, names, purpose, reads = '', leaves = ''] of s.tools) {
   if (kind !== 'Skill' && kind !== 'Agent') continue;

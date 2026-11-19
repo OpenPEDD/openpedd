@@ -328,3 +328,4 @@
 {"path":"modules/specify/prd.md","version":"1.8 → 1.9","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"/specify-interview: a client defines in a conversation (ARCH-18)"}
 {"path":"capabilities.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition listed"}
 {"path":"foundations/glossary.md","version":"1.12 → 1.13","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition and minimum map"}
+{"path":"foundations/architecture/agents.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-026","story":null,"stage":"specify","summary":"Where skills and judges live in the framework repo, and the documents each implements"}
