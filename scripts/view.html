@@ -134,6 +134,21 @@ input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line);bo
 .piece b{font-family:var(--mono);font-size:.86rem}
 .piece ul{margin:2px 0 0;padding-left:16px;font-size:.8rem}
 .cross{display:flex;flex-direction:column;gap:8px}
+/* Artifacts: tables */
+.big{border-collapse:separate;border-spacing:0;font-size:.84rem;min-width:1100px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.big th{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);white-space:nowrap}
+.big td{border-top:1px solid var(--line);vertical-align:top;padding:10px}
+.big tr.grp td{background:var(--bg);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;padding:6px 10px}
+.big td.stg{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.big ul{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:4px}
+.big .from{color:var(--muted);font-size:.78rem}
+.big .w{min-width:220px}
+.sc{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:1px 6px;border-radius:5px;margin:0 3px 3px 0;background:var(--accent-soft);color:var(--accent);cursor:help}
+.sc.read{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.sc.chk{background:var(--judge-soft);color:var(--judge)}
+.sc.only{background:none;border:1px dashed var(--accent)}
+.sc.miss{background:var(--warn-soft);color:var(--warn)}
+.none{color:var(--muted)}
 /* Gaps */
 .gap{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .gap .k{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--warn)}
@@ -143,7 +158,7 @@ input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line);bo
 <body>
 <nav aria-label="Views">
   <span class="brand">OpenPEDD map</span>
-  <a href="#process">Process</a><a href="#concepts">Concepts</a><a href="#architecture">Architecture</a><a href="#gaps">Gaps</a>
+  <a href="#process">Process</a><a href="#artifacts">Artifacts</a><a href="#concepts">Concepts</a><a href="#architecture">Architecture</a><a href="#gaps">Gaps</a>
   <span class="built" id="built"></span>
 </nav>
 <main class="wrap" id="main"></main>
@@ -334,6 +349,42 @@ function architecture(){
   ${home[""]?.length?`<section class="cross"><h2>Other architecture documents</h2><p class="muted" style="font-size:.88rem">The overview does not tie these to a piece.</p><div class="grid">${home[""].map(d=>`<div class="piece"><span class="label">${d.ids[0]||""}</span><b style="font-family:var(--display);font-size:.95rem">${esc(d.title)}</b><span style="font-size:.84rem" class="muted">${md(d.description)}</span></div>`).join("")}</div></section>`:""}`;
 }
 
+/* ---------------- Artifacts ---------------- */
+const as={mode:"stages"};
+function artifactsView(){
+  $("#main").innerHTML=`
+  <section class="intro"><span class="label">Artifacts · from foundations/artifacts.md and each stage's Inputs, Outputs, Judge and Skills</span>
+    <h1>What each stage takes in, does and leaves</h1>
+    <p class="muted"><b>By stage</b>: every stage in one row, with its skills, what goes in, what comes out and who judges it. <b>By artifact</b>: every artifact of the catalog, where it is made, which stage reads it and which judge checks it. An empty cell is something the spec does not say yet.</p></section>
+  <section class="toolbar">${sub("a",[["stages","By stage"],["arts","By artifact"]],as.mode)}</section>
+  <div class="scroll" id="aview"></div>`;
+  as.mode==="stages"?byStage():byArtifact();
+}
+function byStage(){
+  const li=(arr,fn)=>arr.length?`<ul>${arr.map(fn).join("")}</ul>`:`<span class="none">—</span>`;
+  $("#aview").innerHTML=`<table class="big"><thead><tr><th>Stage</th><th>What it does</th><th>Skills: what each one does</th><th>Takes in · from</th><th>Leaves</th><th>Judged by</th></tr></thead>
+  ${D.stages.map(s=>`<tr><td class="stg">${String(s.n).padStart(2,"0")} ${s.id}<br><span class="mode ${isHuman(s.mode)?"h":""}" style="font-family:var(--display)">${md(s.mode)}</span></td>
+    <td class="w">${md(s.does)}</td>
+    <td class="w">${li(s.tools.filter(t=>t[0]==="Skill"),t=>`<li>${md(t[1])}: ${md(t[2])}</li>`)}</td>
+    <td class="w">${li(s.inputs,r=>`<li>${md(r[0])}<br><span class="from">from ${md(r[1])}</span></li>`)}</td>
+    <td class="w">${li(s.outputs,r=>`<li>${md(r[0])}</li>`)}</td>
+    <td class="w">${s.judges.length?li(s.judges,r=>`<li>${md(r[0])}: ${md(r[1])}</li>`):`<span>${md(s.judgeText)}</span>`}</td></tr>`).join("")}</table>`;
+}
+function byArtifact(){
+  const chips=(obj,cls)=>{const k=Object.keys(obj);return k.length?k.map(st=>`<span class="sc ${cls}" title="${esc(obj[st].join("\n").replace(/`/g,""))}">${st}</span>`).join(""):`<span class="none">—</span>`;};
+  const made=a=>{const out=[];
+    a.madeBy.forEach(st=>out.push(a.made[st]?`<span class="sc" title="${esc(("Catalog: "+a.madeByText+"\nOutputs: "+a.made[st].join("\n")).replace(/`/g,""))}">${st}</span>`:`<span class="sc miss" title="The catalog says ${st} writes it; its Outputs table does not name it">${st} ⚠</span>`));
+    Object.keys(a.made).filter(st=>!a.madeBy.includes(st)).forEach(st=>out.push(`<span class="sc only" title="${esc(("Named in the Outputs of "+st+", not in the catalog's writer:\n"+a.made[st].join("\n")).replace(/`/g,""))}">${st}</span>`));
+    if(!out.length&&a.madeByText) out.push(`<span class="none">${md(a.madeByText)}</span>`);
+    return out.join("")||`<span class="none">—</span>`;};
+  let grp="";
+  $("#aview").innerHTML=`<div class="legend" style="margin-bottom:10px"><span><i style="background:var(--accent-soft)"></i>Made here: catalog and Outputs agree</span><span><i style="border:1px dashed var(--accent)"></i>Also in this stage's Outputs</span><span><i style="background:var(--warn-soft)"></i>Catalog says it is made here; Outputs do not say so</span><span><i style="background:var(--surface);border:1px solid var(--line)"></i>Read as an input</span><span><i style="background:var(--judge-soft)"></i>Checked by the judge</span><span>Hover a stage to read the line it comes from</span></div>
+  <table class="big"><thead><tr><th>Artifact</th><th>Defines</th><th>Comes from</th><th>Made in</th><th>Read in</th><th>Checked in</th><th>Lives in</th></tr></thead>
+  ${D.artifacts.map(a=>{const g=a.group!==grp?`<tr class="grp"><td colspan="7">${(grp=a.group)}</td></tr>`:"";
+    return g+`<tr><td><b>${esc(a.name)}</b>${a.ids.length?`<br><span class="from mono">${a.ids.join(" · ")}</span>`:""}</td><td class="w">${md(a.defines)}</td>
+    <td>${a.comesFrom?md(a.comesFrom):`<span class="none">—</span>`}</td><td>${made(a)}</td><td>${chips(a.read,"read")}</td><td>${chips(a.checked,"chk")}</td><td class="from">${md(a.lives)}</td></tr>`;}).join("")}</table>`;
+}
+
 /* ---------------- Gaps ---------------- */
 function gaps(){
   $("#main").innerHTML=`
@@ -344,7 +395,7 @@ function gaps(){
 }
 
 /* ---------------- Routing and events ---------------- */
-const views={process,concepts,architecture,gaps};
+const views={process,artifacts:artifactsView,concepts,architecture,gaps};
 function route(){
   const v=views[location.hash.slice(1)]?location.hash.slice(1):"process";
   document.querySelectorAll("nav a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"page":"false"));
@@ -352,7 +403,7 @@ function route(){
 }
 document.querySelector('nav a[href="#gaps"]').insertAdjacentHTML("beforeend",D.gaps.length?`<span class="n">${D.gaps.length}</span>`:"");
 document.addEventListener("click",e=>{
-  const sb=e.target.closest("[data-sub]");if(sb){const [k,v]=sb.dataset.sub.split(":");if(k==="p")st.mode=v;else cs.mode=v;route();return;}
+  const sb=e.target.closest("[data-sub]");if(sb){const [k,v]=sb.dataset.sub.split(":");if(k==="p")st.mode=v;else if(k==="a")as.mode=v;else cs.mode=v;route();return;}
   const c=e.target.closest("[data-c]");if(c){st.change=+c.dataset.c;process();return;}
   const s=e.target.closest("[data-s]");if(s){st.sel=s.dataset.s;lanes();return;}
   const cell=e.target.closest("[data-cell]");if(cell){st.cell=cell.dataset.cell;dsm();return;}

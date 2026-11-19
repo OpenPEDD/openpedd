@@ -172,6 +172,62 @@ const caps = read('spec/capabilities.md');
 const capSkills = tableWith(section(caps, 'Skills'), 'Stage', 'Skills')?.rows || [];
 const capJudges = tableWith(section(caps, 'Judges'), 'Stage', 'Judge')?.rows || [];
 
+// ---------- Artifacts: what each stage makes, reads and checks ----------
+
+const catalog = read('spec/foundations/artifacts.md');
+const artifacts = [];
+for (const [group, t] of [['The spec', 'The spec: what governs'], ['Not decided yet', 'What does not govern yet'], ['Records', 'Records: what happened'], ['Derived', 'Derived artifacts: produced from the spec']].map(([g, h]) => [g, tables(section(catalog, h))[0]])) {
+  if (!t) continue;
+  const col = (row, name) => row[t.header.findIndex((h) => h.startsWith(name))] ?? '';
+  for (const row of t.rows) {
+    {
+      const name = col(row, 'Artifact');
+      artifacts.push({
+        group, name,
+        defines: col(row, 'Defines') || col(row, 'Records'),
+        comesFrom: col(row, 'Comes from'), lives: col(row, 'Lives in'),
+        ids: code(col(row, 'ID')).map((c) => c.replace(/-.*$/, '')),
+        madeBy: code(col(row, 'Written by') || col(row, 'Produced by')).filter((c) => stageIds.has(c)),
+        madeByText: col(row, 'Written by') || col(row, 'Produced by'),
+      });
+    }
+  }
+}
+// Terms the spec names in backticks with more than one word (`Test Data`): a shorter name inside one is not a mention.
+const namedTerms = new Set();
+for (const st of stages) for (const t of [...st.inputs, ...st.outputs, ...st.judges].flat()) for (const m of t.matchAll(/`([A-Z][\w-]*(?: [A-Z][\w-]*)+)`/g)) namedTerms.add(m[1]);
+// How an artifact is named in a stage's text: its name, its ID codes, and the initials of a two-word name (Pull request → PR).
+// A name of three words or more is also found without its last word (Help Center article → Help Center).
+const aliases = (a) => {
+  const out = [...a.ids];
+  for (const base of a.name.replace(/\s*\(.*\)$/, '').split(' · ')) {
+    out.push(base);
+    const words = base.split(/\s+/);
+    if (words.length === 2) out.push(words.map((w) => w[0].toUpperCase()).join(''));
+    if (words.length >= 3) out.push(words.slice(0, -1).join(' '));
+  }
+  return out;
+};
+// Another named term in backticks (`Test Data`) is not a mention of a shorter name inside it (Test).
+const mentions = (text, a) => aliases(a).some((al) => {
+  if (/^[A-Z]{2,}$/.test(al)) return new RegExp(`(^|[^A-Za-z])${al}s?([^A-Za-z]|$)`).test(text);
+  const low = al.toLowerCase();
+  for (const term of namedTerms) if (term.toLowerCase().includes(low) && term.toLowerCase() !== low) text = text.replace(new RegExp(term, 'gi'), ' ');
+  const clean = text.split('`').map((part, i) => (i % 2 && /\s/.test(part) && part.toLowerCase().includes(low) && part.toLowerCase() !== low ? '' : part)).join(' ');
+  return new RegExp(`\\b${al.replace(/s$/, '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}s?\\b`, 'i').test(clean);
+});
+for (const a of artifacts) {
+  a.made = {}; a.read = {}; a.checked = {};
+  for (const s of stages) {
+    const outs = s.outputs.filter((r) => mentions(r[0], a)).map((r) => r[0]);
+    if (outs.length) a.made[s.id] = outs;
+    const ins = s.inputs.filter((r) => mentions(r[0], a)).map((r) => `${r[0]} — from ${r[1]}`);
+    if (ins.length) a.read[s.id] = ins;
+    const checks = [...s.judges.filter((r) => mentions(r[1] + ' ' + (r[2] || ''), a)).map((r) => `${r[0]}: ${r[1]}`), ...(s.judgeText && mentions(s.judgeText, a) ? [s.judgeText] : [])];
+    if (checks.length) a.checked[s.id] = checks;
+  }
+}
+
 // ---------- Gaps: what the spec says about itself that does not add up ----------
 
 const gaps = [];
@@ -201,13 +257,18 @@ for (const [stage, list] of capJudges) {
     for (const j of code(list)) if (!prdJudges.has(j)) gaps.push({ kind: 'Judges', where: s.path, text: `\`${j}\` is listed for \`${st}\` in capabilities, but its PRD does not name it in "Judge"` });
   }
 }
+for (const s of stages) {
+  const missing = artifacts.filter((a) => a.madeBy.includes(s.id) && !a.made[s.id]).map((a) => `"${a.name}"`);
+  if (missing.length) gaps.push({ kind: 'Artifacts', where: s.path, text: `The artifact catalog says \`${s.id}\` writes ${missing.join(', ')}, but its Outputs table does not name ${missing.length > 1 ? 'them' : 'it'}` });
+}
+for (const a of artifacts.filter((x) => x.group === 'Derived')) if (!Object.keys(a.read).length && !Object.keys(a.checked).length) gaps.push({ kind: 'Artifacts', where: 'spec/foundations/artifacts.md', text: `No stage declares "${a.name}" as an input or names it in a judge's checks` });
 for (const d of docs) if (d.incoming === 0 && !/README|index|capabilities/.test(d.path)) gaps.push({ kind: 'Links', where: d.path, text: `"${d.title}" is linked from no other document` });
 
 // ---------- Write ----------
 
 const data = {
   built: new Date().toISOString().slice(0, 10),
-  stages, flows, trackCols, changes, lenses, lensItems, docs, pieces, openLayers, cloud, external, connections, readingOrder, archDocs, gaps,
+  stages, flows, trackCols, changes, lenses, lensItems, docs, pieces, openLayers, cloud, external, connections, readingOrder, archDocs, artifacts, gaps,
 };
 const template = readFileSync(join(ROOT, 'scripts/view.html'), 'utf8');
 const out = join(ROOT, '.pedd/view/index.html');
