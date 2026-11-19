@@ -5,9 +5,10 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- Licenses in the repo: `LICENSE` (Apache-2.0, the code), `LICENSE-docs` (CC BY 4.0, the spec and docs) and `NOTICE`. A borrowed source is cited, never copied (RULE-27).
 - How a change is reviewed, in six layers: gates, project rules as lint, hunters per lens, a refuter, `pedd` deciding what blocks, and a person approving from the review signals. A finding confirmed in two changes becomes a rule.
 - Default review lenses with their checklist, from the corrections of Reclee's PRs.
-- The judges are part of the method: free, on every PR in the CI action, on the team's own subscription. The Cloud runs no judges.
+- The judges are part of the method: free, on every PR in the CI action, on the team's own API key. The Cloud runs no judges.
 - `pedd judges bench` and judge precision as a process metric.
 - Small work is not delegated: a `small` task builds in one local session.
 - `/build-findings`: fix the real findings, answer the rest, stop where the spec is wrong.

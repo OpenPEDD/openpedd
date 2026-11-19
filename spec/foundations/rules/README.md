@@ -2,8 +2,8 @@
 title: Rules
 description: How rules are written
 owner: Kevin
-version: "1.4"
-updated: "2026-11-17"
+version: "1.5"
+updated: "2026-11-19"
 ---
 
 A rule is something **every module, stage or document follows**. A rule of a single module lives in
@@ -11,7 +11,7 @@ its PRD; a rule about an entity's states lives in the entity.
 
 | File | Rules | About |
 |---|---|---|
-| [writing.md](writing.md) | `RULE-01` to `RULE-09` | How every document is written |
+| [writing.md](writing.md) | `RULE-01` to `RULE-09`, `RULE-27` | How every document is written, and how a borrowed source is used |
 | [cycle.md](cycle.md) | `RULE-10` to `RULE-26` | How every stage works, how agents talk to people, and how they back a claim |
 
 In a product's spec, this is also where its cross-module **business rules** go: *"a trial falls to

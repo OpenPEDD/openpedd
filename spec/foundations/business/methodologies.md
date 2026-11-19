@@ -2,8 +2,8 @@
 title: What we borrow
 description: BIZ-03 · The proven pieces OpenPEDD takes from other methods, and in which stage
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 # BIZ-03 · What we borrow
@@ -16,7 +16,7 @@ governs. This table says where each piece comes from, so nobody reinvents it or 
 | Böckeler, the three SDD levels | We are spec-anchored: the spec stays alive and everything is kept against it | All |
 | GitHub Spec Kit | Constitution (our foundations), `/clarify`, spec checklist, `/analyze`, `/converge`, extensions and presets | `specify` · `plan` · `verify` |
 | OpenSpec | The delta format, `specs/` against `changes/`, the archive, the spec in its own repo | `specify` · `publish` |
-| Kiro | EARS: *"When `<trigger>`, the system shall `<response>`"* | `specify` |
+| EARS (Mavin et al., IEEE RE 2009), as Kiro uses it | *"When `<trigger>`, the system shall `<response>`"* | `specify` |
 | BMAD-METHOD | One agent per role, and *correct course* when something drifts | All |
 | pdd-kit | The product model, mapping an existing repo, blueprints, variations, changes read as sentences | `map` · `specify` |
 | Spec Growth Engine | Contract apart from design, context by ownership path, hardest-first, drift gate | `plan` · `verify` |

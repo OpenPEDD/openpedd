@@ -2,8 +2,8 @@
 title: Reviewing a change
 description: ARCH-13 · The layers a change goes through before it merges, who decides what blocks, the judges in CI and the person's last step
 owner: Kevin
-version: "1.0"
-updated: "2026-11-13"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 # ARCH-13 · Reviewing a change
@@ -56,7 +56,7 @@ The judges are part of the method, and run free in the project's own CI
 
 | Rule | Why |
 |---|---|
-| The subscription token (`claude setup-token`) or an API key goes in a CI secret | The judges run on what the team already pays |
+| **An API key** goes in a CI secret. A subscription token (`claude setup-token`) only in its holder's own repositories, never a team's or a client's | The judges run on what the team already pays. A subscription is for its holder's own use; a team's CI runs under the provider's commercial terms |
 | One required check, red only with blocking findings | The branch rule keeps a red out, not a person |
 | **One comment per PR, edited in place** | A comment per run buries the thread |
 | `/pedd recheck` reruns it; `/pedd override` lets **one head commit** through, only from an approver, recorded in the trace | The override does not carry over to the next push |

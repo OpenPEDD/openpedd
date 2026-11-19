@@ -2,8 +2,8 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 These rules apply to every document in every spec that uses OpenPEDD, this one included.
@@ -83,3 +83,12 @@ mentions it. If the answer does not deserve a recorded decision, it was not an o
 A contradiction is never parked. Stop, decide which version stays, write the reason in the document
 that wins, and correct the one that loses as if it had always said the new thing ([`RULE-02`](#rule-02)).
 **A list of unresolved contradictions is a spec that knows it contradicts itself and moves on.**
+
+## RULE-27 · A borrowed source is cited, never copied [#rule-27]
+
+An idea or a method from elsewhere is written in our own words and credited by name in
+[`BIZ-03`](../business/methodologies.md). A source under CC BY-SA (OWASP ASVS, arc42, Diátaxis) or
+with no open license is cited by name or identifier (*"ASVS V5.1.3"*), never quoted at length. Code or
+text copied from a permissive license (MIT, Apache-2.0) keeps its copyright notice and license next to
+it, and is listed in `NOTICE`. **Copyright covers text, not ideas: copying a BY-SA paragraph would
+force the spec off CC BY 4.0.**

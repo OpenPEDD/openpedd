@@ -2,8 +2,8 @@
 title: Open core
 description: BIZ-04 · What is free, what is paid, and the rule that draws the line
 owner: Kevin
-version: "1.2"
-updated: "2026-11-13"
+version: "1.3"
+updated: "2026-11-19"
 ---
 
 # BIZ-04 · Open core
@@ -20,7 +20,7 @@ across systems, is paid.** The free framework gives everything needed to compute
 The paid plan's value is that **nobody has to remember to run it**.
 
 **The judges are the method, not a service**: every judge, in every stage and on every PR, is free
-and runs on the team's own subscription. The Cloud runs none ([`DEC-19`](../../decisions/DEC-19-judges-in-ci.md)).
+and runs on the team's own subscription or API key. The Cloud runs none ([`DEC-19`](../../decisions/DEC-19-judges-in-ci.md)).
 
 | Free: OpenPEDD | Paid: OpenPEDD Cloud |
 |---|---|
@@ -29,7 +29,7 @@ and runs on the team's own subscription. The Cloud runs none ([`DEC-19`](../../d
 | Stages, skills and judges for each agent, with your own subscription | **Two-way tracker sync**: issues anchored, flagged stale, created when the spec changes |
 | Local MCP, read-only plus `propose_delta` | **Auto-PRs** that update the help and API docs when a requirement changes |
 | Reader (static site) | **Hosted MCP** with per-person tokens and permissions |
-| CI action with the checks and the judges on every PR, on the team's own subscription; the review metrics with `pedd status` | — |
+| CI action with the checks and the judges on every PR, on the team's own API key; the review metrics with `pedd status` | — |
 | Local generators | Multi-repo and multi-product |
 | `measure` by hand ([`DEC-03`](../../decisions/DEC-03-measure.md)) | `measure` on its own, with analytics connectors |
 | Creating repos with the CLI | Creating repos from the dashboard; hosting spec, help and docs |

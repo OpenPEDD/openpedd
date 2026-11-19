@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.7"
-updated: "2026-11-17"
+version: "1.8"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -100,5 +100,5 @@ Then **`spec-approval`**: the person approves.
 
 ## Sources
 
-Spec Kit (`/specify`, `/clarify`, checklist) · Kiro (EARS) · Cockburn (flows) · JTBD · Shape Up ·
+Spec Kit (`/specify`, `/clarify`, checklist) · EARS (Mavin et al.) · Cockburn (flows) · JTBD · Shape Up ·
 Lean Startup · ATDD · pdd-kit (variations) · Reclee Spec (`/flujo`, cold read).

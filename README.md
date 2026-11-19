@@ -28,6 +28,11 @@ npm run check
 
 ## License
 
-The framework code: Apache-2.0. The spec and the format: CC BY 4.0
-([`DEC-02`](spec/decisions/DEC-02-licenses.md)). The repo stays private until the trademark is filed
+| What | License | File |
+|---|---|---|
+| The framework's code: `scripts/` today, the `pedd` CLI, skills, MCP and CI action as they land | Apache-2.0 | [`LICENSE`](LICENSE) |
+| The spec, the format and the docs: `spec/`, the README and the changelog | CC BY 4.0 | [`LICENSE-docs`](LICENSE-docs) |
+
+Why each one: [`DEC-02`](spec/decisions/DEC-02-licenses.md). What OpenPEDD borrows is cited, never
+copied ([`RULE-27`](spec/foundations/rules/writing.md#rule-27), [`NOTICE`](NOTICE)). The repo stays private until the trademark is filed
 ([`DEC-11`](spec/decisions/DEC-11-visibility.md)).

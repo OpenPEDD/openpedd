@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.5"
-updated: "2026-11-17"
+version: "1.6"
+updated: "2026-11-19"
 ---
 
 # What OpenPEDD can do
@@ -30,7 +30,7 @@ updated: "2026-11-17"
 | Let agents work without bending the spec | Only `specify` writes it; everything else proposes deltas, decided at a gate | [Merge Gate](foundations/domain/merge-gate.md) |
 | Have the AI reviewed by something other than itself | A judge per stage, in another session and model | [Judge](foundations/domain/judge.md) |
 | Review by lens, with few false alarms | Hunters in parallel, one per lens; each serious finding must survive a refuter; the tool, not a model, decides what blocks | [Reviewing a change](foundations/architecture/review.md) |
-| Run the judges on every PR, on your own subscription | The CI action: one required check, one comment edited in place, `/pedd recheck` and `/pedd override` | [Judges in CI](foundations/architecture/review.md#the-judges-in-ci) |
+| Run the judges on every PR, on your team's API key | The CI action: one required check, one comment edited in place, `/pedd recheck` and `/pedd override` | [Judges in CI](foundations/architecture/review.md#the-judges-in-ci) |
 | Know whether a judge got worse | `pedd judges bench` over past changes; precision as a process metric | [Measuring judges](foundations/architecture/agents.md#measuring-judges) |
 | Let the agent install safely | `--dry-run`, backups, sensitive paths denied, the agent never installed for you | [Writing safely](modules/workspace/prd.md#writing-safely) |
 | Decide only what nobody defined | One report with each assumption and deviation | [accept](modules/accept/prd.md) |

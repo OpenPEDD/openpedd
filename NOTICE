@@ -1,0 +1,10 @@
+OpenPEDD
+Copyright 2026 The OpenPEDD Authors
+
+The framework's code is licensed under the Apache License, Version 2.0 (LICENSE).
+The spec, the format and the docs are licensed under Creative Commons Attribution 4.0
+International (LICENSE-docs).
+
+This repository includes no third-party code or text. The methods and projects OpenPEDD takes
+ideas from are credited in spec/foundations/business/methodologies.md; they are cited, never
+copied (RULE-27).

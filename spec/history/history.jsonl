@@ -307,3 +307,12 @@
 {"path":"modules/design/prd.md","version":"1.3 → 1.4","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"Diverge from the catalog; refactor reads the whole code; stories as an output; judge checks catalog, duplicates and axe in both themes"}
 {"path":"modules/workspace/prd.md","version":"1.7 → 1.8","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"Component catalog and duplicate check as recommended capabilities"}
 {"path":"open/backlog.md","version":"1.7 → 1.8","date":"2026-11-17","change":"CHG-021","story":null,"stage":"specify","summary":"For Reclee: stories in CI, extract the copies, accessibility debt"}
+{"path":"decisions/DEC-02-licenses.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"Trademark through INPI, then USPTO with the INPI date; Madrid Protocol removed"}
+{"path":"foundations/architecture/review.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"CI judges on an API key; a subscription token only in its holder's own repositories"}
+{"path":"decisions/DEC-19-judges-in-ci.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"Judges on a person's subscription at their desk, on the team's API key in CI"}
+{"path":"foundations/business/open-core.md","version":"1.2 → 1.3","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"CI action on the team's API key"}
+{"path":"capabilities.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"CI judges on the team's API key"}
+{"path":"foundations/business/methodologies.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"EARS credited to Mavin et al."}
+{"path":"modules/specify/prd.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"EARS credited to Mavin et al."}
+{"path":"foundations/rules/writing.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"RULE-27: a borrowed source is cited, never copied"}
+{"path":"foundations/rules/README.md","version":"1.4 → 1.5","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"RULE-27 listed"}
