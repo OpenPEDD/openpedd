@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.7"
-updated: "2026-11-17"
+version: "1.8"
+updated: "2026-11-19"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -28,6 +28,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [The tracker](tracker.md) | `ARCH-15` | The issues of a change, its tasks, what moves their status, keeping it clean |
 | [Sweep](sweep.md) | `ARCH-16` | Every open question of a change, from every stage ahead, asked at once |
 | [Landing parallel changes](landing.md) | `ARCH-17` | The overlap of changes in flight, syncing them, and the order they land in |
+| [Guided definition](definition.md) | `ARCH-18` | The minimum each scope needs, who answers each item, and the conversation that fills it |
 
 ## How an architecture document is written
 

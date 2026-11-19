@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.12"
-updated: "2026-11-17"
+version: "1.13"
+updated: "2026-11-19"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -56,6 +56,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
+| Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |
 | Footprint · overlap · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
 | Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-15`](architecture/tracker.md) |
 | Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |

@@ -2,7 +2,7 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.8"
+version: "1.9"
 updated: "2026-11-19"
 status: draft
 ---
@@ -56,6 +56,7 @@ in the PRD** ([`RULE-01`](../../foundations/rules/writing.md#rule-01)).
 | The PRD or the delta | `draft` → `designing` on approval |
 | New `Q`s | Open; none blocking |
 | The hash of each ID | Computed on approval |
+| The definition notes, when a client defined it in a conversation | `changes/<CHG>/definition.md` |
 | The change's issue (the one that already exists, if any), and on approval **one sub-issue per stage with a branch and a gate that its track runs**, with their blocks and anchors, unassigned and in the backlog. Created once: it looks up the anchor and updates before creating ([`ARCH-15`](../../foundations/architecture/tracker.md)) | Anchored to the IDs |
 
 ## Judge
@@ -85,6 +86,7 @@ Then **`spec-approval`**: the person approves.
 | Skill | `/specify-story` | The delta of a story | The story and its criteria, from the tracker; the PRD it touches | The delta against the IDs it touches |
 | Skill | `/specify-define` | Placing a loose definition in the right layer | A loose definition | The definition in its layer: an `ENT`, a `RULE`, the glossary or a foundation |
 | Skill | `/specify-fix-doc` | Correcting, splitting, moving or retiring a document | The document and its history | The document corrected, split, moved or retired, with its history |
+| Skill | `/specify-interview` | A client's definition, in a conversation until it is complete ([`ARCH-18`](../../foundations/architecture/definition.md)) | What the client says; the spec and the code, to drop what is answered | `changes/<CHG>/definition.md`: each item of the scope's map with its state and the client's words; the summary the client confirmed |
 | Skill | `/sweep` | Every open question of the change, at any stage, in one sheet ([`ARCH-16`](../../foundations/architecture/sweep.md)) | The change in scope, and what each stage ahead needs | One sheet: each question with its options and a recommendation; the answers, written where they belong |
 | Skill | `/idea` | Sending something to `open/ideas.md` without breaking the work | Something loose said while working | A line in `open/ideas.md` |
 | Agent | `cold-read-judge` · `prd-judge` | The judges | — | — |

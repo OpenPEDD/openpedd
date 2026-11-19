@@ -323,3 +323,8 @@
 {"path":"foundations/rules/cycle.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"RULE-26: a client defines in a conversation, DEC-20"}
 {"path":"foundations/market/README.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"MKT-08 listed"}
 {"path":"foundations/market/asking-and-landing.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"Points to MKT-08, where Spec Kit, BMAD and Kiro were read"}
+{"path":"foundations/architecture/definition.md","version":"1.0","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"The minimum map per scope, who answers each item, and the conversation"}
+{"path":"foundations/architecture/README.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"ARCH-18 listed"}
+{"path":"modules/specify/prd.md","version":"1.8 → 1.9","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"/specify-interview: a client defines in a conversation (ARCH-18)"}
+{"path":"capabilities.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition listed"}
+{"path":"foundations/glossary.md","version":"1.12 → 1.13","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition and minimum map"}

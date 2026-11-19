@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.5"
-updated: "2026-11-17"
+version: "1.6"
+updated: "2026-11-19"
 ---
 
 # What OpenPEDD can do
@@ -25,6 +25,7 @@ updated: "2026-11-17"
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
+| Let a client define what they want, in a conversation | `/specify-interview`: asks only what is missing, counts how complete the definition is, ends with a summary to confirm | [Guided definition](foundations/architecture/definition.md) |
 | Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each | [Sweep](foundations/architecture/sweep.md) |
 | Land many parallel changes without a pile of conflicts | `pedd overlap` warns early, `pedd sync` keeps them close to the base, `pedd land` computes the order | [Landing](foundations/architecture/landing.md) |
 | Let agents work without bending the spec | Only `specify` writes it; everything else proposes deltas, decided at a gate | [Merge Gate](foundations/domain/merge-gate.md) |
@@ -123,7 +124,7 @@ theirs as [extensions](foundations/business/open-core.md#extensions).
 |---|---|
 | Any | `/sweep` |
 | `map` | `/map` · `/map-module` |
-| `specify` | `/specify` · `/specify-flow` · `/specify-story` · `/specify-define` · `/specify-fix-doc` · `/idea` |
+| `specify` | `/specify` · `/specify-interview` · `/specify-flow` · `/specify-story` · `/specify-define` · `/specify-fix-doc` · `/idea` |
 | `architect` | `/architect` · `/architect-research` · `/architect-teardown` · `/architect-adr` · `/architect-fitness` |
 | `design` | `/design` · `/design-inventory` · `/design-variants` · `/design-complete` · `/design-close` |
 | `plan` | `/plan` · `/plan-slice` · `/plan-tests` · `/plan-pack` |
