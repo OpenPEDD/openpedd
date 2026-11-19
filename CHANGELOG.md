@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- A client defines a product in a conversation that runs until the definition is complete: questions computed first, two or three per turn, completeness counted per item, a summary to confirm (DEC-20, MKT-08).
 - Each skill says what it reads and what it leaves, in its stage's table; every stage input is read by a skill and every output is left by one. `verify` declares the tests as an input: the Walkthrough draft comes from their steps.
 - How a change is reviewed, in six layers: gates, project rules as lint, hunters per lens, a refuter, `pedd` deciding what blocks, and a person approving from the review signals. A finding confirmed in two changes becomes a rule.
 - Default review lenses with their checklist, from the corrections of Reclee's PRs.

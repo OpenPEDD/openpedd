@@ -318,3 +318,8 @@
 {"path":"modules/publish/prd.md","version":"1.1 → 1.2","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"Each skill says what it reads and leaves"}
 {"path":"modules/measure/prd.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"Each skill says what it reads and leaves"}
 {"path":"foundations/domain/stage.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-023","story":null,"stage":"specify","summary":"Each skill reads and leaves something named; every stage input and output is covered by a skill"}
+{"path":"foundations/market/guided-definition.md","version":"1.0","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"How tools ask, stop and end a definition"}
+{"path":"decisions/DEC-20-definition-chat.md","version":"1.0","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"A client defines in a conversation that runs until the definition is complete"}
+{"path":"foundations/rules/cycle.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"RULE-26: a client defines in a conversation, DEC-20"}
+{"path":"foundations/market/README.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"MKT-08 listed"}
+{"path":"foundations/market/asking-and-landing.md","version":"1.0 → 1.1","date":"2026-11-19","change":"CHG-024","story":null,"stage":"specify","summary":"Points to MKT-08, where Spec Kit, BMAD and Kiro were read"}

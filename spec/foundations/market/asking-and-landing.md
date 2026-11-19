@@ -2,8 +2,8 @@
 title: Asking and landing
 description: MKT-07 · How tools ask the person what is missing, and how merge queues order and land parallel PRs. Surveyed 2026-11-17
 owner: Kevin
-version: "1.0"
-updated: "2026-11-17"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 # MKT-07 · Asking and landing
@@ -21,7 +21,8 @@ code and issues before `ARCH-16` or `ARCH-17` is implemented.
 | BMAD Method | Docs, not re-read | Elicitation by persona (analyst, PM, architect), each asking in its turn | The questions of each persona come at its stage, not together |
 | Claude Code plan mode | Product, not re-read | A plan the person approves before any edit, with questions asked in one dialog | Per session, not per change; no owner per answer |
 
-Nobody found asks the questions of every stage ahead at once, with an owner for each answer.
+Nobody found asks the questions of every stage ahead at once, with an owner for each answer. Spec Kit, BMAD and Kiro
+were read on 2026-11-19 in [`MKT-08`](guided-definition.md).
 
 ## How merge queues land parallel PRs
 
