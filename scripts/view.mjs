@@ -234,13 +234,14 @@ const agentsDoc = read('spec/foundations/architecture/agents.md');
 const judgeInput = (tableWith(section(agentsDoc, 'How judges run'), 'Form', 'How')?.rows.find((r) => /subagent/i.test(r[0])) || [])[1] || '';
 const promptPath = (kind, name) => (kind === 'Skill' ? `.claude/skills/${name.replace(/^\//, '').split(' ')[0]}/SKILL.md` : `.claude/agents/${name}.md`);
 const skills = [];
-for (const s of stages) for (const [kind, names, purpose] of s.tools) {
+for (const s of stages) for (const [kind, names, purpose, reads = '', leaves = ''] of s.tools) {
   if (kind !== 'Skill' && kind !== 'Agent') continue;
   for (const name of code(names)) {
     const judge = s.judges.find((r) => code(r[0]).includes(name));
     const path = promptPath(kind, name);
     skills.push({
       name, kind: kind === 'Skill' ? 'skill' : 'judge', stage: s.id, purpose,
+      reads: reads === '—' ? '' : reads, leaves: leaves === '—' ? '' : leaves,
       checks: judge?.[1] || (kind === 'Agent' ? s.judgeText.replace(/^`[^`]+`:\s*/, '').split(/\s*Passes when/)[0] : ''),
       passes: judge?.[2] || (kind === 'Agent' ? (s.judgeText.match(/Passes when ([^.]+)/) || [])[1] || '' : ''),
       checkedBy: kind === 'Skill' ? [...s.judges.flatMap((r) => code(r[0])), ...code(s.judgeText).filter((c) => c.endsWith('-judge'))] : [],
@@ -286,7 +287,7 @@ for (const s of stages) {
 for (const a of artifacts.filter((x) => x.group === 'Derived')) if (!Object.keys(a.read).length && !Object.keys(a.checked).length) gaps.push({ kind: 'Artifacts', where: 'spec/foundations/artifacts.md', text: `No stage declares "${a.name}" as an input or names it in a judge's checks` });
 {
   const sk = skills.filter((x) => x.kind === 'skill'), jd = skills.filter((x) => x.kind === 'judge');
-  gaps.push({ kind: 'Skills', where: 'spec/modules/*/prd.md', text: `Each stage's skills table says what each of its ${sk.length} skills is for, but not what each one reads or leaves: inputs and outputs are given per stage` });
+  for (const x of sk.filter((y) => !y.reads || !y.leaves)) gaps.push({ kind: 'Skills', where: `spec/modules/${x.stage}/prd.md`, text: `\`${x.name}\` does not say what it ${!x.reads ? 'reads' : 'leaves'}` });
   const noPrompt = skills.filter((x) => !x.prompt);
   if (noPrompt.length) gaps.push({ kind: 'Prompts', where: '.claude/', text: `${noPrompt.length} of ${skills.length} skills and judges have no prompt file yet (${sk.filter((x) => !x.prompt).length} skills, ${jd.filter((x) => !x.prompt).length} judges)` });
 }

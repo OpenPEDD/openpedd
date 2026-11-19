@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.7"
-updated: "2026-11-17"
+version: "1.8"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -78,17 +78,17 @@ Then **`spec-approval`**: the person approves.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/specify` | The whole stage |
-| Skill | `/specify-flow` | Flows, requirements and criteria for something new |
-| Skill | `/specify-story` | The delta of a story |
-| Skill | `/specify-define` | Placing a loose definition in the right layer |
-| Skill | `/specify-fix-doc` | Correcting, splitting, moving or retiring a document |
-| Skill | `/sweep` | Every open question of the change, at any stage, in one sheet ([`ARCH-16`](../../foundations/architecture/sweep.md)) |
-| Skill | `/idea` | Sending something to `open/ideas.md` without breaking the work |
-| Agent | `cold-read-judge` · `prd-judge` | The judges |
-| MCP | `search_spec` · `resolve_id` · `get_history` | Read before writing |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/specify` | The whole stage | The idea or the story; the module's `live` PRD and code | The PRD or the delta, judged; the change's issue and sub-issues |
+| Skill | `/specify-flow` | Flows, requirements and criteria for something new | The frame and the sweep's answers; the foundations it cites | Flows, `FR`, `NFR`, contracts, screens and copy, `AC`s and test data |
+| Skill | `/specify-story` | The delta of a story | The story and its criteria, from the tracker; the PRD it touches | The delta against the IDs it touches |
+| Skill | `/specify-define` | Placing a loose definition in the right layer | A loose definition | The definition in its layer: an `ENT`, a `RULE`, the glossary or a foundation |
+| Skill | `/specify-fix-doc` | Correcting, splitting, moving or retiring a document | The document and its history | The document corrected, split, moved or retired, with its history |
+| Skill | `/sweep` | Every open question of the change, at any stage, in one sheet ([`ARCH-16`](../../foundations/architecture/sweep.md)) | The change in scope, and what each stage ahead needs | One sheet: each question with its options and a recommendation; the answers, written where they belong |
+| Skill | `/idea` | Sending something to `open/ideas.md` without breaking the work | Something loose said while working | A line in `open/ideas.md` |
+| Agent | `cold-read-judge` · `prd-judge` | The judges | — | — |
+| MCP | `search_spec` · `resolve_id` · `get_history` | Read before writing | — | — |
 
 ## Per track
 

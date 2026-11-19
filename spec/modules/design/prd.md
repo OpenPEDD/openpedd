@@ -2,8 +2,8 @@
 title: design
 description: Stage 3 · Turns the spec into screens; another implementation of the spec, with its own judge and its closing passes
 owner: Kevin
-version: "1.4"
-updated: "2026-11-17"
+version: "1.5"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -107,18 +107,18 @@ Then **`design-merge`**: the person reads the `Delta Report` and decides what en
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/design` | The whole stage |
-| Skill | `/design-inventory` | The screen and state inventory |
-| Skill | `/design-variants` | The options |
-| Skill | `/design-complete` | Completing the winner in every state |
-| Skill | `/design-close` | The closing passes |
-| Agent | `design-judge` | The judge |
-| MCP | `get_context_for` · `propose_delta` | The pack and the deltas |
-| Tool | The product's code and components | Where the mockup is built |
-| Tool | The component catalog and its MCP (Storybook, or equivalent) | Finding the piece before drawing one; its stories run as tests with axe |
-| Tool | Claude Design, or a design tool through an adapter | Exploring options before building them |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/design` | The whole stage | The approved flows, `FR`s, screens and copy; the `Test Data`; the screens that exist; `architect`'s decisions | The screens in code, every state; the seam; the stories; `proposal` deltas; the `Delta Report` |
+| Skill | `/design-inventory` | The screen and state inventory | The PRD in scope; the screens that exist | The screen and state inventory, in the design sub-issue |
+| Skill | `/design-variants` | The options | The inventory; the component catalog; the `Test Data` | Two or three options for the key screens, on the design branch |
+| Skill | `/design-complete` | Completing the winner in every state | The winner; the inventory | The winner in every state, with the development menu and its `data-guide`s |
+| Skill | `/design-close` | The closing passes | The complete screens; `Brand System`; `Quality Standards` | The closing passes done; each extracted piece with its story; suggestions in the design sub-issue |
+| Agent | `design-judge` | The judge | — | — |
+| MCP | `get_context_for` · `propose_delta` | The pack and the deltas | — | — |
+| Tool | The product's code and components | Where the mockup is built | — | — |
+| Tool | The component catalog and its MCP (Storybook, or equivalent) | Finding the piece before drawing one; its stories run as tests with axe | — | — |
+| Tool | Claude Design, or a design tool through an adapter | Exploring options before building them | — | — |
 
 ## Per track
 

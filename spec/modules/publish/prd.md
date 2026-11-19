@@ -2,8 +2,8 @@
 title: publish
 description: Stage 8 · Closes the loop — prepares what people read when a change is accepted, and publishes it at launch
 owner: Kevin
-version: "1.1"
-updated: "2026-11-11"
+version: "1.2"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -79,16 +79,16 @@ artifact**.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/publish` | The whole stage |
-| Skill | `/publish-api` | The API Reference |
-| Skill | `/publish-help` | The Help Center |
-| Skill | `/publish-notes` | The Release Notes |
-| Skill | `/publish-walkthrough` | The Walkthroughs |
-| CLI | `pedd launch` | The launch, by hand. In the Cloud, the Launch section |
-| Agent | `freshness-judge` | The judge |
-| MCP | `get_change` · `changes_since` · `list_stale` · the tracker's MCP | Apply, generate and close |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/publish` | The whole stage | The `keep` deltas; the change | The spec updated, with its history; everything people read, prepared; at launch, published |
+| Skill | `/publish-api` | The API Reference | The contracts | The API Reference, generated |
+| Skill | `/publish-help` | The Help Center | The `FR`s the user sees; the glossary; `verify`'s screenshots | The Help Center articles, each with its `sources` |
+| Skill | `/publish-notes` | The Release Notes | The change, its PRs and its deploy | One Release Notes entry, with its links |
+| Skill | `/publish-walkthrough` | The Walkthroughs | The Walkthrough draft from `verify` | The Walkthrough, with its `sources` |
+| CLI | `pedd launch` | The launch, by hand. In the Cloud, the Launch section | — | — |
+| Agent | `freshness-judge` | The judge | — | — |
+| MCP | `get_change` · `changes_since` · `list_stale` · the tracker's MCP | Apply, generate and close | — | — |
 
 ## Per track
 

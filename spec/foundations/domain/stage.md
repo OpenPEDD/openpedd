@@ -2,8 +2,8 @@
 title: Stage
 description: ENT-10 · One step of the cycle
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-19"
 ---
 
 # ENT-10 · Stage
@@ -20,7 +20,7 @@ the order and the gates between them are in [`modules/cycle`](../../modules/cycl
 | `outputs` | What it leaves, each with its anchor |
 | `judge` | Who reviews it and what has to pass ([`ENT-12`](judge.md)) |
 | `gate` | The merge gate at its end, if any ([`ENT-09`](merge-gate.md)) |
-| `skills` · `agents` · `tools` | What it runs with ([`ARCH-04`](../architecture/agents.md)) |
+| `skills` · `agents` · `tools` | What it runs with ([`ARCH-04`](../architecture/agents.md)); each skill with what it reads and what it leaves |
 
 | `mode` | Means | Stages |
 |---|---|---|
@@ -30,3 +30,7 @@ the order and the gates between them are in [`modules/cycle`](../../modules/cycl
 
 Every stage's PRD has the same sections: what it is, inputs, context pack, procedure, outputs, judge,
 what to keep in mind, skills, agents and tools, per track, and sources.
+
+**Every input of a stage is read by at least one of its skills, and every output is left by at
+least one.** So each skill can be checked on its own, and a stage input that no skill reads is a gap
+in the stage.

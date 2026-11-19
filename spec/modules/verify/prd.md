@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.6"
-updated: "2026-11-13"
+version: "1.7"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -25,6 +25,7 @@ back to `build` on its own.
 | The PRs in scope, with their Spec section | `build` |
 | The spec in scope and the traceability matrix | `plan` |
 | Every delta of the change | `plan` and `build` |
+| The tests of each `AC`, locked and green | `plan`, made green in `build` |
 
 ## Context pack
 
@@ -84,11 +85,11 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/verify` | The whole stage: splits by area and builds the report |
-| Agent | `verify-judge` · `confirm-judge` | The judges |
-| MCP | `get_context_for` · `get_freshness` · `propose_delta` | Read and report |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/verify` | The whole stage: splits by area and builds the report | The PRs and their Spec section; the spec in scope and the traceability matrix; every delta; the tests, green | The `Acceptance Report`; `finding` deltas; a screenshot per `AC` with a screen; the Walkthrough draft, from the green tests' steps; the PR to the base |
+| Agent | `verify-judge` · `confirm-judge` | The judges | — | — |
+| MCP | `get_context_for` · `get_freshness` · `propose_delta` | Read and report | — | — |
 
 ## Per track
 

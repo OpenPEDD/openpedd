@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.10"
-updated: "2026-11-17"
+version: "1.11"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -82,12 +82,12 @@ is `verify`. Passes when everything is green.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/build` | One whole task |
-| Skill | `/build-batch` | Several tasks with no dependencies between them, each in its own session |
-| Skill | `/build-findings` | The findings that came back: fix, answer or stop ([above](#when-findings-come-back)) |
-| MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas, and ticking the task. Statuses move from the PRs ([`ARCH-15`](../../foundations/architecture/tracker.md#what-moves-a-status)) |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/build` | One whole task | One task's context pack and its red tests | Anchored code; the tests green; the PR with its Spec section; `deviation` and `assumption` deltas |
+| Skill | `/build-batch` | Several tasks with no dependencies between them, each in its own session | The tasks with no blockers between them | One session and one PR per task |
+| Skill | `/build-findings` | The findings that came back: fix, answer or stop ([above](#when-findings-come-back)) | The findings that came back, one at a time | A fix with its test, an answer that cites the code, or a `deviation` |
+| MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas, and ticking the task. Statuses move from the PRs ([`ARCH-15`](../../foundations/architecture/tracker.md#what-moves-a-status)) | — | — |
 
 ## Per track
 

@@ -2,8 +2,8 @@
 title: measure
 description: Stage 9 · On the review date, checks whether the PRD's hypothesis held
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -67,11 +67,11 @@ person, through the `Q`.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/measure` | Query, compare and record |
-| Adapter | PostHog, Amplitude, SQL | The query. In the free framework the person enters the value or configures the query |
-| Reminder | The review date | Free: the person runs it. Cloud: it runs on its own and notifies ([`DEC-03`](../../decisions/DEC-03-measure.md)) |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/measure` | Query, compare and record | The `Success metric`; its `Tracking Plan` event; the data | The value and its date, in the PRD; a `Q` or a candidate story; the next review date |
+| Adapter | PostHog, Amplitude, SQL | The query. In the free framework the person enters the value or configures the query | — | — |
+| Reminder | The review date | Free: the person runs it. Cloud: it runs on its own and notifies ([`DEC-03`](../../decisions/DEC-03-measure.md)) | — | — |
 
 ## Per track
 

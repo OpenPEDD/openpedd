@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.11"
-updated: "2026-11-17"
+version: "1.12"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -85,14 +85,14 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/plan` | The whole stage |
-| Skill | `/plan-slice` | Cutting and ordering tasks |
-| Skill | `/plan-tests` | Writing the red tests |
-| Skill | `/plan-pack` | Building each task's context pack |
-| Agent | `analyze-judge` | The judge |
-| MCP | `get_context_for` · `list_ids` · `propose_delta` · the tracker's MCP | Read, propose and load |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/plan` | The whole stage | The merged spec in scope; the winning mockups; the `ADR`s, `ARCH` documents and fitness functions | The tasks; the red tests and `tests.lock`; the empty contracts; a context pack per task; the traceability matrix; `assumption` deltas |
+| Skill | `/plan-slice` | Cutting and ordering tasks | The `FR`s and `NFR`s in scope, with their `depends_on` | The traceability matrix; the tasks in order, as the implementation sub-issue's checklist |
+| Skill | `/plan-tests` | Writing the red tests | The `AC`s, contracts, permission matrix and fitness functions | The empty contracts and the real seam; a failing test per criterion, per contract × error × role and per permission cell; `tests.lock` |
+| Skill | `/plan-pack` | Building each task's context pack | Each task, with its IDs, tests, mockups and `ADR`s | Its context pack, within 20,000 tokens |
+| Agent | `analyze-judge` | The judge | — | — |
+| MCP | `get_context_for` · `list_ids` · `propose_delta` · the tracker's MCP | Read, propose and load | — | — |
 
 ## Per track
 

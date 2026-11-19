@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- Each skill says what it reads and what it leaves, in its stage's table; every stage input is read by a skill and every output is left by one. `verify` declares the tests as an input: the Walkthrough draft comes from their steps.
 - How a change is reviewed, in six layers: gates, project rules as lint, hunters per lens, a refuter, `pedd` deciding what blocks, and a person approving from the review signals. A finding confirmed in two changes becomes a rule.
 - Default review lenses with their checklist, from the corrections of Reclee's PRs.
 - The judges are part of the method: free, on every PR in the CI action, on the team's own subscription. The Cloud runs no judges.

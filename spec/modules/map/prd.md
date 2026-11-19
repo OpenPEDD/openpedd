@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD
 owner: Kevin
-version: "1.3"
-updated: "2026-11-17"
+version: "1.4"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -72,13 +72,13 @@ approves.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/map` | The foundations and the index; `--all` for every PRD |
-| Skill | `/map-module` | One module |
-| Skill | `/map --from-spec` | Importing an existing spec |
-| Agent | `map-judge` | Coverage |
-| MCP | `propose_delta` | Everything enters as deltas of the initial change |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/map` | The foundations and the index; `--all` for every PRD | The code repos; the docs, help and designs that exist | The index of modules, each `unmapped`; the inferred foundations; `.pedd/stack.json`; one sheet of `Q`s |
+| Skill | `/map-module` | One module | The module's code; the foundations | The module's PRD of what the code does today; its `Q`s; its code anchored; the module `live` |
+| Skill | `/map --from-spec` | Importing an existing spec | The existing spec; the code | The spec in the framework's layers, with its history; `.pedd/id-map.json`; a `Q` for each requirement the code does not meet |
+| Agent | `map-judge` | Coverage | — | — |
+| MCP | `propose_delta` | Everything enters as deltas of the initial change | — | — |
 
 ## Sources
 

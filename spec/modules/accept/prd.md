@@ -2,8 +2,8 @@
 title: accept
 description: Stage 7 · A person decides everything the AI decided without them, from one report
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -69,11 +69,11 @@ None: the person is the gate. Passes when **nothing is left undecided**.
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/accept` | Shows the report, records each decision, creates the tasks |
-| MCP | `get_change` · the tracker's MCP | Read the change and create tasks |
-| Dashboard (Cloud) | The acceptance queue | Deciding without opening the repo |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/accept` | Shows the report, records each decision, creates the tasks | The `Acceptance Report`; the feature on the preview | A decision per delta; a task per `change`; a `Q` per `reject` that needs one; each covered bug, with its judge |
+| MCP | `get_change` · the tracker's MCP | Read the change and create tasks | — | — |
+| Dashboard (Cloud) | The acceptance queue | Deciding without opening the repo | — | — |
 
 ## Per track
 

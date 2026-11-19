@@ -374,7 +374,7 @@ function byStage(){
   $("#aview").innerHTML=`<table class="big"><thead><tr><th>Stage</th><th>What it does</th><th>Skills: what each one does</th><th>Takes in · from</th><th>Leaves</th><th>Judged by</th></tr></thead>
   ${D.stages.map(s=>`<tr><td class="stg">${String(s.n).padStart(2,"0")} ${s.id}<br><span class="mode ${isHuman(s.mode)?"h":""}" style="font-family:var(--display)">${md(s.mode)}</span></td>
     <td class="w">${md(s.does)}</td>
-    <td class="w">${li(s.tools.filter(t=>t[0]==="Skill"),t=>`<li>${md(t[1])}: ${md(t[2])}</li>`)}</td>
+    <td class="w">${li(s.tools.filter(t=>t[0]==="Skill"),t=>`<li>${md(t[1])}: ${md(t[2])}${t[3]&&t[3]!=="—"?`<br><span class="from">reads ${md(t[3])} · leaves ${md(t[4])}</span>`:""}</li>`)}</td>
     <td class="w">${li(s.inputs,r=>`<li>${md(r[0])}<br><span class="from">from ${md(r[1])}</span></li>`)}</td>
     <td class="w">${li(s.outputs,r=>`<li>${md(r[0])}</li>`)}</td>
     <td class="w">${s.judges.length?li(s.judges,r=>`<li>${md(r[0])}: ${md(r[1])}</li>`):`<span>${md(s.judgeText)}</span>`}</td></tr>`).join("")}</table>`;
@@ -407,7 +407,7 @@ function skillsView(){
     <p class="muted">One row per skill and per judge: the stage it works in, what it is for, what goes in, what comes out, what checks it, and its prompt. Red is what the spec or the repo does not have yet.</p></section>
   <section class="bars">
     ${bar("Skills that say what they are for",sk.filter(x=>x.purpose).length,sk.length)}
-    ${bar("Skills with their own inputs and outputs",0,sk.length,"The spec gives inputs and outputs per stage, not per skill")}
+    ${bar("Skills that say what they read and leave",sk.filter(x=>x.reads&&x.leaves).length,sk.length)}
     ${bar("Skills whose stage has an agent judge",sk.filter(x=>x.checkedBy.length).length,sk.length,"The rest are checked by tests, by a person, or not at all")}
     ${bar("Judges with written checks",jd.filter(x=>x.checks).length,jd.length)}
     ${bar("Judges with a pass condition",jd.filter(x=>x.passes).length,jd.length)}
@@ -420,8 +420,8 @@ function skillsView(){
     const isJ=x.kind==="judge";
     return g+`<tr><td class="stg">${esc(x.name)}<br><span class="sc ${isJ?"chk":""}" style="font-family:var(--display)">${isJ?"judge":"skill"}</span></td>
       <td class="w">${md(isJ?x.checks:x.purpose)}</td>
-      <td class="w">${isJ?md(D.judgeInput):`<span class="miss">Not said per skill</span><details><summary class="from">What the stage takes in (${s.inputs.length})</summary><span class="from">${s.inputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
-      <td class="w">${isJ?`<span class="from">A verdict on the stage's output</span>`:`<span class="miss">Not said per skill</span><details><summary class="from">What the stage leaves (${s.outputs.length})</summary><span class="from">${s.outputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
+      <td class="w">${isJ?md(D.judgeInput):x.reads?md(x.reads):`<span class="miss">Not said per skill</span><details><summary class="from">What the stage takes in (${s.inputs.length})</summary><span class="from">${s.inputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
+      <td class="w">${isJ?`<span class="from">A verdict on the stage's output</span>`:x.leaves?md(x.leaves):`<span class="miss">Not said per skill</span><details><summary class="from">What the stage leaves (${s.outputs.length})</summary><span class="from">${s.outputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
       <td class="w">${isJ?(x.passes?`Passes when: ${md(x.passes)}`:`<span class="miss">No pass condition</span>`):(x.checkedBy.length?x.checkedBy.map(j=>`<span class="sc chk">${esc(j)}</span>`).join(""):`<span class="from">${md(x.checkedByText)}</span>`)}</td>
       <td>${x.prompt?`<code>${esc(x.prompt)}</code>`:`<span class="miss">Not written</span><br><span class="from mono">${esc(x.promptPath)}</span>`}</td></tr>`;}).join("")}
   </table></div>`;

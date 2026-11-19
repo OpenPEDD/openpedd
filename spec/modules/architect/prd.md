@@ -2,8 +2,8 @@
 title: architect
 description: Stage 2 · Decides how to build what specify defined, after reading the spec, the code, the design and those who solved it before
 owner: Kevin
-version: "1.6"
-updated: "2026-11-17"
+version: "1.7"
+updated: "2026-11-19"
 status: draft
 ---
 
@@ -93,15 +93,15 @@ in the story (label `architect:delegated`) or in `workspace.yaml`; the most spec
 
 ## Skills, agents and tools
 
-| Kind | Name | For |
-|---|---|---|
-| Skill | `/architect` | The whole stage |
-| Skill | `/architect-research` | The references for a decision, and the `Market` entries |
-| Skill | `/architect-teardown` | Reading one open-source reference: its data model, its API and its issues |
-| Skill | `/architect-adr` | Recording a decision |
-| Skill | `/architect-fitness` | Turning a `NFR` or a contract into a check |
-| Agent | `architecture-judge` | The judge |
-| MCP | `get_context_for` · `propose_delta` | The pack and the deltas |
+| Kind | Name | For | Reads | Leaves |
+|---|---|---|---|---|
+| Skill | `/architect` | The whole stage | The approved `FR`s and `NFR`s; the code; the design branch; `Market` | Decisions and `ADR`s; the `ARCH` documents; fitness functions; `proposal` deltas; the `Delta Report` |
+| Skill | `/architect-research` | The references for a decision, and the `Market` entries | A decision to make; `Market` | Three references or more, compared; dated `Market` entries |
+| Skill | `/architect-teardown` | Reading one open-source reference: its data model, its API and its issues | One open-source reference: its code and its issues | Its data model, its API and where it breaks, in `Market` |
+| Skill | `/architect-adr` | Recording a decision | A decision, with its options table | A row in the area's decisions table, or an `ADR` |
+| Skill | `/architect-fitness` | Turning a `NFR` or a contract into a check | A measurable `NFR`, or a contract | A fitness function or a contract check, for `plan` to load |
+| Agent | `architecture-judge` | The judge | — | — |
+| MCP | `get_context_for` · `propose_delta` | The pack and the deltas | — | — |
 
 ## Per track
 
