@@ -2,8 +2,8 @@
 title: design
 description: Stage 3 · Turns the spec into screens; another implementation of the spec, with its own judge and its closing passes
 owner: Kevin
-version: "1.5"
-updated: "2026-11-19"
+version: "1.6"
+updated: "2026-11-20"
 status: draft
 ---
 
@@ -65,7 +65,7 @@ refactor comes late so it is not redone.
 
 | # | Pass | What it does | Done when |
 |---|---|---|---|
-| 1 | **Mobile** | Each screen at the `Brand System` widths: what overflows, headers that do not fit, tables, side panels, floating controls, touch areas. With `locales`, again on a pseudo-locale, for long text | No horizontal scroll, and every action can be reached |
+| 1 | **Mobile** | Each screen at the `Brand System` widths: what overflows, headers that do not fit, tables, side panels, floating controls, touch areas. Again on a pseudo-locale, for long text | No horizontal scroll, and every action can be reached |
 | 2 | **Skeletons** | The loading state draws what the real screen draws: columns, header, tabs, cards | Each skeleton matches the final layout |
 | 3 | **Writes** | **First lists every write**, then compares each with the contract in `Quality Standards` | With the switch on, every write goes back and says so |
 | 4 | **Refactor** | In order: copies of something shared, the same thing written twice **anywhere in the product** (the duplicate check reads the whole code, not the change), reads that skip the seam, dead code and copy keys, inline types in sample data. Extracts only what has **two real uses**, without changing behavior; each extracted piece gets its story | Nothing left on the list, and the duplicate check has nothing new |

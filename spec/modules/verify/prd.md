@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.7"
-updated: "2026-11-19"
+version: "1.8"
+updated: "2026-11-20"
 status: draft
 ---
 
@@ -37,7 +37,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 ## Procedure
 
 1. **Hunts by lens, in parallel**: one `verify-judge` session per lens that applies to the area ([`ARCH-14`](../../foundations/architecture/review-lenses.md)), each with only its lens and the area's pack. The Spec lens covers drift: whatever the code does that the spec does not say (an extra screen, an extra field). Security reads OWASP ASVS. Hunters read; `pedd` writes their findings as deltas.
-2. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC` with a screen**, with the test data. With `locales`, renders each one and fails on a raw key. With a Walkthrough declared, drafts it from the green tests' steps and walks it in the browser ([`ARCH-07`](../../foundations/architecture/walkthroughs.md)).
+2. **Evidence**: runs each criterion's tests and takes **one screenshot per `AC` with a screen**, with the test data. Renders each one in every locale and fails on a raw key. With a Walkthrough declared, drafts it from the green tests' steps and walks it in the browser ([`ARCH-07`](../../foundations/architecture/walkthroughs.md)).
 3. **Tests that can catch**, **only in the last round**: once no high finding is left, with the whole suite run once and green, and nothing else changing. Runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
 4. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
 5. **Tries to refute what is serious**: every `high` finding goes to `confirm-judge`, whose job is to prove it wrong from the code and the spec. Only what survives counts.

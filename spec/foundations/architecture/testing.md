@@ -2,8 +2,8 @@
 title: Testing
 description: ARCH-10 · What is tested at which level, and how permissions, contracts, languages, AI features and quality are proved
 owner: Kevin
-version: "1.3"
-updated: "2026-11-11"
+version: "1.4"
+updated: "2026-11-20"
 ---
 
 # ARCH-10 · Testing
@@ -49,11 +49,11 @@ tested once; each door (screen, API, MCP) proves only that it reaches it.
 
 ## Languages
 
-With `locales` declared:
+Every product has i18n from its first change, with English as the base ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)). These checks run with one locale or many:
 
 | Stage | Check |
 |---|---|
-| `design` | A pseudo-locale pass: long text and accents, to see what breaks |
+| `design` | A pseudo-locale pass: long text and accents, to see what breaks and what was written in code |
 | `plan` | Missing, unused or malformed keys fail the pipeline |
 | `verify` | Renders each locale and fails on a raw key: the fallback hides what is missing |
 | `publish` | Help, Walkthrough and Release Note per locale |

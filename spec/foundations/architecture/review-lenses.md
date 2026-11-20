@@ -2,8 +2,8 @@
 title: Review lenses
 description: ARCH-14 · What each hunter looks at, the default checklist of each lens, and how a project adds its own
 owner: Kevin
-version: "1.0"
-updated: "2026-11-13"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-14 · Review lenses
@@ -45,7 +45,7 @@ foundations of its lens, and nothing else. The defaults come from the correction
 | Security | Private files have a policy per tenant; a personal document never has a public URL |
 | Security | No personal data in scripts, seeds, fixtures or logs; each setting exists in every environment |
 | Interface | Every branch of the screen opened, not only the happy path: empty, error, the one never mounted |
-| Interface | With `locales`: no text written in code, every key in every locale, no dead keys, one tone; third-party components get the copy too |
+| Interface | No text written in code, every key in every locale, no dead keys, one tone; third-party components get the copy too |
 | Interface | Operable by keyboard; icon-only buttons have a label; what changes on its own is announced; no layout shift while loading |
 | Performance | The reads a screen needs at mount go in one; no request twice; large lists paginated in the database, never truncated in silence |
 | Change | Searched before writing: nothing duplicated; nothing dead, commented out, or `TODO` without an issue |

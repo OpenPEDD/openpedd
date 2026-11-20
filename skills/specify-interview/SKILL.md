@@ -3,7 +3,7 @@ name: specify-interview
 description: Interview a client, usually not technical, until what they want built is defined. Use when someone wants to define a new product, a new module or a request in a conversation ("I want an app that…", "we need a module for…", "quiero pedir…"), or asks to resume a definition in progress. Asks only what is missing, a few questions per turn, counts how complete the definition is, and ends with a short summary the client confirms. Leaves the notes that /specify writes the PRD from; it never writes the spec itself.
 ---
 
-<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.0 and DEC-20 v1.0. Change those first, then this file. -->
+<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.1, DEC-20 v1.0 and DEC-21 v1.0. Change those first, then this file. -->
 
 # Guided definition interview
 
@@ -31,7 +31,7 @@ From the opening, decide which scope it is and say it in plain words for the cli
 **new product**, a **new part (module)** of a product, or a **request** on something that exists.
 
 Then ask the conditions, because each one switches items on or off: does it have screens; does it
-keep personal data; does it charge or pay; in which languages.
+keep personal data; does it charge or pay.
 
 ## The minimum map
 
@@ -51,7 +51,7 @@ the client accept it in the summary. **Team**: never ask the client; list it for
 | Personal data: which, why, for how long | Client; how long is proposed. Only if there is personal data |
 | Outside services: payments, email, sign-in | Client names the need; the provider is proposed. Only if there are any |
 | The brand | Client: a link, files, or none yet. Only if there are screens |
-| Languages | Client |
+| Languages besides English (the product always starts in English) | Client |
 | Architecture rules, security policy, quality standards, delivery pipeline | Team |
 
 **New module**, one item per section of its PRD:

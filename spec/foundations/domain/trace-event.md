@@ -2,8 +2,8 @@
 title: Trace Event
 description: ENT-23 · One state change of a trace link, appended and never edited
 owner: Kevin
-version: "1.2"
-updated: "2026-11-12"
+version: "1.3"
+updated: "2026-11-20"
 ---
 
 # ENT-23 · Trace Event
@@ -50,7 +50,7 @@ What the events answer, among others:
 
 | Question | From |
 |---|---|
-| How long did this requirement take from `designing` to `live`? | The first and last `spec` events |
+| How long did this requirement take from `specified` to `live`? | The first and last `spec` events |
 | Which stories touched this module in the last month? | `origin` events, by module |
 | Where do changes get stuck? | The time between events, per kind |
 | How long did each stage take, and how much of it was waiting? | `step` events: work, review and wait |
