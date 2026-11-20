@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.8"
+version: "1.9"
 updated: "2026-11-20"
 ---
 
@@ -28,7 +28,7 @@ updated: "2026-11-20"
 | Let any agent find where to work without reading the repo | A code index per module and package, regenerated on every merge to the base, read first | [Code index](foundations/architecture/code-index.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
 | Map a client's business before designing its system | `/map --business`: how the organization works today and will work with the system, approved by the client; it feeds the foundations, the modules and the first roadmap | [Business mode](modules/map/prd.md#business-mode) |
-| Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/branches.md#a-request) |
+| Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/requests.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
 | Let a client define what they want, in a conversation | `/specify-interview`: asks only what is missing, counts how complete the definition is, ends with a summary to confirm | [Guided definition](foundations/architecture/definition.md) |
 | Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each | [Sweep](foundations/architecture/sweep.md) |

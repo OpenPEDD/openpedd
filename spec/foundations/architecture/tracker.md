@@ -2,8 +2,8 @@
 title: The tracker
 description: ARCH-15 · The issues of a change, its tasks, who creates them without duplicates, what moves their status, and how the tracker is kept clean
 owner: Kevin
-version: "1.0"
-updated: "2026-11-17"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-15 · The tracker
@@ -40,6 +40,7 @@ that is dropped would leave them orphaned, and assigning is a person's call when
 | **The parent is the issue that already exists**: the story, or the roadmap item the change comes from. A new parent only when there is none | A change created next to its own idea leaves two issues for one thing |
 | **Every issue carries its anchor**: a `Spec: CHG-021` line in the description, with the PRD path | It is the key the tracker is searched by; a search by words finds what sounds alike, not what is the same |
 | **Creating is idempotent**: before creating, `specify` looks up the anchor and updates what it finds | Running approval twice changes nothing |
+| **Then `specify` renames the change branch to carry the parent's key**, when the tracker links branches by key, as Linear does ([`ARCH-21`](requests.md#renamed-at-approval)) | The tracker links the branch and its PRs to the issue on its own |
 
 ## The tasks
 

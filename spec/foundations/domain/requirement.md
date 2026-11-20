@@ -2,7 +2,7 @@
 title: Requirement
 description: ENT-03 · A functional or non-functional requirement, and its lifecycle
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-20"
 ---
 
@@ -30,12 +30,12 @@ with a time or a volume carries the number. Every `FR` has at least one
 | `criteria` | Its `AC` IDs |
 | `depends_on` | The IDs in other modules it needs to work: a table, a tool, an event. `plan` checks they are `live` |
 | `hash` | The content hash, recomputed on merge |
-| `status` | Its place in the lifecycle below |
+| `status` | Its place in the lifecycle below, in the `Status` column of its PRD's requirements table. In a PRD without the column, the PRD's status ([`DEC-28`](../../decisions/DEC-28-requirement-status-column.md)) |
 
 ## Lifecycle [#lifecycle]
 
 The lifecycle applies to **each requirement and to the PRD**. A PRD's status is that of its least
-advanced requirement. A user story touches two requirements, not the whole PRD.
+advanced requirement, and `pedd check` fails when they disagree. A user story touches two requirements, not the whole PRD.
 
 | Status | Means | Set by |
 |---|---|---|

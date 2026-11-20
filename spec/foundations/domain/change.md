@@ -2,7 +2,7 @@
 title: Change
 description: ENT-06 · One unit of work moving through the cycle
 owner: Kevin
-version: "1.5"
+version: "1.6"
 updated: "2026-11-20"
 ---
 
@@ -15,10 +15,10 @@ it. **A client's request is a change from the moment it is made**: there is no r
 
 | Field | What it holds |
 |---|---|
-| `id` | `CHG-nnn` |
+| `id` | `CHG-nnn`, the highest found plus one, when its branch is cut ([`ARCH-21`](../architecture/requests.md#numbering)) |
 | `track` | `full`, `story`, `fix` or `chore` ([`ENT-11`](track.md)) |
 | `story` | The originating issue in the tracker: `REC-412` |
-| `branch` | Its branch, cut from the base when the request is made: `feat/automations` ([`ARCH-06`](../architecture/branches.md#a-request)) |
+| `branch` | Its branch, cut from the base when the request is made: `feat/automations` ([`ARCH-21`](../architecture/requests.md)) |
 | `definition.md` | What the client asked for, before `specify` writes it ([`ARCH-18`](../architecture/definition.md#the-conversation)) |
 | `scope` | The IDs it touches |
 | `deltas/` | Its [`Delta`](delta.md)s |
@@ -28,7 +28,7 @@ it. **A client's request is a change from the moment it is made**: there is no r
 
 | State | Is |
 |---|---|
-| `requested` | The branch holds only `definition.md` |
+| `requested` | The branch holds only `definition.md`, `draft`, `confirmed` or `agreed` ([`ARCH-18`](../architecture/definition.md#the-file)) |
 | `open` | From `spec-approval` until `acceptance-merge` |
 | `accepted` | On the base, until `publish` closes it |
 | `archived` | Closed by `publish` |

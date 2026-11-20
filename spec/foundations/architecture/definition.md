@@ -2,7 +2,7 @@
 title: Guided definition
 description: ARCH-18 · The minimum each scope needs to be defined, who answers each item, and the conversation that fills it until it is complete
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-20"
 ---
 
@@ -67,10 +67,23 @@ off.
 2. **The scope**: a product, a module or a request, and its conditions.
 3. **Computes the map**, and drops what is already answered: by the spec, citing the ID; by the code, citing the file ([`RULE-21`](../rules/cycle.md#rule-21)).
 4. **Asks** as [`DEC-20`](../../decisions/DEC-20-definition-chat.md) says: two or three questions per turn, one topic, each with its options, a recommendation and why it matters, in the client's words ([`RULE-20`](../rules/cycle.md#rule-20)). What switches other items on or off goes first.
-5. **Writes as it goes**, to `changes/<CHG>/definition.md` on the change branch cut for the request ([`ARCH-06`](branches.md#a-request)): each item with its state (answered, assumed, deferred, missing) and the client's own words. A restart resumes from it.
+5. **Writes as it goes**, to `changes/<CHG>/definition.md` on the change branch cut for the request ([`ARCH-21`](requests.md)): each item with its state (answered, assumed, deferred, missing) and the client's own words. A restart resumes from it.
 6. **Shows the count** every few turns: *9 of 14 · missing: payments, roles*.
 7. **Ends** when nothing is missing, or when the client stops and is told what is. The summary keeps what the client said apart from what was assumed and what was deferred; the client confirms it.
 8. **Hands over**: `/specify` writes the PRD or the delta from the notes, its judges run, and the Team items go to the sweep.
+
+## The file [#the-file]
+
+`changes/<CHG>/definition.md`, read and written by the reader ([`ARCH-20`](reader.md)). Its frontmatter:
+
+| Field | Holds | Written when |
+|---|---|---|
+| `status` | `draft` · `confirmed` · `agreed` ([`DEC-27`](../../decisions/DEC-27-request-agreed.md)) | The branch is cut · the client confirms the summary · the builder takes it |
+| `agreed` | `by`, the builder's name, and `at`, the date and time | The builder takes it |
+| `prds` | The paths of the PRDs the client confirmed it touches | The client confirms, or an edit changes them |
+
+The body holds each item of the map with its state and the client's words, then the summary. Once
+`agreed`, it changes only through an edit branch ([`ARCH-21`](requests.md#edit-branch)).
 
 ## Free and Cloud
 

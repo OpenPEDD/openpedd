@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.15"
+version: "1.16"
 updated: "2026-11-20"
 ---
 
@@ -62,7 +62,10 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
-| Request · `requested` · `dropped` · `retired` | A client's ask, which is a change branch from the start; a change dropped before approval, or retired after it | [`ARCH-06`](architecture/branches.md#a-request) · [`ENT-06`](domain/change.md) |
+| Request · `requested` · `dropped` · `retired` | A client's ask, which is a change branch from the start; a change dropped before approval, or retired after it | [`ARCH-21`](architecture/requests.md) · [`ENT-06`](domain/change.md) |
+| `draft` · `confirmed` · `agreed` | A request's definition: being defined, confirmed by the client, taken by the builder and queued. `agreed` is not `accepted`, a change's status after `accept` | [`DEC-27`](../decisions/DEC-27-request-agreed.md) |
+| Edit branch · `edit/` | One edit to an agreed request, merged into its branch by the builder | [`ARCH-21`](architecture/requests.md#edit-branch) |
+| `@openpedd/reader` | The package that reads a spec, shared by the CLI and the Cloud | [`ARCH-20`](architecture/reader.md) |
 | Business Map · as-is · to-be · business mode · product engineer | How a client's organization works today and with the system; `map`'s mode that draws it; the person who runs it | [map](../modules/map/prd.md#business-mode) |
 | Branding change | The change that fills the `Brand System` before a product's first screens | [open](../open/README.md#the-roadmap) |
 | Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |

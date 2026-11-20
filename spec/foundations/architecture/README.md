@@ -2,7 +2,7 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.9"
+version: "1.10"
 updated: "2026-11-20"
 ---
 
@@ -30,6 +30,8 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Landing parallel changes](landing.md) | `ARCH-17` | The overlap of changes in flight, syncing them, and the order they land in |
 | [Guided definition](definition.md) | `ARCH-18` | The minimum each scope needs, who answers each item, and the conversation that fills it |
 | [Code index](code-index.md) | `ARCH-19` | The generated map of the code per module and package, read first by every agent |
+| [Spec reader](reader.md) | `ARCH-20` | The package that reads a spec, shared by the CLI and the Cloud |
+| [A request's branch](requests.md) | `ARCH-21` | Numbering a change, the definition's status, editing once agreed, renaming at approval |
 
 ## How an architecture document is written
 

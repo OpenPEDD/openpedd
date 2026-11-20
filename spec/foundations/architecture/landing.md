@@ -2,7 +2,7 @@
 title: Landing parallel changes
 description: ARCH-17 · Seeing early which changes in flight overlap, keeping them close to the base, and the order they land in
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-20"
 ---
 
@@ -15,12 +15,12 @@ seeing the overlap early, staying close to the base, and landing in an order the
 
 ## The queue [#the-queue]
 
-**By default, changes land in the order their requests were queued.** With one change in flight, it
+**By default, changes land in the order their requests were queued**: a request enters the queue when it is `agreed`, at its `agreed.at` ([`ARCH-21`](requests.md#the-definitions-status)). With one change in flight, it
 lands, and the next request in the queue starts after it. The computed order
 [below](#at-the-end-the-landing-order) applies only when several changes are in flight at once, or a
 `hotfix` cuts in.
 
-A request's branch is cut when the client asks ([`ARCH-06`](branches.md#a-request)), possibly long
+A request's branch is cut when the client asks ([`ARCH-21`](requests.md)), possibly long
 before work starts, so **`pedd sync` merges the base into it when it is taken from the queue**: work
 never starts on a stale base. An overlap on the same ID still blocks the later change ([below](#before-the-overlap-of-changes-in-flight)).
 
