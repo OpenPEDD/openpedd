@@ -380,3 +380,9 @@
 {"path":"foundations/architecture/review.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"The branch check runs first in the CI action"}
 {"path":"capabilities.md","version":"1.8","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"pedd branch"}
 {"path":"foundations/glossary.md","version":"1.15","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Queue, pedd branch, branch check"}
+{"path":"modules/workspace/baseline.md","version":"1.0","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"What a project starts with, with a level per item; the baseline versioned; doctor lists gaps, update turns one into a chore or cover change; the project template"}
+{"path":"modules/workspace/prd.md","version":"1.11 → 1.12","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Split by topic: what a project starts with and the template moved to baseline.md; doctor and update read the baseline"}
+{"path":"modules/README.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Baseline PRD listed under workspace"}
+{"path":"open/roadmap.md","version":"1.1 → 1.2","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Template link points to the baseline PRD"}
+{"path":"capabilities.md","version":"1.8","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Keeping a built product up to the current practices"}
+{"path":"foundations/glossary.md","version":"1.15","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Baseline and baseline gap"}

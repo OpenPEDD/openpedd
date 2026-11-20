@@ -20,7 +20,8 @@ updated: "2026-11-20"
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
-| See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/prd.md#what-a-project-starts-with) |
+| Keep a built product up to the current practices | A versioned baseline: `pedd doctor` lists what it lacks, red if required, yellow if recommended; `pedd update` turns a gap into a small change | [Baseline](modules/workspace/baseline.md#keeping-up) |
+| See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/baseline.md#what-a-project-starts-with) |
 | Run implementation in parallel in the cloud | One session per task, set per stage in `workspace.yaml`, with a quota guard | [Where agents run](foundations/architecture/running.md#where-agents-run) |
 | Take a running product to the full framework | `pedd adopt`: its gaps per module, as small `cover` changes; an existing spec imported | [Adopting](modules/workspace/prd.md#adopting-a-running-product) |
 | Start a product as one monorepo | `spec/`, the app, the landing, the docs and the help, sharing one design system with its Storybook and one i18n package; each app deploys on its own. Several repos only when a part must be apart | [Workspace repos](foundations/architecture/workspace.md) |

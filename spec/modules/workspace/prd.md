@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.11"
+version: "1.12"
 updated: "2026-11-20"
 status: draft
 ---
@@ -24,8 +24,8 @@ pedd init reclee
 | Command | Does | When |
 |---|---|---|
 | `pedd init` | The whole onboarding | Once per project |
-| `pedd doctor` | What each stage has and lacks. Reads only | Any time |
-| `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
+| `pedd doctor` | What each stage has and lacks, and the gaps against the current [baseline](baseline.md#keeping-up). Reads only | Any time |
+| `pedd update` | Brings the framework's files to the installed CLI, and offers each baseline gap as a small change; `--dry-run` shows what would change | After upgrading the CLI |
 | `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, and the permission rules and read hook that keep agents' context small, without asking again | Whoever clones the project |
 | `pedd adopt` | Lists what a running product lacks, per module, and turns each gap into a change ([adopting](#adopting-a-running-product)) | After `init`, on a product already in production |
 | `pedd launch` | Launches an accepted change ([`ARCH-08`](../../foundations/architecture/release.md)) | When it should reach customers |
@@ -37,7 +37,7 @@ pedd init reclee
 | 1 | **Reads the situation**: an empty folder, code already there, or OpenPEDD already installed (then it runs `doctor` and offers `update`) |
 | 2 | **Settles the layout**, on two axes ([below](#the-layout)): detects what it can and confirms |
 | 3 | Creates the monorepo, or connects the repos that exist; in `split`, writes a `link.yaml` in each pointing back to the spec |
-| 4 | **Installs the structure** from the [project template](#the-project-template): `spec/` with its foundations marked empty, the apps and packages of a new product, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
+| 4 | **Installs the structure** from the [project template](baseline.md#the-project-template): `spec/` with its foundations marked empty, the apps and packages of a new product, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
 | 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers; it sends every agent to the [code index](../../foundations/architecture/code-index.md) first. Nothing outside them is touched |
 | 6 | **Finds out the stack** ([below](#the-stack)) |
 | 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
@@ -46,40 +46,10 @@ pedd init reclee
 | 10 | **Reports which stages are ready** and what each lacks |
 | 11 | Offers the next step: `map` if there is code; `map --business` if the product changes how an organization works; `specify` otherwise |
 
-## What a project starts with [#what-a-project-starts-with]
+## The baseline
 
-Everything `init` leaves in a new project, each defined where it points.
-
-| Part | What it is | Defined in |
-|---|---|---|
-| Layout | One monorepo: `spec/`, `apps/` (`app`, `landing`, `docs`, `help`), `packages/` (`ui` with its Storybook, `i18n`), each app deployed on its own | [`ARCH-03`](../../foundations/architecture/workspace.md) |
-| `spec/` | Foundations marked empty, `modules/`, `decisions/`, `open/`, `changes/`, `history/` | [Artifacts](../../foundations/artifacts.md) |
-| `workspace.yaml` | Mode, repos, components, tools, runners, `locales: [en]` | [`ENT-16`](../../foundations/domain/workspace.md) |
-| i18n | English as the base; every text a person reads is a key | [`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md) |
-| Agents' instructions | OpenPEDD's block in `AGENTS.md` or `CLAUDE.md`, between markers | [Main flow](#main-flow), step 5 |
-| Code index | One file per module and package, regenerated on every merge to the base | [`ARCH-19`](../../foundations/architecture/code-index.md) |
-| Checks | Links and token budgets now; the rest of `pedd check` as it ships | [`RULE-04`](../../foundations/rules/writing.md#rule-04) |
-| Stages | `map` to `measure`, each run only where its track says | [cycle](../cycle/prd.md) · [tracks](../tracks/prd.md) |
-| Skills, judges and MCP | Installed in each agent found, recorded in `.pedd/manifest.json` | [Capabilities](../../capabilities.md#skills) |
-| Tools per stage | Each capability, its level, and what is lost without it | [Below](#the-tools-of-each-stage) |
-| Safety | `--dry-run`, backups, secrets denied | [Below](#writing-safely) |
-| Branches and tracker | One branch per change; one sub-issue per stage | [`ARCH-06`](../../foundations/architecture/branches.md) · [`ARCH-15`](../../foundations/architecture/tracker.md) |
-| Pipeline | The moments of the pipeline, and the judges on every PR | [`ARCH-11`](../../foundations/architecture/pipeline.md) |
-
-## The project template [#the-project-template]
-
-What `init` installs comes from one place: the `template/` folder of `openpedd/openpedd`. **Before the
-CLI exists, the first client starts from it by hand**, with the skills already written, today
-`/specify-interview`. Other skills are written and improved as that work needs them.
-
-It holds the first six rows [above](#what-a-project-starts-with) (the apps and packages as empty skeletons), with each folder's guide, every
-`workspace.yaml` default commented, and the same check scripts this repo runs.
-
-| Rule | Why |
-|---|---|
-| One template, here; `init` installs it and records its version in `.pedd/manifest.json` | A second copy drifts, and `update` could not tell what changed |
-| Copied with `npx degit openpedd/openpedd/template` until `pedd init` exists | The first client cannot wait for the CLI |
-| It names no client | This repo is public |
+What a project starts with, its version, and how a product already built keeps up with it, are in
+[Baseline](baseline.md).
 
 ## The layout
 

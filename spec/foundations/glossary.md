@@ -24,7 +24,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Level: `unit` · `integration` · `contract` · `e2e` · `eval` | Where a criterion is proved | [`ARCH-10`](architecture/testing.md) |
 | `unmapped` | A module in the index with no PRD yet | [`ENT-21`](domain/module.md) |
 | `pedd` | The CLI, and the short form of the name | [`ARCH-01`](architecture/overview.md) |
-| Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/prd.md#the-project-template) |
+| Baseline · baseline gap | What every project starts with, versioned; what a product lacks against the current one | [Baseline](../modules/workspace/baseline.md) |
+| Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/baseline.md#the-project-template) |
 | Monorepo · `mono` · `split` · `apps/` · `packages/ui` · `packages/i18n` | The default layout, and the split one for when a part must be apart | [`ARCH-03`](architecture/workspace.md) |
 | Code index · `.pedd/code-index/` | The generated map of the code, per module and package, read first by every agent | [`ARCH-19`](architecture/code-index.md) |
 | Extension · Cloud add-on | A skill outside the core, free; one OpenPEDD hosts or pays for, paid | [`BIZ-04`](business/open-core.md#extensions) |
