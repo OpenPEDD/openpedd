@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- The project template, `template/`: the spec structure with each folder's guide, `workspace.yaml` with every default commented and `locales: [en]`, OpenPEDD's block for `AGENTS.md`, and `npm run check`. Start with `npx degit openpedd/openpedd/template`. `npm run check` here also checks that the template's scripts and guides match their sources. `branches` and `review` are now listed among the workspace fields.
 - Requirement and PRD statuses renamed: `designing` is now `specified`, `ready` is now `designed`. The order: `draft`, `specified`, `designed`, `building`, `in_review`, `accepted`, `live`.
 - Every product starts with i18n: English as the base, other languages added to `locales`; `init` writes `locales: [en]` and the language checks always run (DEC-21).
 - What a new project comes with, in one table, and the project template (`template/`) that `pedd init` installs and the first client copies by hand.

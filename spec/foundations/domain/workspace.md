@@ -2,7 +2,7 @@
 title: Workspace
 description: ENT-16 · The repos of a project and how they connect
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-20"
 ---
 
@@ -25,7 +25,9 @@ repo has one audience. How the repos are created and published is in
 | `publish` | Which artifacts the project has, and where each is published |
 | `locales` | The languages of the product's interface. The first is the base, always `en`; `init` writes `[en]` ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)) |
 | `environments` | Where code runs, in order; one marked `public` |
+| `branches` | The base, and the name of each kind of branch ([`ARCH-06`](../architecture/branches.md#configuration)) |
 | `models` | The model profile and overrides ([`DEC-07`](../../decisions/DEC-07-models.md)) |
 | `stages` | Per-stage settings, such as `architect.mode` |
 | `runners` | Where each stage runs: `local`, `cloud` or `self-hosted`, its environment and how many in parallel ([`ARCH-12`](../architecture/running.md#where-agents-run)) |
+| `review` | What blocks a change, and whether the judges run on every PR ([`ARCH-13`](../architecture/review.md)) |
 | `budgets` | Token budgets per layer |

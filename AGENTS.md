@@ -69,9 +69,11 @@ changed, not why: the why lives in the document.
 ## Checks
 
 ```bash
-npm run check          # both checks
+npm run check          # every check
 npm run check:links    # relative links to a missing file or anchor
 npm run check:size     # token budget per document (RULE-04)
+npm run check:template # template/ scripts and guides match their sources
 ```
 
-Run them before committing. `check:size` fails only when a document over budget grows.
+Run them before committing. `check:size` fails only when a document over budget grows. A guide in
+`template/` names its `source`; when that source changes version, update the guide too.

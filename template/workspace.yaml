@@ -1,0 +1,75 @@
+# The workspace of this project: every field of ENT-16, at its default.
+# https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/workspace.md
+# Replace each <placeholder>; a field left at its default can stay as it is.
+
+project: <project>                      # the name, used as the repo prefix: <project>-spec, <project>-help
+mode: split                             # split: one repo per audience (default) · mono: one repo with spec/, help/, docs/ (ARCH-03)
+language: en                            # the language of the prose; names are always in English (RULE-05)
+
+repos:                                  # in mono, only code: the one repo
+  spec: <owner>/<project>-spec          # the spec and this file
+  help: <owner>/<project>-help          # the Help Center and the Release Notes
+  docs: <owner>/<project>-docs          # the API Reference and developer guides
+  code: [<owner>/<project>]             # one or more code repos
+
+components: []                          # each part of the code, its repo and path, and the modules it implements
+#  - { repo: <owner>/<project>, path: apps/web, modules: [<module>] }
+
+run:                                    # how to run it locally
+  command: <command>                    # e.g. pnpm dev
+  test_user: E2E_TEST_USER              # the name of the test user's variable, never its value
+
+tools: {}                               # the tool chosen for each capability a stage needs; pedd doctor lists them
+#  research: <tool>                     # e.g. firecrawl
+#  design_system: <tool>
+#  browser: <tool>
+#  e2e: <tool>
+#  mutation: <tool>
+#  flags: <tool>
+#  observability: <tool>
+#  tracker: <tool>
+
+references: []                          # other specs this one builds on, read-only (ARCH-03, several specs)
+
+publish: {}                             # which artifacts the project has, and where; only what is declared is generated
+#  help: { generator: <generator>, url: https://help.<domain> }
+#  docs: { generator: openapi, url: https://docs.<domain> }
+#  release_notes: { target: help }
+#  walkthroughs: { target: help }
+
+locales: [en]                           # the languages of the interface; the first is the base, always en (DEC-21)
+
+environments:                           # where code runs, in order; one marked public (ARCH-08)
+  - { name: production, branch: main, public: true }
+
+branches:                               # ARCH-06
+  base: dev                             # where finished changes land
+  change: "{prefix}/{slug}"             # feat/, fix/ or chore/, by track
+  design: "design/{slug}"
+  architecture: "arch/{slug}"
+  task: "task/{slug}-{task}"            # one per checklist item
+
+models:
+  profile: balanced                     # max · balanced (default) · economy (DEC-07)
+
+stages:
+  architect: { mode: guided }           # guided (default) · delegated (DEC-08)
+
+runners:                                # where each stage runs: local · cloud · self-hosted (DEC-18, ARCH-12)
+  specify: { runner: local }
+  architect: { runner: local }
+  design: { runner: local }
+  plan: { runner: local }
+  build: { runner: cloud, environment: <environment> }    # one session per task; parallel: <n> sets how many at once
+  verify: { runner: cloud, environment: <environment> }
+
+review:                                 # ARCH-13
+  blocking: high                        # the lowest severity that blocks
+  ci: true                              # the judges run on every PR
+
+budgets:                                # tokens per document, by layer (RULE-04): the numbers npm run check:size uses
+  modules: 4000
+  foundations: 2000
+  glossary: 4000
+  decisions: 1000
+  open: 2000

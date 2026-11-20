@@ -344,3 +344,5 @@
 {"path":"foundations/architecture/definition.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Languages besides English; languages no longer a condition"}
 {"path":"capabilities.md","version":"1.6 → 1.7","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"What a new project comes with; languages besides English"}
 {"path":"open/roadmap.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"The first client as step 4"}
+{"path":"foundations/domain/workspace.md","version":"1.4 → 1.5","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"branches and review listed as fields"}
+{"path":"modules/workspace/prd.md","version":"1.10 → 1.11","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Example task branch named as in ARCH-06"}

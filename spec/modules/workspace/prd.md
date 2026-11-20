@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.10"
+version: "1.11"
 updated: "2026-11-20"
 status: draft
 ---
@@ -119,7 +119,7 @@ branches:
   change: "{prefix}/{slug}"
   design: "design/{slug}"
   architecture: "arch/{slug}"
-  task: tracker
+  task: "task/{slug}-{task}"
 run:
   command: pnpm dev
   test_user: E2E_TEST_USER   # the name of the variable, never its value

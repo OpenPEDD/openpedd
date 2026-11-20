@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node scripts/check-links.mjs && node scripts/check-size.mjs",
+    "check": "node scripts/check-links.mjs && node scripts/check-size.mjs && node scripts/check-template.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:size": "node scripts/check-size.mjs",
+    "check:template": "node scripts/check-template.mjs",
     "view": "node scripts/view.mjs"
   }
 }
