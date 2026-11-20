@@ -2,8 +2,8 @@
 title: Requirement
 description: ENT-03 · A functional or non-functional requirement, and its lifecycle
 owner: Kevin
-version: "1.2"
-updated: "2026-11-11"
+version: "1.3"
+updated: "2026-11-20"
 ---
 
 # ENT-03 · Requirement
@@ -40,8 +40,8 @@ advanced requirement. A user story touches two requirements, not the whole PRD.
 | Status | Means | Set by |
 |---|---|---|
 | `draft` | Being defined | `specify`, on start |
-| `designing` | Approved; waiting for architecture and design | `spec-approval` |
-| `ready` | Architecture and design merged | The last of the two merge gates |
+| `specified` | Approved; waiting for architecture and design | `spec-approval` |
+| `designed` | Architecture and design merged | The last of the two merge gates |
 | `building` | Planned and under construction | `plan` |
 | `in_review` | Built and verified; waiting for `accept` | `verify` |
 | `accepted` | Accepted and on the base, not launched | `publish`, on prepare |

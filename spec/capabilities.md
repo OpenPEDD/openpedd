@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.6"
-updated: "2026-11-19"
+version: "1.7"
+updated: "2026-11-20"
 ---
 
 # What OpenPEDD can do
@@ -20,6 +20,7 @@ updated: "2026-11-19"
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
+| See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/prd.md#what-a-project-starts-with) |
 | Run implementation in parallel in the cloud | One session per task, set per stage in `workspace.yaml`, with a quota guard | [Where agents run](foundations/architecture/running.md#where-agents-run) |
 | Take a running product to the full framework | `pedd adopt`: its gaps per module, as small `cover` changes; an existing spec imported | [Adopting](modules/workspace/prd.md#adopting-a-running-product) |
 | Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
@@ -54,7 +55,7 @@ updated: "2026-11-19"
 | Capability | Turned on with |
 |---|---|
 | API Reference · MCP · Help Center · Release Notes · Walkthroughs | `publish` in `workspace.yaml` |
-| Several languages | `locales` |
+| Languages besides English | `locales`; English and i18n come with every project |
 | A staging environment | `environments` |
 | Feature flags | `tools.flags` |
 | Row-level security tests · Evals · Observability · Mutation testing | `tools` |

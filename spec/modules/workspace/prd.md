@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.9"
-updated: "2026-11-17"
+version: "1.10"
+updated: "2026-11-20"
 status: draft
 ---
 
@@ -37,7 +37,7 @@ pedd init reclee
 | 1 | **Reads the situation**: an empty folder, code already there, or OpenPEDD already installed (then it runs `doctor` and offers `update`) |
 | 2 | **Settles the layout**, on two axes ([below](#the-layout)): detects what it can and confirms |
 | 3 | Creates the missing repos with the project prefix (`reclee-spec`, `reclee-help`, `reclee-docs`), or connects the existing ones, and in `split` writes a `link.yaml` in each pointing back to the spec |
-| 4 | **Installs the documentation structure**: `spec/` with its foundations marked empty, `workspace.yaml`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
+| 4 | **Installs the documentation structure** from the [project template](#the-project-template): `spec/` with its foundations marked empty, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
 | 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers. Nothing outside them is touched |
 | 6 | **Finds out the stack** ([below](#the-stack)) |
 | 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
@@ -45,6 +45,39 @@ pedd init reclee
 | 9 | Installs the skills, the judges and the MCP in the agents it detects, and records each file and its hash in `.pedd/manifest.json` |
 | 10 | **Reports which stages are ready** and what each lacks |
 | 11 | Offers the next step: `map` if there is code, `specify` if there is none |
+
+## What a project starts with [#what-a-project-starts-with]
+
+Everything `init` leaves in a new project, each defined where it points.
+
+| Part | What it is | Defined in |
+|---|---|---|
+| `spec/` | Foundations marked empty, `modules/`, `decisions/`, `open/`, `changes/`, `history/` | [Artifacts](../../foundations/artifacts.md) |
+| `workspace.yaml` | Mode, repos, components, tools, runners, `locales: [en]` | [`ENT-16`](../../foundations/domain/workspace.md) |
+| i18n | English as the base; every text a person reads is a key | [`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md) |
+| Agents' instructions | OpenPEDD's block in `AGENTS.md` or `CLAUDE.md`, between markers | [Main flow](#main-flow), step 5 |
+| Checks | Links and token budgets now; the rest of `pedd check` as it ships | [`RULE-04`](../../foundations/rules/writing.md#rule-04) |
+| Stages | `map` to `measure`, each run only where its track says | [cycle](../cycle/prd.md) · [tracks](../tracks/prd.md) |
+| Skills, judges and MCP | Installed in each agent found, recorded in `.pedd/manifest.json` | [Capabilities](../../capabilities.md#skills) |
+| Tools per stage | Each capability, its level, and what is lost without it | [Below](#the-tools-of-each-stage) |
+| Safety | `--dry-run`, backups, secrets denied | [Below](#writing-safely) |
+| Branches and tracker | One branch per change; one sub-issue per stage | [`ARCH-06`](../../foundations/architecture/branches.md) · [`ARCH-15`](../../foundations/architecture/tracker.md) |
+| Pipeline | The moments of the pipeline, and the judges on every PR | [`ARCH-11`](../../foundations/architecture/pipeline.md) |
+
+## The project template [#the-project-template]
+
+What `init` installs comes from one place: the `template/` folder of `openpedd/openpedd`. **Before the
+CLI exists, the first client starts from it by hand**, with the skills already written, today
+`/specify-interview`. Other skills are written and improved as that work needs them.
+
+It holds the first five rows [above](#what-a-project-starts-with), with each folder's guide, every
+`workspace.yaml` default commented, and the same check scripts this repo runs.
+
+| Rule | Why |
+|---|---|
+| One template, here; `init` installs it and records its version in `.pedd/manifest.json` | A second copy drifts, and `update` could not tell what changed |
+| Copied with `npx degit openpedd/openpedd/template` until `pedd init` exists | The first client cannot wait for the CLI |
+| It names no client | This repo is public |
 
 ## The layout
 
@@ -78,7 +111,7 @@ publish:
   docs: { generator: openapi, url: https://docs.reclee.com }
   release_notes: { target: help }
   walkthroughs: { target: help }   # only what is declared is generated
-locales: [es, en]
+locales: [en, es]   # en is the base (DEC-21)
 environments:
   - { name: production, branch: main, public: true }
 branches:
@@ -113,7 +146,7 @@ review:
 | Project | How it is settled | Where it goes |
 |---|---|---|
 | **Running** | Detected from the manifests and config: language, framework, package manager, database, auth, unit and end-to-end tests, CI, deploy, analytics, flags, design system. Each one names the file that proves it ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)) | `.pedd/stack.json`, recalculated by `doctor` |
-| **New** | Asked one decision at a time, with the options and a recommendation | `ADR`s of the initial change, and `.pedd/stack.json` once it exists in the code |
+| **New** | Asked one decision at a time, with the options and a recommendation. The i18n library is always one of them ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)) | `ADR`s of the initial change, and `.pedd/stack.json` once it exists in the code |
 
 **The list of technologies is not written into the spec**: the code already says it, and a copy goes
 stale. The spec holds what the code cannot say: why it was chosen ([`DEC-12`](../../decisions/DEC-12-stack-derived.md)).
@@ -145,7 +178,7 @@ missing tool never stops `init`.
 | Launch | Feature flags | If the project has them | What is on the base launches together |
 | After launch | Observability | Recommended | Regressions are found by users |
 | `plan` · `verify` | Row-level security tests | If the project has it | Roles are proved in the application only |
-| `plan` · `verify` | Translation checks | If there are `locales` | Missing text reaches users |
+| `plan` · `verify` | Translation checks: missing, unused and raw keys | Required | Missing text reaches users |
 | `plan` · `verify` | Evals | If the product uses AI | Those criteria cannot be tested |
 
 MCP servers go in the project's config only without secrets; credentials stay in each person's
@@ -182,7 +215,7 @@ changes ([`DEC-17`](../../decisions/DEC-17-adopt-in-slices.md)). It reads only, 
 | Step | Does |
 |---|---|
 | 1 | **Finds the existing spec**, if there is one, and imports it through `map`: converted and checked against the code, not rewritten |
-| 2 | **Lists the gaps per module**: no PRD; a `FR` without an `AC`; an `AC` without a test; a screen without help or Walkthrough, where the project declares them; code with no anchor; a stage without its tool, from `doctor` |
+| 2 | **Lists the gaps per module**: no PRD; a `FR` without an `AC`; an `AC` without a test; a screen without help or Walkthrough, where the project declares them; text written in code instead of a key, as one change of its own ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)); code with no anchor; a stage without its tool, from `doctor` |
 | 3 | **Orders them**: first what is riskiest (permissions, billing, personal data, deletion), then what changes most often in git, then what a planned change will touch next |
 | 4 | **Proposes one change per module and kind of gap**, on the `cover` track ([tracks](../tracks/prd.md#the-cover-track)), and creates them in the tracker once the person confirms |
 

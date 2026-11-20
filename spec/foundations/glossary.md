@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.13"
-updated: "2026-11-19"
+version: "1.14"
+updated: "2026-11-20"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -24,6 +24,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Level: `unit` · `integration` · `contract` · `e2e` · `eval` | Where a criterion is proved | [`ARCH-10`](architecture/testing.md) |
 | `unmapped` | A module in the index with no PRD yet | [`ENT-21`](domain/module.md) |
 | `pedd` | The CLI, and the short form of the name | [`ARCH-01`](architecture/overview.md) |
+| Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/prd.md#the-project-template) |
+| i18n · base locale · `locales` | Every text a person reads is a key; English is the base, other languages are locales | [`DEC-21`](../decisions/DEC-21-i18n-from-day-one.md) |
 
 ## The hierarchy
 
@@ -90,7 +92,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 
 ## Requirement and PRD status
 
-`draft` · `designing` · `ready` · `building` · `in_review` · `live` · `changing` · `deprecated`
+`draft` · `specified` · `designed` · `building` · `in_review` · `accepted` · `live` · `changing` · `deprecated`
 ([`ENT-03`](domain/requirement.md#lifecycle)).
 
 ## IDs
@@ -120,6 +122,8 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | Camino feliz · alternativo · de excepción | `Main flow` · `Alternate flows` · `Exception flows` |
 | Finalizado (PRD status) | `live` |
 | En mejora (PRD status) | `changing` |
+| `designing` (status) | `specified` |
+| `ready` (status) | `designed`: `ready` read as launched, next to `live` |
 | `product/` (the folder of modules) | `modules/` |
 | Area (level above the PRD) | Module |
 | `BIZ-02` (the landscape) | `MKT-01`. `BIZ-02` stays dead |

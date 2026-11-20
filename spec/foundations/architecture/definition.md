@@ -2,8 +2,8 @@
 title: Guided definition
 description: ARCH-18 · The minimum each scope needs to be defined, who answers each item, and the conversation that fills it until it is complete
 owner: Kevin
-version: "1.0"
-updated: "2026-11-19"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-18 · Guided definition
@@ -32,7 +32,7 @@ summary. **Team**: left for the sweep ([`ARCH-16`](sweep.md)), never asked of a 
 | Personal data: which, why, for how long | Client; how long is proposed | `Privacy`, if there is personal data |
 | Outside services: payments, email, sign-in | Client names the need; the provider is proposed | `Integrations`, if there are any |
 | The brand | Client: a link, files, or none yet | `Brand System`, if there are screens |
-| Languages | Client | `locales` ([`ENT-16`](../domain/workspace.md)) |
+| Languages besides English | Client | `locales` ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)) |
 | `Architecture Rules`, `Security Policy`, `Quality Standards`, `Delivery Pipeline` | Team | `ENT-02` |
 
 **A module**, one item per section of its PRD ([modules](../../modules/README.md)):
@@ -55,8 +55,8 @@ summary. **Team**: left for the sweep ([`ARCH-16`](sweep.md)), never asked of a 
 **what has to exist first**, from each requirement's `depends_on` ([`ENT-03`](../domain/requirement.md)),
 confirmed by the client; and how to tell it works, as examples that become its criteria.
 
-**Conditions come first**: screens, personal data, payments, languages. Each answer switches the items
-above on or off.
+**Conditions come first**: screens, personal data, payments. Each answer switches the items above on or
+off.
 
 ## The conversation
 

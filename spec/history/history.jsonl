@@ -329,3 +329,18 @@
 {"path":"capabilities.md","version":"1.5 → 1.6","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition listed"}
 {"path":"foundations/glossary.md","version":"1.12 → 1.13","date":"2026-11-19","change":"CHG-025","story":null,"stage":"specify","summary":"Guided definition and minimum map"}
 {"path":"foundations/architecture/agents.md","version":"1.7 → 1.8","date":"2026-11-19","change":"CHG-026","story":null,"stage":"specify","summary":"Where skills and judges live in the framework repo, and the documents each implements"}
+{"path":"decisions/DEC-21-i18n-from-day-one.md","version":"1.0","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Every product starts with i18n, English as the base"}
+{"path":"foundations/domain/requirement.md","version":"1.2 → 1.3","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Statuses renamed: designing to specified, ready to designed"}
+{"path":"foundations/domain/trace-link.md","version":"1.2 → 1.3","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"spec link statuses renamed: specified, designed"}
+{"path":"foundations/domain/trace-event.md","version":"1.2 → 1.3","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Lead-time example starts at specified"}
+{"path":"modules/specify/prd.md","version":"1.9 → 1.10","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Approval moves draft to specified"}
+{"path":"foundations/glossary.md","version":"1.13 → 1.14","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Status list renamed and accepted added; old names designing and ready; project template and i18n"}
+{"path":"foundations/domain/workspace.md","version":"1.3 → 1.4","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"locales: the base is always en, init writes [en] (DEC-21)"}
+{"path":"modules/workspace/prd.md","version":"1.9 → 1.10","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"What a project starts with; the project template; locales [en] on init; i18n library among stack decisions; adopt lists missing i18n"}
+{"path":"foundations/architecture/testing.md","version":"1.3 → 1.4","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Language checks always on (DEC-21)"}
+{"path":"foundations/architecture/review-lenses.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Interface lens: no text in code, always"}
+{"path":"modules/design/prd.md","version":"1.5 → 1.6","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Pseudo-locale pass always runs"}
+{"path":"modules/verify/prd.md","version":"1.7 → 1.8","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Every locale rendered, always"}
+{"path":"foundations/architecture/definition.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"Languages besides English; languages no longer a condition"}
+{"path":"capabilities.md","version":"1.6 → 1.7","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"What a new project comes with; languages besides English"}
+{"path":"open/roadmap.md","version":"1.0 → 1.1","date":"2026-11-20","change":"CHG-027","story":null,"stage":"specify","summary":"The first client as step 4"}

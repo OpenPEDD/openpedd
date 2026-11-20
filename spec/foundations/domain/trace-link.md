@@ -2,8 +2,8 @@
 title: Trace Link
 description: ENT-22 · One link in a requirement's chain, with its current state
 owner: Kevin
-version: "1.2"
-updated: "2026-11-11"
+version: "1.3"
+updated: "2026-11-20"
 ---
 
 # ENT-22 · Trace Link
@@ -25,7 +25,7 @@ now. Together they answer *where is this requirement, and what is holding it*.
 
 | Kind | Is | States | Source |
 |---|---|---|---|
-| `spec` | The requirement itself | `draft` · `designing` · `ready` · `building` · `in_review` · `accepted` · `live` · `changing` · `deprecated` | The spec ([`ENT-03`](requirement.md#lifecycle)) |
+| `spec` | The requirement itself | `draft` · `specified` · `designed` · `building` · `in_review` · `accepted` · `live` · `changing` · `deprecated` | The spec ([`ENT-03`](requirement.md#lifecycle)) |
 | `origin` | The story or issue that asked for it | `candidate` · `accepted` · `discarded` | The tracker |
 | `change` | The change in flight, and its deltas | `open` · `accepted` · `archived` | `changes/` |
 | `design` | A mockup | `fresh` · `stale` · `uncovered` | The spec repo or a design tool |

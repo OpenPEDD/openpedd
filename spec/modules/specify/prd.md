@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.9"
-updated: "2026-11-19"
+version: "1.10"
+updated: "2026-11-20"
 status: draft
 ---
 
@@ -53,7 +53,7 @@ in the PRD** ([`RULE-01`](../../foundations/rules/writing.md#rule-01)).
 
 | What | Status or anchor |
 |---|---|
-| The PRD or the delta | `draft` → `designing` on approval |
+| The PRD or the delta | `draft` → `specified` on approval |
 | New `Q`s | Open; none blocking |
 | The hash of each ID | Computed on approval |
 | The definition notes, when a client defined it in a conversation | `changes/<CHG>/definition.md` |
