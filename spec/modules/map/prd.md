@@ -1,21 +1,22 @@
 ---
 title: map
-description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD
+description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "1.4"
-updated: "2026-11-19"
+version: "1.5"
+updated: "2026-11-20"
 status: draft
 ---
 
 # Stage 0 · `map`
 
-**Mode:** interactive, per module · **Gate:** `spec-approval` of the initial model
+**Mode:** interactive, per module · **Gate:** `spec-approval` of the initial model; in business mode, the client's
 
 ## What it is
 
 The entry point when **the product already exists**. It reads the code, and whatever docs and tickets
 there are, and builds the spec: first the foundations and the index of modules, then one PRD per
-module. Without it, OpenPEDD would serve new products only.
+module. Without it, OpenPEDD would serve new products only. **In business mode** it maps an
+organization instead of code, before its system is designed ([below](#business-mode)).
 
 **The end state is every module with its PRD, kept `live`**: the spec is the source of truth of the
 whole software, and a PRD is maintained from the day it exists. Each PRD is written when a change
@@ -29,6 +30,7 @@ first touches its module, or all at once with `/map --all`
 | The code repo | The person points to it |
 | Existing docs, help, designs | Optional |
 | The questions the code cannot answer | The person, in the conversation |
+| In business mode: calls, documents, spreadsheets | The client, through a product engineer |
 
 ## Context pack
 
@@ -70,6 +72,34 @@ approves.
 - Existing docs are reading material: what they say is checked against the code, not copied. **An existing spec is the exception**: it is imported, because it holds decisions the code cannot show.
 - It reads the code; it never runs it.
 
+## Business mode [#business-mode]
+
+For a product that **changes how an organization works** and has no code yet
+([`DEC-24`](../../decisions/DEC-24-business-map.md)). A **product engineer** runs it, from calls with
+the client (their transcripts), the documents and spreadsheets the client shares, and the guided
+conversation ([`ARCH-18`](../../foundations/architecture/definition.md)). It leaves the `Business Map`
+in `foundations/business-map/`, in two files.
+
+| `as-is.md` | Holds |
+|---|---|
+| People | Teams, roles, how many people each, who reports to whom. Roles, not names |
+| Processes | One `PRC-nn` each: what starts it, its steps, the role of each step, the tool used, how often. **Confirmed by** the role that runs it |
+| Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
+| Pains | Each with the client's own words, who said it and the process it sits in |
+
+| `to-be.md` | Holds |
+|---|---|
+| People | The roles that appear, change or go |
+| Processes | Each `PRC` marked `kept`, `changed` or `taken` by the system, with the module that takes it |
+| Modules | The modules that follow, each with the processes it takes and the pains it removes |
+| Order | The order they are built in, and why |
+
+1. **Drafts the as-is** from the sources; a draft from transcripts is never final until its process is confirmed.
+2. **Draws the to-be** as a marked copy of the as-is, process by process.
+3. **Derives**, never restating the map: roles to `Roles & Permissions`, the things processes and spreadsheets handle to the `Domain Model`, goal and audience to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
+4. **`map-judge`**: every process has its roles and a confirmation, every pain a source, every to-be process a mark, every module the processes it takes.
+5. **`spec-approval` is the client's**: they approve the as-is as true and the to-be as wanted.
+
 ## Skills, agents and tools
 
 | Kind | Name | For | Reads | Leaves |
@@ -77,6 +107,7 @@ approves.
 | Skill | `/map` | The foundations and the index; `--all` for every PRD | The code repos; the docs, help and designs that exist | The index of modules, each `unmapped`; the inferred foundations; `.pedd/stack.json`; one sheet of `Q`s |
 | Skill | `/map-module` | One module | The module's code; the foundations | The module's PRD of what the code does today; its `Q`s; its code anchored; the module `live` |
 | Skill | `/map --from-spec` | Importing an existing spec | The existing spec; the code | The spec in the framework's layers, with its history; `.pedd/id-map.json`; a `Q` for each requirement the code does not meet |
+| Skill | `/map --business` | Mapping an organization | Call transcripts, documents, spreadsheets; the guided conversation | The `Business Map`; the foundations and the index derived from it; the first roadmap |
 | Agent | `map-judge` | Coverage | — | — |
 | MCP | `propose_delta` | Everything enters as deltas of the initial change | — | — |
 

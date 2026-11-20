@@ -2,8 +2,8 @@
 title: Modules
 description: How a module and its PRDs are written
 owner: Kevin
-version: "1.0"
-updated: "2026-11-08"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 Each folder here is a [`Module`](../foundations/domain/module.md): a part of the product that
@@ -14,7 +14,7 @@ budget (`modules/<module>/<topic>.md`).
 |---|---|---|
 | [cycle](cycle/prd.md) | `CYC` | The stages in order, their modes, where people intervene |
 | [tracks](tracks/prd.md) | `TRK` | Which stages each change runs |
-| [workspace](workspace/prd.md) | `WSP` | `pedd init` and the repos |
+| [workspace](workspace/prd.md) · [baseline](workspace/baseline.md) | `WSP` | `pedd init` and the repos; what every project starts with, and keeping up with it |
 | [trace](trace/prd.md) | `TRC` | `pedd trace` and `pedd status` |
 | [map](map/prd.md) · [specify](specify/prd.md) · [architect](architect/prd.md) · [design](design/prd.md) · [plan](plan/prd.md) · [build](build/prd.md) · [verify](verify/prd.md) · [accept](accept/prd.md) · [publish](publish/prd.md) · [measure](measure/prd.md) | `MAP` · `SPC` · `ARC` · `DSG` · `PLN` · `BLD` · `VRF` · `ACC` · `PUB` · `MSR` | One per stage |
 

@@ -2,18 +2,23 @@
 # https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/workspace.md
 # Replace each <placeholder>; a field left at its default can stay as it is.
 
-project: <project>                      # the name, used as the repo prefix: <project>-spec, <project>-help
-mode: split                             # split: one repo per audience (default) · mono: one repo with spec/, help/, docs/ (ARCH-03)
+project: <project>                      # the name, used as the repo prefix
+mode: mono                              # mono: one repo with spec/, apps/, packages/ (default, DEC-22) · split: only for the cases in ARCH-03
 language: en                            # the language of the prose; names are always in English (RULE-05)
 
 repos:                                  # in mono, only code: the one repo
-  spec: <owner>/<project>-spec          # the spec and this file
-  help: <owner>/<project>-help          # the Help Center and the Release Notes
-  docs: <owner>/<project>-docs          # the API Reference and developer guides
-  code: [<owner>/<project>]             # one or more code repos
+  code: [<owner>/<project>]
+#  spec: <owner>/<project>-spec         # split only: the spec and this file
+#  help: <owner>/<project>-help         # split only, when the help is not in a code repo
+#  docs: <owner>/<project>-docs         # split only, when the docs are not in a code repo
 
-components: []                          # each part of the code, its repo and path, and the modules it implements
-#  - { repo: <owner>/<project>, path: apps/web, modules: [<module>] }
+components:                             # each app and package, its path, and the modules it implements; the code index is built from it
+  - { path: apps/app, modules: [] }       # the product
+  - { path: apps/landing, modules: [] }   # the public site
+  - { path: apps/docs, modules: [] }      # the API Reference and developer guides
+  - { path: apps/help, modules: [] }      # the Help Center and the Release Notes
+  - { path: packages/ui, modules: [] }    # the design system, with its Storybook
+  - { path: packages/i18n, modules: [] }  # the message keys and the locales
 
 run:                                    # how to run it locally
   command: <command>                    # e.g. pnpm dev
@@ -31,10 +36,10 @@ tools: {}                               # the tool chosen for each capability a 
 
 references: []                          # other specs this one builds on, read-only (ARCH-03, several specs)
 
-publish: {}                             # which artifacts the project has, and where; only what is declared is generated
-#  help: { generator: <generator>, url: https://help.<domain> }
-#  docs: { generator: openapi, url: https://docs.<domain> }
-#  release_notes: { target: help }
+publish:                                # which artifacts the project has, and where; only what is declared is generated
+  help: { path: apps/help, url: https://help.<domain> }
+  docs: { path: apps/docs, url: https://docs.<domain> }
+  release_notes: { target: help }
 #  walkthroughs: { target: help }
 
 locales: [en]                           # the languages of the interface; the first is the base, always en (DEC-21)

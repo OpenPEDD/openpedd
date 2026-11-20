@@ -2,8 +2,8 @@
 title: Reviewing a change
 description: ARCH-13 · The layers a change goes through before it merges, who decides what blocks, the judges in CI and the person's last step
 owner: Kevin
-version: "1.0"
-updated: "2026-11-13"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-13 · Reviewing a change
@@ -63,6 +63,7 @@ The judges are part of the method, and run free in the project's own CI
 | A new push cancels the run in progress | Only the last commit counts |
 | A PR from a fork gets no secrets: it runs when an approver comments `/pedd recheck` | A fork could read the token |
 | Full history checked out (`fetch-depth: 0`) | Without the base, the review loses context without saying so |
+| **The branch check** runs first: a PR cut from the wrong branch fails with the command that fixes it ([`ARCH-06`](branches.md#creating-a-branch)) | A branch from the wrong base brings conflicts and a tangled landing order |
 
 ## How the rules grow [#how-the-rules-grow]
 

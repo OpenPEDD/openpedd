@@ -4,7 +4,7 @@ description: Every artifact of an OpenPEDD project — what it defines, where it
 owner: <owner>
 version: "1.0"
 updated: "2026-11-20"
-source: spec/foundations/artifacts.md@1.5
+source: spec/foundations/artifacts.md@1.6
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -20,7 +20,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Entity | What a concept is: fields, states, transitions | `foundations/domain/` | `ENT-nn` | `specify` | 2,000 | [Domain](domain/index.md) |
 | Rule | What every module or document must follow | `foundations/rules/` | `RULE-nn` | `specify` | 2,000 per file | [Rules](rules/README.md) |
 | Glossary | What each thing is called, in code and on screen | `foundations/glossary.md` | — | `specify` | 4,000 | [Glossary](glossary.md) |
-| Other foundations | Brand, voice, security, quality, integrations, pipeline, tracking plan, test data | `foundations/<name>/` | `SEC` · `INT` · `EVT` | `specify` · `architect` | 2,000 | [`ENT-02`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/foundation.md) |
+| Other foundations | Business map, brand, voice, security, quality, integrations, pipeline, tracking plan, test data | `foundations/<name>/` | `PRC` · `SEC` · `INT` · `EVT` | `specify` · `architect` | 2,000 | [`ENT-02`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/foundation.md) |
 | Architecture document | How the product is built and run | `foundations/architecture/` | `ARCH-nn` | `architect` | 2,000 | [Architecture](architecture/README.md) |
 | PRD | What a module does: flows, requirements, criteria, contracts | `modules/<module>/` | `FR` · `NFR` · `AC` | `specify` | 4,000 | [Modules](../modules/README.md) |
 | Decision | The answer to a question, and why | `decisions/` | `DEC-nn` | `specify` · `accept` | 1,000 | [Decisions](../decisions/README.md) |
@@ -42,6 +42,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Delta | A proposed change to one ID | `changes/<CHG>/deltas/` | `DLT-nnnn` | Every stage but `specify` | [`ENT-07`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/delta.md) |
 | Delta Report · Acceptance Report | What a person reads to decide | `changes/<CHG>/reports/` | — | `architect` · `design` · `verify` | [`ENT-08`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/report.md) |
 | History entry | One version of one document | `history/` | — | `publish` | [`ENT-17`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/history-entry.md) |
+| Code index | Where each module and package lives in the code: paths, entry points, IDs, symbols, components, tests | `.pedd/code-index/` | — | The CLI, on every merge to the base | [`ARCH-19`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/code-index.md) |
 | Detected stack | The technologies in the code, each with the file that proves it | `.pedd/stack.json` | — | The CLI | [`DEC-12`](https://github.com/openpedd/openpedd/blob/main/spec/decisions/DEC-12-stack-derived.md) |
 | Install manifest | Each file the framework installed, and its hash | `.pedd/manifest.json` | — | The CLI | [workspace](https://github.com/openpedd/openpedd/blob/main/spec/modules/workspace/prd.md) |
 | Trace event | One state change of a link in the chain | `.pedd/trace/` | — | The CLI, or the Cloud | [`ENT-23`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/trace-event.md) |
@@ -55,10 +56,10 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Code | `FR` · `NFR` | The code | `build` | `spec.lock` or `@spec` |
 | Task | `FR` · `NFR` | The tracker, an item of the implementation sub-issue's checklist | `plan` | Its IDs on the item |
 | Pull request | The task, or the whole change | The code host: to the change branch, or to the base | `build` · `verify` | Its **Spec** section |
-| API Reference | Contracts | `docs/` or `<project>-docs` | `publish` | Generated |
-| Help Center article | `FR` | `help/` or `<project>-help` | `publish` | `sources` in frontmatter |
-| Walkthrough (optional) | `FR` | `help/walkthroughs/` or `<project>-help` | `verify` · `publish` | `sources` in the file |
-| Release Notes entry | The change | `help/` or `<project>-help` | `publish` | The change ID |
+| API Reference | Contracts | `apps/docs`, or `<project>-docs` in `split` | `publish` | Generated |
+| Help Center article | `FR` | `apps/help`, or `<project>-help` in `split` | `publish` | `sources` in frontmatter |
+| Walkthrough (optional) | `FR` | `apps/help/walkthroughs/`, or `<project>-help` in `split` | `verify` · `publish` | `sources` in the file |
+| Release Notes entry | The change | `apps/help`, or `<project>-help` in `split` | `publish` | The change ID |
 
 Each derived artifact is `fresh`, `stale` or `uncovered` ([`ENT-14`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/anchor.md#freshness)), and
 each is a link in the requirement's chain ([`ENT-22`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/trace-link.md)).

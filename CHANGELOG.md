@@ -5,7 +5,16 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
-- The project template, `template/`: the spec structure with each folder's guide, `workspace.yaml` with every default commented and `locales: [en]`, OpenPEDD's block for `AGENTS.md`, and `npm run check`. Start with `npx degit openpedd/openpedd/template`. `npm run check` here also checks that the template's scripts and guides match their sources. `branches` and `review` are now listed among the workspace fields.
+- A product starts as one monorepo: `spec/`, `apps/` (app, landing, docs, help) and `packages/` (`ui` with its Storybook, `i18n`), each app deployed on its own. Several repos only for a product adopted that way, or open-source code with a private spec (DEC-22).
+- The code index: one generated file per module and package, regenerated on every merge to the base, that every agent reads first to know where to work (ARCH-19).
+- A request is a change branch from the start, holding only its definition; dropped before `spec-approval`, the branch is deleted; after, it is retired through a change (DEC-23).
+- `map` in business mode: a product engineer maps how a client's organization works today and will work with the system, the client approves it, and it feeds the foundations, the modules and the first roadmap (DEC-24).
+- A product with screens and no `Brand System` gets a branding change before its first screens.
+- `pedd branch` creates every work branch from the right base, read from the tracker; the CI action fails a PR cut from elsewhere, and agents are denied `git checkout -b` for work branches.
+- Changes land in the order their requests were queued; the computed order applies only with several in flight or a hotfix, and a queued request gets the base merged in when it is taken.
+- A versioned baseline of what every project starts with, each item required, recommended or if the project has it; a new practice enters as recommended; `pedd doctor` lists a built product's gaps and `pedd update` turns one into a small change. The workspace PRD is split: the baseline and the template live in `modules/workspace/baseline.md`.
+- The core holds only the method's skills; others are extensions with their license checked, and what OpenPEDD hosts or pays for is a Cloud add-on (DEC-25).
+- The project template, `template/`: one monorepo with the spec structure and each folder's guide, the apps and packages as empty skeletons, `workspace.yaml` with every default commented and `locales: [en]`, OpenPEDD's block for `AGENTS.md`, and `npm run check`. Start with `npx degit openpedd/openpedd/template`. `npm run check` here also checks that the template's scripts and guides match their sources. `branches` and `review` are now listed among the workspace fields.
 - Requirement and PRD statuses renamed: `designing` is now `specified`, `ready` is now `designed`. The order: `draft`, `specified`, `designed`, `building`, `in_review`, `accepted`, `live`.
 - Every product starts with i18n: English as the base, other languages added to `locales`; `init` writes `locales: [en]` and the language checks always run (DEC-21).
 - What a new project comes with, in one table, and the project template (`template/`) that `pedd init` installs and the first client copies by hand.

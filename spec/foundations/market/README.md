@@ -2,8 +2,8 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.8"
-updated: "2026-11-19"
+version: "1.9"
+updated: "2026-11-20"
 ---
 
 **Market holds what we measured outside**: competitors, tools, market size, studies, prices others
@@ -20,6 +20,9 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [Component catalogs for agents](component-catalogs.md) | `MKT-06` | How a product's components reach agents, and what Reclee's first catalog found |
 | [Asking and landing](asking-and-landing.md) | `MKT-07` | How tools ask the person, and how merge queues order and land parallel PRs |
 | [Guided definition](guided-definition.md) | `MKT-08` | How tools ask a person what they want built, when they stop asking, and how they end |
+| [Code maps for agents](code-maps.md) | `MKT-09` | How tools give an agent a map of the repo, and when they rebuild it |
+| [Monorepos for a product and its sites](monorepos.md) | `MKT-10` | One repo with the app, its sites and a shared design system, each deployed apart |
+| [Mapping a business](business-mapping.md) | `MKT-11` | How an organization is mapped as it is and as it will be, and who approves it |
 
 ## How a market document is written
 

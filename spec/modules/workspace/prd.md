@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.11"
+version: "1.12"
 updated: "2026-11-20"
 status: draft
 ---
@@ -10,7 +10,7 @@ status: draft
 # Workspace
 
 `pedd init <project>` **onboards a project** to the framework: from zero or on software already
-running, in one repo or many. It sets up a [`Workspace`](../../foundations/domain/workspace.md),
+running, in one monorepo by default or in several repos. It sets up a [`Workspace`](../../foundations/domain/workspace.md),
 installs the documentation structure, finds out what the project is built with, and says what each
 stage still needs to work. The repo layout is in
 [`ARCH-03`](../../foundations/architecture/workspace.md).
@@ -24,8 +24,8 @@ pedd init reclee
 | Command | Does | When |
 |---|---|---|
 | `pedd init` | The whole onboarding | Once per project |
-| `pedd doctor` | What each stage has and lacks. Reads only | Any time |
-| `pedd update` | Brings the framework's files to the installed CLI; `--dry-run` shows what would change | After upgrading the CLI |
+| `pedd doctor` | What each stage has and lacks, and the gaps against the current [baseline](baseline.md#keeping-up). Reads only | Any time |
+| `pedd update` | Brings the framework's files to the installed CLI, and offers each baseline gap as a small change; `--dry-run` shows what would change | After upgrading the CLI |
 | `pedd install` | Installs the skills, judges and MCP from `workspace.yaml`, and the permission rules and read hook that keep agents' context small, without asking again | Whoever clones the project |
 | `pedd adopt` | Lists what a running product lacks, per module, and turns each gap into a change ([adopting](#adopting-a-running-product)) | After `init`, on a product already in production |
 | `pedd launch` | Launches an accepted change ([`ARCH-08`](../../foundations/architecture/release.md)) | When it should reach customers |
@@ -36,109 +36,58 @@ pedd init reclee
 |---|---|
 | 1 | **Reads the situation**: an empty folder, code already there, or OpenPEDD already installed (then it runs `doctor` and offers `update`) |
 | 2 | **Settles the layout**, on two axes ([below](#the-layout)): detects what it can and confirms |
-| 3 | Creates the missing repos with the project prefix (`reclee-spec`, `reclee-help`, `reclee-docs`), or connects the existing ones, and in `split` writes a `link.yaml` in each pointing back to the spec |
-| 4 | **Installs the documentation structure** from the [project template](#the-project-template): `spec/` with its foundations marked empty, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
-| 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers. Nothing outside them is touched |
+| 3 | Creates the monorepo, or connects the repos that exist; in `split`, writes a `link.yaml` in each pointing back to the spec |
+| 4 | **Installs the structure** from the [project template](baseline.md#the-project-template): `spec/` with its foundations marked empty, the apps and packages of a new product, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
+| 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers; it sends every agent to the [code index](../../foundations/architecture/code-index.md) first. Nothing outside them is touched |
 | 6 | **Finds out the stack** ([below](#the-stack)) |
 | 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
 | 8 | **Checks the tools of each stage** ([below](#the-tools-of-each-stage)) and offers what is missing |
 | 9 | Installs the skills, the judges and the MCP in the agents it detects, and records each file and its hash in `.pedd/manifest.json` |
 | 10 | **Reports which stages are ready** and what each lacks |
-| 11 | Offers the next step: `map` if there is code, `specify` if there is none |
+| 11 | Offers the next step: `map` if there is code; `map --business` if the product changes how an organization works; `specify` otherwise |
 
-## What a project starts with [#what-a-project-starts-with]
+## The baseline
 
-Everything `init` leaves in a new project, each defined where it points.
-
-| Part | What it is | Defined in |
-|---|---|---|
-| `spec/` | Foundations marked empty, `modules/`, `decisions/`, `open/`, `changes/`, `history/` | [Artifacts](../../foundations/artifacts.md) |
-| `workspace.yaml` | Mode, repos, components, tools, runners, `locales: [en]` | [`ENT-16`](../../foundations/domain/workspace.md) |
-| i18n | English as the base; every text a person reads is a key | [`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md) |
-| Agents' instructions | OpenPEDD's block in `AGENTS.md` or `CLAUDE.md`, between markers | [Main flow](#main-flow), step 5 |
-| Checks | Links and token budgets now; the rest of `pedd check` as it ships | [`RULE-04`](../../foundations/rules/writing.md#rule-04) |
-| Stages | `map` to `measure`, each run only where its track says | [cycle](../cycle/prd.md) · [tracks](../tracks/prd.md) |
-| Skills, judges and MCP | Installed in each agent found, recorded in `.pedd/manifest.json` | [Capabilities](../../capabilities.md#skills) |
-| Tools per stage | Each capability, its level, and what is lost without it | [Below](#the-tools-of-each-stage) |
-| Safety | `--dry-run`, backups, secrets denied | [Below](#writing-safely) |
-| Branches and tracker | One branch per change; one sub-issue per stage | [`ARCH-06`](../../foundations/architecture/branches.md) · [`ARCH-15`](../../foundations/architecture/tracker.md) |
-| Pipeline | The moments of the pipeline, and the judges on every PR | [`ARCH-11`](../../foundations/architecture/pipeline.md) |
-
-## The project template [#the-project-template]
-
-What `init` installs comes from one place: the `template/` folder of `openpedd/openpedd`. **Before the
-CLI exists, the first client starts from it by hand**, with the skills already written, today
-`/specify-interview`. Other skills are written and improved as that work needs them.
-
-It holds the first five rows [above](#what-a-project-starts-with), with each folder's guide, every
-`workspace.yaml` default commented, and the same check scripts this repo runs.
-
-| Rule | Why |
-|---|---|
-| One template, here; `init` installs it and records its version in `.pedd/manifest.json` | A second copy drifts, and `update` could not tell what changed |
-| Copied with `npx degit openpedd/openpedd/template` until `pedd init` exists | The first client cannot wait for the CLI |
-| It names no client | This repo is public |
+What a project starts with, its version, and how a product already built keeps up with it, are in
+[Baseline](baseline.md).
 
 ## The layout
 
-Two separate questions: where the documentation lives, and how the code is organized.
+**A new product is one monorepo** ([`ARCH-03`](../../foundations/architecture/workspace.md)). `split`
+is offered only where ARCH-03 says: a product adopted with several repos, or open-source code with a
+private spec.
 
-| Code | Documentation `mono` (folders in the repo) | Documentation `split` (one repo per audience) |
-|---|---|---|
-| **One app** | `spec/`, `help/`, `docs/` next to the code | `-spec`, `-help`, `-docs` |
-| **Monorepo** (packages) | The same folders at the root | The same repos; the monorepo is one code repo |
-| **Several repos** | Not offered: the spec would live inside one part | `-spec`, `-help`, `-docs`, and each code repo |
+| Project | Layout |
+|---|---|
+| New | `mono`: `spec/`, `apps/`, `packages/` |
+| Running, one repo or a monorepo | `mono`: `spec/` and the missing apps added next to the code |
+| Running, several repos | `split`: a `-spec` repo, and each code repo linked to it |
 
-There is **one spec per product**, whatever the layout. Each component maps to the modules it
-implements, so an agent working on a change knows which code to open. `init` detects the components
-from the workspace manager (pnpm, Turborepo, Nx and the like).
+There is **one spec per product**, whatever the layout. Each app and package is a component mapped to
+the modules it implements, so an agent working on a change knows which code to open. `init` detects the
+components from the workspace manager (pnpm, Turborepo, Nx and the like).
 
 ```yaml
-# reclee-spec/workspace.yaml
+# workspace.yaml, at the monorepo root
 project: reclee
-mode: split
+mode: mono
 language: es
-repos:
-  spec: Reclee-team/reclee-spec
-  help: Reclee-team/reclee-help
-  docs: Reclee-team/reclee-docs
-  code: [Reclee-team/scout]
 components:
-  - { repo: Reclee-team/scout, path: apps/web, modules: [ats, talent-pool] }
-  - { repo: Reclee-team/scout, path: apps/api, modules: [ats, talent-pool] }
+  - { path: apps/app, modules: [ats, talent-pool] }
+  - { path: apps/landing, modules: [site] }
+  - { path: packages/ui, modules: [] }
 publish:
-  help: { generator: fumadocs, url: https://help.reclee.com }
-  docs: { generator: openapi, url: https://docs.reclee.com }
+  help: { path: apps/help, url: https://help.reclee.com }
+  docs: { path: apps/docs, url: https://docs.reclee.com }
   release_notes: { target: help }
-  walkthroughs: { target: help }   # only what is declared is generated
 locales: [en, es]   # en is the base (DEC-21)
-environments:
-  - { name: production, branch: main, public: true }
-branches:
-  base: dev
-  change: "{prefix}/{slug}"
-  design: "design/{slug}"
-  architecture: "arch/{slug}"
-  task: "task/{slug}-{task}"
 run:
   command: pnpm dev
   test_user: E2E_TEST_USER   # the name of the variable, never its value
 tools:
-  research: firecrawl
   design_system: shadcn
-  browser: playwright
   e2e: playwright
-  mutation: stryker
-  flags: openfeature-table
-  observability: sentry
   tracker: linear
-models:
-  profile: balanced
-stages:
-  architect: { mode: guided }
-review:
-  blocking: high       # the lowest severity that blocks (ARCH-13)
-  ci: true             # the judges run on every PR (ARCH-04)
 ```
 
 ## The stack
@@ -164,7 +113,7 @@ missing tool never stops `init`.
 | Stage | Capability | Level | Without it |
 |---|---|---|---|
 | `specify` · `architect` | Web research | Recommended | Fewer references, and the `Delta Report` says so |
-| `design` | Design system: `Brand System` filled, components in code | Required | It is defined first: extracted from the code, or chosen |
+| `design` | Design system: `Brand System` filled, components in code | Required | A branding change first, planned in the roadmap ([open](../../open/README.md#the-roadmap)): extracted from the code, or chosen |
 | `design` · `build` | A component catalog agents can query: a story per reusable piece, its MCP, its stories run as tests with axe | Recommended | Agents redraw pieces that exist, and contrast is checked by hand |
 | `design` · `verify` | A duplicate check over the whole code: the same markup written by hand in 3+ files | Recommended | Copies are found only inside the change |
 | `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
@@ -234,7 +183,7 @@ a count and a percentage.
 |---|---|
 | Repos already exist | Connects them and only writes the config files |
 | A private spec on top of a public one | Adds `references` in `workspace.yaml` ([`ARCH-03`](../../foundations/architecture/workspace.md#several-specs)) |
-| Moving from `mono` to `split` | `pedd workspace split` moves the folders and updates the references |
+| Moving from `mono` to `split` | `pedd workspace split` moves the folders and updates the references ([`ARCH-03`](../../foundations/architecture/workspace.md#split)) |
 | Without a person at the keyboard | `--yes` takes the detected values and `--json` prints the report |
 | `update` finds a file edited by hand | Stops and shows the difference; `--force` overwrites it. The spec is never touched |
 

@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-20"
 ---
 
@@ -20,11 +20,15 @@ updated: "2026-11-20"
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
-| See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/prd.md#what-a-project-starts-with) |
+| Keep a built product up to the current practices | A versioned baseline: `pedd doctor` lists what it lacks, red if required, yellow if recommended; `pedd update` turns a gap into a small change | [Baseline](modules/workspace/baseline.md#keeping-up) |
+| See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/baseline.md#what-a-project-starts-with) |
 | Run implementation in parallel in the cloud | One session per task, set per stage in `workspace.yaml`, with a quota guard | [Where agents run](foundations/architecture/running.md#where-agents-run) |
 | Take a running product to the full framework | `pedd adopt`: its gaps per module, as small `cover` changes; an existing spec imported | [Adopting](modules/workspace/prd.md#adopting-a-running-product) |
-| Use one repo or many | Documentation and code are separate choices; one spec per product | [Workspace repos](foundations/architecture/workspace.md) |
+| Start a product as one monorepo | `spec/`, the app, the landing, the docs and the help, sharing one design system with its Storybook and one i18n package; each app deploys on its own. Several repos only when a part must be apart | [Workspace repos](foundations/architecture/workspace.md) |
+| Let any agent find where to work without reading the repo | A code index per module and package, regenerated on every merge to the base, read first | [Code index](foundations/architecture/code-index.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
+| Map a client's business before designing its system | `/map --business`: how the organization works today and will work with the system, approved by the client; it feeds the foundations, the modules and the first roadmap | [Business mode](modules/map/prd.md#business-mode) |
+| Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/branches.md#a-request) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
 | Let a client define what they want, in a conversation | `/specify-interview`: asks only what is missing, counts how complete the definition is, ends with a summary to confirm | [Guided definition](foundations/architecture/definition.md) |
 | Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each | [Sweep](foundations/architecture/sweep.md) |
@@ -108,6 +112,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd trace <id>` | One requirement's chain |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd sweep` | Every open question of a change, at once, with recommendations; `--accept-recommended` |
+| `pedd branch` | Creates a work branch from the right base, read from the tracker and the change |
 | `pedd overlap` | Which changes in flight touch the same IDs or files |
 | `pedd sync` | Merges the base into every change in flight that overlaps what just landed |
 | `pedd land` | The landing order of the ready changes, then lands them one at a time |
@@ -119,12 +124,12 @@ Branches: one per change, with design, architecture and task branches inside it
 ### Skills
 
 Installed by `pedd init`, or without the CLI with `npx skills add openpedd/openpedd`. Others publish
-theirs as [extensions](foundations/business/open-core.md#extensions).
+theirs as [extensions](foundations/business/open-core.md#extensions): the core holds only the method's skills; any other, ours or found online, is an extension with its license checked.
 
 | Stage | Skills |
 |---|---|
 | Any | `/sweep` |
-| `map` | `/map` · `/map-module` |
+| `map` | `/map` · `/map-module` · `/map --business` |
 | `specify` | `/specify` · `/specify-interview` · `/specify-flow` · `/specify-story` · `/specify-define` · `/specify-fix-doc` · `/idea` |
 | `architect` | `/architect` · `/architect-research` · `/architect-teardown` · `/architect-adr` · `/architect-fitness` |
 | `design` | `/design` · `/design-inventory` · `/design-variants` · `/design-complete` · `/design-close` |

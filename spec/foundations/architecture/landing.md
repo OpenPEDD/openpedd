@@ -2,8 +2,8 @@
 title: Landing parallel changes
 description: ARCH-17 · Seeing early which changes in flight overlap, keeping them close to the base, and the order they land in
 owner: Kevin
-version: "1.0"
-updated: "2026-11-17"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-17 · Landing parallel changes
@@ -12,6 +12,17 @@ With delegated stages, many change branches finish within hours of each other, a
 base only when its PR opened ([`ARCH-06`](branches.md#the-pull-request-to-the-base)). The conflicts
 then arrive all at once, at the end, far from whoever caused them. **Landing works at three moments:
 seeing the overlap early, staying close to the base, and landing in an order the tool computes.**
+
+## The queue [#the-queue]
+
+**By default, changes land in the order their requests were queued.** With one change in flight, it
+lands, and the next request in the queue starts after it. The computed order
+[below](#at-the-end-the-landing-order) applies only when several changes are in flight at once, or a
+`hotfix` cuts in.
+
+A request's branch is cut when the client asks ([`ARCH-06`](branches.md#a-request)), possibly long
+before work starts, so **`pedd sync` merges the base into it when it is taken from the queue**: work
+never starts on a stale base. An overlap on the same ID still blocks the later change ([below](#before-the-overlap-of-changes-in-flight)).
 
 ## Before: the overlap of changes in flight
 
@@ -42,7 +53,7 @@ A change that overlaps nothing is synced when its PR opens, as before.
 
 ## At the end: the landing order
 
-When several changes are accepted or ready together, `pedd land` orders them. **The order is computed
+When several changes in flight are accepted or ready together, or a `hotfix` cuts in, `pedd land` orders them. **The order is computed
 by the tool, not a model** ([`RULE-24`](../rules/cycle.md#rule-24)), first criterion first:
 
 | # | Criterion | Why |

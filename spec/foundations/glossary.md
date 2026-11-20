@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.14"
+version: "1.15"
 updated: "2026-11-20"
 ---
 
@@ -24,7 +24,11 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Level: `unit` · `integration` · `contract` · `e2e` · `eval` | Where a criterion is proved | [`ARCH-10`](architecture/testing.md) |
 | `unmapped` | A module in the index with no PRD yet | [`ENT-21`](domain/module.md) |
 | `pedd` | The CLI, and the short form of the name | [`ARCH-01`](architecture/overview.md) |
-| Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/prd.md#the-project-template) |
+| Baseline · baseline gap | What every project starts with, versioned; what a product lacks against the current one | [Baseline](../modules/workspace/baseline.md) |
+| Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/baseline.md#the-project-template) |
+| Monorepo · `mono` · `split` · `apps/` · `packages/ui` · `packages/i18n` | The default layout, and the split one for when a part must be apart | [`ARCH-03`](architecture/workspace.md) |
+| Code index · `.pedd/code-index/` | The generated map of the code, per module and package, read first by every agent | [`ARCH-19`](architecture/code-index.md) |
+| Extension · Cloud add-on | A skill outside the core, free; one OpenPEDD hosts or pays for, paid | [`BIZ-04`](business/open-core.md#extensions) |
 | i18n · base locale · `locales` | Every text a person reads is a key; English is the base, other languages are locales | [`DEC-21`](../decisions/DEC-21-i18n-from-day-one.md) |
 
 ## The hierarchy
@@ -58,8 +62,12 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
+| Request · `requested` · `dropped` · `retired` | A client's ask, which is a change branch from the start; a change dropped before approval, or retired after it | [`ARCH-06`](architecture/branches.md#a-request) · [`ENT-06`](domain/change.md) |
+| Business Map · as-is · to-be · business mode · product engineer | How a client's organization works today and with the system; `map`'s mode that draws it; the person who runs it | [map](../modules/map/prd.md#business-mode) |
+| Branding change | The change that fills the `Brand System` before a product's first screens | [open](../open/README.md#the-roadmap) |
 | Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |
-| Footprint · overlap · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
+| Footprint · overlap · queue · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, the order requests were queued in, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
+| `pedd branch` · `/branch` · branch check | The one way to create a work branch, and the CI check that refuses one cut from elsewhere | [`ARCH-06`](architecture/branches.md#creating-a-branch) |
 | Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-15`](architecture/tracker.md) |
 | Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |
@@ -99,7 +107,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 
 | Prefix | Is |
 |---|---|
-| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations |
+| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `PRC-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations; `PRC` is a process of the `Business Map` |
 | `FR-<MOD>-nn` · `NFR-<MOD>-nn` · `FR-<MOD>-nn.ACn` | Requirements and criteria |
 | `DEC-nn` · `ADR-nn` | Decisions |
 | `Q-nn` | Open questions |
@@ -123,6 +131,7 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | Finalizado (PRD status) | `live` |
 | En mejora (PRD status) | `changing` |
 | `designing` (status) | `specified` |
+| One repo per audience (default) | One monorepo ([`DEC-22`](../decisions/DEC-22-monorepo-default.md)) |
 | `ready` (status) | `designed`: `ready` read as launched, next to `live` |
 | `product/` (the folder of modules) | `modules/` |
 | Area (level above the PRD) | Module |

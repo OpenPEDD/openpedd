@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.8"
-updated: "2026-11-19"
+version: "1.9"
+updated: "2026-11-20"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -20,7 +20,8 @@ Three pieces, never mixed:
 hash in `.pedd/manifest.json` so `pedd update` can tell what was edited by hand (Claude Code first; Cursor,
 Copilot, Codex and others through the same templates, the way Spec Kit does).
 
-Their source is in the framework repo: `skills/<name>/SKILL.md` and `agents/<name>.md`, the layout the
+Only the method's skills and judges are in the core; every other skill is an extension
+([`BIZ-04`](../business/open-core.md#extensions)). Their source is in the framework repo: `skills/<name>/SKILL.md` and `agents/<name>.md`, the layout the
 `skills.sh` registry reads; `pedd init` installs from there. Each one names the spec documents it
 implements, with their version, so it goes `stale` with them ([`ARCH-02`](freshness.md)).
 
@@ -76,7 +77,7 @@ not shipped.
 | `get_doc` | A document or a section, without its history | All |
 | `resolve_id` | An ID's block, hash and references | All |
 | `list_ids` | IDs by layer, module or status | `plan` · `verify` |
-| `get_context_for` | The `Context Pack` of an ID or a task, in one call | Every delegated stage |
+| `get_context_for` | The `Context Pack` of an ID or a task, in one call, with its [code index](code-index.md) entries | Every delegated stage |
 | `get_history` | The history of an ID or a document | `specify` · `accept` |
 | `changes_since` | Which IDs changed since a date, commit or hash | `plan` · `publish` |
 | `get_freshness` | For a file, task or article: its anchors and which are stale | `verify` · `publish` |
