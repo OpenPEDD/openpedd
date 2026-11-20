@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their issues in the tracker
 owner: Kevin
-version: "1.6"
-updated: "2026-11-17"
+version: "1.7"
+updated: "2026-11-20"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -39,6 +39,23 @@ it edits, and merges there.
 
 `architect` and `design` run at the same time, each on its branch, and each reads what the other has
 written there before each round. A decision that arrives late makes a screen get rebuilt.
+
+## A request [#a-request]
+
+**When a client asks for something, the change branch is cut from the base at once**, holding only
+`changes/<CHG>/definition.md`: what the client said, and the minimum map as it fills
+([`ARCH-18`](definition.md)). It is the input of `specify`, which writes the PRD or the delta on the same
+branch ([`DEC-23`](../../decisions/DEC-23-request-is-a-change.md)). The track, and so the prefix, is
+known only when `specify` computes the scope: until then the branch is `feat/`, and it is renamed if the
+track turns out to be `fix` or `chore`.
+
+| The request is dropped | What happens |
+|---|---|
+| **Before `spec-approval`** | The branch is deleted and the change is `dropped`. No sub-issues, trace links or footprint exist yet, so there is nothing to sync or undo |
+| **After `spec-approval`** | It is retired through a change: its requirements `REMOVED` by deltas, its sub-issues closed and its open tasks `canceled`; the change is `retired` ([`ENT-06`](../domain/change.md)), so the trace says why |
+
+A branch holding only a definition has no footprint ([`ARCH-17`](landing.md)), so it is not synced and
+blocks nothing.
 
 ## The tracker
 

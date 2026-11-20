@@ -5,6 +5,12 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- A product starts as one monorepo: `spec/`, `apps/` (app, landing, docs, help) and `packages/` (`ui` with its Storybook, `i18n`), each app deployed on its own. Several repos only for a product adopted that way, or open-source code with a private spec (DEC-22).
+- The code index: one generated file per module and package, regenerated on every merge to the base, that every agent reads first to know where to work (ARCH-19).
+- A request is a change branch from the start, holding only its definition; dropped before `spec-approval`, the branch is deleted; after, it is retired through a change (DEC-23).
+- `map` in business mode: a product engineer maps how a client's organization works today and will work with the system, the client approves it, and it feeds the foundations, the modules and the first roadmap (DEC-24).
+- A product with screens and no `Brand System` gets a branding change before its first screens.
+- The core holds only the method's skills; others are extensions with their license checked, and what OpenPEDD hosts or pays for is a Cloud add-on (DEC-25).
 - Requirement and PRD statuses renamed: `designing` is now `specified`, `ready` is now `designed`. The order: `draft`, `specified`, `designed`, `building`, `in_review`, `accepted`, `live`.
 - Every product starts with i18n: English as the base, other languages added to `locales`; `init` writes `locales: [en]` and the language checks always run (DEC-21).
 - What a new project comes with, in one table, and the project template (`template/`) that `pedd init` installs and the first client copies by hand.

@@ -2,8 +2,8 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, and what each change costs
 owner: Kevin
-version: "1.3"
-updated: "2026-11-17"
+version: "1.4"
+updated: "2026-11-20"
 ---
 
 # ARCH-11 · Pipeline
@@ -16,6 +16,7 @@ has its own set, and the last ones run everything.
 | Agent working | Lint, types, tests of what was touched | Yes |
 | Task PR | Affected `unit`, `integration` and `contract`; the task's `e2e`; mutation on the changed lines | Yes |
 | PR to the base | Everything of the change, `e2e` in parallel shards; the permission matrix; each locale | Only by change |
+| Merge to the base | The [code index](code-index.md), regenerated for what changed and committed | — |
 | Promotion to the `public` environment | **The whole suite** | **Never** |
 | Nightly | The whole suite, full mutation, every locale, accessibility, visual, `eval` | Never |
 

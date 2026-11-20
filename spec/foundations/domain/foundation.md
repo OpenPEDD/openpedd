@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.7"
-updated: "2026-11-17"
+version: "1.8"
+updated: "2026-11-20"
 ---
 
 # ENT-02 · Foundation
@@ -15,6 +15,7 @@ includes.
 | Foundation | What it defines | Read by |
 |---|---|---|
 | `Business Context` | Product goal, audience, pricing, north-star metric, positioning: what we decided | `specify` |
+| `Business Map` | How the client's organization works today (**as-is**: people and roles, processes, tools and spreadsheets, pains) and how it will work with the system (**to-be**: what changes, which processes the system takes, the modules and their order). Required when the product changes how an organization works; optional otherwise ([`DEC-24`](../../decisions/DEC-24-business-map.md), [map](../../modules/map/prd.md#business-mode)) | `specify` · `map` |
 | `Market` | Competitors, tools, market size, studies: what we measured outside, each with its survey date | `specify` |
 | `Domain Model` | Each entity (`ENT`), once: fields, states, transitions | All |
 | `Glossary` | What each thing is called in code and on screen, per language; names no longer used | All |

@@ -2,7 +2,7 @@
 title: Trace Link
 description: ENT-22 · One link in a requirement's chain, with its current state
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-20"
 ---
 
@@ -27,7 +27,7 @@ now. Together they answer *where is this requirement, and what is holding it*.
 |---|---|---|---|
 | `spec` | The requirement itself | `draft` · `specified` · `designed` · `building` · `in_review` · `accepted` · `live` · `changing` · `deprecated` | The spec ([`ENT-03`](requirement.md#lifecycle)) |
 | `origin` | The story or issue that asked for it | `candidate` · `accepted` · `discarded` | The tracker |
-| `change` | The change in flight, and its deltas | `open` · `accepted` · `archived` | `changes/` |
+| `change` | The change in flight, and its deltas | `open` · `accepted` · `archived` · `retired` ([`ENT-06`](change.md)); a `requested` change has no link yet | `changes/` |
 | `design` | A mockup | `fresh` · `stale` · `uncovered` | The spec repo or a design tool |
 | `task` | A task from `plan` | `todo` · `in_progress` · `in_review` · `done` · `canceled` | The tracker |
 | `code` | A pull request, and the files it anchors | `open` · `merged` · `closed` | The code host |

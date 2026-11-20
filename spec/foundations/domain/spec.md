@@ -2,15 +2,15 @@
 title: Spec
 description: ENT-01 · The single source of truth of a product
 owner: Kevin
-version: "1.3"
-updated: "2026-11-09"
+version: "1.4"
+updated: "2026-11-20"
 ---
 
 # ENT-01 · Spec
 
 The spec is **what governs** in a product: what it does, for whom, and the rules it follows.
 Everything else (code, mockups, tests, API Reference, Help Center, tasks) is a
-[`Derived Artifact`](derived-artifact.md) of it. It lives in its own repo (`split`) or in a `spec/` folder of the product repo (`mono`)
+[`Derived Artifact`](derived-artifact.md) of it. It lives in a `spec/` folder of the product's monorepo (`mono`, the default), or in its own repo (`split`)
 ([`ENT-16`](workspace.md)) and is read by people through the reader and by agents through the MCP.
 
 One spec describes one [`Product`](product.md). Inside it, the hierarchy is **Product → Module →
