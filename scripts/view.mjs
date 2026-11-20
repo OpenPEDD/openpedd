@@ -2,7 +2,7 @@
 // the architecture, plus the gaps the spec shows about itself. Nothing in it is written by hand:
 // every label comes from a table or heading of the spec.
 //
-//   node scripts/view.mjs          → .pedd/view/index.html
+//   node scripts/view.mjs          → .pedd/view/index.html and .pedd/view/map.json
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, normalize, sep } from 'node:path';
 import { ROOT, green, read, specFiles } from './lib.mjs';
@@ -67,6 +67,8 @@ const stages = stageTable.rows.map(([n, name, mode, does]) => {
   const skills = tableWith(section(text, 'Skills, agents and tools'), 'Kind', 'Name');
   return {
     id, n: Number(n), mode, does, path,
+    // The PRD's header line: **Gate:** `spec-approval` (or none).
+    gate: text.match(/\*\*Gate:\*\* `([\w-]+)`/)?.[1] ?? null,
     what: prose(section(text, 'What it is')),
     inputs: tableWith(section(text, 'Inputs'), 'What')?.rows || [],
     outputs: tableWith(section(text, 'Outputs'), 'What')?.rows || [],
@@ -303,4 +305,6 @@ const template = readFileSync(join(ROOT, 'scripts/view.html'), 'utf8');
 const out = join(ROOT, '.pedd/view/index.html');
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, template.replace('/*__DATA__*/null', JSON.stringify(data).replace(/</g, '\\u003c')));
+// The same data as JSON, for the framework map in openpedd-cloud (apps/map reads it at build time).
+writeFileSync(join(ROOT, '.pedd/view/map.json'), JSON.stringify(data));
 console.log(green(`✓ ${stages.length} stages, ${docs.length} documents, ${gaps.length} gaps → .pedd/view/index.html`));
