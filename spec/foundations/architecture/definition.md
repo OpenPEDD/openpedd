@@ -2,7 +2,7 @@
 title: Guided definition
 description: ARCH-18 · The minimum each scope needs to be defined, who answers each item, and the conversation that fills it until it is complete
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-20"
 ---
 
@@ -19,10 +19,13 @@ The map is **not a list of its own**: each item is something the spec already re
 who answers it. **Client**: asked. **Proposed**: the agent proposes, the client confirms it in the
 summary. **Team**: left for the sweep ([`ARCH-16`](sweep.md)), never asked of a client.
 
-**A product**, before its first module:
+**A product**, before its first module. When it changes how an organization works, its `Business Map`
+comes first ([map](../../modules/map/prd.md#business-mode)), and every item below it already answers is
+dropped, citing it:
 
 | Item | Answers | Required by |
 |---|---|---|
+| How the organization works today and will work with the system | A product engineer, from calls and documents | `Business Map`, when the product changes how an organization works |
 | Goal, audience, and the job the product is hired for | Client | `Business Context` ([`ENT-02`](../domain/foundation.md)) |
 | How it is paid for | Client | `Business Context` |
 | The north-star metric | Proposed, from the goal | `Business Context` |
@@ -64,7 +67,7 @@ off.
 2. **The scope**: a product, a module or a request, and its conditions.
 3. **Computes the map**, and drops what is already answered: by the spec, citing the ID; by the code, citing the file ([`RULE-21`](../rules/cycle.md#rule-21)).
 4. **Asks** as [`DEC-20`](../../decisions/DEC-20-definition-chat.md) says: two or three questions per turn, one topic, each with its options, a recommendation and why it matters, in the client's words ([`RULE-20`](../rules/cycle.md#rule-20)). What switches other items on or off goes first.
-5. **Writes as it goes**, to `changes/<CHG>/definition.md`: each item with its state (answered, assumed, deferred, missing) and the client's own words. A restart resumes from it.
+5. **Writes as it goes**, to `changes/<CHG>/definition.md` on the change branch cut for the request ([`ARCH-06`](branches.md#a-request)): each item with its state (answered, assumed, deferred, missing) and the client's own words. A restart resumes from it.
 6. **Shows the count** every few turns: *9 of 14 · missing: payments, roles*.
 7. **Ends** when nothing is missing, or when the client stops and is told what is. The summary keeps what the client said apart from what was assumed and what was deferred; the client confirms it.
 8. **Hands over**: `/specify` writes the PRD or the delta from the notes, its judges run, and the Team items go to the sweep.

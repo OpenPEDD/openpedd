@@ -2,8 +2,8 @@
 title: Running agents
 description: ARCH-12 · Where each stage's agents run, the quota guard, and keeping their context small
 owner: Kevin
-version: "1.2"
-updated: "2026-11-17"
+version: "1.3"
+updated: "2026-11-20"
 ---
 
 # ARCH-12 · Running agents
@@ -58,7 +58,7 @@ is where a task starts; these keep it from growing:
 | **One session, one task** of the plan, never a batch | `pedd` launches one session per task | A batch carries every earlier task's reading into the next |
 | **Tests report only what fails** | A project script for agents (`test:agent`) writes the full report to a file and prints the counts and the failures, cut to a maximum length. The agent opens the file only if it needs more | Thousands of passing tests say nothing, and are reread on every call |
 | **Logs, cut to their end** | Long command output goes to a file; the agent sees the last lines | The same |
-| **The pack points at the code**: the files the task touches, and the relevant line ranges | `plan` writes them in the pack | An agent that knows where to go does not explore |
+| **The pack points at the code**: the files the task touches, and the relevant line ranges | `plan` picks them from the [code index](code-index.md); an agent without a pack reads the index first | An agent that knows where to go does not explore |
 | **What is never opened is denied**: old migrations, generated code, lockfiles, build output | Permission rules in the agent's settings | Reading it costs and teaches nothing |
 | **A long file is read by parts** | A hook before each read: over **400 lines** with no range asked for, the read is refused with *"search first, then read the fragment"* | The tool keeps the rule, not the prompt ([`RULE-24`](../rules/cycle.md#rule-24)) |
 

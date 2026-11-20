@@ -1,55 +1,65 @@
 ---
 title: Workspace repos
-description: ARCH-03 · One repo per audience, the two modes, several specs, and hosting
+description: ARCH-03 · One monorepo by default, split repos when a part must be apart, several specs, and hosting
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-20"
 ---
 
 # ARCH-03 · Workspace repos
 
-A [`Workspace`](../domain/workspace.md) has **one repo per audience**, prefixed with the project name
-([`DEC-09`](../../decisions/DEC-09-repos.md)).
+A [`Workspace`](../domain/workspace.md) is **one monorepo by default**
+([`DEC-22`](../../decisions/DEC-22-monorepo-default.md)): the spec, every surface people see, and the
+packages they share.
 
-| Repo | Holds | Audience | Published at |
+## The monorepo (`mono`, default) [#modes]
+
+| Path | Holds | Audience | Deploys to |
 |---|---|---|---|
-| `<project>-spec` | The spec and `workspace.yaml` | The team and the agents | A private site, and the MCP |
-| `<project>-help` | The Help Center and the Release Notes (`/changelog`) | Product users | `help.<domain>` |
-| `<project>-docs` | The generated API Reference and developer guides | Integrators | `docs.<domain>` |
-| Code repos | The code, with `spec.lock`. An `AGENTS.md` per component only if the agents in use read it there | The team | Wherever they already deploy |
+| `spec/` | The spec; `workspace.yaml` at the repo root | The team and the agents | A private site, and the MCP |
+| `apps/app` | The product | Its users | Its own project, by the team's host |
+| `apps/landing` | The public site | People who do not know the product yet | `<domain>` |
+| `apps/docs` | The generated API Reference and developer guides | Integrators | `docs.<domain>` |
+| `apps/help` | The Help Center and the Release Notes (`/changelog`) | Product users | `help.<domain>` |
+| `packages/ui` | The design system: tokens and components, with its Storybook, the component catalog of the `Brand System` ([`MKT-06`](../market/component-catalogs.md)) | The apps, and the agents through its MCP | Not deployed; the Storybook is published with the docs |
+| `packages/i18n` | The message keys and the locales ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)) | The apps | Not deployed |
 
-| Why apart | What happens together |
+| Rule | Why |
 |---|---|
-| The spec is private; help and API docs are public | A public repo exposes the spec, or a private one publishes the help with the wrong permissions |
-| They publish at different paces | Every spec change triggers a help deploy |
-| Different people write and read them | Design must read the spec without cloning code |
-| Each uses its own tool | Help in Fumadocs, Mintlify or Docusaurus; the API in anything that reads OpenAPI |
+| **Every app deploys on its own**: its own project on the host, its own root directory, built only when it or a package it imports changed | A typo in the help does not redeploy the product |
+| The apps import components only from `packages/ui` and text only from `packages/i18n` | The app, the landing and the help look and speak the same, and change together |
+| CI runs only what a change affects, through the workspace manager (Turborepo, Nx); everything runs where [`ARCH-11`](pipeline.md) says | The pipeline does not grow with the number of apps |
+| Help and docs hold **standard content** (Markdown, MDX, OpenAPI) | They publish anywhere, without depending on OpenPEDD |
 
-Help and docs repos hold **standard content** (Markdown, MDX, OpenAPI): they publish anywhere,
-without depending on OpenPEDD.
+Each app and package is a `component` in `workspace.yaml`, mapped to the modules it implements; that
+mapping is what the [code index](code-index.md) is built on.
 
-## Modes
+## Split repos (`split`) [#split]
 
-| `mode` | Is | For |
-|---|---|---|
-| `split` (default) | One repo per audience | Teams, and any product with outside users |
-| `mono` | One repo with the code and `spec/`, `help/`, `docs/` folders | One person, an open-source project where code and spec are both public, or a project that does not publish yet |
+| Repo | Holds |
+|---|---|
+| `<project>-spec` | The spec and `workspace.yaml` |
+| `<project>-help` · `<project>-docs` | The Help Center and the API Reference, when they are not in a code repo |
+| Code repos | The code, with `spec.lock` |
 
-How the code is organized is a separate question: one app, a monorepo with packages, or several
-repos, declared as `components`, each mapped to its modules. Several code repos need `split`: in
-`mono` the spec would live inside one part. There is **one spec per product** in every case
-([`modules/workspace`](../../modules/workspace/prd.md#the-layout)).
+`split` is for two cases only:
 
-In `mono`, `workspace.yaml` sits at the repo root. `mono` can move to `split` later: the CLI moves
-the folders to their repos and updates the references.
+| Case | Why apart |
+|---|---|
+| A product **adopted with several repos** | The spec cannot live inside one part of it |
+| **Open-source code with a private spec** | A repo's access is all or nothing: a private folder in a public repo does not exist ([`MKT-10`](../market/monorepos.md)) |
+
+In `split`, each repo has a `link.yaml` pointing back to the spec. `mono` can move to `split` later:
+`pedd workspace split` moves the folders to their repos and updates the references. There is **one
+spec per product** in every case ([`modules/workspace`](../../modules/workspace/prd.md#the-layout)).
 
 ## Several specs [#several-specs]
 
 A project may have **a public spec and a private one**. The private one references the public one by
 ID, read-only, and never redefines it. It is declared with `references` in `workspace.yaml`, and the
-MCP resolves IDs from both. OpenPEDD itself works this way, in `mono`: `openpedd/openpedd` is public
-with its spec in `spec/`, and `openpedd/openpedd-cloud` is private with the Cloud's spec in its own
-`spec/` ([`DEC-11`](../../decisions/DEC-11-visibility.md)).
+MCP resolves IDs from both. OpenPEDD itself works this way: `openpedd/openpedd` is public with its spec
+in `spec/`, and `openpedd/openpedd-cloud` is private with the Cloud's spec in its own `spec/`
+([`DEC-11`](../../decisions/DEC-11-visibility.md)).
 
 ## Hosted
 
@@ -58,5 +68,5 @@ with its spec in `spec/`, and `openpedd/openpedd-cloud` is private with the Clou
 | Create and connect repos | `pedd init` with the GitHub CLI | A GitHub App, from the dashboard |
 | Publish the spec | The team hosts it | A private site with SSO |
 | Publish help and docs | The team hosts them | Public sites with their own domain, or a deploy to the customer's hosting |
-| When the spec changes | `publish` runs by hand | The sync opens the PRs in `-help`, `-docs` and the code |
+| When the spec changes | `publish` runs by hand | The sync opens the PRs in the help, the docs and the code |
 | The MCP | Local, over stdio | Hosted, with a token per person |

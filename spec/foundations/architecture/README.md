@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.8"
-updated: "2026-11-19"
+version: "1.9"
+updated: "2026-11-20"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -13,7 +13,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 |---|---|---|
 | [Overview](overview.md) | `ARCH-01` | The pieces and how they connect |
 | [Freshness](freshness.md) | `ARCH-02` | The index, the hash and the anchors |
-| [Workspace repos](workspace.md) | `ARCH-03` | One repo per audience, the modes, several specs |
+| [Workspace repos](workspace.md) | `ARCH-03` | One monorepo by default, split repos when a part must be apart, several specs |
 | [Skills, agents and tools](agents.md) | `ARCH-04` | What each stage runs with, and the MCP tools |
 | [Traceability](traceability.md) | `ARCH-05` | How the chain of each requirement is built and kept |
 | [Branches and tasks](branches.md) | `ARCH-06` | The branch of each change, and its design, architecture and task branches |
@@ -29,6 +29,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Sweep](sweep.md) | `ARCH-16` | Every open question of a change, from every stage ahead, asked at once |
 | [Landing parallel changes](landing.md) | `ARCH-17` | The overlap of changes in flight, syncing them, and the order they land in |
 | [Guided definition](definition.md) | `ARCH-18` | The minimum each scope needs, who answers each item, and the conversation that fills it |
+| [Code index](code-index.md) | `ARCH-19` | The generated map of the code per module and package, read first by every agent |
 
 ## How an architecture document is written
 

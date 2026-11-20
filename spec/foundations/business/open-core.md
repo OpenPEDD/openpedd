@@ -2,8 +2,8 @@
 title: Open core
 description: BIZ-04 · What is free, what is paid, and the rule that draws the line
 owner: Kevin
-version: "1.2"
-updated: "2026-11-13"
+version: "1.3"
+updated: "2026-11-20"
 ---
 
 # BIZ-04 · Open core
@@ -46,7 +46,20 @@ Pricing and Cloud plans live in the private `openpedd-cloud` repo ([`DEC-11`](..
 
 ## Extensions [#extensions]
 
-Skills, judges, lenses and tool adapters made by others are listed in a catalog built from GitHub
-topics: `openpedd-extension`, with `openpedd-skill`, `openpedd-judge`, `openpedd-lens` and
-`openpedd-adapter` for the kind. **A listing is not an endorsement**, and the catalog says so. Each
-extension keeps its own license; the catalog is free.
+**The core holds only the method**: the stages, their judges, the interview and `map`. Every other
+skill is an extension, or a Cloud add-on ([`DEC-25`](../../decisions/DEC-25-where-skills-live.md)):
+
+| It | Is | Paid |
+|---|---|---|
+| Runs on request, on the team's machine, even calling a service with the team's own key (a logo, a deck, an image) | An extension | No |
+| Runs on a service OpenPEDD hosts, or with a key OpenPEDD pays for (image generation, a template gallery) | A Cloud add-on | Yes |
+
+Skills, judges, lenses and tool adapters, ours or made by others, are listed in a catalog built from
+GitHub topics: `openpedd-extension`, with `openpedd-skill`, `openpedd-judge`, `openpedd-lens` and
+`openpedd-adapter` for the kind. **A listing is not an endorsement**, and the catalog says so.
+
+| Rule | Why |
+|---|---|
+| **A license is checked before listing**: an extension with none, or one that forbids the use, is not listed; the license is shown next to it | A skill found online is someone's work; using it without a license exposes the team |
+| `pedd install` shows an extension's license and source before installing it | The person decides with what the catalog checked in front of them |
+| The catalog is free | It is how the method grows without the core growing |

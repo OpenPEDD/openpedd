@@ -2,8 +2,8 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their issues in the tracker
 owner: Kevin
-version: "1.6"
-updated: "2026-11-17"
+version: "1.7"
+updated: "2026-11-20"
 ---
 
 # ARCH-06 · Branches and tasks
@@ -40,6 +40,36 @@ it edits, and merges there.
 `architect` and `design` run at the same time, each on its branch, and each reads what the other has
 written there before each round. A decision that arrives late makes a screen get rebuilt.
 
+## A request [#a-request]
+
+**When a client asks for something, the change branch is cut from the base at once**, holding only
+`changes/<CHG>/definition.md`: what the client said, and the minimum map as it fills
+([`ARCH-18`](definition.md)). It is the input of `specify`, which writes the PRD or the delta on the same
+branch ([`DEC-23`](../../decisions/DEC-23-request-is-a-change.md)). The track, and so the prefix, is
+known only when `specify` computes the scope: until then the branch is `feat/`, and it is renamed if the
+track turns out to be `fix` or `chore`.
+
+| The request is dropped | What happens |
+|---|---|
+| **Before `spec-approval`** | The branch is deleted and the change is `dropped`. No sub-issues, trace links or footprint exist yet, so there is nothing to sync or undo |
+| **After `spec-approval`** | It is retired through a change: its requirements `REMOVED` by deltas, its sub-issues closed and its open tasks `canceled`; the change is `retired` ([`ENT-06`](../domain/change.md)), so the trace says why |
+
+A branch holding only a definition has no footprint ([`ARCH-17`](landing.md)), so it is not synced and
+blocks nothing.
+
+## Creating a branch [#creating-a-branch]
+
+**Where a branch is cut from is never chosen by an agent.** One command creates every work branch,
+and CI refuses one cut from anywhere else.
+
+| Piece | Does |
+|---|---|
+| **`pedd branch <issue>`**, also as `/branch` | Reads the tracker and the change: a change or a request is cut from the base; the branch of a sub-issue or a task (design, architecture, task) from its change branch. It names it by `branches` in `workspace.yaml`, pushes it, and prints it |
+| **The branch check** in the CI action ([`ARCH-13`](review.md#the-judges-in-ci)) | Fails a PR whose target or merge-base does not match the table [above](#the-branches), and prints the `pedd branch` command that fixes it |
+| **A permission rule** installed by `pedd install` | Denies agents `git checkout -b`, `git switch -c` and `git branch <name>` for work branches; they run `pedd branch` ([`ARCH-12`](running.md#keeping-the-context-small)) |
+
+The check is what guarantees it; the command and the rule keep it from going red.
+
 ## The tracker
 
 The change is a parent issue, each stage with a branch and a gate is a sub-issue, and the tasks are
@@ -54,7 +84,7 @@ sub-issue with a non-closing word, so the task branch carries no issue ID.
 3. A person accepts on the change branch's preview ([accept](../../modules/accept/prd.md)).
 4. It merges at **`acceptance-merge`**. The parent issue stays open until `publish`.
 
-When several changes are in flight at once, which overlap, how they stay close to the base and the order they land in is [`ARCH-17`](landing.md).
+When several changes are in flight at once, which overlap, how they stay close to the base and the order they land in is [`ARCH-17`](landing.md). A request waiting in the queue has its base merged in when it is taken ([`ARCH-17`](landing.md#the-queue)).
 
 From the base to production is a promotion, through the project's environments ([`ARCH-08`](release.md)).
 

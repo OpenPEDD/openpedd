@@ -2,8 +2,8 @@
 title: Walkthroughs
 description: ARCH-07 · How a product's assistant answers, points, takes the user there or acts, and why a Walkthrough cannot go stale unnoticed
 owner: Kevin
-version: "1.0"
-updated: "2026-11-11"
+version: "1.1"
+updated: "2026-11-20"
 ---
 
 # ARCH-07 · Walkthroughs
@@ -36,9 +36,9 @@ the permissions already are.
 ## The file
 
 ```yaml
-# help/walkthroughs/create-job.yaml
+# apps/help/walkthroughs/create-job.yaml
 sources: [FR-JOB-03@3fa9c1]
-article: help/create-job.mdx
+article: apps/help/create-job.mdx
 roles: [owner, recruiter]
 steps:
   - screen: /jobs/new
