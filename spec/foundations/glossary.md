@@ -65,7 +65,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Business Map · as-is · to-be · business mode · product engineer | How a client's organization works today and with the system; `map`'s mode that draws it; the person who runs it | [map](../modules/map/prd.md#business-mode) |
 | Branding change | The change that fills the `Brand System` before a product's first screens | [open](../open/README.md#the-roadmap) |
 | Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |
-| Footprint · overlap · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
+| Footprint · overlap · queue · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, the order requests were queued in, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
+| `pedd branch` · `/branch` · branch check | The one way to create a work branch, and the CI check that refuses one cut from elsewhere | [`ARCH-06`](architecture/branches.md#creating-a-branch) |
 | Parent issue · sub-issue | The change and its stages in the tracker | [`ARCH-15`](architecture/tracker.md) |
 | Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |

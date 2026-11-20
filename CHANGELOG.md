@@ -10,6 +10,8 @@ the format; the spec of each version is the tag `v<version>`.
 - A request is a change branch from the start, holding only its definition; dropped before `spec-approval`, the branch is deleted; after, it is retired through a change (DEC-23).
 - `map` in business mode: a product engineer maps how a client's organization works today and will work with the system, the client approves it, and it feeds the foundations, the modules and the first roadmap (DEC-24).
 - A product with screens and no `Brand System` gets a branding change before its first screens.
+- `pedd branch` creates every work branch from the right base, read from the tracker; the CI action fails a PR cut from elsewhere, and agents are denied `git checkout -b` for work branches.
+- Changes land in the order their requests were queued; the computed order applies only with several in flight or a hotfix, and a queued request gets the base merged in when it is taken.
 - The core holds only the method's skills; others are extensions with their license checked, and what OpenPEDD hosts or pays for is a Cloud add-on (DEC-25).
 - Requirement and PRD statuses renamed: `designing` is now `specified`, `ready` is now `designed`. The order: `draft`, `specified`, `designed`, `building`, `in_review`, `accepted`, `live`.
 - Every product starts with i18n: English as the base, other languages added to `locales`; `init` writes `locales: [en]` and the language checks always run (DEC-21).

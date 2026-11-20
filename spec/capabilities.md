@@ -111,6 +111,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd trace <id>` | One requirement's chain |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd sweep` | Every open question of a change, at once, with recommendations; `--accept-recommended` |
+| `pedd branch` | Creates a work branch from the right base, read from the tracker and the change |
 | `pedd overlap` | Which changes in flight touch the same IDs or files |
 | `pedd sync` | Merges the base into every change in flight that overlaps what just landed |
 | `pedd land` | The landing order of the ready changes, then lands them one at a time |

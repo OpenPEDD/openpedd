@@ -57,6 +57,19 @@ track turns out to be `fix` or `chore`.
 A branch holding only a definition has no footprint ([`ARCH-17`](landing.md)), so it is not synced and
 blocks nothing.
 
+## Creating a branch [#creating-a-branch]
+
+**Where a branch is cut from is never chosen by an agent.** One command creates every work branch,
+and CI refuses one cut from anywhere else.
+
+| Piece | Does |
+|---|---|
+| **`pedd branch <issue>`**, also as `/branch` | Reads the tracker and the change: a change or a request is cut from the base; the branch of a sub-issue or a task (design, architecture, task) from its change branch. It names it by `branches` in `workspace.yaml`, pushes it, and prints it |
+| **The branch check** in the CI action ([`ARCH-13`](review.md#the-judges-in-ci)) | Fails a PR whose target or merge-base does not match the table [above](#the-branches), and prints the `pedd branch` command that fixes it |
+| **A permission rule** installed by `pedd install` | Denies agents `git checkout -b`, `git switch -c` and `git branch <name>` for work branches; they run `pedd branch` ([`ARCH-12`](running.md#keeping-the-context-small)) |
+
+The check is what guarantees it; the command and the rule keep it from going red.
+
 ## The tracker
 
 The change is a parent issue, each stage with a branch and a gate is a sub-issue, and the tasks are
@@ -71,7 +84,7 @@ sub-issue with a non-closing word, so the task branch carries no issue ID.
 3. A person accepts on the change branch's preview ([accept](../../modules/accept/prd.md)).
 4. It merges at **`acceptance-merge`**. The parent issue stays open until `publish`.
 
-When several changes are in flight at once, which overlap, how they stay close to the base and the order they land in is [`ARCH-17`](landing.md).
+When several changes are in flight at once, which overlap, how they stay close to the base and the order they land in is [`ARCH-17`](landing.md). A request waiting in the queue has its base merged in when it is taken ([`ARCH-17`](landing.md#the-queue)).
 
 From the base to production is a promotion, through the project's environments ([`ARCH-08`](release.md)).
 
