@@ -2,7 +2,7 @@
 title: Branches and tasks
 description: ARCH-06 · The branch of each change, the design, architecture and task branches inside it, and their issues in the tracker
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-20"
 ---
 
@@ -31,6 +31,7 @@ dev ─────────────────────────�
 | **Design branch**: `design/automations` | The change branch | The mockup, built in code ([design](../../modules/design/prd.md)) | The change branch | At `design-merge` |
 | **Architecture branch**: `arch/automations` | The change branch | The `ARCH` documents, the `ADR`s and the deltas, as they are decided ([architect](../../modules/architect/prd.md)) | The change branch | At `architecture-merge` |
 | **Task branch**: `task/automations-triggers` | The change branch, after the design and the architecture merged | One task from `plan` | The change branch, through its own PR | When the task's tests and the pipeline checks pass |
+| **Edit branch**: `edit/CHG-031-1` | The change branch of an `agreed` request | One edit to its definition ([`ARCH-21`](requests.md#edit-branch)) | The change branch, through its own PR | When the builder merges it |
 
 The prefix of the change branch follows the track: `feat/` for `full` and `story`, `fix/`, `chore/`.
 The design branch cannot be `feat/automations/design`: git does not allow a branch under a name that
@@ -42,20 +43,9 @@ written there before each round. A decision that arrives late makes a screen get
 
 ## A request [#a-request]
 
-**When a client asks for something, the change branch is cut from the base at once**, holding only
-`changes/<CHG>/definition.md`: what the client said, and the minimum map as it fills
-([`ARCH-18`](definition.md)). It is the input of `specify`, which writes the PRD or the delta on the same
-branch ([`DEC-23`](../../decisions/DEC-23-request-is-a-change.md)). The track, and so the prefix, is
-known only when `specify` computes the scope: until then the branch is `feat/`, and it is renamed if the
-track turns out to be `fix` or `chore`.
-
-| The request is dropped | What happens |
-|---|---|
-| **Before `spec-approval`** | The branch is deleted and the change is `dropped`. No sub-issues, trace links or footprint exist yet, so there is nothing to sync or undo |
-| **After `spec-approval`** | It is retired through a change: its requirements `REMOVED` by deltas, its sub-issues closed and its open tasks `canceled`; the change is `retired` ([`ENT-06`](../domain/change.md)), so the trace says why |
-
-A branch holding only a definition has no footprint ([`ARCH-17`](landing.md)), so it is not synced and
-blocks nothing.
+**When a client asks for something, the change branch is cut from the base at once**, holding only its
+definition. How it is numbered, edited once agreed, renamed at `spec-approval` and dropped is
+[`ARCH-21`](requests.md).
 
 ## Creating a branch [#creating-a-branch]
 
@@ -64,7 +54,7 @@ and CI refuses one cut from anywhere else.
 
 | Piece | Does |
 |---|---|
-| **`pedd branch <issue>`**, also as `/branch` | Reads the tracker and the change: a change or a request is cut from the base; the branch of a sub-issue or a task (design, architecture, task) from its change branch. It names it by `branches` in `workspace.yaml`, pushes it, and prints it |
+| **`pedd branch <issue>`**, also as `/branch` | Reads the tracker and the change: a change or a request is cut from the base, numbered as [`ARCH-21`](requests.md#numbering) says; the branch of a sub-issue, a task or an edit (design, architecture, task, edit) from its change branch. It names it by `branches` in `workspace.yaml`, pushes it, and prints it |
 | **The branch check** in the CI action ([`ARCH-13`](review.md#the-judges-in-ci)) | Fails a PR whose target or merge-base does not match the table [above](#the-branches), and prints the `pedd branch` command that fixes it |
 | **A permission rule** installed by `pedd install` | Denies agents `git checkout -b`, `git switch -c` and `git branch <name>` for work branches; they run `pedd branch` ([`ARCH-12`](running.md#keeping-the-context-small)) |
 
@@ -107,6 +97,7 @@ branches:
   design: "design/{slug}"
   architecture: "arch/{slug}"
   task: "task/{slug}-{task}" # one per checklist item
+  edit: "edit/{change}-{n}"  # one per edit to an agreed request
 ```
 
 ## Rules

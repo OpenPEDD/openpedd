@@ -2,7 +2,7 @@
 title: Modules
 description: How a module and its PRDs are written
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-20"
 ---
 
@@ -27,7 +27,7 @@ budget (`modules/<module>/<topic>.md`).
 | Metric | `Success metric`: `baseline`, `target`, `review date`, the event that measures it | One row |
 | Appetite and `Out of scope` | How much it is worth spending; what is not built | The only section in the negative |
 | Flows | `Main flow`, `Alternate flows`, `Exception flows`, numbered `F1`, `F2`… | Each flow ends in a known state |
-| Requirements | A table of `FR` and `NFR`: ID, EARS statement, reason, roles, criteria | [`ENT-03`](../foundations/domain/requirement.md) |
+| Requirements | A table of `FR` and `NFR`: ID, EARS statement, reason, roles, criteria, status | [`ENT-03`](../foundations/domain/requirement.md) |
 | Permissions | Which role performs each action | From `Roles & Permissions` |
 | States | The transitions the flows touch, cited from the domain | Never redefined here |
 | Contracts | Input, output, errors of each action | [`ENT-05`](../foundations/domain/contract.md) |

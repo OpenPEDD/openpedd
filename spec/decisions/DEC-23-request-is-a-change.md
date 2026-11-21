@@ -2,7 +2,7 @@
 title: "DEC-23 · A request is a change branch"
 description: What happens in the repo when a client asks for something
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-20"
 ---
 
@@ -12,7 +12,7 @@ updated: "2026-11-20"
 
 **When a client asks for something, a change branch is cut from the base holding only its definition**,
 the input of `specify`. The request and the change are the same thing, with one ID: there is no request
-record apart from the change. The detail is in [`ARCH-06`](../foundations/architecture/branches.md#a-request).
+record apart from the change. The detail is in [`ARCH-21`](../foundations/architecture/requests.md).
 
 | The request is dropped | What happens |
 |---|---|
