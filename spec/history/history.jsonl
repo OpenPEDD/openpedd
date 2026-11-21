@@ -386,6 +386,7 @@
 {"path":"open/roadmap.md","version":"1.1 → 1.2","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Template link points to the baseline PRD"}
 {"path":"capabilities.md","version":"1.8","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Keeping a built product up to the current practices"}
 {"path":"foundations/glossary.md","version":"1.15","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"Baseline and baseline gap"}
+{"path":"foundations/domain/workspace.md","version":"1.5 → 1.6","date":"2026-11-20","change":"CHG-028","story":null,"stage":"specify","summary":"branches and review listed as fields"}
 {"path": "foundations/architecture/reader.md", "version": "1.0", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "The spec reader package: what it parses, reads, writes, numbers and renders, and how it is versioned"}
 {"path": "foundations/architecture/requests.md", "version": "1.0", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "A request's branch: numbering, the definition's status, the edit branch, the rename at spec-approval, dropping; moved in from ARCH-06"}
 {"path": "decisions/DEC-26-reader-package.md", "version": "1.0", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "One reader package shared by the CLI and the Cloud"}
