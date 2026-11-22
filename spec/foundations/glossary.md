@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.16"
-updated: "2026-11-20"
+version: "1.17"
+updated: "2026-11-22"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -28,6 +28,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/baseline.md#the-project-template) |
 | Monorepo · `mono` · `split` · `apps/` · `packages/ui` · `packages/i18n` | The default layout, and the split one for when a part must be apart | [`ARCH-03`](architecture/workspace.md) |
 | Code index · `.pedd/code-index/` | The generated map of the code, per module and package, read first by every agent | [`ARCH-19`](architecture/code-index.md) |
+| `pedd view` · project view · `views.json` | A map of what a project's spec defines, one per kind, generated from its IDs, tables and links | [views](../modules/views/prd.md) · [`ARCH-22`](architecture/views.md) |
+| Loose item | An item linked to nothing that governs it or that it governs; `pedd check` fails on it | [`RULE-27`](rules/writing.md#rule-27) |
 | Extension · Cloud add-on | A skill outside the core, free; one OpenPEDD hosts or pays for, paid | [`BIZ-04`](business/open-core.md#extensions) |
 | i18n · base locale · `locales` | Every text a person reads is a key; English is the base, other languages are locales | [`DEC-21`](../decisions/DEC-21-i18n-from-day-one.md) |
 

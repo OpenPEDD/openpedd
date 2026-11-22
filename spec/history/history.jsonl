@@ -404,3 +404,24 @@
 {"path": "capabilities.md", "version": "1.8 → 1.9", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "Request link points to ARCH-21"}
 {"path": "decisions/DEC-23-request-is-a-change.md", "version": "1.0 → 1.1", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "Detail link points to ARCH-21"}
 {"path": "foundations/glossary.md", "version": "1.15 → 1.16", "date": "2026-11-20", "change": "CHG-029", "story": null, "stage": "specify", "summary": "Request statuses, edit branch, @openpedd/reader"}
+{"path": "capabilities.md", "version": "1.9 → 1.10", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "See the spec as maps; catch what is unconnected; pedd view"}
+{"path": "decisions/README.md", "version": "1.1 → 1.2", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Supersedes in the header; a decision cites what it changes"}
+{"path": "foundations/architecture/README.md", "version": "1.10 → 1.11", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Lists ARCH-22"}
+{"path": "foundations/architecture/reader.md", "version": "1.0 → 1.1", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "viewData, renderViews and toMermaid"}
+{"path": "foundations/artifacts.md", "version": "1.6 → 1.7", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Project views among the records"}
+{"path": "foundations/business/open-core.md", "version": "1.3 → 1.4", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Row for pedd view and views live per product"}
+{"path": "foundations/domain/decision.md", "version": "1.1 → 1.2", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Fields supersedes and cites; a DEC status"}
+{"path": "foundations/domain/foundation.md", "version": "1.8 → 1.9", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Tables the security and context views read"}
+{"path": "foundations/domain/index.md", "version": "1.1 → 1.2", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "How an entity is written: Fields, States, Transitions tables"}
+{"path": "foundations/domain/workspace.md", "version": "1.6 → 1.7", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "The views field: files in the code a view reads"}
+{"path": "foundations/glossary.md", "version": "1.16 → 1.17", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "pedd view, project view, views.json, loose item"}
+{"path": "foundations/market/README.md", "version": "1.9 → 1.10", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Lists MKT-12"}
+{"path": "foundations/rules/README.md", "version": "1.4 → 1.5", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "writing.md holds RULE-27"}
+{"path": "foundations/rules/writing.md", "version": "1.0 → 1.1", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "RULE-27: nothing stands alone"}
+{"path": "modules/README.md", "version": "1.2 → 1.3", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "views module; flows, flows column, permissions matrix, states tables"}
+{"path": "modules/map/prd.md", "version": "1.5 → 1.6", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Business Map process tables with their columns"}
+{"path": "modules/trace/prd.md", "version": "1.1 → 1.2", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "The graph on demand is the trace view"}
+{"path": "decisions/DEC-29-views-free-cloud-live.md", "version": "1.0", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Every view free on the machine; the Cloud keeps them live per product"}
+{"path": "foundations/architecture/views.md", "version": "1.0", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "How the reader makes views.json, its shape per kind, and the rendering"}
+{"path": "foundations/market/view-generation.md", "version": "1.0", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "Tools that draw views from one model, and which check for loose items"}
+{"path": "modules/views/prd.md", "version": "1.0", "date": "2026-11-22", "change": "CHG-030", "story": null, "stage": "specify", "summary": "pedd view: ten views, what feeds each, loose items, requirements and criteria"}

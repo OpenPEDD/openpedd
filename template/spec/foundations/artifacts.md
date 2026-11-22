@@ -2,9 +2,9 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: <owner>
-version: "1.0"
-updated: "2026-11-20"
-source: spec/foundations/artifacts.md@1.6
+version: "1.1"
+updated: "2026-11-22"
+source: spec/foundations/artifacts.md@1.7
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -46,6 +46,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Detected stack | The technologies in the code, each with the file that proves it | `.pedd/stack.json` | — | The CLI | [`DEC-12`](https://github.com/openpedd/openpedd/blob/main/spec/decisions/DEC-12-stack-derived.md) |
 | Install manifest | Each file the framework installed, and its hash | `.pedd/manifest.json` | — | The CLI | [workspace](https://github.com/openpedd/openpedd/blob/main/spec/modules/workspace/prd.md) |
 | Trace event | One state change of a link in the chain | `.pedd/trace/` | — | The CLI, or the Cloud | [`ENT-23`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/trace-event.md) |
+| Project views | Every view of the spec as a map, and its loose items: `views.json` and its page. Generated, never edited | `.pedd/view/` | — | The CLI (`pedd view`), or the Cloud | [`ARCH-22`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/views.md) |
 
 ## Derived artifacts: produced from the spec
 

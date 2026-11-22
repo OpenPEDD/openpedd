@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.9"
-updated: "2026-11-20"
+version: "1.10"
+updated: "2026-11-22"
 ---
 
 # What OpenPEDD can do
@@ -27,6 +27,8 @@ updated: "2026-11-20"
 | Start a product as one monorepo | `spec/`, the app, the landing, the docs and the help, sharing one design system with its Storybook and one i18n package; each app deploys on its own. Several repos only when a part must be apart | [Workspace repos](foundations/architecture/workspace.md) |
 | Let any agent find where to work without reading the repo | A code index per module and package, regenerated on every merge to the base, read first | [Code index](foundations/architecture/code-index.md) |
 | Bring an existing product in | Foundations and module index first, each PRD as it is needed | [map](modules/map/prd.md) |
+| See everything the spec defines, as maps | `pedd view`: decisions, entities and their states, security, context, code, business, each PRD, traceability and changes in flight, generated from the spec on every change | [views](modules/views/prd.md) |
+| Catch what is left unconnected | `pedd check` fails on a decision that changes nothing, an entity no module uses, a requirement no flow carries, an ID defined nowhere | [Loose items](modules/views/prd.md#loose-items) |
 | Map a client's business before designing its system | `/map --business`: how the organization works today and will work with the system, approved by the client; it feeds the foundations, the modules and the first roadmap | [Business mode](modules/map/prd.md#business-mode) |
 | Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/requests.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
@@ -110,6 +112,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd check` | Runs the checks |
 | `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption`, `--landing` |
 | `pedd trace <id>` | One requirement's chain |
+| `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid` |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd sweep` | Every open question of a change, at once, with recommendations; `--accept-recommended` |
 | `pedd branch` | Creates a work branch from the right base, read from the tracker and the change |
@@ -161,5 +164,5 @@ in [Skills, agents and tools](foundations/architecture/agents.md#mcp-tools).
 ## Free and paid
 
 The framework is free: everything above, run when you ask. **OpenPEDD Cloud** watches for you, all the
-time and across systems: sync, live dashboard, traceability always on, the way back from the tracker,
+time and across systems: sync, live dashboard, views live per product, traceability always on, the way back from the tracker,
 hotspots, and Launch ([Open core](foundations/business/open-core.md)).

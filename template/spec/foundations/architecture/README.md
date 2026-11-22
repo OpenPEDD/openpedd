@@ -2,9 +2,9 @@
 title: Architecture
 description: How architecture documents are written
 owner: <owner>
-version: "1.0"
-updated: "2026-11-20"
-source: spec/foundations/architecture/README.md@1.10
+version: "1.1"
+updated: "2026-11-22"
+source: spec/foundations/architecture/README.md@1.11
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the

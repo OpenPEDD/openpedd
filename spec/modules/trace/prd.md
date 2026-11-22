@@ -2,8 +2,8 @@
 title: trace
 description: pedd trace and pedd status — where every requirement stands, built on demand
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-22"
 status: draft
 ---
 
@@ -17,8 +17,9 @@ ends with the chain of each requirement on screen and recorded in `.pedd/trace/`
 
 ## Out of scope
 
-Watching continuously, the graph and the way back from the tracker: those are OpenPEDD Cloud
-([`BIZ-04`](../../foundations/business/open-core.md)).
+Watching continuously, the graph kept live across tools with its history, and the way back from the
+tracker: those are OpenPEDD Cloud ([`BIZ-04`](../../foundations/business/open-core.md)). The graph on
+demand is the `trace` view of `pedd view` ([`DEC-29`](../../decisions/DEC-29-views-free-cloud-live.md)).
 
 ## Flows
 

@@ -2,8 +2,8 @@
 title: Open core
 description: BIZ-04 · What is free, what is paid, and the rule that draws the line
 owner: Kevin
-version: "1.3"
-updated: "2026-11-20"
+version: "1.4"
+updated: "2026-11-22"
 ---
 
 # BIZ-04 · Open core
@@ -29,6 +29,7 @@ and runs on the team's own subscription. The Cloud runs none ([`DEC-19`](../../d
 | Stages, skills and judges for each agent, with your own subscription | **Two-way tracker sync**: issues anchored, flagged stale, created when the spec changes |
 | Local MCP, read-only plus `propose_delta` | **Auto-PRs** that update the help and API docs when a requirement changes |
 | Reader (static site) | **Hosted MCP** with per-person tokens and permissions |
+| `pedd view`: every view of the spec as a map, traceability and code included, and the check for loose items ([`DEC-29`](../../decisions/DEC-29-views-free-cloud-live.md)) | **Views live per product**: rebuilt on every push, across repos, with each view's history and the diff between versions |
 | CI action with the checks and the judges on every PR, on the team's own subscription; the review metrics with `pedd status` | — |
 | Local generators | Multi-repo and multi-product |
 | `measure` by hand ([`DEC-03`](../../decisions/DEC-03-measure.md)) | `measure` on its own, with analytics connectors |

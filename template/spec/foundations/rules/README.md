@@ -2,9 +2,9 @@
 title: Rules
 description: How rules are written
 owner: <owner>
-version: "1.0"
-updated: "2026-11-20"
-source: spec/foundations/rules/README.md@1.4
+version: "1.1"
+updated: "2026-11-22"
+source: spec/foundations/rules/README.md@1.5
 ---
 
 A rule is something **every module, stage or document follows**. A rule of a single module lives in
