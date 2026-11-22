@@ -73,6 +73,7 @@ npm run check          # every check
 npm run check:links    # relative links to a missing file or anchor
 npm run check:size     # token budget per document (RULE-04)
 npm run check:template # template/ scripts and guides match their sources
+npm test               # the reader's tests (packages/reader)
 ```
 
 Run them before committing. `check:size` fails only when a document over budget grows. A guide in

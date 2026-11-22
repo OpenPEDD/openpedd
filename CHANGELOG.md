@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- `@openpedd/reader` 0.1.0, in `packages/reader`: `readSpec` (the model, with each requirement's status from its PRD's column or the PRD's), `readDefinition` · `writeDefinition`, `nextChangeId`, `mapData` and `renderMap`, and `openpedd-reader map <root>` for the map's data as JSON. `npm run view` runs on it, with the same output. Tagged `reader-v0.1.0`; not on npm yet (ARCH-20).
 - A product starts as one monorepo: `spec/`, `apps/` (app, landing, docs, help) and `packages/` (`ui` with its Storybook, `i18n`), each app deployed on its own. Several repos only for a product adopted that way, or open-source code with a private spec (DEC-22).
 - The code index: one generated file per module and package, regenerated on every merge to the base, that every agent reads first to know where to work (ARCH-19).
 - A request is a change branch from the start, holding only its definition; dropped before `spec-approval`, the branch is deleted; after, it is retired through a change (DEC-23).
