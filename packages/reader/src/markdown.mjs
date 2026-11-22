@@ -77,38 +77,78 @@ export const prose = (md) => (md || '').split('\n').filter((l) => !l.startsWith(
 export const code = (s) => [...(s || '').matchAll(/`([^`]+)`/g)].map((m) => m[1]);
 
 const scalar = (v) => {
+  const quoted = v.trim().match(/^(["'])(.*?)\1\s*(#.*)?$/);
+  if (quoted) return quoted[2];
   const s = v.replace(/\s+#.*$/, '').trim();
-  const q = s.match(/^"(.*)"$/) || s.match(/^'(.*)'$/);
-  if (q) return q[1];
   if (/^\[.*\]$/.test(s)) return s.slice(1, -1).split(',').map((x) => scalar(x)).filter((x) => x !== '');
   return s;
 };
 
 /**
- * The frontmatter between the first two `---` lines. A flat key gives a string with its quotes and
- * trailing comment dropped; an indented block gives an object (`key: value` lines) or a list (`- item`).
+ * The frontmatter between the first two `---` lines, with what is wrong in it.
+ *
+ * A flat key gives a string with its quotes and trailing comment dropped; an indented block gives an
+ * object (`key: value` lines) or a list (`- item`). `present` is false when the text has no
+ * frontmatter at all. Each problem is { line, message }, `line` counted in the whole text; a line that
+ * cannot be read is reported and skipped, never guessed.
  */
-export function frontmatter(text) {
-  const m = (text || '').match(/^---\n([\s\S]*?)\n---/);
-  const fm = {};
-  if (!m) return fm;
-  let key = null;
-  for (const l of m[1].split('\n')) {
-    const top = l.match(/^(\w+):\s*(.*)$/);
+export function parseFrontmatter(text) {
+  const src = text || '';
+  const data = {};
+  const problems = [];
+  const lines = src.split('\n');
+  const first = lines.findIndex((l) => l.trim() !== '');
+  if (first < 0 || lines[first].trim() !== '---') return { present: false, data, problems };
+  if (first > 0 || lines[0] !== '---') problems.push({ line: first + 1, message: 'the frontmatter must open with `---` on the first line' });
+  const close = lines.findIndex((l, i) => i > first && l.trim() === '---');
+  if (close < 0) {
+    problems.push({ line: first + 1, message: 'the frontmatter is not closed: no second `---` line' });
+    return { present: true, data, problems };
+  }
+  const seen = new Set();
+  let key = null, nested = false;
+  for (let i = first + 1; i < close; i++) {
+    const l = lines[i], line = i + 1;
+    if (l.trim() === '' || /^\s*#/.test(l)) continue;
+    const top = l.match(/^([\w-]+):(?:\s+(.*)|\s*)$/);
     if (top) {
       key = top[1];
-      fm[key] = top[2].trim() === '' ? null : scalar(top[2]);
+      if (seen.has(key)) problems.push({ line, message: `\`${key}\` is set twice` });
+      seen.add(key);
+      const raw = top[2] ?? '';
+      const quote = unclosedQuote(raw);
+      if (quote) problems.push({ line, message: `\`${key}\`: ${quote}` });
+      nested = raw.replace(/\s+#.*$/, '').trim() === '';
+      data[key] = nested ? null : scalar(raw);
       continue;
     }
-    if (!key || !/^\s+\S/.test(l)) continue;
-    const item = l.match(/^\s+-\s+(.*)$/);
-    const sub = l.match(/^\s+(\w+):\s*(.*)$/);
-    if (item) fm[key] = [...(Array.isArray(fm[key]) ? fm[key] : []), scalar(item[1])];
-    else if (sub) fm[key] = { ...(fm[key] && typeof fm[key] === 'object' && !Array.isArray(fm[key]) ? fm[key] : {}), [sub[1]]: scalar(sub[2]) };
+    if (/^\s+\S/.test(l) && key && nested) {
+      const item = l.match(/^\s+-\s+(.*)$/);
+      const sub = l.match(/^\s+([\w-]+):\s*(.*)$/);
+      if (item && !(data[key] && typeof data[key] === 'object' && !Array.isArray(data[key]))) { data[key] = [...(data[key] || []), scalar(item[1])]; continue; }
+      if (sub && !Array.isArray(data[key])) { data[key] = { ...(data[key] || {}), [sub[1]]: scalar(sub[2]) }; continue; }
+      problems.push({ line, message: `\`${key}\` mixes a list and \`key: value\` lines` });
+      continue;
+    }
+    problems.push({ line, message: /^\s/.test(l) ? `an indented line with no key above it to belong to: \`${l.trim()}\`` : `not \`key: value\`: \`${l.trim()}\`` });
   }
-  for (const k of Object.keys(fm)) if (fm[k] === null) fm[k] = '';
-  return fm;
+  for (const k of Object.keys(data)) if (data[k] === null) data[k] = '';
+  return { present: true, data, problems };
 }
+
+/** What is wrong with a value's quotes, or null. */
+function unclosedQuote(raw) {
+  const s = raw.trim();
+  const q = s[0];
+  if (q !== '"' && q !== "'") return null;
+  const end = s.indexOf(q, 1);
+  if (end < 0) return `the ${q === '"' ? 'double' : 'single'} quote is not closed`;
+  if (!/^\s*(#.*)?$/.test(s.slice(end + 1))) return `text after the closing quote: \`${s.slice(end + 1).trim()}\``;
+  return null;
+}
+
+/** The frontmatter's data, read the same way as `parseFrontmatter`; its problems are dropped. */
+export const frontmatter = (text) => parseFrontmatter(text).data;
 
 /** The text after the frontmatter. */
 export const body = (text) => (text || '').replace(/^---\n[\s\S]*?\n---\n?/, '');

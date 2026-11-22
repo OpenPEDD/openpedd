@@ -1,5 +1,6 @@
 // readSpec: the spec's files, held in memory as path → text, turned into the model (ARCH-20).
-import { code, frontmatter, headings, stripCode, tables } from './markdown.mjs';
+import { code, headings, parseFrontmatter, stripCode, tables } from './markdown.mjs';
+import { readBusinessMap } from './business-map.mjs';
 
 /** Paths compared segment by segment, the order a recursive directory listing gives. */
 export function comparePaths(a, b) {
@@ -31,6 +32,18 @@ function tablesBySection(text) {
 }
 
 const REQ = /^(N?FR)-([A-Z]+)-(\d+)$/;
+
+/**
+ * A requirement's statuses from least to most advanced (ENT-03). `changing` was `live` and goes back
+ * to it on publish, so it sits just below. `deprecated` is retired: it holds no PRD back.
+ */
+export const REQUIREMENT_STATUSES = ['draft', 'specified', 'designed', 'building', 'in_review', 'accepted', 'changing', 'live', 'deprecated'];
+
+/** The least advanced of some statuses, the one a PRD carries (DEC-28); null when none counts. */
+export function leastAdvanced(statuses) {
+  const ranked = statuses.filter((s) => s && s !== 'deprecated').map((s) => REQUIREMENT_STATUSES.indexOf(s)).filter((i) => i >= 0);
+  return ranked.length ? REQUIREMENT_STATUSES[Math.min(...ranked)] : null;
+}
 const col = (header, re) => header.findIndex((h) => re.test(h));
 
 /** The requirements of one PRD: every row of a table whose first column holds an `FR` or `NFR` ID. */
@@ -96,9 +109,13 @@ export function readSpec(files, { root = 'spec' } = {}) {
   const all = toFiles(files);
   const prefix = root ? `${root.replace(/\/$/, '')}/` : '';
   const paths = [...all.keys()].sort(comparePaths);
+  const problems = [];
   const documents = paths.filter((p) => p.endsWith('.md')).map((path) => {
     const text = all.get(path);
-    return { path, frontmatter: frontmatter(text), headings: headings(text), tables: tablesBySection(text), text };
+    const fm = parseFrontmatter(text);
+    // A broken frontmatter is reported, not read around: the caller decides whether it fails.
+    for (const p of fm.problems) problems.push({ path, line: p.line, kind: 'frontmatter', message: p.message });
+    return { path, frontmatter: fm.data, hasFrontmatter: fm.present, frontmatterProblems: fm.problems, headings: headings(text), tables: tablesBySection(text), text };
   });
   const inSpec = documents.filter((d) => d.path.startsWith(prefix));
 
@@ -115,6 +132,8 @@ export function readSpec(files, { root = 'spec' } = {}) {
   const modules = [...new Set(prds.map((p) => p.module))].map((id) => ({ id, code: codes[id] ?? null, prds: prds.filter((p) => p.module === id).map((p) => p.path) }));
 
   const historyPath = `${prefix}history/history.jsonl`;
+  const history = readHistory(all.get(historyPath));
+  for (const h of history) if (h.error) problems.push({ path: historyPath, line: h.line, kind: 'history', message: h.error });
   return {
     root: prefix.replace(/\/$/, ''),
     paths,
@@ -122,6 +141,8 @@ export function readSpec(files, { root = 'spec' } = {}) {
     modules,
     prds,
     requirements: prds.flatMap((p) => p.requirements),
-    history: readHistory(all.get(historyPath)),
+    history,
+    businessMap: readBusinessMap(all, prefix),
+    problems,
   };
 }
