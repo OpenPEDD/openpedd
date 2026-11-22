@@ -15,10 +15,33 @@ The spec checks, on the working tree. Fails (exit 1) on any failure; a warning d
 | `size` | A document over its budget ([RULE-04](../../spec/foundations/rules/writing.md#rule-04), `budgets` in `workspace.yaml`) grew against `--against <ref>` (default `HEAD`) |
 | `status` | A PRD's `status` is not that of its least advanced requirement, or a status is not one of [ENT-03](../../spec/foundations/domain/requirement.md#lifecycle) ([DEC-28](../../spec/decisions/DEC-28-requirement-status-column.md)) |
 | `history` | A line of `history.jsonl` is not JSON or lacks a field |
+| `loose` | A loose item ([RULE-27](../../spec/foundations/rules/writing.md#rule-27), [the list](../../spec/modules/views/prd.md#loose-items)) the change adds (it is not among the loose items of `--against`) or touches (its file changed since). The rest is listed as pressure. One on another change branch is that change's. Without git, every one fails |
 
 ```bash
-pedd check [--only frontmatter,links,size,status,history] [--against origin/dev] [--root <dir>]
+pedd check [--only frontmatter,links,size,status,history,loose] [--against origin/dev] [--root <dir>] [--json]
 ```
+
+`--json` prints every check with its failures and warnings, for a script or the Cloud.
+
+## `pedd view`
+
+Every view of the spec as a map ([views](../../spec/modules/views/prd.md)), made by the reader's
+`viewData` and `renderViews` ([ARCH-22](../../spec/foundations/architecture/views.md)). Writes
+`.pedd/view/views.json` and `.pedd/view/index.html`, one page with no network, and opens it on the first
+view with loose items, or on `context`.
+
+```bash
+pedd view                                   # every view
+pedd view <kind> [<id>] [--depth <n>]       # opens on one view, scoped: pedd view prd modules/billing/prd.md
+pedd view <kind> [<id>] --format mermaid    # prints it as Markdown with a mermaid block, writes nothing
+pedd view --watch [--port <n>]              # serves it on localhost, rebuilt on each save of the spec; the page reloads
+pedd view --no-open · --root <dir>
+```
+
+Beyond the spec it hands the reader what the working tree has: `workspace.yaml` (its `components` and
+the files `views.security` names), `.pedd/stack.json`, each component's `package.json`,
+`.pedd/code-index/`, `.pedd/spec-graph.json`, `.pedd/trace/*.jsonl`, and the `changes/` of every remote
+branch that differ from the working tree's. What is missing leaves its view empty.
 
 ## `pedd branch`
 

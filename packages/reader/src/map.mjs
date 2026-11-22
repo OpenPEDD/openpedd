@@ -8,7 +8,7 @@ import { code, frontmatter, prose, section, tableWith, tables } from './markdown
 const flat = (fm) => Object.fromEntries(Object.entries(fm).map(([k, v]) => [k, typeof v === 'string' ? v : JSON.stringify(v)]));
 
 /**
- * The map's data, as `npm run view` writes it to `.pedd/view/map.json`.
+ * The map's data, as `npm run view` writes it to `.pedd/map/map.json`.
  *
  * @param model  what `readSpec` gives, for the framework's own repository.
  * @param opts.built  the build date, `YYYY-MM-DD`; today by default.

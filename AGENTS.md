@@ -70,7 +70,8 @@ changed, not why: the why lives in the document.
 
 ```bash
 npm run check          # every check: pedd check, then the template's
-npm run pedd -- check  # the spec checks of pedd (packages/cli): frontmatter, links, size, status, history
+npm run pedd -- check  # the spec checks of pedd (packages/cli): frontmatter, links, size, status, history, loose items
+npm run pedd -- view   # every view of the spec as a map, in .pedd/view/ (npm run view: the framework map, in .pedd/map/)
 npm run check:links    # relative links to a missing file or anchor
 npm run check:size     # token budget per document (RULE-04)
 npm run check:template # template/ scripts and guides match their sources

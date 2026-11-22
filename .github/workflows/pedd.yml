@@ -45,7 +45,7 @@ jobs:
           node-version: 20
       - run: npm ci
       - name: pedd check
-        run: npx pedd check --against "origin/$BASE_REF"   # a document over budget fails if it grew against the base
+        run: npx pedd check --against "origin/$BASE_REF"   # a document over budget fails if it grew, a loose item if the PR adds or touches it
         env:
           BASE_REF: ${{ github.base_ref }}
       - run: node scripts/check-template.mjs

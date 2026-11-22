@@ -5,13 +5,15 @@
 //   size          token budgets per document (RULE-04): fails only when one over budget grows
 //   status        each PRD's status is that of its least advanced requirement (DEC-28, ENT-03)
 //   history       each line of history.jsonl is JSON with every field
+//   loose         nothing stands alone (RULE-27): fails on each loose item the change adds or touches,
+//                 lists the rest as pressure (modules/views, loose items)
 //
 // Each check gives { name, failures: [{ path, line?, message }], warnings: [...] }.
 import { existsSync } from 'node:fs';
 import { join, posix } from 'node:path';
 import { REQUIREMENT_STATUSES, leastAdvanced, markdown } from '@openpedd/reader';
 
-export const CHECKS = ['frontmatter', 'links', 'size', 'status', 'history'];
+export const CHECKS = ['frontmatter', 'links', 'size', 'status', 'history', 'loose'];
 
 const FIELDS = ['title', 'description', 'owner', 'version', 'updated'];
 const HISTORY_FIELDS = ['path', 'version', 'date', 'change', 'story', 'stage', 'summary'];
@@ -102,7 +104,30 @@ function historyCheck(model, { spec }) {
   return { failures, warnings };
 }
 
-const RUN = { frontmatter: frontmatterCheck, links: linksCheck, size: sizeCheck, status: statusCheck, history: historyCheck };
+/** The key of a loose item that stays the same when only its line moves. */
+export const looseKey = (l) => `${l.view}|${l.kind}|${l.id}|${l.at}|${l.message}`;
+
+/**
+ * RULE-27, F3: a loose item fails when the change adds it (it is not among the base's) or touches it
+ * (its file changed); the rest is pressure, like a document over budget that did not grow.
+ * Without a base to compare with, every loose item is the change's.
+ */
+function looseCheck(model, { loose }) {
+  const failures = [], warnings = [];
+  if (!loose) return { failures, warnings };
+  const old = loose.base ? new Set(loose.base.map(looseKey)) : null;
+  for (const l of loose.now) {
+    // An item on another change branch (`feat/x:spec/…`) is that change's, never this one's.
+    const other = /^[^:/][^:]*:/.test(l.at);
+    const file = l.at.replace(/^[^:]+:/, '').split('#')[0];
+    const item = { path: file, line: l.line, message: `${l.says === l.id ? `\`${l.id}\`` : `"${l.says}" (${l.id})`} ${l.message} · ${l.view}`, loose: l };
+    const touched = !other && (!old || !old.has(looseKey(l)) || (loose.changed && loose.changed.has(file)));
+    (touched ? failures : warnings).push(item);
+  }
+  return { failures, warnings };
+}
+
+const RUN = { frontmatter: frontmatterCheck, links: linksCheck, size: sizeCheck, status: statusCheck, history: historyCheck, loose: looseCheck };
 
 /**
  * Runs the checks on a model.
@@ -112,10 +137,12 @@ const RUN = { frontmatter: frontmatterCheck, links: linksCheck, size: sizeCheck,
  * @param opts.budgets  workspace.yaml's `budgets`.
  * @param opts.before   path → its text at the commit to compare against, or null; for `size`.
  * @param opts.only     the checks to run; every one by default.
+ * @param opts.loose    for `loose`: { now, base, changed }, the loose items of the working tree and of the
+ *                      base (null when there is none), and the paths changed against it.
  */
-export function runChecks(model, { root, spec = 'spec', budgets = {}, before = () => null, only = CHECKS } = {}) {
+export function runChecks(model, { root, spec = 'spec', budgets = {}, before = () => null, only = CHECKS, loose = null } = {}) {
   return only.map((name) => {
     if (!RUN[name]) throw new Error(`unknown check "${name}": ${CHECKS.join(', ')}`);
-    return { name, ...RUN[name](model, { root, spec, budgets, before }) };
+    return { name, ...RUN[name](model, { root, spec, budgets, before, loose }) };
   });
 }
