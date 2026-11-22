@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { code, frontmatter, headings, prose, section, tableWith, tables } from '../src/markdown.mjs';
+import { code, frontmatter, headings, parseFrontmatter, prose, section, tableWith, tables } from '../src/markdown.mjs';
 
 const doc = `---
 title: "DEC-26 · One reader"
@@ -75,4 +75,12 @@ test('prose and code', () => {
 
 test('headings: one inside a code block is not a heading', () => {
   assert.deepEqual(headings('```\n# no\n```\n# yes').map((h) => h.text), ['yes']);
+});
+
+test('parseFrontmatter: a quoted value keeps a # inside it; a frontmatter not on line 1 is reported', () => {
+  assert.deepEqual(parseFrontmatter('---\ntitle: "A # B" # comment\n---\n'), { present: true, data: { title: 'A # B' }, problems: [] });
+  assert.deepEqual(parseFrontmatter('\n---\na: 1\n---\n').problems, [{ line: 2, message: 'the frontmatter must open with `---` on the first line' }]);
+  assert.deepEqual(parseFrontmatter('---\nx:\n  - a\n  b: c\n---\n').problems, [{ line: 4, message: '`x` mixes a list and `key: value` lines' }]);
+  assert.deepEqual(parseFrontmatter('---\n  orphan: 1\n---\n').problems, [{ line: 2, message: 'an indented line with no key above it to belong to: `orphan: 1`' }]);
+  assert.equal(parseFrontmatter('# none').present, false);
 });

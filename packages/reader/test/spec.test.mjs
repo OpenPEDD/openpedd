@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { readSpec, comparePaths } from '../src/index.mjs';
+import { readSpec, comparePaths, leastAdvanced } from '../src/index.mjs';
 import { readFiles } from '../src/files.mjs';
 
 const REPO = fileURLToPath(new URL('../../..', import.meta.url));
@@ -90,4 +90,36 @@ test('readSpec: this repository reads without error', () => {
   assert.ok(m.modules.some((x) => x.id === 'cycle' && x.code === 'CYC'));
   assert.ok(m.history.length > 300);
   assert.ok(m.history.every((h) => !h.error));
+});
+
+test('readSpec: a broken frontmatter is reported with its line, not read around', () => {
+  const m = readSpec({
+    'spec/ok.md': '---\ntitle: ok\n---\n',
+    'spec/open.md': '---\ntitle: never closed\n',
+    'spec/bad.md': '---\ntitle: "unclosed\nversion 1.0\ntitle: again\n---\n',
+    'spec/none.md': '# no frontmatter',
+    'spec/history/history.jsonl': '{"a": 1}\n{broken\n',
+  });
+  assert.deepEqual(m.problems, [
+    { path: 'spec/bad.md', line: 2, kind: 'frontmatter', message: '`title`: the double quote is not closed' },
+    { path: 'spec/bad.md', line: 3, kind: 'frontmatter', message: 'not `key: value`: `version 1.0`' },
+    { path: 'spec/bad.md', line: 4, kind: 'frontmatter', message: '`title` is set twice' },
+    { path: 'spec/open.md', line: 1, kind: 'frontmatter', message: 'the frontmatter is not closed: no second `---` line' },
+    { path: 'spec/history/history.jsonl', line: 2, kind: 'history', message: 'not JSON' },
+  ]);
+  const by = Object.fromEntries(m.documents.map((d) => [d.path, d]));
+  assert.equal(by['spec/none.md'].hasFrontmatter, false);
+  assert.deepEqual(by['spec/none.md'].frontmatterProblems, []);
+  assert.deepEqual(by['spec/open.md'].frontmatter, {});
+});
+
+test('leastAdvanced: the PRD carries its least advanced requirement; deprecated holds nothing back', () => {
+  assert.equal(leastAdvanced(['live', 'building', 'designed']), 'designed');
+  assert.equal(leastAdvanced(['live', 'changing']), 'changing');
+  assert.equal(leastAdvanced(['deprecated', 'live']), 'live');
+  assert.equal(leastAdvanced(['deprecated']), null);
+});
+
+test('readSpec: this repository has no broken frontmatter', () => {
+  assert.deepEqual(readSpec(readFiles(REPO)).problems, []);
 });

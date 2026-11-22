@@ -1,0 +1,159 @@
+// The commands of `pedd`, with their arguments read. Each returns an exit code.
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { readSpec } from '@openpedd/reader';
+import { readFiles } from '@openpedd/reader/files';
+import { BranchError, cutChange, cutChild, cutEdit, renameChange } from './branch.mjs';
+import { checkBranch } from './branch-check.mjs';
+import { CHECKS, runChecks } from './check.mjs';
+import { Git } from './git.mjs';
+import { readWorkspace } from './workspace.mjs';
+import { VERSION } from './version.mjs';
+
+const red = (s) => `\x1b[31m${s}\x1b[0m`, yellow = (s) => `\x1b[33m${s}\x1b[0m`, green = (s) => `\x1b[32m${s}\x1b[0m`;
+
+/** The commands the spec names (capabilities.md, CLI) that this version does not build, and why. */
+export const NOT_BUILT = {
+  init: 'onboarding a project (modules/workspace): the template is copied by hand for now',
+  doctor: 'needs the stack detection and the baseline gaps (modules/workspace)',
+  update: 'needs the manifest pedd init writes (.pedd/manifest.json)',
+  install: 'needs the skills, judges and MCP to install; it will also install the permission rule that denies agents git checkout -b',
+  index: 'the spec graph and the code index (ARCH-05, ARCH-19) are specified, not built',
+  status: 'needs the spec graph of pedd index (modules/trace)',
+  trace: 'needs the trace links (modules/trace)',
+  impact: 'needs the spec graph and the code index',
+  sweep: 'needs the open items of every stage of a change (ARCH-16)',
+  overlap: 'needs each change\'s footprint from the index (ARCH-17)',
+  sync: 'needs pedd overlap (ARCH-17)',
+  land: 'needs pedd overlap and the queue (ARCH-17)',
+  adopt: 'needs pedd doctor and the baseline gaps',
+  launch: 'needs the release adapters (ARCH-08)',
+  judges: 'pedd judges bench needs the judges and past changes with known findings (ARCH-04)',
+  workspace: 'pedd workspace split needs the split layout tooling (ARCH-03)',
+};
+
+const HELP = `pedd ${VERSION}
+
+  pedd check [--only ${CHECKS.join(',')}] [--against <ref>] [--root <dir>]
+      The spec checks. --against: the commit a document's size is compared with (default HEAD).
+
+  pedd branch change <slug> [--track full|story|fix|chore|hotfix]    (also: pedd branch request <slug>)
+      A change's branch, from the base (a hotfix: from production), numbered CHG-nnn, holding only
+      its changes/<CHG>/definition.md, pushed.
+  pedd branch design <change>          design/{slug}, from the change branch
+  pedd branch architecture <change>    arch/{slug}, from the change branch
+  pedd branch task <change> <task>     task/{slug}-{task}, from the change branch
+  pedd branch edit <change>            edit/{change}-{n}, from the change branch of an agreed request
+  pedd branch rename <change> --track <track> [--key <issue key>]
+      The rename at spec-approval: feat/automations → feat/rec-412-automations.
+  pedd branch check [--head <branch>] [--target <branch>] [--sha <commit>]
+      The CI branch check: the head's name, its target and where it was cut from.
+
+      <change> is CHG-nnn or the change branch's name. --no-push builds the branch without pushing.
+      --remote <name> (default origin).
+
+  pedd version · pedd help
+
+Not built yet: ${Object.keys(NOT_BUILT).join(', ')}. Run one for why.`;
+
+/** Reads `--flag value` and `--flag` (boolean) options out of the arguments. */
+function options(args, booleans = []) {
+  const opts = {}, rest = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (!a.startsWith('--')) { rest.push(a); continue; }
+    const key = a.slice(2);
+    if (booleans.includes(key)) opts[key] = true;
+    else opts[key] = args[++i];
+  }
+  return { opts, rest };
+}
+
+async function check(args, { cwd, out }) {
+  const { opts } = options(args);
+  const root = resolve(cwd, opts.root || '.');
+  const ws = readWorkspace(root);
+  const model = readSpec(readFiles(root), { root: ws.spec });
+  const against = opts.against || 'HEAD';
+  const before = (path) => {
+    try { return execFileSync('git', ['show', `${against}:${path}`], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch { return null; }
+  };
+  const only = opts.only ? opts.only.split(',') : CHECKS;
+  const results = runChecks(model, { root, spec: ws.spec, budgets: ws.budgets, before, only });
+  let failed = 0;
+  for (const r of results) {
+    const where = (f) => `${f.path}${f.line ? `:${f.line}` : ''}`;
+    for (const f of r.failures) out(red(`✗ ${r.name} · ${where(f)}: ${f.message}`));
+    for (const w of r.warnings) out(yellow(`! ${r.name} · ${where(w)}: ${w.message}`));
+    out(r.failures.length ? red(`✗ ${r.name}: ${r.failures.length} problem(s)`) : green(`✓ ${r.name}`));
+    failed += r.failures.length;
+  }
+  return failed ? 1 : 0;
+}
+
+function branch(args, { cwd, out }) {
+  const { opts, rest } = options(args, ['no-push']);
+  const [sub, ...params] = rest;
+  const git = new Git(cwd, opts.remote || 'origin');
+  const root = git.run(['rev-parse', '--show-toplevel']);
+  const ws = readWorkspace(root);
+  const push = !opts['no-push'];
+  const report = (r) => {
+    out(r.branch);
+    out(`  from ${r.from}${r.id ? ` · ${r.id}` : ''}${r.pushed === false ? ' · not pushed (--no-push)' : ` · pushed to ${git.remote}`}`);
+    if (r.clashed?.length) out(`  numbering clashed with ${r.clashed.join(', ')} on another branch; took the next`);
+    return 0;
+  };
+  switch (sub) {
+    case 'change':
+    case 'request': return report(cutChange(git, ws, { slug: params.join(' '), track: opts.track, push }));
+    case 'design':
+    case 'architecture': return report(cutChild(git, ws, { kind: sub, change: need(params[0], `pedd branch ${sub} <change>`), push }));
+    case 'task': return report(cutChild(git, ws, { kind: 'task', change: need(params[0], 'pedd branch task <change> <task>'), task: need(params.slice(1).join(' '), 'pedd branch task <change> <task>'), push }));
+    case 'edit': return report(cutEdit(git, ws, { change: need(params[0], 'pedd branch edit <change>'), push }));
+    case 'rename': {
+      const r = renameChange(git, ws, { change: need(params[0], 'pedd branch rename <change> --track <track>'), track: opts.track, key: opts.key, push });
+      if (!r.renamed) { out(`${r.branch}: already named so`); return 0; }
+      out(r.branch);
+      out(`  renamed from ${r.from}${r.pushed === false ? ' · not pushed (--no-push)' : ` · ${r.from} deleted on ${git.remote}`}`);
+      return 0;
+    }
+    case 'check': {
+      git.run(['fetch', '--prune', git.remote], { allowFail: true });
+      const head = opts.head || process.env.GITHUB_HEAD_REF || git.currentBranch();
+      const target = opts.target || process.env.GITHUB_BASE_REF || ws.branches.base;
+      const r = checkBranch(git, ws, { head, target, commit: opts.sha || 'HEAD' });
+      if (r.ok) { out(green(`✓ ${head} → ${target}: a ${r.kind} branch, cut from the right branch`)); return 0; }
+      for (const p of r.problems) out(red(`✗ ${p}`));
+      if (r.fix) out(`  fix: ${r.fix}`);
+      return 1;
+    }
+    case undefined: throw new BranchError('pedd branch change|design|architecture|task|edit|rename|check … (pedd help)');
+    default:
+      throw new BranchError(`pedd branch ${sub}: cutting a branch from a tracker issue needs the tracker adapter (ARCH-15), not built yet. Name the kind: pedd branch change|design|architecture|task|edit …`);
+  }
+}
+
+function need(v, usage) {
+  if (!v) throw new BranchError(`usage: ${usage}`);
+  return v;
+}
+
+export async function main(argv, io) {
+  const [command, ...args] = argv;
+  try {
+    switch (command) {
+      case 'check': return await check(args, io);
+      case 'branch': return branch(args, io);
+      case 'version': case '--version': io.out(VERSION); return 0;
+      case undefined: case 'help': case '--help': io.out(HELP); return 0;
+      default:
+        if (NOT_BUILT[command]) { io.err(`pedd ${command} is not built yet: ${NOT_BUILT[command]}.`); return 3; }
+        io.err(`pedd: unknown command "${command}". pedd help lists them.`);
+        return 2;
+    }
+  } catch (e) {
+    if (e instanceof BranchError) { io.err(red(`✗ ${e.message}`)); return 1; }
+    throw e;
+  }
+}

@@ -33,6 +33,7 @@ Then:
 | `workspace.yaml` | Every field of the workspace, at its default | [`ENT-16`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/workspace.md) |
 | `AGENTS.md` · `CLAUDE.md` | Where each artifact goes, the rules never negotiated, frontmatter, history, checks | OpenPEDD's own `AGENTS.md` |
 | `scripts/` · `package.json` | `npm run check`: broken links and token budgets | The same scripts OpenPEDD runs on its own spec |
+| `.github/workflows/pedd.yml` | On every pull request: the branch check (a branch cut from the wrong base or misnamed fails, with the `pedd branch` command that fixes it), then `pedd check`. `pedd` runs from OpenPEDD's repository at the tag in `PEDD_VERSION` | [`ARCH-06`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/branches.md#creating-a-branch) · [`ARCH-13`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/review.md#the-judges-in-ci) |
 
 What a project starts with, and why the template is one place, is in
 [workspace](https://github.com/openpedd/openpedd/blob/main/spec/modules/workspace/baseline.md#the-project-template).

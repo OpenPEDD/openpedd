@@ -53,6 +53,7 @@ branches:                               # ARCH-06
   design: "design/{slug}"
   architecture: "arch/{slug}"
   task: "task/{slug}-{task}"            # one per checklist item
+  edit: "edit/{change}-{n}"             # one per edit to an agreed request
 
 models:
   profile: balanced                     # max · balanced (default) · economy (DEC-07)
