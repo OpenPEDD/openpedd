@@ -4,11 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node scripts/check-links.mjs && node scripts/check-size.mjs && node scripts/check-template.mjs",
+    "check": "node packages/cli/bin/pedd.mjs check && node scripts/check-template.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:size": "node scripts/check-size.mjs",
     "check:template": "node scripts/check-template.mjs",
     "view": "node scripts/view.mjs",
-    "test": "npm test --prefix packages/reader"
-  }
+    "test": "npm test --workspaces",
+    "pedd": "node packages/cli/bin/pedd.mjs"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

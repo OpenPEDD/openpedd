@@ -9,6 +9,8 @@ paths:
   docs: docs                            # created at first publish
 referenced_by:
   - openpedd/openpedd-cloud             # private; its spec references this one, never redefines it
+branches:                               # ARCH-06; the rest of the names at their defaults
+  base: main                            # this repo lands on main
 models:
   profile: balanced                     # DEC-07
 stages:
