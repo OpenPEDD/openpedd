@@ -28,6 +28,6 @@
     "@openpedd/reader": "0.2.0"
   },
   "scripts": {
-    "test": "node --test \"test/*.test.mjs\""
+    "test": "node --test test/*.test.mjs"
   }
 }
