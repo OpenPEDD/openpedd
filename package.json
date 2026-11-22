@@ -8,6 +8,7 @@
     "check:links": "node scripts/check-links.mjs",
     "check:size": "node scripts/check-size.mjs",
     "check:template": "node scripts/check-template.mjs",
-    "view": "node scripts/view.mjs"
+    "view": "node scripts/view.mjs",
+    "test": "npm test --prefix packages/reader"
   }
 }
