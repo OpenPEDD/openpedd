@@ -41,7 +41,7 @@ export function checkBranch(git, ws, { head, target, commit = 'HEAD' }) {
   const me = parseName(head, b, targetIsChange ? { slug: parsedTarget.slug } : {});
 
   if (!me) {
-    problems.push(`"${head}" is not named as a work branch: ${['change', 'design', 'architecture', 'task', 'edit', 'hotfix'].map((k) => b[k]).join(' · ')}`);
+    problems.push(`"${head}" is not named as a work branch: ${['change', 'design', 'architecture', 'task', 'edit', 'hotfix'].map((k) => b[k].replace('{prefix}', 'feat|fix|chore')).join(' · ')}`);
     fix = targetIsChange ? `${fixes.task(target)}, or ${fixes.design(target)}` : fixes.change();
     return result(null);
   }

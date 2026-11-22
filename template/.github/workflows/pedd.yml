@@ -1,0 +1,65 @@
+# The checks on every pull request (ARCH-13): the branch check first, then the spec checks.
+# pedd runs from OpenPEDD's repository at a pinned tag; a new version reaches this project when the
+# tag here is bumped, in a reviewed PR.
+name: pedd
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pedd-${{ github.event.pull_request.number }}
+  cancel-in-progress: true          # only the last commit counts
+
+env:
+  PEDD_VERSION: cli-v0.1.0          # the tag of OpenPEDD's packages/cli
+  PEDD: node .pedd/openpedd/packages/cli/bin/pedd.mjs
+
+jobs:
+  branch:
+    name: Branch check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0              # every branch, to see where this one was cut from
+      - uses: actions/checkout@v4
+        with:
+          repository: openpedd/openpedd
+          ref: ${{ env.PEDD_VERSION }}
+          path: .pedd/openpedd
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci --prefix .pedd/openpedd
+      - name: pedd branch check
+        run: $PEDD branch check --head "$HEAD_REF" --target "$BASE_REF"
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+
+  check:
+    name: Spec checks
+    needs: branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: openpedd/openpedd
+          ref: ${{ env.PEDD_VERSION }}
+          path: .pedd/openpedd
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci --prefix .pedd/openpedd
+      - name: pedd check
+        run: $PEDD check --against "origin/$BASE_REF"   # a document over budget fails if it grew against the base
+        env:
+          BASE_REF: ${{ github.base_ref }}
