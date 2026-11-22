@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.10"
-updated: "2026-11-20"
+version: "1.11"
+updated: "2026-11-22"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -32,6 +32,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Code index](code-index.md) | `ARCH-19` | The generated map of the code per module and package, read first by every agent |
 | [Spec reader](reader.md) | `ARCH-20` | The package that reads a spec, shared by the CLI and the Cloud |
 | [A request's branch](requests.md) | `ARCH-21` | Numbering a change, the definition's status, editing once agreed, renaming at approval |
+| [Project views](views.md) | `ARCH-22` | How the reader makes the data of every view of a project, and how it is rendered |
 
 ## How an architecture document is written
 
