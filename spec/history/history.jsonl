@@ -449,3 +449,8 @@
 {"path": "capabilities.md", "version": "1.11 → 1.12", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "pedd weigh in the CLI table"}
 {"path": "foundations/architecture/reader.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "weigh and weighChange"}
 {"path": "foundations/domain/delta.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "weight computed by pedd weigh"}
+{"path": "foundations/architecture/sweep.md", "version": "1.1 → 1.2", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "How pedd runs it: the stages ahead, the finders and their output, duplicates, the files it leaves, the reply and round 2; --from"}
+{"path": "foundations/architecture/weight.md", "version": "1.1 → 1.2", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "Fan-out of a sweep question; its options not read for triggers; fan-out shown only when it raises the weight"}
+{"path": "foundations/domain/workspace.md", "version": "1.7 → 1.8", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "agents.finder"}
+{"path": "foundations/architecture/reader.md", "version": "1.3 → 1.4", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "mergeQuestions, renderSheet, applyReply"}
+{"path": "capabilities.md", "version": "1.12 → 1.13", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "pedd sweep built, with answer"}

@@ -128,7 +128,7 @@ export function weigh(item, { dependents } = {}) {
   }
   if (triggers.length) weight = 'high';
 
-  const says = [weight, ...triggers.map((t) => `touches ${t}`), undo.why, reach.why, evidence.why, ...(fanOut.level ? [fanOut.why] : [])].join(' · ');
+  const says = [weight, ...triggers.map((t) => `touches ${t}`), undo.why, reach.why, evidence.why, ...(fanOut.level === 'high' ? [fanOut.why] : [])].join(' · ');
   return { weight, table, factors: { undo, reach, evidence, fanOut }, triggers, says, missing };
 }
 

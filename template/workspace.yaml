@@ -61,6 +61,9 @@ models:
 stages:
   architect: { mode: guided }           # guided (default) · delegated (DEC-08)
 
+agents:
+  finder: claude -p --allowedTools Read,Grep,Glob --disallowedTools Edit,Write,Bash,NotebookEdit   # pedd sweep's finders: read only (ARCH-16)
+
 runners:                                # where each stage runs: local · cloud · self-hosted (DEC-18, ARCH-12)
   specify: { runner: local }
   architect: { runner: local }

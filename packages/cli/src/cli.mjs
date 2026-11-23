@@ -8,6 +8,7 @@ import { checkBranch } from './branch-check.mjs';
 import { CHECKS, runChecks } from './check.mjs';
 import { Git } from './git.mjs';
 import { changedPaths, filesAt, viewSources } from './sources.mjs';
+import { SweepError, answer as sweepAnswer, sweep as runSweep } from './sweep.mjs';
 import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewTarget, watchViews, writeViews } from './view.mjs';
 import { readWorkspace } from './workspace.mjs';
 import { VERSION } from './version.mjs';
@@ -24,7 +25,6 @@ export const NOT_BUILT = {
   status: 'needs the spec graph of pedd index (modules/trace)',
   trace: 'needs the trace links (modules/trace)',
   impact: 'needs the spec graph and the code index',
-  sweep: 'needs the open items of every stage of a change (ARCH-16)',
   overlap: 'needs each change\'s footprint from the index (ARCH-17)',
   sync: 'needs pedd overlap (ARCH-17)',
   land: 'needs pedd overlap and the queue (ARCH-17)',
@@ -59,6 +59,15 @@ const HELP = `pedd ${VERSION}
 
       <change> is CHG-nnn or the change branch's name. --no-push builds the branch without pushing.
       --remote <name> (default origin).
+
+  pedd sweep <change> [--stages specify,architect,design,plan] [--all] [--ask-all] [--accept-recommended]
+             [--from <dir>] [--json]
+      Every question the stages ahead of a change still have, in one sheet (ARCH-16): one finder per
+      stage, a session that only reads (workspace.yaml agents.finder, default claude -p with read-only
+      tools), merged, weighed, the high ones asked and the rest shown decided. Writes
+      <spec>/changes/<change>/sweep.md. --from: a folder of <stage>.json findings instead of finders.
+  pedd sweep <change> answer "all as recommended, except 3: b, 7: monthly"
+      The one reply: records each answer, says where it goes, reopens what an answer changed.
 
   pedd weigh <change> [--fan-out DLT-0001=3,DLT-0002=1] [--root <dir>] [--json]
       The weight of each assumption and deviation of a change, high, medium or low, with the factors
@@ -175,6 +184,47 @@ function weighCmd(args, { cwd, out, err }) {
   return 0;
 }
 
+async function sweepCmd(args, { cwd, out, err }) {
+  const { opts, rest } = options(args, ['all', 'ask-all', 'accept-recommended', 'json']);
+  const [change, sub, ...words] = rest;
+  const root = resolve(cwd, opts.root || '.');
+  const ws = readWorkspace(root);
+  const color = { high: red, medium: yellow, low: green };
+  if (sub === 'answer') {
+    const r = sweepAnswer(root, ws, change, words.join(' '));
+    if (opts.json) { out(JSON.stringify(r.state, null, 2)); return 0; }
+    const answered = r.state.questions.filter((q) => q.answer);
+    out(`${change}: ${answered.length} of ${r.state.questions.length} answered · ${r.paths.sheet}`);
+    for (const q of answered) out(`  ${String(q.n).padStart(2)} ${q.answer.open ? yellow('open') : q.answer.by === 'person' ? green('you ') : 'rec '} ${q.about} → ${q.answer.goesTo.replace(/`/g, '')}`);
+    if (r.unknown.length) err(yellow(`! no question numbered ${r.unknown.join(', ')}`));
+    if (r.reopened.length) out(yellow(`Round ${r.state.round}: ${r.reopened.join(', ')} assumed an answer you changed. pedd sweep ${change} rewrites only those; then answer them.`));
+    return 0;
+  }
+  if (sub) throw new SweepError(`pedd sweep ${change} ${sub}: the only subcommand is answer`);
+  const model = readSpec(readFiles(root), { root: ws.spec });
+  const stages = opts.stages ? opts.stages.split(',').map((s) => s.trim()).filter(Boolean) : null;
+  const r = await runSweep(root, ws, model, change, { stages, all: opts.all, askAll: opts['ask-all'], acceptRecommended: opts['accept-recommended'], from: opts.from });
+  if (opts.json) { out(JSON.stringify(r.state, null, 2)); return r.state.notRun.length ? 1 : 0; }
+  const s = r.state;
+  if (r.round === 2) {
+    const open = s.questions.filter((q) => q.reopened && !q.answer);
+    out(`${change}: round 2 · ${open.length} question(s) rewritten with your answers · ${r.paths.sheet}`);
+    for (const q of open) out(`  ${String(q.n).padStart(2)} ${color[q.weight](q.weight.padEnd(6))} ${q.about}`);
+    for (const n of s.notRun) err(red(`✗ the ${n.stage} finder did not run: ${n.why}`));
+    if (open.length) out(`  Answer them: pedd sweep ${change} answer "${open[0].n}: a"`);
+    return s.notRun.length ? 1 : 0;
+  }
+  if (!s.ran.length && !s.notRun.length) { out(`${change}: no stage ahead to sweep (its PRDs are ${r.where.least}); --all sweeps every stage`); return 0; }
+  const asked = s.questions.filter((q) => (s.askAll || q.weight === 'high') && !q.answer);
+  out(`${change}: swept ${s.ran.join(', ') || 'nothing'} · ${s.questions.length} question(s), ${asked.length} to answer, ${s.questions.length - asked.length} decided by recommendation · ${s.dropped.length} already answered`);
+  for (const q of s.questions) out(`  ${String(q.n).padStart(2)} ${color[q.weight](q.weight.padEnd(6))} ${q.answer ? '✓ ' : ''}${q.about}`);
+  for (const x of s.rejected) out(yellow(`  ! a ${x.stage} question was left out: it ${x.problems.join(', ')}`));
+  for (const n of s.notRun) err(red(`✗ the ${n.stage} finder did not run: ${n.why}`));
+  out(`  ${r.paths.sheet}`);
+  if (asked.length) out(`  Answer in one reply: pedd sweep ${change} answer "all as recommended, except 3: b"`);
+  return s.notRun.length ? 1 : 0;
+}
+
 function branch(args, { cwd, out }) {
   const { opts, rest } = options(args, ['no-push']);
   const [sub, ...params] = rest;
@@ -231,6 +281,7 @@ export async function main(argv, io) {
       case 'branch': return branch(args, io);
       case 'view': return await view(args, io);
       case 'weigh': return weighCmd(args, io);
+      case 'sweep': return await sweepCmd(args, io);
       case 'version': case '--version': io.out(VERSION); return 0;
       case undefined: case 'help': case '--help': io.out(HELP); return 0;
       default:
@@ -239,7 +290,7 @@ export async function main(argv, io) {
         return 2;
     }
   } catch (e) {
-    if (e instanceof BranchError) { io.err(red(`✗ ${e.message}`)); return 1; }
+    if (e instanceof BranchError || e instanceof SweepError) { io.err(red(`✗ ${e.message}`)); return 1; }
     if (e instanceof ViewError) { io.err(red(`✗ ${e.message}`)); return 2; }
     throw e;
   }
