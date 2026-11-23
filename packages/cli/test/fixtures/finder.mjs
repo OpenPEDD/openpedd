@@ -10,7 +10,7 @@ process.stdin.on('end', () => {
   const out = {
     specify: [q('who', 'Who can see the invoices of a company?'), q('copy', 'What does the empty list say?', { evidence: 'FR-BIL-02', undo: 'copy' }), { about: 'Is there a billing page?', answered_by: 'FR-BIL-01' }],
     architect: [q('store', round2 ? 'Where are invoices stored, now that everyone sees them?' : 'Where are invoices stored?', { target: 'ENT-04', undo: 'a migration', depends_on: ['who'] })],
-    plan: [],
+    plan: [q('data', 'Which test data do the invoice tests use?', { target: 'FR-BIL-03' })],
   }[stage];
   process.stdout.write(`Found:\n\`\`\`json\n${JSON.stringify(out)}\n\`\`\`\n`);
 });

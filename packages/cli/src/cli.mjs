@@ -1,7 +1,7 @@
 // The commands of `pedd`, with their arguments read. Each returns an exit code.
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
-import { readSpec, viewData, weighChange } from '@openpedd/reader';
+import { isAsked, pendingFor, readSpec, viewData, weighChange } from '@openpedd/reader';
 import { readFiles } from '@openpedd/reader/files';
 import { BranchError, cutChange, cutChild, cutEdit, renameChange } from './branch.mjs';
 import { checkBranch } from './branch-check.mjs';
@@ -66,8 +66,10 @@ const HELP = `pedd ${VERSION}
       stage, a session that only reads (workspace.yaml agents.finder, default claude -p with read-only
       tools), merged, weighed, the high ones asked and the rest shown decided. Writes
       <spec>/changes/<change>/sweep.md. --from: a folder of <stage>.json findings instead of finders.
-  pedd sweep <change> answer "all as recommended, except 3: b, 7: monthly"
-      The one reply: records each answer, says where it goes, reopens what an answer changed.
+  pedd sweep <change> answer [--as client|builder] "all as recommended, except 3: b, 7: monthly"
+      The one reply: records each answer, says where it goes, reopens what an answer changed. The client
+      answers the specify questions, the product engineer the architect and design ones; --as takes
+      only that person's. The plan's are decided by the AI.
 
   pedd weigh <change> [--fan-out DLT-0001=3,DLT-0002=1] [--root <dir>] [--json]
       The weight of each assumption and deviation of a change, high, medium or low, with the factors
@@ -191,7 +193,7 @@ async function sweepCmd(args, { cwd, out, err }) {
   const ws = readWorkspace(root);
   const color = { high: red, medium: yellow, low: green };
   if (sub === 'answer') {
-    const r = sweepAnswer(root, ws, change, words.join(' '));
+    const r = sweepAnswer(root, ws, change, words.join(' '), { who: opts.as || null });
     if (opts.json) { out(JSON.stringify(r.state, null, 2)); return 0; }
     const answered = r.state.questions.filter((q) => q.answer);
     out(`${change}: ${answered.length} of ${r.state.questions.length} answered · ${r.paths.sheet}`);
@@ -215,13 +217,15 @@ async function sweepCmd(args, { cwd, out, err }) {
     return s.notRun.length ? 1 : 0;
   }
   if (!s.ran.length && !s.notRun.length) { out(`${change}: no stage ahead to sweep (its PRDs are ${r.where.least}); --all sweeps every stage`); return 0; }
-  const asked = s.questions.filter((q) => (s.askAll || q.weight === 'high') && !q.answer);
-  out(`${change}: swept ${s.ran.join(', ') || 'nothing'} · ${s.questions.length} question(s), ${asked.length} to answer, ${s.questions.length - asked.length} decided by recommendation · ${s.dropped.length} already answered`);
-  for (const q of s.questions) out(`  ${String(q.n).padStart(2)} ${color[q.weight](q.weight.padEnd(6))} ${q.answer ? '✓ ' : ''}${q.about}`);
+  const pending = pendingFor(s);
+  const asked = s.questions.filter((q) => isAsked(q, { askAll: s.askAll }) && !q.answer);
+  const byAi = s.questions.filter((q) => q.answer?.by === 'ai').length;
+  out(`${change}: swept ${s.ran.join(', ') || 'nothing'} · ${s.questions.length} question(s): ${pending.client} for the client, ${pending.builder} for the product engineer, ${s.questions.length - asked.length - byAi} decided by recommendation, ${byAi} decided by the AI · ${s.dropped.length} already answered`);
+  for (const q of s.questions) out(`  ${String(q.n).padStart(2)} ${color[q.weight](q.weight.padEnd(6))} ${q.answer ? '✓ ' : ''}${q.about}${q.who === 'ai' ? ' (the AI)' : isAsked(q, { askAll: s.askAll }) ? ` (${q.who === 'client' ? 'the client' : 'the product engineer'})` : ''}`);
   for (const x of s.rejected) out(yellow(`  ! a ${x.stage} question was left out: it ${x.problems.join(', ')}`));
   for (const n of s.notRun) err(red(`✗ the ${n.stage} finder did not run: ${n.why}`));
   out(`  ${r.paths.sheet}`);
-  if (asked.length) out(`  Answer in one reply: pedd sweep ${change} answer "all as recommended, except 3: b"`);
+  if (asked.length) out(`  Answer in one reply each: pedd sweep ${change} answer --as client|builder "all as recommended, except 3: b"`);
   return s.notRun.length ? 1 : 0;
 }
 

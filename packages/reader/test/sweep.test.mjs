@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { applyReply, mergeQuestions, parseReply, renderSheet, rewriteReopened, stagesAhead } from '../src/index.mjs';
+import { applyAnswers, applyReply, decideByAi, mergeQuestions, pendingFor, parseReply, renderSheet, rewriteReopened, stagesAhead } from '../src/index.mjs';
 
 const q = (key, about, extra = {}) => ({ key, about, target: 'FR-JOB-01', breaks: 'x', options: [{ option: 'A', then: '' }, { option: 'B', then: '' }], recommended: 0, reason: 'r', evidence: 'FR-JOB-02', undo: '`apps/app/locales/en.json`: copy', ...extra });
 
@@ -35,8 +35,8 @@ test('mergeQuestions: a question others depend on weighs more (Fan-out); an opti
 test('renderSheet: the high are asked with their options; the rest are shown decided, overturnable', () => {
   const { questions } = mergeQuestions({ specify: [q('who', 'Who can see the job posts?', { evidence: 'guess', undo: 'logic' }), q('copy', 'What does the empty list say?')] });
   const md = renderSheet({ change: 'CHG-040', round: 1, questions, ran: ['specify'], notRun: [] });
-  assert.match(md, /## To answer \(1\)[\s\S]*### 1 · Who can see the job posts\?[\s\S]*\| a ✓ \| A \|/);
-  assert.match(md, /## Decided by their recommendation \(1\)[\s\S]*\| 2 \| What does the empty list say\? \| a: A \| low/);
+  assert.match(md, /## For the client to answer \(1\)[\s\S]*### 1 · Who can see the job posts\?[\s\S]*\| a ✓ \| A \|/);
+  assert.match(md, /## Decided by their recommendation \(1\)[\s\S]*\| 2 \| What does the empty list say\? \| a: A \| low[^\n]*\| the client \|/);
 });
 
 test('parseReply: one reply in English or Spanish; a letter picks, other words are a custom answer, later leaves it open', () => {
@@ -64,4 +64,28 @@ test('applyReply: an answer other than the recommendation reopens what assumed i
   const r2 = applyReply(state, 'ok');
   assert.equal(r2.state.questions.find((x) => x.key === 'store').answer.by, 'recommendation');
   assert.ok(r2.state.questions.every((x) => x.answer));
+});
+
+test('who answers: the client the what, the product engineer the how and the look, the AI the plan', () => {
+  const { questions } = mergeQuestions({
+    specify: [q('who', 'Who can see the job posts?', { evidence: 'guess', undo: 'logic' })],
+    design: [q('empty', 'What does the empty state of the job posts show?', { evidence: 'guess', undo: 'logic' })],
+    plan: [q('data', 'Which test data do the job post tests use?', { evidence: 'guess', undo: 'logic' })],
+  });
+  const state = decideByAi({ change: 'CHG-040', round: 1, questions });
+  const byKey = (k) => state.questions.find((x) => x.key === k);
+  assert.deepEqual(['who', 'empty', 'data'].map((k) => byKey(k).who), ['client', 'builder', 'ai']);
+  assert.equal(byKey('data').answer.by, 'ai', 'the plan is never asked');
+  assert.deepEqual(pendingFor(state), { client: 1, builder: 1 });
+  const md = renderSheet(state);
+  assert.match(md, /## For the client to answer \(1\)[\s\S]*## For the product engineer to answer \(1\)/);
+  // The client's "ok" answers only the client's; the product engineer's stay waiting.
+  const r = applyReply(state, 'ok', { who: 'client' });
+  assert.equal(byKey('who').answer.by, 'recommendation');
+  assert.equal(byKey('empty').answer, undefined);
+  assert.deepEqual(r.unknown, []);
+  assert.deepEqual(applyAnswers(r.state, [{ n: byKey('empty').n, option: 1 }], { who: 'client' }).unknown, [byKey('empty').n], 'not the client\'s to answer');
+  applyAnswers(r.state, [{ n: byKey('empty').n, option: 1 }], { who: 'builder' });
+  assert.equal(byKey('empty').answer.by, 'person');
+  assert.deepEqual(pendingFor(r.state), { client: 0, builder: 0 });
 });
