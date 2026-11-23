@@ -4,7 +4,7 @@
 /* global ELK, scopeView */
 function mount(root, data, options) {
   'use strict';
-  const KINDS = ['decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'prd', 'trace', 'changes'];
+  const KINDS = ['decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'trace', 'changes'];
   const SHOWS = {
     decisions: 'Every decision: its status, what supersedes what, and what it cites',
     entities: 'Each entity with its fields, its relations, and the modules that use it',
@@ -13,12 +13,16 @@ function mount(root, data, options) {
     context: 'The system, who uses it, its apps and packages, and the services each talks to',
     code: 'Modules, packages and their main symbols, with the requirements anchored in each',
     business: 'Roles × business processes, as-is and to-be, and the module that takes each',
-    prd: 'Per PRD: its use cases, its flows, and the transitions it touches',
+    org: 'Who reports to whom, as-is and to-be, with each role\'s span of control',
+    activity: 'Each business process as an activity: one start, its steps in each role\'s lane, its decisions and its ends',
+    prd: 'Modules and their PRDs; a PRD opens to its flows, use cases, transitions, requirements and criteria',
+    'use-cases': 'Who uses which flow: actors, use cases by module, «include» and «extend»',
+    glossary: 'Every name: what it is, how it is said, and where it is defined',
     trace: 'Per requirement: spec → design → code → test → deploy',
     changes: 'The changes in flight, what each touches, and where two overlap',
   };
   const TITLES = { prd: 'PRDs' };
-  const DIRECTION = { prd: 'RIGHT', trace: 'RIGHT', states: 'RIGHT', changes: 'RIGHT' };
+  const DIRECTION = { prd: 'RIGHT', trace: 'RIGHT', states: 'RIGHT', changes: 'RIGHT', activity: 'RIGHT', org: 'UP', 'use-cases': 'RIGHT' };
   const GROUPED_OVER = 150;
   const elk = new ELK();
   const el = (tag, attrs = {}, ...kids) => {
@@ -75,7 +79,7 @@ function mount(root, data, options) {
     return lines.slice(0, 4).map((l, i, a) => (i === 3 && words.join(' ').length > a.join(' ').length ? `${l.slice(0, width - 1)}…` : l));
   }
   const color = (type) => {
-    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change'];
+    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change', 'prd', 'initial', 'action', 'decision', 'final', 'actor', 'usecase'];
     const i = all.indexOf(type);
     return `var(--t${((i < 0 ? type.length : i) % 9) + 1})`;
   };
@@ -140,7 +144,7 @@ function mount(root, data, options) {
       const p = pos.get(s.n.id);
       const cls = ['node', s.n.type === 'group' ? 'group' : '', loose.has(s.n.id) ? 'loose' : '', state.selected === s.n.id ? 'sel' : ''].filter(Boolean).join(' ');
       const g = el('g', { class: cls, 'data-id': s.n.id, transform: `translate(${p.x},${p.y})`, tabindex: 0, role: 'button', 'aria-label': `${s.n.label}${s.idLine ? ` (${s.idLine})` : ''}`, on: {
-        click: () => (s.n.type === 'group' ? (state.expanded.add(s.n.group), draw()) : select(s.n.id)),
+        click: () => (s.n.type === 'group' ? (state.expanded.add(s.n.group), draw()) : kind === 'prd' && !state.id && s.n.type === 'prd' ? go({ id: s.n.group, selected: s.n.id }) : select(s.n.id)),
         keydown: (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); g.dispatchEvent(new MouseEvent('click')); } },
       } });
       g.append(el('rect', { width: s.width, height: s.height, rx: 7 }), el('rect', { class: 'bar-t', width: 4, height: s.height, rx: 2, fill: color(s.n.type) }));
@@ -193,7 +197,9 @@ function mount(root, data, options) {
   function draw() {
     drawSide();
     const full = data.views[state.kind];
-    const view = state.id ? scopeView(full, state.id, state.depth) : full;
+    // The prd view opens on modules and their PRDs; a PRD opens to its detail (FR-VEW-10).
+    const level1 = (v) => { const keep = new Set(v.nodes.filter((n) => n.level === 1).map((n) => n.id)); return { ...v, nodes: v.nodes.filter((n) => keep.has(n.id)), edges: v.edges.filter((e) => keep.has(e.from) && keep.has(e.to)), matrix: null }; };
+    const view = state.id ? scopeView(full, state.id, state.depth) : state.kind === 'prd' && !full.empty ? level1(full) : full;
     const box = el('div', { class: 'canvas' });
     const id = el('input', { value: state.id, placeholder: 'An ID, a group or a path', 'aria-label': 'Scope to', on: { change: (e) => go({ id: e.target.value.trim() }) } });
     const depth = el('input', { class: 'depth', type: 'number', min: 1, max: 6, value: state.depth, 'aria-label': 'Depth', on: { change: (e) => go({ depth: Number(e.target.value) || 1 }) } });

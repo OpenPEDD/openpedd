@@ -25,7 +25,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@openpedd/reader": "0.3.1"
+    "@openpedd/reader": "0.4.0"
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"

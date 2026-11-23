@@ -21,6 +21,13 @@ export function build(model, sources) {
     const group = prd.path;
     const nid = (x) => `${mod}:${x}`;
 
+    // Level 1 (FR-VEW-10): the module and its PRD, with its requirements counted by status.
+    const counts = {};
+    for (const r of prd.requirements) counts[r.status || 'no status'] = (counts[r.status || 'no status'] || 0) + 1;
+    nodes.push({ id: `module:${mod}`, type: 'module', label: mod, group: 'modules', level: 1, at: at(prd.path, null), line: 1 });
+    nodes.push({ id: `prd:${prd.path}`, type: 'prd', label: `${prd.title || prd.path} · ${prd.requirements.length} requirements`, status: prd.status || undefined, group, level: 1, at: at(prd.path, null), line: 1, requirements: Object.entries(counts).sort().map(([k, v]) => `${v} ${k}`) });
+    edges.push({ from: `module:${mod}`, to: `prd:${prd.path}`, type: 'has', at: prd.path, line: 1 });
+
     // Flows: one `### F<n> · <name>` each, with its `Step · Role · Does` table.
     const flows = new Map();
     for (const h of doc.headings) {
@@ -32,6 +39,7 @@ export function build(model, sources) {
     }
     for (const f of flows.values()) {
       nodes.push({ id: nid(f.id), type: 'flow', label: `${f.id} · ${f.name}`, group, at: at(prd.path, f.anchor), line: f.line });
+      edges.push({ from: `prd:${prd.path}`, to: nid(f.id), type: 'has', at: prd.path, line: f.line });
       f.steps.forEach((s, i) => {
         nodes.push({ id: nid(`${f.id}.${s.n}`), type: 'step', label: clean(s.does), role: s.role && s.role !== '—' ? s.role : null, group, at: at(prd.path, f.anchor), line: s.line });
         edges.push(i === 0
