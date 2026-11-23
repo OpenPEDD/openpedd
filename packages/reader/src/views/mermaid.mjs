@@ -45,6 +45,18 @@ function flowchart(view, dir) {
   return lines.join('\n');
 }
 
+function useCases(view) {
+  const lines = ['usecase-beta'];
+  for (const n of view.nodes.filter((x) => x.type === 'actor')) lines.push(`  actor ${safe(n.id)} as "${text(n.label)}"`);
+  for (const g of [...new Set(view.nodes.filter((x) => x.type !== 'actor').map((x) => x.group))]) {
+    lines.push(`  rectangle "${text(g)}" {`);
+    for (const n of view.nodes.filter((x) => x.type !== 'actor' && x.group === g)) lines.push(`    usecase ${safe(n.id)} as "${text(n.label)}"`);
+    lines.push('  }');
+  }
+  for (const e of view.edges) lines.push(e.type === 'uses' ? `  ${safe(e.from)} --> ${safe(e.to)}` : `  ${safe(e.from)} ..> ${safe(e.to)} : ${e.type === '«include»' ? '<<include>>' : '<<extend>>'}`);
+  return lines.join('\n');
+}
+
 function table(m) {
   return [`**${m.title}**`, '', `| | ${m.cols.map(cell).join(' | ')} |`, `|---|${m.cols.map(() => '---').join('|')}|`, ...m.rows.map((r, i) => `| ${cell(r)} | ${m.cells[i].map(cell).join(' | ')} |`)].join('\n');
 }
@@ -55,7 +67,7 @@ export function toMermaid(view, kind) {
   if (view.empty) return `_${kind ?? 'This view'} is empty: it needs ${view.empty.artifact}. ${view.empty.fill}._\n`;
   const parts = [];
   if (view.nodes.length) {
-    const body = kind === 'states' ? states(view) : kind === 'entities' ? er(view) : flowchart(view, ['prd', 'trace', 'changes'].includes(kind) ? 'LR' : 'TD');
+    const body = kind === 'states' ? states(view) : kind === 'entities' ? er(view) : kind === 'use-cases' ? useCases(view) : flowchart(view, ['prd', 'trace', 'changes', 'activity'].includes(kind) ? 'LR' : kind === 'org' ? 'BT' : 'TD');
     parts.push(['```mermaid', body, '```'].join('\n'));
   }
   for (const m of view.matrix || []) parts.push(table(m));

@@ -1,24 +1,29 @@
 ---
-title: "CHG-035 · Foundations first, PRDs one at a time: summary for Kevin"
-description: One page — what changed in the framework, found mapping Grupo Origen's business
+title: "CHG-035 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
+description: One page — what changed in the framework's spec, and why, found mapping OpenPEDD Cloud with it
 owner: Kevin
-version: "1.0"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
-# CHG-035 · Foundations first, PRDs one at a time
+# CHG-035 · What an entity is, the business's views, and the prd view by levels
 
-Stages: `specify` and `build`. Found mapping a client's business (Grupo Origen) with `/map --business`:
-the map gave eleven modules at once, and writing eleven PRDs before any answer is unsustainable.
+Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-017`).
 
 | What | Where |
 |---|---|
-| **The foundations are laid for where the product is going; the PRDs come one at a time**; a PRD that needs to change a foundation raises a `Q` | [`RULE-30`](../../foundations/rules/definition.md#rule-30) |
-| The to-be lists the later modules too, and the foundations are derived for them | [map, business mode](../../modules/map/prd.md#business-mode) |
-| The roadmap holds the later modules; each PRD is written when its module is next | [open](../../open/README.md#the-roadmap), and its guide in `template/` |
-| A module listed `unmapped` exists for the loose check; an entity another document cites is not loose while modules wait | [views](../../modules/views/prd.md#loose-items), `FR-VEW-20` |
-| A business map file has 8,000 tokens; `budgets` takes a folder or a file | [`RULE-04`](../../foundations/rules/writing.md#rule-04), [`ENT-16`](../../foundations/domain/workspace.md) |
-| The template README: push `main` and `dev` first; an agent's session branch moves to the one `pedd branch` names before its PR | `template/README.md`, [`ARCH-06`](../../foundations/architecture/branches.md#creating-a-branch) |
+| **Every kind of model is defined as the industry defines it**, surveyed first | [`RULE-29`](../../foundations/rules/writing.md#rule-29); [`MKT-14`](../../foundations/market/modeling-standards.md) (ER, UML state machine, use case, activity), [`MKT-15`](../../foundations/market/business-models.md) (BPMN, as-is/to-be and the gap, organization chart, business glossary) |
+| **What is an entity**, as the ER model defines it: distinguishable by a key, its own attributes, relevant to the domain, related with a cardinality, strong, weak or associative; transitions as UML's `trigger [guard]` | [Domain](../../foundations/domain/index.md#what-is-an-entity), and its guide in `template/` |
+| The `prd` view opens on modules and their PRDs; one PRD opens to its flows, use cases, transitions, requirements and criteria | [views](../../modules/views/prd.md), `FR-VEW-10` |
+| An ID with a reference's prefix (`openpedd:ENT-20`) is the reference's, never loose | `FR-VEW-11`, [`ARCH-22`](../../foundations/architecture/views.md) |
+| Criteria written as `AC-<MOD>-nn` count as criteria | `FR-VEW-12` |
+| Four views of the business: glossary, organization chart, activity per process in swimlanes, use cases | [the business's views](../../modules/views/business.md), surveyed in [`MKT-12`](../../foundations/market/view-generation.md#the-businesss-diagrams) |
+| `People` of the business map: `Role` · `How many` · `Reports to` · `Does`, one role per job; each process's steps under `### PRC-nn` | [map](../../modules/map/prd.md#business-mode) |
 
-Built: `@openpedd/reader` 0.8.0 (`unmapped` in the model; the `business` and `entities` views),
-`@openpedd/cli` 0.6.0 (`budgetOf` by folder), the scripts' `check:size`, with tests.
+| The renderer as a module an app mounts, with links, live data and a diff; `diffViews` between two builds, for the Cloud's views (`cloud:ADR-26`) | `FR-VEW-18`, `FR-VEW-19`, [`ARCH-22`](../../foundations/architecture/views.md#rendering); reader 0.7.0 |
+
+## For `build`
+
+The reader's `prd` view, `FR-VEW-11` and `FR-VEW-12` first: they remove most of the loose items a
+spec that builds on another shows. Then the four views. The Cloud renders the same `views.json`
+(`DEC-29`).

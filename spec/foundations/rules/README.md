@@ -2,7 +2,7 @@
 title: Rules
 description: How rules are written
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-23"
 ---
 
@@ -11,7 +11,7 @@ its PRD; a rule about an entity's states lives in the entity.
 
 | File | Rules | About |
 |---|---|---|
-| [writing.md](writing.md) | `RULE-01` to `RULE-09`, `RULE-27` | How every document is written, and linked |
+| [writing.md](writing.md) | `RULE-01` to `RULE-09`, `RULE-27`, `RULE-29` | How every document is written, linked, and modeled as the industry does |
 | [cycle.md](cycle.md) | `RULE-10` to `RULE-26`, `RULE-28` | How every stage works, how agents talk to people, and how they back a claim |
 | [definition.md](definition.md) | `RULE-30` | In what order a product is defined |
 

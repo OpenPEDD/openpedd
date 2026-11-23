@@ -7,7 +7,8 @@ export { readDefinition, writeDefinition, DEFINITION_STATUSES, ITEM_STATES } fro
 export { nextChangeId, changeIds } from './changes.mjs';
 export { mapData, renderMap } from './map.mjs';
 export { viewData, renderViews, toMermaid, scopeView, firstView, KINDS, VIEWS_FORMAT } from './views/index.mjs';
+export { diffViews } from './views/diff.mjs';
 export { weigh, weighChange, deltaOf, WEIGHTS, SIGNALS, FAN_OUT_THRESHOLD } from './weight.mjs';
 export { SWEEP_STAGES, FINDERS, stagesAhead, normalizeQuestion, questionProblems, mergeQuestions, isAsked, renderSheet, parseReply, whereItGoes, applyReply, applyAnswers, rewriteReopened, answersSoFar, decideByAi, pendingFor, ANSWERER, ANSWERER_LABEL } from './sweep.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.8.0';
+export const VERSION = '0.9.0';
