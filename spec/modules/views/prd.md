@@ -2,8 +2,8 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.0"
-updated: "2026-11-22"
+version: "1.1"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -29,7 +29,7 @@ so the same views render locally and in OpenPEDD Cloud, which specifies its own 
 
 ## Appetite and out of scope
 
-Two weeks of `build` for the ten views and the checks. Out of scope:
+Two weeks of `build` for the ten views and the checks; one more for the four of [the business's views](business.md). Out of scope:
 
 - Editing a view, or saving a layout: the layout is computed on each render ([`MKT-12`](../../foundations/market/view-generation.md)).
 - A view written or summarized by a model.
@@ -49,7 +49,8 @@ no other edit. What each source table holds is defined where its artifact is.
 | `context` | C4 levels 1 and 2: the system, the roles that use it, its apps and packages, and the external services each talks to | `workspace.yaml` components, `.pedd/stack.json`, `Integrations` | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read), [`ENT-16`](../../foundations/domain/workspace.md) |
 | `code` | Modules, packages and their main symbols, each linked to the requirements anchored in it | The code index | [`ARCH-19`](../../foundations/architecture/code-index.md) |
 | `business` | Roles × business processes, as-is and to-be, each process with its mark and the module that takes it | The `Business Map` | [map](../map/prd.md#business-mode) |
-| `prd` | Per PRD: its use cases (roles × actions), its flows as flowcharts, the transitions it touches | The PRD's `Permissions`, flows and `States` | [Modules](../README.md#the-sections-of-a-prd-in-order) |
+| `prd` | **Modules and their PRDs**, each PRD with its requirements counted by status. **One PRD opens** to its flows as flowcharts, its use cases (roles × actions), the transitions it touches, its requirements and their criteria | The module folders, and each PRD's flows, `Permissions`, `States`, requirements and criteria | [Modules](../README.md#the-sections-of-a-prd-in-order) |
+| `glossary` · `org` · `activity` · `use-cases` | The names; who reports to whom; each business process in swimlanes; who uses which flow | The `Glossary`, the `Business Map` and the PRDs' flows | [the business's views](business.md) |
 | `trace` | Per requirement: spec → design → code → test → deploy, each link with its state and freshness | `.pedd/spec-graph.json` and `.pedd/trace/` | [`ARCH-05`](../../foundations/architecture/traceability.md) |
 | `changes` | The changes in flight, the IDs each touches, and where two overlap | `changes/` on the base and on every change branch | [`ARCH-17`](../../foundations/architecture/landing.md#before-the-overlap-of-changes-in-flight) |
 
@@ -85,7 +86,7 @@ its view and listed by `pedd check`:
 
 | Step | Role | Does |
 |---|---|---|
-| 1 | Team | Runs `pedd view <kind> [id]`: `pedd view prd modules/billing/prd.md`, `pedd view trace FR-JOB-03` |
+| 1 | Team | Runs `pedd view <kind> [id]`: `pedd view prd modules/billing/prd.md`, `pedd view trace FR-VEW-01` |
 | 2 | — | Opens that view on that ID and what it reaches within the depth asked (`--depth`, 1 by default) |
 | 3 | — | `--format mermaid` prints it as Mermaid instead, to paste in a PR or a README |
 
@@ -117,6 +118,9 @@ its view and listed by `pedd check`:
 | `FR-VEW-07` | When `--watch` is on, the system shall rebuild the views on each save of a spec file | The map follows the writing | Team | `AC1` | F1 | `draft` |
 | `FR-VEW-08` | When `--format mermaid` is given, the system shall print the view as Mermaid | The one format GitHub renders ([`MKT-12`](../../foundations/market/view-generation.md)) | Team | `AC1` | F2 | `draft` |
 | `FR-VEW-09` | When `pedd check` runs, the system shall list every [loose item](#loose-items) and fail on each one the change adds or touches | Loose items are caught where they are made; old ones do not block new work | Team | `AC1` · `AC2` | F3 | `draft` |
+| `FR-VEW-10` | When the `prd` view opens, the system shall show the modules and their PRDs only; when a PRD is picked, its flows, use cases, transitions, requirements and criteria | A product has dozens of PRDs and hundreds of requirements: one graph of all of them is read by nobody | Team | `AC1` | F1 · F2 | `draft` |
+| `FR-VEW-11` | When the spec cites an ID with a reference's prefix (`openpedd:ENT-20`), the system shall take it as that reference's, never as loose, and link it there when `workspace.yaml` names the reference | A spec that builds on another cites it all the time | Team | `AC1` | F1 · F3 | `draft` |
+| `FR-VEW-12` | The system shall take as a requirement's criteria the IDs in its `Criteria` column that are rows of the PRD's criteria table, in the form of [`ENT-04`](../../foundations/domain/acceptance-criterion.md) or the earlier `AC-<MOD>-nn` | A spec written before `ENT-04`'s form is not missing its criteria | Team | `AC1` | F1 · F3 | `draft` |
 | `NFR-VEW-01` | The system shall give the same `views.json`, byte for byte, for the same files | The Cloud and a test can compare two builds | — | `AC1` | F1 | `draft` |
 | `NFR-VEW-02` | The system shall build every view of a 500-document spec in under 5 seconds on a laptop, and render them offline from one HTML file | It runs on every save and every PR | — | `AC1` | F1 | `draft` |
 
@@ -131,7 +135,7 @@ its view and listed by `pedd check`:
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `FR-VEW-01.AC1` | The template's spec with one entity, one PRD and one decision | `pedd view` runs | `views.json` holds the ten kinds, and the page opens on `context` |
+| `FR-VEW-01.AC1` | The template's spec with one entity, one PRD and one decision | `pedd view` runs | `views.json` holds the fourteen kinds, and the page opens on `context` |
 | `FR-VEW-01.AC2` | A decision citing an ID defined nowhere | `pedd view` runs | The page opens on `decisions`, the decision marked loose |
 | `FR-VEW-02.AC1` | A PRD with flows `F1` and `F2` | `pedd view prd <its path>` | Only that PRD's use cases, flowcharts and transitions are shown |
 | `FR-VEW-03.AC1` | A spec and its `views.json` | Every node and edge is looked up | Each names the file and line it came from |
@@ -142,6 +146,9 @@ its view and listed by `pedd check`:
 | `FR-VEW-08.AC1` | An entity with states and transitions | `pedd view states ENT-06 --format mermaid` | A `stateDiagram-v2` that GitHub renders |
 | `FR-VEW-09.AC1` | A PR adding an entity no PRD cites | `pedd check` runs in CI | It fails, naming the entity as written and its file |
 | `FR-VEW-09.AC2` | A spec with an old loose decision the PR does not touch | `pedd check` runs | It passes, and lists the decision as pressure |
+| `FR-VEW-10.AC1` | A product with 13 modules, 15 PRDs and 150 requirements | The `prd` view opens; a PRD is clicked | 13 modules and 15 PRDs, no requirement; then that PRD's flows, use cases, transitions, requirements and criteria |
+| `FR-VEW-11.AC1` | An entity citing `openpedd:ENT-20`, and `references` naming `OpenPEDD/openpedd` | `pedd check` runs | Nothing loose for it; its node links to the public spec |
+| `FR-VEW-12.AC1` | A requirement whose `Criteria` holds a criterion written `AC-<MOD>-nn`, a row of the criteria table | `pedd check` runs | The requirement is not loose for lacking a criterion |
 | `NFR-VEW-01.AC1` | The same commit | The views are built twice | The two `views.json` are identical |
 | `NFR-VEW-02.AC1` | A generated spec of 500 documents | `pedd view` runs, network off | Built in under 5 seconds, and the page renders |
 

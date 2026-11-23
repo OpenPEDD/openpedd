@@ -2,8 +2,8 @@
 title: Views generated from a model
 description: MKT-12 · How tools draw architecture, decisions, entities, permissions and traceability from one source, and which check for loose items. Surveyed 2026-11-22
 owner: Kevin
-version: "1.0"
-updated: "2026-11-22"
+version: "1.1"
+updated: "2026-11-23"
 ---
 
 # MKT-12 · Views generated from a model
@@ -56,3 +56,13 @@ marks what only a third party said. Swimm, Sourcegraph, Oso and ADR Manager retu
 | Generating and rendering are free; hosting, collaboration and history are paid. A closed generator dies with its vendor | Structurizr, Stately, LivingDoc, CodeSee |
 | Mermaid is the only format GitHub renders, and its C4 is experimental | Mermaid |
 | Nothing argued against C4 levels 1–2, entity state machines or traceability; **no tool shows changes in flight** | All |
+
+## The business's diagrams
+
+Surveyed on 2026-11-23, from search results quoting each tool's docs; no page was opened.
+
+| Diagram | How tools draw it | Generated from | What we take | Source |
+|---|---|---|---|---|
+| Activity, in swimlanes | PlantUML: a `|Role|` line opens a lane (beta) | Text by hand, or by a chatbot | One lane per role, from a process's steps table | plantuml.com/activity-diagram-beta |
+| Use cases | Mermaid `usecase-beta` since v12, one level of boundary, syntax may change; PlantUML: actors, `(use case)` | Text by hand | Roles as actors, flows as use cases, modules as boundaries; Mermaid only as an export | mermaid.js.org/syntax/usecase.html |
+| Organization chart | d3-org-chart: an `id` and a `parentId` per row, laid out with d3-flextree; ng-diagram-orgchart lays out with ELK `mrtree` | CSV or JSON of id and parent | A `Reports to` column is the parent; laid out with ELK `mrtree`, which the page already bundles | npmjs.com/package/d3-org-chart · github.com/synergycodes/ng-diagram-orgchart |

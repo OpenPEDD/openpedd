@@ -2,8 +2,8 @@
 title: Domain
 description: Every concept OpenPEDD is made of, each defined once
 owner: Kevin
-version: "1.2"
-updated: "2026-11-22"
+version: "1.3"
+updated: "2026-11-23"
 ---
 
 The domain names every concept the framework works with. A PRD that needs one of these references
@@ -34,6 +34,31 @@ it; it never redefines it ([`RULE-01`](../rules/writing.md#rule-01)).
 | `ENT-21` | [Module](module.md) | A part of the product that stands on its own, with its PRDs |
 | `ENT-22` | [Trace Link](trace-link.md) | One link in a requirement's chain, with its current state |
 | `ENT-23` | [Trace Event](trace-event.md) | One state change of a trace link, appended and never edited |
+
+## What is an entity [#what-is-an-entity]
+
+**An entity is a thing the business talks about, that is one of its own and lives in time.** It passes
+all three tests; whatever fails one goes where the table below says.
+
+| Test | Asks | Example that passes |
+|---|---|---|
+| Named | Do the people of the business say it, in their own words, before any system exists? | *An invoice*, *a request*, *a client* |
+| One of its own | Are two with the same data still two? | Invoice `0007` and `0008`, both for 100 |
+| Lives in time | Is it created, does it change or move through states, and does someone decide on it? | An invoice goes from `due` to `paid` |
+
+| Fails, because it is | Goes to |
+|---|---|
+| A role, or what a role may do | `Roles & Permissions` |
+| A value: money, a date, a plan, an address | A `Type` of the entity that holds it |
+| A part that never lives apart from its owner | A field of that entity, with its type |
+| A record only the system needs: a token, a branch, a cache, a log | The data model, in architecture |
+| A screen, a step or a message | The PRD that has it |
+| A list of what someone did | A trace or history, never an entity |
+
+A **link between two entities** is an entity only when the business names it and decides on it, with a
+life of its own: an employment, a contract, a client's delegation to an agency. Otherwise it is a field.
+**Kinds of one thing** stay one entity while they share their fields, rules and states; a kind with
+states of its own becomes its own entity.
 
 ## How an entity is written [#how-an-entity-is-written]
 

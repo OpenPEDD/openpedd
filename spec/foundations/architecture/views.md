@@ -2,8 +2,8 @@
 title: Project views
 description: ARCH-22 · How the reader turns a project's spec into the data of every view, and how pedd view and the Cloud render it
 owner: Kevin
-version: "1.0"
-updated: "2026-11-22"
+version: "1.1"
+updated: "2026-11-23"
 ---
 
 # ARCH-22 · Project views
@@ -56,7 +56,7 @@ new kind is one new module and one row in the views table.
 | Field | Holds | Rule |
 |---|---|---|
 | `nodes` | One per item: its ID, its type, its title or governing sentence as written, its status, its group (module, package or layer), its source and line | The label is copied, never shortened by a model ([`RULE-20`](../rules/cycle.md#rule-20)) |
-| `edges` | `from`, `to`, `type`; a `label` when the source table gives one (a field name, a transition's trigger) | Only edges whose two ends are nodes; an end that is missing is a loose item |
+| `edges` | `from`, `to`, `type`; a `label` when the source table gives one (a field name, a transition's trigger) | Only edges whose two ends are nodes; an end that is missing is a loose item, unless it carries a reference's prefix (`openpedd:ENT-20`): that end is the reference's |
 | `matrix` | For `security`, `business` and a PRD's use cases: `rows`, `cols`, and the cell text | A matrix is not drawn as a graph |
 | `empty` | When the view has no source: the artifact that would fill it | [`FR-VEW-06`](../../modules/views/prd.md#requirements) |
 | `loose` | Every loose item, with its kind and where it is | One list for `pedd check` and the page |
@@ -75,7 +75,11 @@ format has its own `format` number; a change to its shape is a major of the read
 | `context` | `workspace.yaml` components, `.pedd/stack.json`, `Integrations` | Component → component from the workspace graph; component → provider from `Used by` |
 | `code` | `.pedd/code-index/` | Module → package from `components`; file → requirement from the anchors |
 | `business` | `as-is.md` and `to-be.md` of the `Business Map` | Role → process; process → module |
-| `prd` | One PRD's `Permissions`, flows and `States` | Step → next step; alternate flow → the step it leaves from; requirement → its flows |
+| `prd` | The module folders; then one PRD's `Permissions`, flows, `States`, requirements and criteria | Module → PRD; inside a PRD: step → next step; alternate flow → the step it leaves from; requirement → its flows and criteria |
+| `glossary` | The `Glossary`'s tables | Name → where it is defined; old name → new name |
+| `org` | `People` of `as-is.md` and `to-be.md` | Role → the role it reports to |
+| `activity` | Each `### PRC-nn` steps table | Step → next step, each in its role's lane |
+| `use-cases` | Every PRD's `### F<n>` steps | Role → flow, inside its module |
 | `trace` | `spec-graph.json` and the events in `.pedd/trace/` | One chain per requirement, each link with its state ([`ENT-22`](../domain/trace-link.md)) |
 | `changes` | `changes/` on the base and each change branch, through the same listing `nextChangeId` uses | Change → each ID its deltas target; two changes on one ID → `overlaps` |
 
@@ -84,7 +88,7 @@ are built.
 
 ## Rendering
 
-The page is the same for `pedd view` and the Cloud: a sidebar of the ten kinds with their loose count,
+The page is the same for `pedd view` and the Cloud: a sidebar of the fourteen kinds with their loose count,
 the view in the middle, and the item as written on the right. **Layout is ELK** (layered for graphs and
 flows), bundled into the page; a graph over 150 nodes opens grouped by module, a group expanding on
 click. The Cloud renders the same `views.json` from its pinned reader on every push, and specifies its

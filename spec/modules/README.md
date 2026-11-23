@@ -2,8 +2,8 @@
 title: Modules
 description: How a module and its PRDs are written
 owner: Kevin
-version: "1.3"
-updated: "2026-11-22"
+version: "1.4"
+updated: "2026-11-23"
 ---
 
 Each folder here is a [`Module`](../foundations/domain/module.md): a part of the product that
@@ -16,7 +16,7 @@ budget (`modules/<module>/<topic>.md`).
 | [tracks](tracks/prd.md) | `TRK` | Which stages each change runs |
 | [workspace](workspace/prd.md) · [baseline](workspace/baseline.md) | `WSP` | `pedd init` and the repos; what every project starts with, and keeping up with it |
 | [trace](trace/prd.md) | `TRC` | `pedd trace` and `pedd status` |
-| [views](views/prd.md) | `VEW` | `pedd view`: every view of a project's spec, and the check for loose items |
+| [views](views/prd.md) · [business](views/business.md) | `VEW` | `pedd view`: every view of a project's spec, and the check for loose items; the glossary, the organization chart, activities and use cases |
 | [map](map/prd.md) · [specify](specify/prd.md) · [architect](architect/prd.md) · [design](design/prd.md) · [plan](plan/prd.md) · [build](build/prd.md) · [verify](verify/prd.md) · [accept](accept/prd.md) · [publish](publish/prd.md) · [measure](measure/prd.md) | `MAP` · `SPC` · `ARC` · `DSG` · `PLN` · `BLD` · `VRF` · `ACC` · `PUB` · `MSR` | One per stage |
 
 ## The sections of a PRD, in order
