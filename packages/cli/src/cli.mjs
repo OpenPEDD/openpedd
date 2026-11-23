@@ -8,6 +8,7 @@ import { checkBranch } from './branch-check.mjs';
 import { CHECKS, runChecks } from './check.mjs';
 import { Git } from './git.mjs';
 import { changedPaths, filesAt, viewSources } from './sources.mjs';
+import { RecordsError, records } from './records.mjs';
 import { SweepError, answer as sweepAnswer, sweep as runSweep } from './sweep.mjs';
 import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewTarget, watchViews, writeViews } from './view.mjs';
 import { readWorkspace } from './workspace.mjs';
@@ -70,6 +71,15 @@ const HELP = `pedd ${VERSION}
       The one reply: records each answer, says where it goes, reopens what an answer changed. The client
       answers the specify questions, the product engineer the architect and design ones; --as takes
       only that person's. The plan's are decided by the AI.
+
+  pedd records <change> pr|tasks|report|accept [--json]
+      That nothing went unrecorded (ARCH-11), counted, never judged:
+        pr      the PR's Spec section against the change's deltas: --body <file|-> or the GitHub event;
+                the task from --task, or the task branch (--head/--base, or GITHUB_HEAD_REF/BASE_REF)
+        tasks   every task of the checklist ticked with its PR merged: --checklist <file|->, the merges
+                read from --branch (default HEAD)
+        report  every delta in the Acceptance Report, heaviest first: changes/<change>/reports/, or --report
+        accept  every delta decided: keep, change or reject
 
   pedd weigh <change> [--fan-out DLT-0001=3,DLT-0002=1] [--root <dir>] [--json]
       The weight of each assumption and deviation of a change, high, medium or low, with the factors
@@ -229,6 +239,21 @@ async function sweepCmd(args, { cwd, out, err }) {
   return s.notRun.length ? 1 : 0;
 }
 
+function recordsCmd(args, { cwd, out }) {
+  const { opts, rest } = options(args, ['json']);
+  const [change, moment] = rest;
+  const root = resolve(cwd, opts.root || '.');
+  const ws = readWorkspace(root);
+  const model = readSpec(readFiles(root), { root: ws.spec });
+  const r = records({ root, cwd, ws, model, git: new Git(root), change, moment, opts });
+  if (opts.json) { out(JSON.stringify(r, null, 2)); return r.ok ? 0 : 1; }
+  const label = { pr: `the PR${r.task ? ` of task ${r.task}` : ''}`, tasks: 'the task checklist', report: 'the Acceptance Report', accept: 'the decisions' }[moment];
+  if (r.ok) { out(green(`✓ ${change}: ${label} records everything`)); return 0; }
+  for (const p of r.problems) out(red(`✗ ${p.what}`) + `\n    fix: ${p.fix}`);
+  out(red(`✗ ${change}: ${label}: ${r.problems.length} problem(s)`));
+  return 1;
+}
+
 function branch(args, { cwd, out }) {
   const { opts, rest } = options(args, ['no-push']);
   const [sub, ...params] = rest;
@@ -285,6 +310,7 @@ export async function main(argv, io) {
       case 'branch': return branch(args, io);
       case 'view': return await view(args, io);
       case 'weigh': return weighCmd(args, io);
+      case 'records': return recordsCmd(args, io);
       case 'sweep': return await sweepCmd(args, io);
       case 'version': case '--version': io.out(VERSION); return 0;
       case undefined: case 'help': case '--help': io.out(HELP); return 0;
@@ -294,7 +320,7 @@ export async function main(argv, io) {
         return 2;
     }
   } catch (e) {
-    if (e instanceof BranchError || e instanceof SweepError) { io.err(red(`✗ ${e.message}`)); return 1; }
+    if (e instanceof BranchError || e instanceof SweepError || e instanceof RecordsError) { io.err(red(`✗ ${e.message}`)); return 1; }
     if (e instanceof ViewError) { io.err(red(`✗ ${e.message}`)); return 2; }
     throw e;
   }

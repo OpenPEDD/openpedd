@@ -455,3 +455,7 @@
 {"path": "foundations/architecture/reader.md", "version": "1.3 → 1.4", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "mergeQuestions, renderSheet, applyReply"}
 {"path": "capabilities.md", "version": "1.12 → 1.13", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "pedd sweep built, with answer"}
 {"path": "foundations/architecture/sweep.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-034", "story": null, "stage": "specify", "summary": "Who answers: the client the what, the product engineer the how and the look, the AI the plan"}
+{"path": "foundations/architecture/pipeline.md", "version": "1.5 → 1.6", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "build", "summary": "pedd records: how each of the four checks reads its input, and the Spec section's format"}
+{"path": "modules/build/prd.md", "version": "1.12 → 1.13", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "build", "summary": "The Spec section's format points to ARCH-11"}
+{"path": "foundations/architecture/reader.md", "version": "1.4 → 1.5", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "build", "summary": "checkTaskPr, checkChecklist, checkReport, checkDecisions"}
+{"path": "capabilities.md", "version": "1.13 → 1.14", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "build", "summary": "pedd records"}
