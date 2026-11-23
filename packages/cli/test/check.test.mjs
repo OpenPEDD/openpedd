@@ -67,3 +67,17 @@ test('pedd branch check from the command line, on a clone', async () => {
   assert.equal(await main(['branch', 'check', '--head', 'feat/job-posts', '--target', 'dev'], io), 0, out.join('\n'));
   assert.equal(await main(['branch', 'check', '--head', 'feat/job-posts', '--target', 'main'], io), 1);
 });
+
+test('pedd weigh: a change of this repository, heaviest first; a bad argument is a usage error', async () => {
+  const lines = [], errs = [];
+  const io = { cwd: REPO, out: (s) => lines.push(s), err: (s) => errs.push(s) };
+  assert.equal(await main(['weigh', 'CHG-030'], io), 0);
+  assert.match(lines[0], /^CHG-030: \d+ assumption\(s\) and deviation\(s\), \d+ decision\(s\), heaviest first$/);
+  assert.ok(lines.some((l) => /DLT-0007/.test(l)));
+  lines.length = 0;
+  assert.equal(await main(['weigh', 'CHG-030', '--json', '--fan-out', 'DLT-0008=3'], io), 0);
+  const r = JSON.parse(lines.join('\n'));
+  assert.equal(r.groups.flatMap((g) => g.items).find((i) => i.id === 'DLT-0008').factors.fanOut.why, '3 build on it');
+  assert.equal(await main(['weigh', 'nope'], io), 2);
+  assert.equal(await main(['weigh', 'CHG-999'], io), 1);
+});

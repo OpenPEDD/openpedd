@@ -1,7 +1,7 @@
 // The commands of `pedd`, with their arguments read. Each returns an exit code.
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
-import { readSpec, viewData } from '@openpedd/reader';
+import { readSpec, viewData, weighChange } from '@openpedd/reader';
 import { readFiles } from '@openpedd/reader/files';
 import { BranchError, cutChange, cutChild, cutEdit, renameChange } from './branch.mjs';
 import { checkBranch } from './branch-check.mjs';
@@ -59,6 +59,11 @@ const HELP = `pedd ${VERSION}
 
       <change> is CHG-nnn or the change branch's name. --no-push builds the branch without pushing.
       --remote <name> (default origin).
+
+  pedd weigh <change> [--fan-out DLT-0001=3,DLT-0002=1] [--root <dir>] [--json]
+      The weight of each assumption and deviation of a change, high, medium or low, with the factors
+      that set it, heaviest first, those with the same target and reason grouped (ARCH-23).
+      --fan-out: how many tasks build on each, while the plan's dependencies are not read.
 
   pedd version · pedd help
 
@@ -141,6 +146,35 @@ async function view(args, { cwd, out, err }) {
   return 0;
 }
 
+function weighCmd(args, { cwd, out, err }) {
+  const { opts, rest } = options(args, ['json']);
+  const change = rest[0];
+  if (!/^CHG-\d+$/.test(change || '')) { err(red('✗ usage: pedd weigh CHG-nnn [--json]')); return 2; }
+  const root = resolve(cwd, opts.root || '.');
+  const ws = readWorkspace(root);
+  const model = readSpec(readFiles(root), { root: ws.spec });
+  const dependents = Object.fromEntries((opts['fan-out'] || '').split(',').filter(Boolean).map((kv) => {
+    const [id, n] = kv.split('=');
+    return [id.trim(), Number(n)];
+  }));
+  const r = weighChange(model, change, { dependents });
+  if (opts.json) { out(JSON.stringify(r, null, 2)); return r.found ? 0 : 1; }
+  if (!r.found) { err(red(`✗ ${change} has no deltas in ${ws.spec}/changes/${change}/deltas/`)); return 1; }
+  const color = { high: red, medium: yellow, low: green };
+  const n = r.groups.reduce((a, g) => a + g.items.length, 0);
+  out(`${change}: ${n} assumption(s) and deviation(s), ${r.groups.length} decision(s), heaviest first`);
+  for (const g of r.groups) {
+    const lead = g.items[0];
+    out(`${color[g.weight](g.weight.padEnd(6))} ${lead.title || lead.id} (${g.items.map((i) => i.id).join(', ')})`);
+    for (const i of g.items) {
+      out(`       ${i.says.replace(/^\w+ · /, '')}`);
+      if (i.missing.length) out(yellow(`       ! ${i.id} does not write ${i.missing.map((f) => `\`${f}\``).join(', ')}`));
+    }
+  }
+  if (r.other.length) out(`Not weighed (${r.other.map((o) => o.type || 'no type').filter((v, k, a) => a.indexOf(v) === k).join(', ')}): ${r.other.map((o) => o.id).join(', ')}`);
+  return 0;
+}
+
 function branch(args, { cwd, out }) {
   const { opts, rest } = options(args, ['no-push']);
   const [sub, ...params] = rest;
@@ -196,6 +230,7 @@ export async function main(argv, io) {
       case 'check': return await check(args, io);
       case 'branch': return branch(args, io);
       case 'view': return await view(args, io);
+      case 'weigh': return weighCmd(args, io);
       case 'version': case '--version': io.out(VERSION); return 0;
       case undefined: case 'help': case '--help': io.out(HELP); return 0;
       default:
