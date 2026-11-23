@@ -2,7 +2,7 @@
 title: How the industry defines each model
 description: MKT-13 · Entities, state machines, use cases and activities, as the ER model and UML define them, and what OpenPEDD takes from each. Surveyed 2026-11-23
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-23"
 ---
 
@@ -41,16 +41,17 @@ where it governs ([`RULE-28`](../rules/writing.md#rule-28)).
 | Use case | Something the system does that yields a result for an actor | Microsoft, *Use case diagrams: reference* |
 | System boundary | The rectangle of the system or subsystem holding its use cases | Same |
 | Association | Actor to use case | Same |
-| `«include»` · `«extend»` | Include: a base always runs the included one. Extend: an optional behavior inserted into a base, the arrow pointing to the base | Visual Paradigm; uml-diagrams.org |
+| `«include»` | Behavior common to several use cases, factored out; **the base always runs it**, at a point of its flow, and it does not stand alone: *Withdraw cash* includes *Authenticate*. Arrow from the base to the included | Warwick UML notes; Visual Paradigm |
+| `«extend»` | Optional or conditional behavior inserted into a base at one of its extension points; the base runs without it. Arrow from the extending to the base. *UML is inconsistent on whether the condition is part of the model or of each run* | O'Reilly, *Use case patterns*, ch. 9; Martin Fowler, *Include and extend* |
 | Generalization | Between actors or use cases; *its semantics for use cases is not agreed* | Same |
 
 ## Activity diagram (UML)
 
 | Element | The industry says | Source |
 |---|---|---|
-| Initial node | Where the flow starts; *one source says exactly one, IBM and Altova allow several* | IBM, *Control nodes*; Altova |
+| Initial node | Where the flow starts. **UML allows several**, each starting a flow; teaching notes and tool guides require exactly one. **OpenPEDD takes one**: a process or flow starts in one place | uml-diagrams.org, *Activity controls*; Pretoria lecture notes; Visual Paradigm |
 | Action | A unit of work, a rounded box | Edinburgh lecture notes |
 | Decision · merge | A diamond: edges out decide, edges in merge without waiting | Microsoft, *Activity diagrams: reference* |
 | Fork · join | A bar: one flow into several in parallel, and several back into one | Same |
 | Partition | The UML 2 name for a swimlane: actions grouped by who is responsible | Altova |
-| Final nodes | Activity final ends everything; flow final ends one path | Edinburgh lecture notes |
+| Final nodes | Zero or more. Activity final ends every flow, the first reached wins; flow final ends one path only. **OpenPEDD draws one activity final per way the activity ends** | uml-diagrams.org; Agile Modeling; Edinburgh lecture notes |

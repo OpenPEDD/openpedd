@@ -442,3 +442,7 @@
 {"path": "modules/views/business.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Each view drawn with the elements the industry defines"}
 {"path": "modules/map/prd.md", "version": "1.8", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "The to-be's marks are the gap"}
 {"path": "changes/CHG-031/summary.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "RULE-28, MKT-13, MKT-14, the entity as the ER model defines it"}
+{"path": "foundations/market/modeling-standards.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Include and extend in full; one initial node, a final node per ending, where UML allows more"}
+{"path": "modules/views/business.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Activity with one initial node and a final per ending; use cases with include"}
+{"path": "modules/map/prd.md", "version": "1.9", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "A process's alternates"}
+{"path": "modules/README.md", "version": "1.5", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "A step naming another flow includes it; an alternate extends"}

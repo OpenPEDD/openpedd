@@ -2,7 +2,7 @@
 title: The business's views
 description: pedd view — the glossary, the organization chart, each process in swimlanes, and who uses which flow
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 status: draft
 ---
@@ -35,8 +35,8 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 |---|---|---|---|
 | `glossary` | A business glossary ([`MKT-14`](../../foundations/market/business-models.md#business-glossary)): each term with its definition, its translations, and a link to where it is defined; names no longer used as its synonyms | The `Glossary` | A name whose `Defined in` points nowhere |
 | `org` | A hierarchical chart ([`MKT-14`](../../foundations/market/business-models.md#organization-chart)): a box per role with how many hold it, reporting lines, and each manager's span of control; as-is and to-be side by side, a role that appears or goes marked | `People` of the `Business Map` (`Role` · `How many` · `Reports to` · `Does`) | A `Reports to` naming no role |
-| `activity` | A UML activity diagram per process ([`MKT-13`](../../foundations/market/modeling-standards.md#activity-diagram-uml)): an initial node at `Starts with`, each step an action in its role's partition (swimlane), its tool beside it, a final node at the end | Each process's steps (`### PRC-nn`, `Step` · `Role` · `Does` · `Tool`) | A step whose role is not among the process's `Roles` |
-| `use-cases` | A UML use case diagram ([`MKT-13`](../../foundations/market/modeling-standards.md#use-case-diagram-uml)): roles as actors, each module as the system boundary, each main flow as a use case associated with the roles of its steps, and each alternate or exception flow as an `«extend»` of the flow it leaves from | The PRDs' flows (`### F<n>`, `Step` · `Role` · `Does`) and their alternates | A flow with no role in any step |
+| `activity` | A UML activity diagram per process ([`MKT-13`](../../foundations/market/modeling-standards.md#activity-diagram-uml)): **one initial node**, at `Starts with`; each step an action in its role's partition (swimlane), its tool beside it; a decision where an alternate leaves a step; **one final node per way it ends**, the main path's and each alternate's `Ends in` | Each process's steps (`### PRC-nn`, `Step` · `Role` · `Does` · `Tool`) and its alternates (`Flow` · `From` · `What changes` · `Ends in`) | A step whose role is not among the process's `Roles`; an alternate leaving from a step that does not exist |
+| `use-cases` | A UML use case diagram ([`MKT-13`](../../foundations/market/modeling-standards.md#use-case-diagram-uml)): roles as actors, each module as the system boundary, each main flow as a use case associated with the roles of its steps; an `«include»` from a flow to each flow one of its steps names, which it always runs (`F2`, or `organizations F1` in another module); and each alternate or exception flow as an `«extend»` of the flow it leaves from, at that step | The PRDs' flows (`### F<n>`, `Step` · `Role` · `Does`) and their alternates | A flow with no role in any step; a step naming a flow that does not exist |
 
 ## Flows
 
@@ -75,6 +75,6 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 |---|---|---|---|
 | `FR-VEW-13.AC1` | A glossary with *Invoice*, defined in an entity | The `glossary` view opens | *Invoice* is listed with what it is, and clicking it opens the entity |
 | `FR-VEW-14.AC1` | `People` with Seller and Product engineer reporting to Founder | The `org` view opens | A tree of Founder over both, Founder's span of control 2; a role only in the to-be is marked new |
-| `FR-VEW-15.AC1` | A process with three steps by two roles | Its activity opens | An initial node, two partitions, three actions in order, each tool beside its step, and a final node |
-| `FR-VEW-16.AC1` | Module `define` with flow `F1 · Start` whose step 1 is by `contributor`, and an alternate leaving from `F1.2` | The `use-cases` view opens | `contributor` associated with *Start*, inside the `define` boundary, and the alternate as an `«extend»` of *Start* |
+| `FR-VEW-15.AC1` | A process with three steps by two roles, and an alternate leaving from step 2 | Its activity opens | One initial node, two partitions, three actions in order, each tool beside its step, a decision after step 2, and two final nodes |
+| `FR-VEW-16.AC1` | Module `define` with flow `F1 · Start` whose step 1 is by `contributor`, and an alternate leaving from `F1.2` | The `use-cases` view opens | `contributor` associated with *Start*, inside the `define` boundary, and the alternate as an `«extend»` of *Start*; a step of *Start* that reads *runs `organizations F1`* draws an `«include»` from *Start* to *Sign in* |
 | `FR-VEW-17.AC1` | The `use-cases` view | `pedd view use-cases --format mermaid` | A `usecase-beta` diagram |
