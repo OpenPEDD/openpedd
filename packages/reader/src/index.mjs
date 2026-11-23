@@ -10,4 +10,4 @@ export { viewData, renderViews, toMermaid, scopeView, firstView, KINDS, VIEWS_FO
 export { weigh, weighChange, deltaOf, WEIGHTS, SIGNALS, FAN_OUT_THRESHOLD } from './weight.mjs';
 export { SWEEP_STAGES, FINDERS, stagesAhead, normalizeQuestion, questionProblems, mergeQuestions, isAsked, renderSheet, parseReply, whereItGoes, applyReply, applyAnswers, rewriteReopened, answersSoFar, decideByAi, pendingFor, ANSWERER, ANSWERER_LABEL } from './sweep.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.7.0';
+export const VERSION = '0.8.0';

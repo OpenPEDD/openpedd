@@ -11,6 +11,7 @@ import { ROOT, green, read, red, specFiles, tokens, yellow } from './lib.mjs';
 const BUDGETS = [
   ['spec/foundations/glossary.md', 4000],
   ['spec/modules/', 4000],
+  ['spec/foundations/business-map/', 8000], // every process with its steps (RULE-04)
   ['spec/foundations/', 2000],
   ['spec/decisions/', 1000],
   ['spec/open/', 2000],

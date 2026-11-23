@@ -2,7 +2,7 @@
 title: Rules
 description: How rules are written
 owner: Kevin
-version: "1.6"
+version: "1.7"
 updated: "2026-11-23"
 ---
 
@@ -13,6 +13,7 @@ its PRD; a rule about an entity's states lives in the entity.
 |---|---|---|
 | [writing.md](writing.md) | `RULE-01` to `RULE-09`, `RULE-27` | How every document is written, and linked |
 | [cycle.md](cycle.md) | `RULE-10` to `RULE-26`, `RULE-28` | How every stage works, how agents talk to people, and how they back a claim |
+| [definition.md](definition.md) | `RULE-30` | In what order a product is defined |
 
 In a product's spec, this is also where its cross-module **business rules** go: *"a trial falls to
 the free plan, it does not switch off"* applies to billing, the app and the emails at once.

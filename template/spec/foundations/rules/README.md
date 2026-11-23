@@ -2,14 +2,14 @@
 title: Rules
 description: How rules are written
 owner: <owner>
-version: "1.1"
-updated: "2026-11-22"
-source: spec/foundations/rules/README.md@1.6
+version: "1.2"
+updated: "2026-11-23"
+source: spec/foundations/rules/README.md@1.7
 ---
 
 A rule is something **every module, stage or document follows**. A rule of a single module lives in
 its PRD; a rule about an entity's states lives in the entity. How the spec itself is written and how
-the stages work are OpenPEDD's rules ([writing](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/writing.md), [cycle](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/cycle.md)), not
+the stages work are OpenPEDD's rules ([writing](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/writing.md), [cycle](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/cycle.md), [definition](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/definition.md)), not
 repeated here.
 
 This is where the product's cross-module **business rules** go: *"a trial falls to the free plan, it

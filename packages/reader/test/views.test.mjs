@@ -276,3 +276,19 @@ test('this repository and the template build, and every loose item names its fil
     for (const l of d.loose) assert.ok(l.at && l.line >= 1 && l.says && l.message, JSON.stringify(l));
   }
 });
+
+test('FR-VEW-20.AC1: a module listed unmapped exists, and an entity another document cites is not loose', () => {
+  const entity = '---\ntitle: Stock\ndescription: x\n---\n\n# ENT-01 · Stock\n\nWhat is in a cold room.\n\n## Fields\n\n| Field | Type | What it holds |\n|---|---|---|\n| `qty` | number | How much |\n';
+  const files = (listed) => ({
+    'spec/modules/README.md': `---\ntitle: Modules\n---\n\n| Module | Code | PRDs |\n|---|---|---|\n${listed ? '| `stock` | `STK` | `unmapped` |\n' : ''}`,
+    'spec/foundations/domain/stock.md': entity,
+    'spec/decisions/DEC-01-one-stock.md': '---\ntitle: One stock\n---\n\n# DEC-01 · One stock\n\nOne stock for every company ([`ENT-01`](../foundations/domain/stock.md)).\n',
+    'spec/foundations/business-map/to-be.md': '---\ntitle: To-be\n---\n\n## People\n\n| Role | How many | Reports to | Does |\n|---|---|---|---|\n| Worker | 1 | — | Counts |\n\n## Processes\n\n| ID | Process | Mark | Module | Roles |\n|---|---|---|---|---|\n| `PRC-01` | Count the stock | `taken` | `stock` | Worker |\n\n## Modules\n\n## Order\n',
+  });
+  const on = build(files(true));
+  assert.deepEqual(kinds(on, 'business'), []);
+  assert.deepEqual(kinds(on, 'entities'), []);
+  const off = build(files(false));
+  assert.deepEqual(kinds(off, 'business'), ['unknown-module PRC-01']);
+  assert.deepEqual(kinds(off, 'entities'), ['not-cited ENT-01']);
+});

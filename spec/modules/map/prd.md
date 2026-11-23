@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "1.6"
-updated: "2026-11-22"
+version: "1.7"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -95,10 +95,12 @@ in `foundations/business-map/`, in two files.
 | Order | The order they are built in, and why |
 
 1. **Drafts the as-is** from the sources; a draft from transcripts is never final until its process is confirmed.
-2. **Draws the to-be** as a marked copy of the as-is, process by process.
-3. **Derives**, never restating the map: roles to `Roles & Permissions`, the things processes and spreadsheets handle to the `Domain Model`, goal and audience to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
+2. **Draws the to-be** as a marked copy of the as-is, process by process, with **the later modules too**: what the client wants after the first version, each with the processes it will take and when ([`RULE-30`](../../foundations/rules/definition.md#rule-30)).
+3. **Derives**, never restating the map, for the first version and the later modules alike: roles to `Roles & Permissions`, the things processes and spreadsheets handle to the `Domain Model`, goal and audience to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
 4. **`map-judge`**: the tables are the ones the `business` view reads ([views](../views/prd.md#the-views)); every process has its roles and a confirmation, every pain a source, every to-be process a mark, every module the processes it takes.
 5. **`spec-approval` is the client's**: they approve the as-is as true and the to-be as wanted.
+
+The PRDs come after, **one per module as it is defined**, in the order of the to-be ([`RULE-30`](../../foundations/rules/definition.md#rule-30)). Until then each module is `unmapped` in the index, and `pedd check` reads it as the list of what is still to define, not as loose ([views](../views/prd.md#loose-items)).
 
 ## Skills, agents and tools
 

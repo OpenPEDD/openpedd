@@ -92,6 +92,24 @@ function moduleCodes(readme) {
   return codes;
 }
 
+/**
+ * The modules the index lists as `unmapped`: a row of `modules/README.md` whose cells say `unmapped`,
+ * named by its folder link or, before the folder exists, by the name in its `Module` cell (RULE-30).
+ */
+function unmappedModules(readme) {
+  const out = [];
+  for (const t of tables(readme || '')) {
+    const m = t.header.findIndex((h) => /^Module$/i.test(h)), c = t.header.findIndex((h) => /^Code$/i.test(h));
+    if (m < 0) continue;
+    for (const row of t.rows) {
+      if (!row.some((cell, i) => i !== m && /\bunmapped\b/i.test(cell))) continue;
+      const id = row[m].match(/\]\(([\w-]+)\//)?.[1] ?? row[m].replace(/[`*]/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').trim();
+      if (id) out.push({ id, code: c < 0 ? null : (code(row[c])[0] ?? null) });
+    }
+  }
+  return out;
+}
+
 /** The lines of `history.jsonl`, parsed; a line that is not JSON is kept as { error, line }. */
 export function readHistory(text) {
   return (text || '').split('\n').filter((l) => l.trim()).map((l, i) => {
@@ -130,6 +148,7 @@ export function readSpec(files, { root = 'spec' } = {}) {
       return prd;
     });
   const modules = [...new Set(prds.map((p) => p.module))].map((id) => ({ id, code: codes[id] ?? null, prds: prds.filter((p) => p.module === id).map((p) => p.path) }));
+  const unmapped = unmappedModules(all.get(`${modDir}README.md`)).filter((u) => !modules.some((x) => x.id === u.id));
 
   const historyPath = `${prefix}history/history.jsonl`;
   const history = readHistory(all.get(historyPath));
@@ -139,6 +158,7 @@ export function readSpec(files, { root = 'spec' } = {}) {
     paths,
     documents,
     modules,
+    unmapped,
     prds,
     requirements: prds.flatMap((p) => p.requirements),
     history,

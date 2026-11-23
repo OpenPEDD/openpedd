@@ -25,6 +25,7 @@ function make(model, sources) {
   ctx.entities = entitiesOf(ctx);
   ctx.foundation = (name) => foundationDoc(ctx, name);
   ctx.modules = new Map(model.modules.map((m) => [m.id, m]));
+  ctx.unmapped = new Map((model.unmapped || []).map((m) => [m.id, m]));
   return ctx;
 }
 

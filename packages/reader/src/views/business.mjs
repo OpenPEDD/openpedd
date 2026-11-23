@@ -14,7 +14,8 @@ export function build(model, sources) {
   const files = { asIs: bm.asIs && readDoc(bm.asIs.path, c.byPath.get(bm.asIs.path)?.text), toBe: bm.toBe && readDoc(bm.toBe.path, c.byPath.get(bm.toBe.path)?.text) };
   const lineIn = (doc, id) => (doc ? Math.max(1, doc.lines.findIndex((l) => l.includes(id)) + 1) : 1);
   const nodes = [], edges = [], out = [], matrix = [];
-  const known = new Set([...c.modules.keys(), ...[...c.modules.values()].map((m) => m.code).filter(Boolean)]);
+  // A module the index lists as `unmapped` exists: it waits for its PRD (RULE-30, FR-VEW-20).
+  const known = new Set([...c.modules.keys(), ...c.unmapped.keys(), ...[...c.modules.values(), ...c.unmapped.values()].map((m) => m.code).filter(Boolean)]);
 
   for (const [side, file] of [['as-is', bm.asIs], ['to-be', bm.toBe]]) {
     if (!file) continue;

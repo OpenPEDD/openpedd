@@ -2,8 +2,8 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.0"
-updated: "2026-11-22"
+version: "1.1"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -56,20 +56,20 @@ no other edit. What each source table holds is defined where its artifact is.
 ## Loose items [#loose-items]
 
 **Nothing in the spec stands alone** ([`RULE-27`](../../foundations/rules/writing.md#rule-27)). Each loose item is marked in
-its view and listed by `pedd check`:
+its view and listed by `pedd check`. **A module listed `unmapped` in the modules index is a module still to define**, not a gap: while a business map waits for its PRDs, one at a time ([`RULE-30`](../../foundations/rules/definition.md#rule-30)), what only those PRDs would cite is not loose:
 
 | Loose item | Found in |
 |---|---|
 | An ID cited, in the spec, a code anchor, a test name or a delta, that is defined nowhere | Every view |
 | A decision that cites no requirement, entity, rule, architecture document or module | `decisions` |
 | A `Supersedes` that names no decision, or a loop of them | `decisions` |
-| An entity no PRD cites | `entities` |
+| An entity no PRD cites, unless modules are still `unmapped` and another document cites it | `entities` |
 | A requirement no flow carries, in a PRD with flows | `prd` |
 | A `FR` with no criterion | `prd` |
 | A transition in a PRD's `States` that its entity does not have | `prd` · `states` |
 | A role or action in a PRD's `Permissions` that `Roles & Permissions` does not have | `security` · `prd` |
 | A table nothing protects, when the project lists its tables | `security` |
-| A to-be process with no mark, or taken by a module that does not exist | `business` |
+| A to-be process with no mark, or taken by a module that does not exist; a module listed `unmapped` in the index exists | `business` |
 
 ## Flows
 
@@ -85,7 +85,7 @@ its view and listed by `pedd check`:
 
 | Step | Role | Does |
 |---|---|---|
-| 1 | Team | Runs `pedd view <kind> [id]`: `pedd view prd modules/billing/prd.md`, `pedd view trace FR-JOB-03` |
+| 1 | Team | Runs `pedd view <kind> [id]`: `pedd view prd modules/billing/prd.md`, `pedd view trace FR-VEW-01` |
 | 2 | — | Opens that view on that ID and what it reaches within the depth asked (`--depth`, 1 by default) |
 | 3 | — | `--format mermaid` prints it as Mermaid instead, to paste in a PR or a README |
 
@@ -117,6 +117,7 @@ its view and listed by `pedd check`:
 | `FR-VEW-07` | When `--watch` is on, the system shall rebuild the views on each save of a spec file | The map follows the writing | Team | `AC1` | F1 | `draft` |
 | `FR-VEW-08` | When `--format mermaid` is given, the system shall print the view as Mermaid | The one format GitHub renders ([`MKT-12`](../../foundations/market/view-generation.md)) | Team | `AC1` | F2 | `draft` |
 | `FR-VEW-09` | When `pedd check` runs, the system shall list every [loose item](#loose-items) and fail on each one the change adds or touches | Loose items are caught where they are made; old ones do not block new work | Team | `AC1` · `AC2` | F3 | `draft` |
+| `FR-VEW-20` | While the modules index lists a module as `unmapped`, the system shall take it as existing, and an entity another document cites as not loose for lack of a PRD | The PRDs come one at a time; the modules waiting are the plan, not a gap | Team | `AC1` | F3 | `draft` |
 | `NFR-VEW-01` | The system shall give the same `views.json`, byte for byte, for the same files | The Cloud and a test can compare two builds | — | `AC1` | F1 | `draft` |
 | `NFR-VEW-02` | The system shall build every view of a 500-document spec in under 5 seconds on a laptop, and render them offline from one HTML file | It runs on every save and every PR | — | `AC1` | F1 | `draft` |
 
@@ -142,6 +143,7 @@ its view and listed by `pedd check`:
 | `FR-VEW-08.AC1` | An entity with states and transitions | `pedd view states ENT-06 --format mermaid` | A `stateDiagram-v2` that GitHub renders |
 | `FR-VEW-09.AC1` | A PR adding an entity no PRD cites | `pedd check` runs in CI | It fails, naming the entity as written and its file |
 | `FR-VEW-09.AC2` | A spec with an old loose decision the PR does not touch | `pedd check` runs | It passes, and lists the decision as pressure |
+| `FR-VEW-20.AC1` | A to-be process taken by `stock`, listed `unmapped` in the modules index with no folder, and an entity cited only by a decision | `pedd check` runs | Neither is loose; with `stock` gone from the index, both are |
 | `NFR-VEW-01.AC1` | The same commit | The views are built twice | The two `views.json` are identical |
 | `NFR-VEW-02.AC1` | A generated spec of 500 documents | `pedd view` runs, network off | Built in under 5 seconds, and the page renders |
 

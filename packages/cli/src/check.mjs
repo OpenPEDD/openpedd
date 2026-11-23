@@ -21,11 +21,17 @@ const HISTORY_FIELDS = ['path', 'version', 'date', 'change', 'story', 'stage', '
 /** English prose averages about 4 characters per token (RULE-04). */
 export const tokens = (text) => Math.ceil(text.length / 4);
 
-/** The budget of a document by its layer (RULE-04), with workspace.yaml's `budgets` over the defaults. */
+/**
+ * The budget of a document (RULE-04), with workspace.yaml's `budgets` over the defaults: by layer
+ * (`foundations: 2000`) or by folder or file, a key with a slash (`foundations/business-map/: 8000`); the
+ * longest one that holds the document wins over its layer.
+ */
 export function budgetOf(path, spec, budgets = {}) {
   const rel = path.startsWith(`${spec}/`) ? path.slice(spec.length + 1) : null;
   if (rel === null) return null;
-  const b = { modules: 4000, foundations: 2000, glossary: 4000, decisions: 1000, open: 2000, deltas: 1000, ...budgets };
+  const b = { modules: 4000, foundations: 2000, glossary: 4000, decisions: 1000, open: 2000, deltas: 1000, 'foundations/business-map/': 8000, ...budgets };
+  const folder = Object.keys(b).filter((k) => k.includes('/') && (rel === k || rel.startsWith(k.endsWith('/') ? k : `${k}/`))).sort((x, y) => y.length - x.length)[0];
+  if (folder) return Number(b[folder]);
   if (rel === 'foundations/glossary.md') return b.glossary;
   if (/^changes\/(archive\/)?CHG-\d+\/deltas\//.test(rel)) return b.deltas;
   return b[rel.split('/')[0]] ?? null;
