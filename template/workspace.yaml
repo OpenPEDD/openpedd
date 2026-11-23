@@ -53,6 +53,7 @@ branches:                               # ARCH-06
   design: "design/{slug}"
   architecture: "arch/{slug}"
   task: "task/{slug}-{task}"            # one per checklist item
+  edit: "edit/{change}-{n}"             # one per edit to an agreed request
 
 models:
   profile: balanced                     # max · balanced (default) · economy (DEC-07)
@@ -71,6 +72,11 @@ runners:                                # where each stage runs: local · cloud 
 review:                                 # ARCH-13
   blocking: high                        # the lowest severity that blocks
   ci: true                              # the judges run on every PR
+
+views: {}                               # files in the code a view reads instead of a spec table (ENT-02)
+#  security:
+#    permissions: { path: <path>, format: toml }   # role → action → yes · own · no
+#    policies: { path: <migrations dir>, format: sql }  # each CREATE POLICY … ON <table>
 
 budgets:                                # tokens per document, by layer (RULE-04): the numbers npm run check:size uses
   modules: 4000

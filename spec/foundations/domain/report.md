@@ -14,7 +14,7 @@ conversations**. If deciding needs any of those, the report is badly built.
 | Report | Written by | Holds | Read at | Budget |
 |---|---|---|---|---|
 | `Delta Report` | `architect` · `design`, on close | Each delta with its reason, alternative and impact | `architecture-merge` · `design-merge` | 2,000 tokens |
-| `Acceptance Report` | `verify`, on close | **The whole delegated block**: each `FR` with its `AC`, test and screenshot; assumptions and deviations, heaviest first ([`ARCH-22`](../architecture/weight.md)); open findings; impact | `acceptance-merge` | 3,000 tokens, without screenshots |
+| `Acceptance Report` | `verify`, on close | **The whole delegated block**: each `FR` with its `AC`, test and screenshot; assumptions and deviations, heaviest first ([`ARCH-23`](../architecture/weight.md)); open findings; impact | `acceptance-merge` | 3,000 tokens, without screenshots |
 
 A report decides, it does not narrate: each delta comes with what has to be decided, not the story of
 how it got there. **Every item is shown as it is written, with its ID only in parentheses**

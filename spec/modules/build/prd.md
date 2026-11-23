@@ -37,7 +37,7 @@ opens to work.
 2. **Makes the tests pass in small, steady steps**, one criterion at a time, and cleans up. Unit tests are its call: where the logic deserves them, without a ritual around them.
 3. **Anchors the code** to the IDs it implements: `@spec FR-JOB-03@<hash>`, or a line in `spec.lock`.
 4. **Runs the `Delivery Pipeline` checks**: lint, types, tests, fitness functions.
-5. **Records deltas**: a `deviation` when the spec cannot be met as written (with the technical reason and the alternative); an `assumption` when it had to fill a gap. Each says what backs it and what changes if it is rejected; `pedd` weighs it ([`ARCH-22`](../../foundations/architecture/weight.md)).
+5. **Records deltas**: a `deviation` when the spec cannot be met as written (with the technical reason and the alternative); an `assumption` when it had to fill a gap. Each says what backs it and what changes if it is rejected; `pedd` weighs it ([`ARCH-23`](../../foundations/architecture/weight.md)).
 6. **Opens the PR against the change branch**, never the base, with the **Spec** section: IDs covered, deviations, assumptions. Even if it says there are none. A check fails the PR if the section and the task's deltas do not match ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)).
 7. **Ticks the task** in the implementation sub-issue's checklist when the PR merges into the change branch. The PR names that sub-issue with a non-closing word (`Part of …`), so the merge does not close it.
 

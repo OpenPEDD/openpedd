@@ -69,11 +69,13 @@ changed, not why: the why lives in the document.
 ## Checks
 
 ```bash
-npm run check          # every check
+npm run check          # every check: pedd check, then the template's
+npm run pedd -- check  # the spec checks of pedd (packages/cli): frontmatter, links, size, status, history, loose items
+npm run pedd -- view   # every view of the spec as a map, in .pedd/view/ (npm run view: the framework map, in .pedd/map/)
 npm run check:links    # relative links to a missing file or anchor
 npm run check:size     # token budget per document (RULE-04)
 npm run check:template # template/ scripts and guides match their sources
-npm test               # the reader's tests (packages/reader)
+npm test               # the tests of every package (packages/reader, packages/cli)
 ```
 
 Run them before committing. `check:size` fails only when a document over budget grows. A guide in

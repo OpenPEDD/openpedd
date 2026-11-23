@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "1.5"
-updated: "2026-11-20"
+version: "1.6"
+updated: "2026-11-22"
 status: draft
 ---
 
@@ -83,21 +83,21 @@ in `foundations/business-map/`, in two files.
 | `as-is.md` | Holds |
 |---|---|
 | People | Teams, roles, how many people each, who reports to whom. Roles, not names |
-| Processes | One `PRC-nn` each: what starts it, its steps, the role of each step, the tool used, how often. **Confirmed by** the role that runs it |
+| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps as `Step` · `Role` · `Does` · `Tool`. **Confirmed by** the role that runs it |
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 
 | `to-be.md` | Holds |
 |---|---|
 | People | The roles that appear, change or go |
-| Processes | Each `PRC` marked `kept`, `changed` or `taken` by the system, with the module that takes it |
+| Processes | A table `PRC` · `Mark` (`kept` · `changed` · `taken`) · `Module` · `Roles`: the module that takes it, and the roles that run it after |
 | Modules | The modules that follow, each with the processes it takes and the pains it removes |
 | Order | The order they are built in, and why |
 
 1. **Drafts the as-is** from the sources; a draft from transcripts is never final until its process is confirmed.
 2. **Draws the to-be** as a marked copy of the as-is, process by process.
 3. **Derives**, never restating the map: roles to `Roles & Permissions`, the things processes and spreadsheets handle to the `Domain Model`, goal and audience to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
-4. **`map-judge`**: every process has its roles and a confirmation, every pain a source, every to-be process a mark, every module the processes it takes.
+4. **`map-judge`**: the tables are the ones the `business` view reads ([views](../views/prd.md#the-views)); every process has its roles and a confirmation, every pain a source, every to-be process a mark, every module the processes it takes.
 5. **`spec-approval` is the client's**: they approve the as-is as true and the to-be as wanted.
 
 ## Skills, agents and tools

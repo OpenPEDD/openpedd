@@ -2,7 +2,7 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.10"
+version: "1.11"
 updated: "2026-11-23"
 ---
 
@@ -23,7 +23,8 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [Code maps for agents](code-maps.md) | `MKT-09` | How tools give an agent a map of the repo, and when they rebuild it |
 | [Monorepos for a product and its sites](monorepos.md) | `MKT-10` | One repo with the app, its sites and a shared design system, each deployed apart |
 | [Mapping a business](business-mapping.md) | `MKT-11` | How an organization is mapped as it is and as it will be, and who approves it |
-| [Weighing and completeness](weighing.md) | `MKT-12` | How tools weigh what to ask and what an agent assumed, check nothing went unrecorded, and list their skills |
+| [Views generated from a model](view-generation.md) | `MKT-12` | How tools draw architecture, decisions, entities and permissions from one source, and which check for loose items |
+| [Weighing and completeness](weighing.md) | `MKT-13` | How tools weigh what to ask and what an agent assumed, check nothing went unrecorded, and list their skills |
 
 ## How a market document is written
 

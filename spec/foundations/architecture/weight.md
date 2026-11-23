@@ -1,16 +1,16 @@
 ---
 title: Weight
-description: ARCH-22 · How each decision the AI takes alone is weighed high, medium or low, so a person is asked, and reads, the heavy ones first
+description: ARCH-23 · How each decision the AI takes alone is weighed high, medium or low, so a person is asked, and reads, the heavy ones first
 owner: Kevin
 version: "1.0"
 updated: "2026-11-23"
 ---
 
-# ARCH-22 · Weight: the heavy ones first
+# ARCH-23 · Weight: the heavy ones first
 
 A change leaves many small decisions nobody asked a person about: a sweep question decided by its
 recommendation, an `assumption`, a `deviation`. **Each one gets a weight, `high`, `medium` or `low`,
-and the weight decides what a person is asked and in what order they read** ([`RULE-27`](../rules/cycle.md#rule-27)).
+and the weight decides what a person is asked and in what order they read** ([`RULE-28`](../rules/cycle.md#rule-28)).
 
 `pedd` computes it from the fields; the agent never sets it ([`RULE-24`](../rules/cycle.md#rule-24)).
 What the agent writes is the evidence and what changes if the answer is no.
@@ -27,7 +27,7 @@ What the agent writes is the evidence and what changes if the answer is no.
 ## The table
 
 The weight comes from a table, **not from multiplying scores**: a product gives the same number to a
-hard-to-undo guess and to a harmless certainty ([`MKT-12`](../market/weighing.md)). Undo leads.
+hard-to-undo guess and to a harmless certainty ([`MKT-13`](../market/weighing.md)). Undo leads.
 
 | Undo ↓ · Reach → | `high` | `medium` | `low` |
 |---|---|---|---|

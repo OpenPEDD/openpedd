@@ -2,8 +2,8 @@
 title: Workspace
 description: ENT-16 · The repos of a project and how they connect
 owner: Kevin
-version: "1.6"
-updated: "2026-11-20"
+version: "1.7"
+updated: "2026-11-22"
 ---
 
 # ENT-16 · Workspace
@@ -32,3 +32,4 @@ shared packages ([`DEC-22`](../../decisions/DEC-22-monorepo-default.md)). It is 
 | `runners` | Where each stage runs: `local`, `cloud` or `self-hosted`, its environment and how many in parallel ([`ARCH-12`](../architecture/running.md#where-agents-run)) |
 | `review` | What blocks a change, and whether the judges run on every PR ([`ARCH-13`](../architecture/review.md)) |
 | `budgets` | Token budgets per layer |
+| `views` | The files in the code a view reads instead of a table in the spec: `security.permissions`, `security.policies`, each a path and its format ([`ENT-02`](foundation.md#tables-the-views-read)) |

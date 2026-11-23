@@ -32,7 +32,7 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 3. **Drops what is already answered**: by the spec, citing the ID ([`RULE-01`](../rules/writing.md#rule-01)), or by the code, citing the file ([`RULE-21`](../rules/cycle.md#rule-21)).
 4. **Merges duplicates**: a question is asked once, by its owner. The what (`specify`) comes before the how (`architect`), and the how before the look (`design`).
 5. **Writes each question** with: what it is about, in words ([`RULE-20`](../rules/cycle.md#rule-20)); what breaks if it is guessed; an options table; **the recommendation and its reason**; what backs it; and the questions that depend on it.
-6. **Weighs and orders them** ([`ARCH-22`](weight.md)): `high` first, and among them what blocks a gate first, then hardest-first. A question that depends on another is written assuming the recommended answer.
+6. **Weighs and orders them** ([`ARCH-23`](weight.md)): `high` first, and among them what blocks a gate first, then hardest-first. A question that depends on another is written assuming the recommended answer.
 7. **Shows the sheet**, in the chat and in `changes/<CHG>/sweep.md`: the `high` as questions; below them, the `medium` and `low` **as decided by their recommendation**, one line each with its weight. The person answers in one reply, and may overturn any line: *"all as recommended, except 3 and 7: …"*.
 8. **Writes each answer where it belongs**, through the stage that owns it ([`RULE-10`](../rules/cycle.md#rule-10)):
 

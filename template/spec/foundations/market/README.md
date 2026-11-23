@@ -2,8 +2,8 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: <owner>
-version: "1.0"
-updated: "2026-11-20"
+version: "1.1"
+updated: "2026-11-22"
 source: spec/foundations/market/README.md@1.10
 ---
 

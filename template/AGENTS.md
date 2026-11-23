@@ -42,6 +42,7 @@ lives. How the spec is laid out is in [spec/README.md](spec/README.md).
 | **To a person, say what an item says, not its ID**: the ID only in parentheses | [`RULE-20`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/cycle.md#rule-20) |
 | A claim about the current system cites the code that proves it | [`RULE-21`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/cycle.md#rule-21) |
 | A check that did not run is reported as not run | [`RULE-22`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/cycle.md#rule-22) |
+| Nothing stands alone: every item linked by ID to what it governs | [`RULE-27`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/writing.md#rule-27) |
 
 ### Language
 
@@ -77,6 +78,7 @@ changed, not why: the why lives in the document.
 npm run check          # both checks
 npm run check:links    # relative links to a missing file or anchor
 npm run check:size     # token budget per document (RULE-04)
+pedd view              # every view of the spec as a map, once the CLI is installed
 ```
 
 Run them before committing. `check:size` fails only when a document over budget grows.

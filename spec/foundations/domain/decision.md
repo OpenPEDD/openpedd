@@ -2,8 +2,8 @@
 title: Decision
 description: ENT-18 · A record that closes a question
 owner: Kevin
-version: "1.1"
-updated: "2026-11-10"
+version: "1.2"
+updated: "2026-11-22"
 ---
 
 # ENT-18 · Decision
@@ -21,7 +21,9 @@ A decision record closes a question ([`RULE-08`](../rules/writing.md#rule-08)). 
 | `closes` | The `Q-nn` it answers, if any |
 | `decision` | What was decided |
 | `why` | The reason, in a few lines |
-| `status` | For an `ADR`: `proposed`, `accepted` or `superseded` by another |
+| `supersedes` | The record it replaces, if any |
+| `cites` | The IDs it changes, cited in its body: requirements, entities, rules, architecture documents, modules |
+| `status` | For an `ADR`: `proposed`, `accepted` or `superseded` by another. A `DEC` is `accepted` until a later one names it in `supersedes` |
 | `date` | When it was decided |
 
 **The full reason lives in the document that implements the decision**, in prose. The record keeps

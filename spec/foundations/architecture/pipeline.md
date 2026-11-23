@@ -32,7 +32,7 @@ model** ([`RULE-24`](../rules/cycle.md#rule-24)). Each check fails with what is 
 |---|---|---|
 | Task PR | The PR's **Spec** section against the change's deltas | An assumption or deviation listed in the PR has no delta, or a delta of the task is not listed; the section is missing, even with nothing to list |
 | Before `verify` builds the report | The implementation sub-issue's checklist ([`ARCH-15`](tracker.md#the-tasks)) | A task is unticked, or ticked without a merged PR |
-| The `Acceptance Report` | The report against the change's deltas | A delta, finding or improvement of the change is not in it, or is not in its place by weight ([`ARCH-22`](weight.md)) |
+| The `Acceptance Report` | The report against the change's deltas | A delta, finding or improvement of the change is not in it, or is not in its place by weight ([`ARCH-23`](weight.md)) |
 | `acceptance-merge` | Every delta of the change | One has no decision |
 
 An assumption the code shows and no delta records is a `finding` of `verify`'s Spec lens, and counts

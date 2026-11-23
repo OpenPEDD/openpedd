@@ -2,7 +2,7 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.11"
+version: "1.12"
 updated: "2026-11-23"
 ---
 
@@ -32,7 +32,8 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Code index](code-index.md) | `ARCH-19` | The generated map of the code per module and package, read first by every agent |
 | [Spec reader](reader.md) | `ARCH-20` | The package that reads a spec, shared by the CLI and the Cloud |
 | [A request's branch](requests.md) | `ARCH-21` | Numbering a change, the definition's status, editing once agreed, renaming at approval |
-| [Weight](weight.md) | `ARCH-22` | How each decision the AI takes alone is weighed, so the heavy ones are asked and read first |
+| [Project views](views.md) | `ARCH-22` | How the reader makes the data of every view of a project, and how it is rendered |
+| [Weight](weight.md) | `ARCH-23` | How each decision the AI takes alone is weighed, so the heavy ones are asked and read first |
 
 ## How an architecture document is written
 

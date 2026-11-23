@@ -50,7 +50,7 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 |---|---|
 | Summary | The scope, how many `FR`s and `NFR`s, how many deltas of each type |
 | Per `FR` | Its `AC`, its test (green), its screenshot |
-| Assumptions | What was assumed, where, the alternative, how it reverts, what changes if rejected. **By weight** ([`ARCH-22`](../../foundations/architecture/weight.md)): `high` first, one by one, each with its factors; `low` grouped at the end, accepted in one reply |
+| Assumptions | What was assumed, where, the alternative, how it reverts, what changes if rejected. **By weight** ([`ARCH-23`](../../foundations/architecture/weight.md)): `high` first, one by one, each with its factors; `low` grouped at the end, accepted in one reply |
 | Deviations | What could not be done as written, why, the alternative, how it reverts. By weight, as assumptions |
 | Open findings | The advisory ones, which did not go back to `build` |
 | Improvements | What the agents of every stage would improve, deduplicated, none applied ([`RULE-25`](../../foundations/rules/cycle.md#rule-25)); and each stage's work, wait and rounds, from the trace |

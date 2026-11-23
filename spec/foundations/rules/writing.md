@@ -2,8 +2,8 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.0"
-updated: "2026-11-04"
+version: "1.1"
+updated: "2026-11-22"
 ---
 
 These rules apply to every document in every spec that uses OpenPEDD, this one included.
@@ -83,3 +83,12 @@ mentions it. If the answer does not deserve a recorded decision, it was not an o
 A contradiction is never parked. Stop, decide which version stays, write the reason in the document
 that wins, and correct the one that loses as if it had always said the new thing ([`RULE-02`](#rule-02)).
 **A list of unresolved contradictions is a spec that knows it contradicts itself and moves on.**
+
+## RULE-27 · Nothing stands alone [#rule-27]
+
+Every item is linked to what it governs or to what governs it, by ID: a decision cites what it
+changes, an entity is cited by a PRD that uses it, a requirement is carried by a flow and proved by a
+criterion, and every ID cited is defined somewhere. **The views of a project are drawn from those links
+([`ARCH-22`](../architecture/views.md)), so an item with none is invisible in them, and nobody knows
+what breaks when it changes.** `pedd check` fails on a loose item a change adds or touches
+([views](../../modules/views/prd.md#loose-items)).

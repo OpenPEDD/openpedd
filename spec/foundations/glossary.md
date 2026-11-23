@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.17"
+version: "1.18"
 updated: "2026-11-23"
 ---
 
@@ -28,6 +28,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Project template · `template/` | What `pedd init` installs, and what a project is copied from before the CLI exists | [workspace](../modules/workspace/baseline.md#the-project-template) |
 | Monorepo · `mono` · `split` · `apps/` · `packages/ui` · `packages/i18n` | The default layout, and the split one for when a part must be apart | [`ARCH-03`](architecture/workspace.md) |
 | Code index · `.pedd/code-index/` | The generated map of the code, per module and package, read first by every agent | [`ARCH-19`](architecture/code-index.md) |
+| `pedd view` · project view · `views.json` | A map of what a project's spec defines, one per kind, generated from its IDs, tables and links | [views](../modules/views/prd.md) · [`ARCH-22`](architecture/views.md) |
+| Loose item | An item linked to nothing that governs it or that it governs; `pedd check` fails on it | [`RULE-27`](rules/writing.md#rule-27) |
 | Extension · Cloud add-on | A skill outside the core, free; one OpenPEDD hosts or pays for, paid | [`BIZ-04`](business/open-core.md#extensions) |
 | i18n · base locale · `locales` | Every text a person reads is a key; English is the base, other languages are locales | [`DEC-21`](../decisions/DEC-21-i18n-from-day-one.md) |
 
@@ -62,7 +64,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
-| Weight: `high` · `medium` · `low` | How costly a decision the AI took alone is to get wrong; decides what is asked and the order it is read in | [`ARCH-22`](architecture/weight.md) |
+| Weight: `high` · `medium` · `low` | How costly a decision the AI took alone is to get wrong; decides what is asked and the order it is read in | [`ARCH-23`](architecture/weight.md) |
 | Undeclared assumption | One `verify` finds in the code with no delta | [`ARCH-11`](architecture/pipeline.md#nothing-left-unrecorded) |
 | Request · `requested` · `dropped` · `retired` | A client's ask, which is a change branch from the start; a change dropped before approval, or retired after it | [`ARCH-21`](architecture/requests.md) · [`ENT-06`](domain/change.md) |
 | `draft` · `confirmed` · `agreed` | A request's definition: being defined, confirmed by the client, taken by the builder and queued. `agreed` is not `accepted`, a change's status after `accept` | [`DEC-27`](../decisions/DEC-27-request-agreed.md) |

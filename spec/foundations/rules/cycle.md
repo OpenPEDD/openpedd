@@ -135,10 +135,10 @@ and asks the heavy ones ([`ARCH-16`](../architecture/sweep.md)); after it, a gap
 **Why:** a question asked alone costs the person a wait per question, and the work stops at each one.
 With a recommendation, most answers are one word.
 
-## RULE-27 · What the AI decides alone is weighed by the tool, and read heaviest first [#rule-27]
+## RULE-28 · What the AI decides alone is weighed by the tool, and read heaviest first [#rule-28]
 
 Every sweep question, `assumption` and `deviation` gets a weight, `high`, `medium` or `low`, from a
-fixed table ([`ARCH-22`](../architecture/weight.md)). The agent writes what backs it and what changes
+fixed table ([`ARCH-23`](../architecture/weight.md)). The agent writes what backs it and what changes
 if the answer is no; `pedd` computes the weight. Only the `high` are asked; the person reads them
 first, and accepts the `low` in one reply.
 

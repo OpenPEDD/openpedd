@@ -1,0 +1,52 @@
+# The checks on every pull request (ARCH-13): the branch check first, then the spec checks and the
+# tests. pedd is this repo's own packages/cli.
+name: pedd
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pedd-${{ github.event.pull_request.number }}
+  cancel-in-progress: true          # only the last commit counts
+
+jobs:
+  branch:
+    name: Branch check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0              # every branch, to see where this one was cut from
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: pedd branch check
+        run: npx pedd branch check --head "$HEAD_REF" --target "$BASE_REF"
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+
+  check:
+    name: Spec checks and tests
+    needs: branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: pedd check
+        run: npx pedd check --against "origin/$BASE_REF"   # a document over budget fails if it grew, a loose item if the PR adds or touches it
+        env:
+          BASE_REF: ${{ github.base_ref }}
+      - run: node scripts/check-template.mjs
+      - run: npm test

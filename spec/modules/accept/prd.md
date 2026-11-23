@@ -34,7 +34,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 
 ## Procedure
 
-1. **The person reads the report**, heaviest first ([`ARCH-22`](../../foundations/architecture/weight.md)), and, if they want, tries the feature in the test environment, with its Walkthrough if it has one.
+1. **The person reads the report**, heaviest first ([`ARCH-23`](../../foundations/architecture/weight.md)), and, if they want, tries the feature in the test environment, with its Walkthrough if it has one.
 2. **Decides each delta**:
 
 | Decision | What happens |

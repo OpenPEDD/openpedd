@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.8"
-updated: "2026-11-20"
+version: "1.9"
+updated: "2026-11-22"
 ---
 
 # ENT-02 · Foundation
@@ -34,3 +34,20 @@ includes.
 
 A foundation that does not exist yet is marked empty, not invented. `map` fills what it can infer
 from existing code ([`modules/map`](../../modules/map/prd.md)).
+
+## Tables the views read [#tables-the-views-read]
+
+Three foundations hold a table the `security` and `context` views are drawn from
+([views](../../modules/views/prd.md#the-views)). When the code already holds it, `workspace.yaml` names
+the file under `views` ([`ENT-16`](workspace.md)) and the spec keeps only the why: **the code wins over a
+copy** ([`RULE-01`](../rules/writing.md#rule-01)).
+
+| Foundation | Table | Columns | Or, from the code |
+|---|---|---|---|
+| `Roles & Permissions` | Permissions | `Action`, then one column per role; each cell `yes`, `own` or `no` | `security.permissions`: a TOML, YAML or JSON file of role → action → `yes` · `own` · `no`, or a script that prints it as JSON |
+| `Security Policy` | Tables | `Table` · `Protected by` · `Roles` · `Rule` | `security.policies`: the migrations, where each `CREATE POLICY … ON <table>` is a row |
+| `Security Policy` | Rules | One `SEC-nn` heading per rule, the rule as its title | — |
+| `Integrations` | Providers | `INT-nn` · `Provider` · `Used for` · `Used by` (the components) | — |
+
+A project that lists its tables lists all of them: one with no row in `Tables` is loose
+([`RULE-27`](../rules/writing.md#rule-27)).

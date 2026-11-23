@@ -1,8 +1,8 @@
 ---
 title: Spec reader
-description: ARCH-20 · The package that parses a spec, reads and writes a change's definition, numbers changes and renders the map, shared by the CLI and the Cloud
+description: ARCH-20 · The package that parses a spec, reads and writes a change's definition, numbers changes, renders the map and makes the data of a project's views, shared by the CLI and the Cloud
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
@@ -13,7 +13,7 @@ published to npm under Apache-2.0 ([`DEC-26`](../../decisions/DEC-26-reader-pack
 `npm run view` and OpenPEDD Cloud import it and parse every spec through it.
 
 ```
- files at a commit ──▶ @openpedd/reader ──▶ model ──┬──▶ pedd (check · index · status · branch)
+ files at a commit ──▶ @openpedd/reader ──▶ model ──┬──▶ pedd (check · index · status · branch · view)
  (path → text)                                      ├──▶ npm run view → the map, a static site
                                                     └──▶ OpenPEDD Cloud (pinned version)
 ```
@@ -26,6 +26,7 @@ published to npm under Apache-2.0 ([`DEC-26`](../../decisions/DEC-26-reader-pack
 | `readDefinition` · `writeDefinition` | A change's `definition.md` | Its frontmatter and items ([`ARCH-18`](definition.md#the-file)); written back in the same format |
 | `nextChangeId` | The change IDs found on the base, its history and every change branch | The next `CHG-nnn` ([`ARCH-21`](requests.md#numbering)) |
 | `renderMap` | The model | The map's HTML, the one `npm run view` writes |
+| `viewData` · `renderViews` · `toMermaid` | The model, and the code index, trace and change branches when given | The data of every project view, its page, and one view as Mermaid ([`ARCH-22`](views.md)) |
 
 It works only on the files the caller hands it. The CLI reads them from the
 working tree; the Cloud fetches them from GitHub, only the spec's path ([`ENT-16`](../domain/workspace.md)).

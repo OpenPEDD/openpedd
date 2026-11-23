@@ -2,8 +2,8 @@
 title: Domain
 description: Every concept OpenPEDD is made of, each defined once
 owner: Kevin
-version: "1.1"
-updated: "2026-11-08"
+version: "1.2"
+updated: "2026-11-22"
 ---
 
 The domain names every concept the framework works with. A PRD that needs one of these references
@@ -34,3 +34,18 @@ it; it never redefines it ([`RULE-01`](../rules/writing.md#rule-01)).
 | `ENT-21` | [Module](module.md) | A part of the product that stands on its own, with its PRDs |
 | `ENT-22` | [Trace Link](trace-link.md) | One link in a requirement's chain, with its current state |
 | `ENT-23` | [Trace Event](trace-event.md) | One state change of a trace link, appended and never edited |
+
+## How an entity is written [#how-an-entity-is-written]
+
+One file per entity: `# ENT-nn · <Name>`, a paragraph on what it is, then its tables, under these
+headings, which the `entities` and `states` views read ([views](../../modules/views/prd.md#the-views)):
+
+| Heading | Columns | Rule |
+|---|---|---|
+| `Fields` | `Field` · `Type` · `What it holds` | A field that names another entity, by link or by ID, is a relation; its type says how many: `ENT-07[]` |
+| `States` | `State` · `Means` | Only when it has states |
+| `Transitions` | `From` · `To` · `When` · `By` | Every state but the first is reached by one row; `By` is the role or stage that moves it |
+
+`Type` may be left out of an entity that is never stored. A PRD cites the entity, never copies these
+tables; the modules that use an entity are the ones whose PRDs cite it
+([`RULE-27`](../rules/writing.md#rule-27)).

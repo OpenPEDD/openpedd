@@ -1,12 +1,12 @@
 ---
 title: Weighing and completeness
-description: MKT-12 · How tools weigh what to ask and what an agent assumed, check that nothing went unrecorded, and list their skills. Surveyed 2026-11-23
+description: MKT-13 · How tools weigh what to ask and what an agent assumed, check that nothing went unrecorded, and list their skills. Surveyed 2026-11-23
 owner: Kevin
 version: "1.0"
 updated: "2026-11-23"
 ---
 
-# MKT-12 · Weighing and completeness
+# MKT-13 · Weighing and completeness
 
 Surveyed on 2026-11-23. Spec Kit and OpenSpec were read in their own files; the rest from their docs,
 and where the page could not be fetched, from search summaries, marked so ([`RULE-22`](../rules/cycle.md#rule-22)).

@@ -94,7 +94,7 @@ stage, to improve the process: `pedd status --time` and the Cloud dashboard.
 | Pipeline | CI time, and reruns of unstable tests |
 | Assumptions per task | Many means the spec came incomplete |
 | Undeclared assumptions | Per task, those `verify` found in the code with no delta: the agent hid a decision |
-| Decisions per weight | Per weight, how many were kept, changed or rejected at `accept`: a `low` often changed means the weight table is wrong ([`ARCH-22`](../../foundations/architecture/weight.md#calibration)) |
+| Decisions per weight | Per weight, how many were kept, changed or rejected at `accept`: a `low` often changed means the weight table is wrong ([`ARCH-23`](../../foundations/architecture/weight.md#calibration)) |
 | Delivery | Deploy frequency, change lead time, change failure rate and time to restore, from `publish` and Launch |
 
 **They measure the process, not people.** Waiting at a gate is shown per stage, never ranked by
