@@ -2,7 +2,7 @@
 title: Spec reader
 description: ARCH-20 · The package that parses a spec, reads and writes a change's definition, numbers changes, renders the map and makes the data of a project's views, shared by the CLI and the Cloud
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-23"
 ---
 
@@ -26,6 +26,7 @@ published to npm under Apache-2.0 ([`DEC-26`](../../decisions/DEC-26-reader-pack
 | `readDefinition` · `writeDefinition` | A change's `definition.md` | Its frontmatter and items ([`ARCH-18`](definition.md#the-file)); written back in the same format |
 | `nextChangeId` | The change IDs found on the base, its history and every change branch | The next `CHG-nnn` ([`ARCH-21`](requests.md#numbering)) |
 | `renderMap` | The model | The map's HTML, the one `npm run view` writes |
+| `mergeQuestions` · `renderSheet` · `applyReply` | What a sweep's finders returned; the sheet's state and the person's reply | The questions merged, weighed and ordered; the sheet; each answer and where it goes, and what it reopens ([`ARCH-16`](sweep.md#how-pedd-runs-it)) |
 | `weigh` · `weighChange` | One item's fields, or the model and a `CHG-nnn` | Its weight with its factors; or the change's assumptions and deviations weighed, grouped, heaviest first ([`ARCH-23`](weight.md#how-pedd-reads-each-factor)) |
 | `viewData` · `renderViews` · `toMermaid` | The model, and the code index, trace and change branches when given | The data of every project view, its page, and one view as Mermaid ([`ARCH-22`](views.md)) |
 

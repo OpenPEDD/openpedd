@@ -1,6 +1,6 @@
 {
   "name": "@openpedd/cli",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "pedd, the OpenPEDD command line: the spec checks, the project views, and the one way a work branch is cut",
   "license": "Apache-2.0",
   "type": "module",
@@ -19,6 +19,7 @@
   "files": [
     "src",
     "bin",
+    "prompts",
     "README.md"
   ],
   "engines": {
