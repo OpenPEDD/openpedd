@@ -433,3 +433,12 @@
 {"path": "foundations/architecture/views.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "How the four views and the prd levels read their sources; prefixed IDs are the reference's"}
 {"path": "modules/README.md", "version": "1.4", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "The business's views PRD"}
 {"path": "changes/CHG-031/summary.md", "version": "1.0", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Summary for Kevin"}
+{"path": "foundations/market/modeling-standards.md", "version": "1.0", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "New: MKT-13, entities, state machines, use cases and activities as the ER model and UML define them"}
+{"path": "foundations/market/business-models.md", "version": "1.0", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "New: MKT-14, BPMN, as-is/to-be and the gap, organization chart, business glossary"}
+{"path": "foundations/market/README.md", "version": "1.11", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "MKT-13 and MKT-14"}
+{"path": "foundations/rules/writing.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "RULE-28: every kind of model is defined as the industry defines it"}
+{"path": "foundations/rules/README.md", "version": "1.6", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "RULE-28 in writing"}
+{"path": "foundations/domain/index.md", "version": "1.4", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "What is an entity, as the ER model defines it; kind and key; cardinality; transitions as UML"}
+{"path": "modules/views/business.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Each view drawn with the elements the industry defines"}
+{"path": "modules/map/prd.md", "version": "1.8", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "The to-be's marks are the gap"}
+{"path": "changes/CHG-031/summary.md", "version": "1.1", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "RULE-28, MKT-13, MKT-14, the entity as the ER model defines it"}

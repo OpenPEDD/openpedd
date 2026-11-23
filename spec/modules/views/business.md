@@ -2,7 +2,7 @@
 title: The business's views
 description: pedd view — the glossary, the organization chart, each process in swimlanes, and who uses which flow
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-23"
 status: draft
 ---
@@ -14,8 +14,8 @@ status: draft
 The [ten views](prd.md#the-views) show how the spec is built. A business owner, a product engineer and a
 new member also ask **what each word means, who reports to whom, how a process runs, and who uses
 what**. Four more views answer from what the spec already holds, drawn by the same reader
-([`ARCH-22`](../../foundations/architecture/views.md)) and laid out as the survey found
-([`MKT-12`](../../foundations/market/view-generation.md#the-businesss-diagrams)). It ends with the whole
+([`ARCH-22`](../../foundations/architecture/views.md)) and drawn as the industry defines each diagram ([`RULE-28`](../../foundations/rules/writing.md#rule-28)) and laid out as
+[`MKT-12`](../../foundations/market/view-generation.md#the-businesss-diagrams) found. It ends with the whole
 business readable from the spec, in `pedd view` and in OpenPEDD Cloud.
 
 ## Success metric
@@ -33,10 +33,10 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 
 | `kind` | Shows | Fed by | Loose when |
 |---|---|---|---|
-| `glossary` | Every name, grouped as written, with what it is and a link to where it is defined; names no longer used beside their new name | The `Glossary` | A name whose `Defined in` points nowhere |
-| `org` | The roles as a tree, each with how many and what it does; as-is and to-be side by side, a role that appears or goes marked | `People` of the `Business Map` (`Role` · `How many` · `Reports to` · `Does`) | A `Reports to` naming no role |
-| `activity` | One diagram per process: one lane per role, each step in its lane in order, its tool beside it | Each process's steps (`### PRC-nn`, `Step` · `Role` · `Does` · `Tool`) | A step whose role is not among the process's `Roles` |
-| `use-cases` | The roles as actors, each module as a boundary, and each flow of its PRDs as a use case, linked to the roles of its steps | The PRDs' flows (`### F<n>`, `Step` · `Role` · `Does`) | A flow with no role in any step |
+| `glossary` | A business glossary ([`MKT-14`](../../foundations/market/business-models.md#business-glossary)): each term with its definition, its translations, and a link to where it is defined; names no longer used as its synonyms | The `Glossary` | A name whose `Defined in` points nowhere |
+| `org` | A hierarchical chart ([`MKT-14`](../../foundations/market/business-models.md#organization-chart)): a box per role with how many hold it, reporting lines, and each manager's span of control; as-is and to-be side by side, a role that appears or goes marked | `People` of the `Business Map` (`Role` · `How many` · `Reports to` · `Does`) | A `Reports to` naming no role |
+| `activity` | A UML activity diagram per process ([`MKT-13`](../../foundations/market/modeling-standards.md#activity-diagram-uml)): an initial node at `Starts with`, each step an action in its role's partition (swimlane), its tool beside it, a final node at the end | Each process's steps (`### PRC-nn`, `Step` · `Role` · `Does` · `Tool`) | A step whose role is not among the process's `Roles` |
+| `use-cases` | A UML use case diagram ([`MKT-13`](../../foundations/market/modeling-standards.md#use-case-diagram-uml)): roles as actors, each module as the system boundary, each main flow as a use case associated with the roles of its steps, and each alternate or exception flow as an `«extend»` of the flow it leaves from | The PRDs' flows (`### F<n>`, `Step` · `Role` · `Does`) and their alternates | A flow with no role in any step |
 
 ## Flows
 
@@ -74,7 +74,7 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 | ID | Given | When | Then |
 |---|---|---|---|
 | `FR-VEW-13.AC1` | A glossary with *Invoice*, defined in an entity | The `glossary` view opens | *Invoice* is listed with what it is, and clicking it opens the entity |
-| `FR-VEW-14.AC1` | `People` with Seller and Product engineer reporting to Founder | The `org` view opens | A tree of Founder over both; a role only in the to-be is marked new |
-| `FR-VEW-15.AC1` | A process with three steps by two roles | Its activity opens | Two lanes, three steps in order, each tool beside its step |
-| `FR-VEW-16.AC1` | Module `define` with flow `F1 · Start` whose step 1 is by `contributor` | The `use-cases` view opens | `contributor` linked to *Start*, inside the `define` boundary |
+| `FR-VEW-14.AC1` | `People` with Seller and Product engineer reporting to Founder | The `org` view opens | A tree of Founder over both, Founder's span of control 2; a role only in the to-be is marked new |
+| `FR-VEW-15.AC1` | A process with three steps by two roles | Its activity opens | An initial node, two partitions, three actions in order, each tool beside its step, and a final node |
+| `FR-VEW-16.AC1` | Module `define` with flow `F1 · Start` whose step 1 is by `contributor`, and an alternate leaving from `F1.2` | The `use-cases` view opens | `contributor` associated with *Start*, inside the `define` boundary, and the alternate as an `«extend»` of *Start* |
 | `FR-VEW-17.AC1` | The `use-cases` view | `pedd view use-cases --format mermaid` | A `usecase-beta` diagram |
