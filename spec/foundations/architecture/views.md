@@ -2,7 +2,7 @@
 title: Project views
 description: ARCH-22 · How the reader turns a project's spec into the data of every view, and how pedd view and the Cloud render it
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
@@ -26,6 +26,8 @@ here, how its data is made. Answers [`NFR-VEW-01`](../../modules/views/prd.md#re
 | `viewData` | The model, plus the code index, the trace and the change branches' `changes/` when the caller has them | `views.json`: every view and every loose item |
 | `renderViews` | `views.json` | One HTML file, no network, with the renderer and its layout inlined |
 | `toMermaid` | One view | Its Mermaid text: `flowchart`, `stateDiagram-v2`, `erDiagram`, or a table for a matrix |
+| `diffViews` | Two `views.json` of one `format` | Per kind, the nodes added, removed or changed (label, status, group) and the edges added or removed, with their counts |
+| `mountViews` | An element, `views.json`, and `links`, `overlay`, `diff`, `labels` | The page's renderer as an ES module, for an app to mount; ELK passed in |
 
 **Each kind is one module of the reader** (`views/<kind>.mjs`) that exports `build(model, sources)`. It
 reads one kind of artifact and nothing is listed by hand, so a new file of that kind is a new node. A
@@ -91,8 +93,8 @@ are built.
 The page is the same for `pedd view` and the Cloud: a sidebar of the fourteen kinds with their loose count,
 the view in the middle, and the item as written on the right. **Layout is ELK** (layered for graphs and
 flows), bundled into the page; a graph over 150 nodes opens grouped by module, a group expanding on
-click. The Cloud renders the same `views.json` from its pinned reader on every push, and specifies its
-own screen ([`DEC-29`](../../decisions/DEC-29-views-free-cloud-live.md)).
+click. `renderViews` inlines `mountViews` into one file; the Cloud mounts it with its own links, live
+data by ID and a diff, and specifies its own screen ([`DEC-29`](../../decisions/DEC-29-views-free-cloud-live.md)).
 
 ## Decisions
 

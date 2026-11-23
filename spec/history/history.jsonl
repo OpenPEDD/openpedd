@@ -472,3 +472,6 @@
 {"path": "modules/README.md", "version": "1.5", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "A step naming another flow includes it; an alternate extends"}
 {"path": "foundations/market/README.md", "version": "1.12", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "MKT-14 and MKT-15 after main's MKT-13"}
 {"path": "foundations/rules/README.md", "version": "1.7", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "RULE-29 in writing, after main's RULE-28 in cycle"}
+{"path": "foundations/architecture/views.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "diffViews and mountViews; the Cloud mounts the renderer"}
+{"path": "modules/views/prd.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "FR-VEW-18 diffViews, FR-VEW-19 the renderer as a module"}
+{"path": "changes/CHG-033/summary.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "specify", "summary": "mountViews and diffViews, reader 0.7.0"}

@@ -1,11 +1,30 @@
-// The renderer of the project views, run in the page. It reads `views.json` and lays out each graph
-// with ELK on every render: no position is stored (ARCH-22). `mount(root, data, options)` draws into one
-// element; `scopeView` and `ELK` are inlined before it.
-/* global ELK, scopeView */
-function mount(root, data, options) {
+// The renderer of the project views (ARCH-22, FR-VEW-19). It reads `views.json` and lays out each graph
+// with ELK on every render: no position is stored. `renderViews` inlines it into one page; an app imports
+// it from `@openpedd/reader/mount` and mounts it into one element, with `views.css`.
+import { scopeView } from './scope.mjs';
+
+/**
+ * Draws every view into `root`.
+ *
+ * @param data              what `viewData` gives; `loose` may be absent (a host that strips it).
+ * @param options.ELK       the ELK constructor (`elkjs/lib/elk.bundled.js`); `globalThis.ELK` by default.
+ * @param options.open      { kind, id, depth }: where it opens.
+ * @param options.sourceBase what a node's `at` is joined to for its link.
+ * @param options.links     node → [{ label, href }]: the host's links of a node (the Cloud's PRD, request, deploy).
+ * @param options.overlay   ID → { state, label }: live data drawn on top, never part of `data`.
+ * @param options.diff      what `diffViews(older, data)` gives: added and changed nodes marked, removed ones listed.
+ * @param options.labels    the page's words, by key, in the person's language.
+ * @param options.hash      false when the host keeps the state in its own URL; `onNavigate(state)` is told.
+ */
+export function mountViews(root, data, options) {
   'use strict';
+  options = options || {};
+  const ELK = options.ELK ?? globalThis.ELK;
+  const L = (key, fallback) => (options.labels && options.labels[key]) || fallback;
+  const useHash = options.hash !== false;
+  if (options.sourceBase == null) options = { ...options, sourceBase: '' };
   const KINDS = ['decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'trace', 'changes'];
-  const SHOWS = {
+  const SHOWS0 = {
     decisions: 'Every decision: its status, what supersedes what, and what it cites',
     entities: 'Each entity with its fields, its relations, and the modules that use it',
     states: 'One state machine per entity',
@@ -21,7 +40,8 @@ function mount(root, data, options) {
     trace: 'Per requirement: spec → design → code → test → deploy',
     changes: 'The changes in flight, what each touches, and where two overlap',
   };
-  const TITLES = { prd: 'PRDs' };
+  const SHOWS = Object.fromEntries(Object.entries(SHOWS0).map(([k, v]) => [k, L(`shows.${k}`, v)]));
+  const TITLES = { prd: L('kind.prd', 'PRDs') };
   const DIRECTION = { prd: 'RIGHT', trace: 'RIGHT', states: 'RIGHT', changes: 'RIGHT', activity: 'RIGHT', org: 'UP', 'use-cases': 'RIGHT' };
   const GROUPED_OVER = 150;
   const elk = new ELK();
@@ -37,15 +57,18 @@ function mount(root, data, options) {
     for (const kid of kids.flat()) if (kid != null) n.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
     return n;
   };
-  const looseOf = (kind) => data.loose.filter((l) => l.view === kind);
+  const allLoose = data.loose || [];
+  const looseOf = (kind) => allLoose.filter((l) => l.view === kind);
+  const diffOf = (kind) => (options.diff && options.diff.kinds && options.diff.kinds[kind]) || null;
   const first = KINDS.find((k) => looseOf(k).length) || 'context';
+  const live = options.overlay || {};
   const state = { kind: first, id: '', depth: 1, selected: null, expanded: new Set() };
   const fromHash = () => {
     const [kind, id, depth] = decodeURIComponent(location.hash.slice(1)).split('|');
     if (KINDS.includes(kind)) Object.assign(state, { kind, id: id || '', depth: Number(depth) || 1 });
   };
   if (options.open && KINDS.includes(options.open.kind)) Object.assign(state, { kind: options.open.kind, id: options.open.id || '', depth: Number(options.open.depth) || 1 });
-  if (location.hash) fromHash();
+  if (useHash && location.hash) fromHash();
 
   const side = el('nav', { class: 'side', 'aria-label': 'Views' });
   const main = el('main', { class: 'main' });
@@ -55,17 +78,20 @@ function mount(root, data, options) {
   function go(patch) {
     Object.assign(state, patch);
     const h = `#${[state.kind, state.id, state.id ? state.depth : ''].filter((x) => x !== '').join('|')}`;
-    if (location.hash !== h) history.replaceState(null, '', h);
+    if (useHash && location.hash !== h) history.replaceState(null, '', h);
+    if (options.onNavigate) options.onNavigate({ kind: state.kind, id: state.id, depth: state.depth });
     draw();
   }
 
   function drawSide() {
     side.replaceChildren(
       el('h1', { text: data.product ? `${data.product} · views` : 'Project views' }),
-      el('p', { class: 'meta', text: [data.commit && `commit ${data.commit}`, `${data.loose.length} loose`].filter(Boolean).join(' · ') }),
+      el('p', { class: 'meta', text: [data.commit && `commit ${data.commit}`, data.loose ? `${allLoose.length} ${L('loose', 'loose')}` : null].filter(Boolean).join(' · ') }),
       ...KINDS.map((k) => {
-        const v = data.views[k], n = looseOf(k).length;
-        return el('button', { 'aria-current': state.kind === k ? 'page' : null, class: v.empty ? 'empty' : null, title: SHOWS[k], on: { click: () => go({ kind: k, id: '', selected: null, expanded: new Set() }) } }, k, el('span', { class: `n${n ? '' : ' zero'}`, text: n }));
+        const v = data.views[k];
+        if (!v) return null;
+        const n = looseOf(k).length, d = diffOf(k), changed = d ? d.count.added + d.count.removed + d.count.changed : 0;
+        return el('button', { 'aria-current': state.kind === k ? 'page' : null, class: v.empty ? 'empty' : null, title: SHOWS[k], on: { click: () => go({ kind: k, id: '', selected: null, expanded: new Set() }) } }, L(`kind.${k}`, k), data.loose ? el('span', { class: `n${n ? '' : ' zero'}`, text: n }) : null, changed ? el('span', { class: 'n diff', title: L('changed', 'changed'), text: `±${changed}` }) : null);
       }),
     );
   }
@@ -142,12 +168,14 @@ function mount(root, data, options) {
     });
     for (const s of sized) {
       const p = pos.get(s.n.id);
-      const cls = ['node', s.n.type === 'group' ? 'group' : '', loose.has(s.n.id) ? 'loose' : '', state.selected === s.n.id ? 'sel' : ''].filter(Boolean).join(' ');
+      const dk = diffOf(kind), mark = dk ? (dk.added.includes(s.n.id) ? 'added' : dk.changed.includes(s.n.id) ? 'changed' : '') : '';
+      const cls = ['node', s.n.type === 'group' ? 'group' : '', loose.has(s.n.id) ? 'loose' : '', state.selected === s.n.id ? 'sel' : '', mark, live[s.n.id] ? `live live-${live[s.n.id].state}` : ''].filter(Boolean).join(' ');
       const g = el('g', { class: cls, 'data-id': s.n.id, transform: `translate(${p.x},${p.y})`, tabindex: 0, role: 'button', 'aria-label': `${s.n.label}${s.idLine ? ` (${s.idLine})` : ''}`, on: {
         click: () => (s.n.type === 'group' ? (state.expanded.add(s.n.group), draw()) : kind === 'prd' && !state.id && s.n.type === 'prd' ? go({ id: s.n.group, selected: s.n.id }) : select(s.n.id)),
         keydown: (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); g.dispatchEvent(new MouseEvent('click')); } },
       } });
       g.append(el('rect', { width: s.width, height: s.height, rx: 7 }), el('rect', { class: 'bar-t', width: 4, height: s.height, rx: 2, fill: color(s.n.type) }));
+      if (live[s.n.id]) g.append(el('circle', { class: 'dot', cx: s.width - 9, cy: 9, r: 4 }));
       s.lines.forEach((l, i) => g.append(el('text', { x: 12, y: 20 + i * 16, text: l })));
       if (s.idLine) g.append(el('text', { class: 'nid', x: 12, y: 20 + s.lines.length * 16, text: s.idLine }));
       g.append(el('title', { text: `${s.n.label}${s.idLine ? ` (${s.idLine})` : ''}` }));
@@ -189,9 +217,16 @@ function mount(root, data, options) {
   function drawLoose(kind) {
     const list = looseOf(kind);
     if (!list.length) return null;
-    return el('section', { class: 'looselist' }, el('h3', { text: `${list.length} loose` }), el('ul', {}, list.map((l) => el('li', {},
+    return el('section', { class: 'looselist' }, el('h3', { text: `${list.length} ${L('loose', 'loose')}` }), el('ul', {}, list.map((l) => el('li', {},
       el('button', { class: 'tool', on: { click: () => select(l.id) }, text: l.says }), ' ', el('code', { text: l.id === l.says ? '' : `(${l.id})` }), ` ${l.message} · `,
       el('a', { href: options.sourceBase + l.at, text: `${l.at}:${l.line}` })))));
+  }
+
+  /** What a diff found removed: not in the view drawn, so listed under it. */
+  function drawRemoved(kind) {
+    const d = diffOf(kind);
+    if (!d || !d.removed.length) return null;
+    return el('section', { class: 'looselist removed' }, el('h3', { text: `${d.removed.length} ${L('removed', 'removed since the version compared')}` }), el('ul', {}, d.removed.map((n) => el('li', {}, el('span', { text: n.label }), ' ', el('code', { text: /^[a-z-]+:/.test(n.id) ? '' : `(${n.id})` })))));
   }
 
   function draw() {
@@ -201,10 +236,10 @@ function mount(root, data, options) {
     const level1 = (v) => { const keep = new Set(v.nodes.filter((n) => n.level === 1).map((n) => n.id)); return { ...v, nodes: v.nodes.filter((n) => keep.has(n.id)), edges: v.edges.filter((e) => keep.has(e.from) && keep.has(e.to)), matrix: null }; };
     const view = state.id ? scopeView(full, state.id, state.depth) : state.kind === 'prd' && !full.empty ? level1(full) : full;
     const box = el('div', { class: 'canvas' });
-    const id = el('input', { value: state.id, placeholder: 'An ID, a group or a path', 'aria-label': 'Scope to', on: { change: (e) => go({ id: e.target.value.trim() }) } });
+    const id = el('input', { value: state.id, placeholder: L('scopePlaceholder', 'An ID, a group or a path'), 'aria-label': 'Scope to', on: { change: (e) => go({ id: e.target.value.trim() }) } });
     const depth = el('input', { class: 'depth', type: 'number', min: 1, max: 6, value: state.depth, 'aria-label': 'Depth', on: { change: (e) => go({ depth: Number(e.target.value) || 1 }) } });
     main.replaceChildren(
-      el('div', { class: 'bar' }, el('h2', { text: TITLES[state.kind] || state.kind }), el('span', { class: 'src', title: (full.sources || []).join('\n'), text: (full.sources || []).length > 3 ? `${full.sources.slice(0, 2).join(' · ')} · and ${full.sources.length - 2} more` : (full.sources || []).join(' · ') }), el('span', { class: 'spacer' }), id, depth, state.id ? el('button', { on: { click: () => go({ id: '' }) }, text: 'Whole view' }) : null),
+      el('div', { class: 'bar' }, el('h2', { text: TITLES[state.kind] || state.kind }), el('span', { class: 'src', title: (full.sources || []).join('\n'), text: (full.sources || []).length > 3 ? `${full.sources.slice(0, 2).join(' · ')} · and ${full.sources.length - 2} more` : (full.sources || []).join(' · ') }), el('span', { class: 'spacer' }), id, depth, state.id ? el('button', { on: { click: () => go({ id: '' }) }, text: L('wholeView', 'Whole view') }) : null),
       box,
     );
     if (full.empty) {
@@ -215,7 +250,7 @@ function mount(root, data, options) {
       box.append(el('p', { class: 'hint', style: 'margin:16px', text: 'Laying out…' }));
       drawGraph(state.kind, view, box).catch((e) => box.replaceChildren(el('p', { class: 'hint', style: 'margin:16px', text: `The layout failed: ${e.message}` })));
     }
-    const extra = [drawMatrices(view), drawLoose(state.kind)].filter(Boolean);
+    const extra = [drawMatrices(view), drawLoose(state.kind), drawRemoved(state.kind)].filter(Boolean);
     if (extra.length) main.append(el('div', { style: view.nodes.length ? 'max-height:45%;overflow:auto;border-top:1px solid var(--line)' : 'overflow:auto;flex:1' }, extra));
     if (!view.nodes.length && !full.empty && !extra.length) box.append(el('p', { class: 'hint', style: 'margin:16px', text: 'Nothing to draw.' }));
     drawDetail();
@@ -238,7 +273,9 @@ function mount(root, data, options) {
     detail.replaceChildren(...[
       el('h3', { text: n.label }),
       /^[a-z]+:/.test(n.id) ? el('div', { class: 'id', text: n.type }) : el('div', { class: 'id', text: `${n.id} · ${n.type}` }),
-      ...looseOf(state.kind).filter((l) => l.id === n.id).map((l) => el('div', { class: 'warn', text: `Loose: ${l.message} (${l.at}:${l.line})` })),
+      ...looseOf(state.kind).filter((l) => l.id === n.id).map((l) => el('div', { class: 'warn', text: `${L('looseOne', 'Loose')}: ${l.message} (${l.at}:${l.line})` })),
+      live[n.id] ? el('div', { class: `live-note live-${live[n.id].state}`, text: live[n.id].label || live[n.id].state }) : null,
+      options.links ? (() => { const ls = options.links(n) || []; return ls.length ? el('ul', { class: 'links' }, ls.map((x) => el('li', {}, el('a', { href: x.href, text: x.label })))) : null; })() : null,
       el('dl', {}, Object.entries(n).filter(([k, v]) => !skip.has(k) && v != null && v !== '' && !(Array.isArray(v) && !v.length)).flatMap(([k, v]) => [el('dt', { text: k }), el('dd', { text: Array.isArray(v) ? v.join(' · ') : String(v) })])),
       n.fields && n.fields.length ? el('table', {}, el('thead', {}, el('tr', {}, el('th', { text: 'Field' }), el('th', { text: 'Type' }), el('th', { text: 'What it holds' }))), el('tbody', {}, n.fields.map((f) => el('tr', {}, el('td', {}, el('code', { text: f.name })), el('td', { text: f.type || '' }), el('td', { text: f.holds }))))) : null,
       n.at ? el('p', {}, el('a', { href: options.sourceBase + n.at, text: `Open ${n.at}` }), el('span', { class: 'hint', text: ` · line ${n.line}` })) : null,
@@ -248,8 +285,8 @@ function mount(root, data, options) {
     ].filter(Boolean));
   }
 
-  window.addEventListener('hashchange', () => { fromHash(); draw(); });
+  if (useHash) window.addEventListener('hashchange', () => { fromHash(); draw(); });
   if (options.live && typeof EventSource !== 'undefined') new EventSource('/events').onmessage = () => location.reload();
   draw();
-  return { go, data };
+  return { go, data, destroy: () => root.replaceChildren() };
 }

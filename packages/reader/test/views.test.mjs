@@ -116,7 +116,7 @@ test('NFR-VEW-02.AC1: 500 documents build in under 5 seconds, and the page needs
   assert.ok(Date.now() - t < 5000, `${Date.now() - t} ms`);
   const html = renderViews(d);
   assert.doesNotMatch(html, /<(?:script|link|img)[^>]+(?:src|href)=["']?https?:/i);
-  assert.match(html, /function mount\(/);
+  assert.match(html, /function mountViews\(/);
   assert.match(html, /function scopeView\(/);
   assert.ok(html.includes('"format":1'));
 });
@@ -402,4 +402,20 @@ test('FR-VEW-17.AC1: use cases export as usecase-beta', () => {
   const md = toMermaid(d.views['use-cases'], 'use-cases');
   assert.match(md, /usecase-beta/);
   assert.match(md, /<<extend>>/);
+});
+
+test('FR-VEW-18.AC1: diffViews gives per kind what was added, changed and removed, and refuses two formats', async () => {
+  const { diffViews } = await import('../src/views/diff.mjs');
+  const a = build(product());
+  const f = product();
+  f['spec/decisions/DEC-02-posts-expire-later.md'] = '---\ntitle: DEC-02 · Posts expire after 60 days\ndescription: DEC-02 · Posts expire after 60 days\nowner: Ana\nversion: "1.0"\nupdated: "2026-11-23"\n---\n\n# DEC-02 · Posts expire after 60 days\n\nIt changes `FR-JOB-02`.\n';
+  f['spec/foundations/domain/job-post.md'] = f['spec/foundations/domain/job-post.md'].replace('# ENT-01 · Job Post', '# ENT-01 · Job Offer');
+  const b = build(f);
+  const d = diffViews(a, b);
+  assert.deepEqual(d.kinds.decisions.added, ['DEC-02']);
+  assert.deepEqual(d.kinds.entities.changed, ['ENT-01']);
+  assert.equal(d.kinds.states.count.added + d.kinds.states.count.changed + d.kinds.states.count.removed, 0);
+  assert.deepEqual(d.kinds.security.changed, ['ENT-01'], 'a security rule cites the entity');
+  assert.deepEqual(diffViews(b, a).kinds.decisions.removed.map((n) => n.id), ['DEC-02']);
+  assert.throws(() => diffViews({ ...a, format: 0 }, b), /format/);
 });

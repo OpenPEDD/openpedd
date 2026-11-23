@@ -2,7 +2,7 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 status: draft
 ---
@@ -94,7 +94,7 @@ its view and listed by `pedd check`:
 
 | Step | Role | Does |
 |---|---|---|
-| 1 | — | `pedd check` runs, on the machine or in the CI action on every PR ([`ARCH-13`](../../foundations/architecture/review.md#the-judges-in-ci)) |
+| 1 | Team | Runs `pedd check`, on the machine, or the CI action runs it on every PR ([`ARCH-13`](../../foundations/architecture/review.md#the-judges-in-ci)) |
 | 2 | — | Builds the views and lists every loose item, each as written, with its file and line |
 | 3 | — | Fails on each loose item the PR adds or touches; lists the rest as pressure, like a document over budget |
 
@@ -121,6 +121,8 @@ its view and listed by `pedd check`:
 | `FR-VEW-10` | When the `prd` view opens, the system shall show the modules and their PRDs only; when a PRD is picked, its flows, use cases, transitions, requirements and criteria | A product has dozens of PRDs and hundreds of requirements: one graph of all of them is read by nobody | Team | `AC1` | F1 · F2 | `draft` |
 | `FR-VEW-11` | When the spec cites an ID with a reference's prefix (`openpedd:ENT-20`), the system shall take it as that reference's, never as loose, and link it there when `workspace.yaml` names the reference | A spec that builds on another cites it all the time | Team | `AC1` | F1 · F3 | `draft` |
 | `FR-VEW-12` | The system shall take as a requirement's criteria the IDs in its `Criteria` column that are rows of the PRD's criteria table, in the form of [`ENT-04`](../../foundations/domain/acceptance-criterion.md) or the earlier `AC-<MOD>-nn` | A spec written before `ENT-04`'s form is not missing its criteria | Team | `AC1` | F1 · F3 | `draft` |
+| `FR-VEW-18` | When two `views.json` of one `format` are compared, the system shall give per kind the nodes and edges added, removed or changed, with their counts | `pedd view` and the Cloud mark the same changes | Team | `AC1` | F2 | `draft` |
+| `FR-VEW-19` | The system shall offer its renderer as a module an app mounts, taking links per node, live data by ID and a diff to mark | One renderer for every host ([`ARCH-22`](../../foundations/architecture/views.md#rendering)) | Team | `AC1` | F1 | `draft` |
 | `NFR-VEW-01` | The system shall give the same `views.json`, byte for byte, for the same files | The Cloud and a test can compare two builds | — | `AC1` | F1 | `draft` |
 | `NFR-VEW-02` | The system shall build every view of a 500-document spec in under 5 seconds on a laptop, and render them offline from one HTML file | It runs on every save and every PR | — | `AC1` | F1 | `draft` |
 
@@ -149,6 +151,8 @@ its view and listed by `pedd check`:
 | `FR-VEW-10.AC1` | A product with 13 modules, 15 PRDs and 150 requirements | The `prd` view opens; a PRD is clicked | 13 modules and 15 PRDs, no requirement; then that PRD's flows, use cases, transitions, requirements and criteria |
 | `FR-VEW-11.AC1` | An entity citing `openpedd:ENT-20`, and `references` naming `OpenPEDD/openpedd` | `pedd check` runs | Nothing loose for it; its node links to the public spec |
 | `FR-VEW-12.AC1` | A requirement whose `Criteria` holds a criterion written `AC-<MOD>-nn`, a row of the criteria table | `pedd check` runs | The requirement is not loose for lacking a criterion |
+| `FR-VEW-18.AC1` | Two builds, the second with one decision more and one entity renamed | `diffViews` runs | `decisions`: one node added; `entities`: one node changed; every other kind zero |
+| `FR-VEW-19.AC1` | An app that mounts the renderer with a link per node, a live state and a diff | A node is clicked | Its detail shows the app's link and the live state; added nodes are marked |
 | `NFR-VEW-01.AC1` | The same commit | The views are built twice | The two `views.json` are identical |
 | `NFR-VEW-02.AC1` | A generated spec of 500 documents | `pedd view` runs, network off | Built in under 5 seconds, and the page renders |
 

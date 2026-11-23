@@ -2,7 +2,7 @@
 title: "CHG-033 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
 description: One page — what changed in the framework's spec, and why, found mapping OpenPEDD Cloud with it
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
@@ -19,6 +19,8 @@ Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:
 | Criteria written as `AC-<MOD>-nn` count as criteria | `FR-VEW-12` |
 | Four views of the business: glossary, organization chart, activity per process in swimlanes, use cases | [the business's views](../../modules/views/business.md), surveyed in [`MKT-12`](../../foundations/market/view-generation.md#the-businesss-diagrams) |
 | `People` of the business map: `Role` · `How many` · `Reports to` · `Does`, one role per job; each process's steps under `### PRC-nn` | [map](../../modules/map/prd.md#business-mode) |
+
+| The renderer as a module an app mounts, with links, live data and a diff; `diffViews` between two builds, for the Cloud's views (`cloud:ADR-26`) | `FR-VEW-18`, `FR-VEW-19`, [`ARCH-22`](../../foundations/architecture/views.md#rendering); reader 0.7.0 |
 
 ## For `build`
 

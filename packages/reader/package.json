@@ -1,6 +1,6 @@
 {
   "name": "@openpedd/reader",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Reads an OpenPEDD spec: parses it and reports what is broken, reads the Business Map, reads and writes a change's definition, numbers changes, renders the framework map, and makes and renders every project view",
   "license": "Apache-2.0",
   "type": "module",
@@ -13,6 +13,10 @@
     ".": "./src/index.mjs",
     "./files": "./src/files.mjs",
     "./markdown": "./src/markdown.mjs",
+    "./mount": "./src/views/mount.mjs",
+    "./diff": "./src/views/diff.mjs",
+    "./scope": "./src/views/scope.mjs",
+    "./views.css": "./src/views/views.css",
     "./package.json": "./package.json"
   },
   "bin": {
