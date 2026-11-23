@@ -8,7 +8,8 @@ const require = createRequire(import.meta.url);
 let parts;
 const load = () => (parts ??= {
   page: readFileSync(new URL('./page.html', import.meta.url), 'utf8'),
-  app: readFileSync(new URL('./app.js', import.meta.url), 'utf8'),
+  app: readFileSync(new URL('./mount.mjs', import.meta.url), 'utf8').replace(/^import .*$/gm, '').replace(/^export function /m, 'function '),
+  css: readFileSync(new URL('./views.css', import.meta.url), 'utf8'),
   elk: readFileSync(require.resolve('elkjs/lib/elk.bundled.js'), 'utf8'),
 });
 
@@ -26,11 +27,12 @@ const script = (s) => s.replace(/<\/script/gi, '<\\/script');
  * @param opts.live       true when served by `pedd view --watch`: the page reloads when the views are rebuilt.
  */
 export function renderViews(data, opts = {}) {
-  const { page, app, elk } = load();
+  const { page, app, elk, css } = load();
   const options = { open: opts.open ?? null, sourceBase: opts.sourceBase ?? '../../', live: !!opts.live };
   const title = `${data.product ? `${data.product} · ` : ''}Project views`;
   return page
     .replace('__TITLE__', () => title.replace(/[<&]/g, (c) => (c === '<' ? '&lt;' : '&amp;')))
+    .replace('/*__CSS__*/', () => css.replace(/<\/style/gi, '<\\/style'))
     .replace('/*__ELK__*/', () => script(elk))
     .replace('/*__SCOPE__*/', () => script(scopeView.toString()))
     .replace('/*__APP__*/', () => script(app))

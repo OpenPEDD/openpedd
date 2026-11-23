@@ -6,7 +6,9 @@ import { code, headingText, slug } from '../markdown.mjs';
 export const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|SEC|INT|EVT)-\d+)\b/g;
 const ONE_ID = new RegExp(`^${ID.source}$`);
 export const isId = (s) => ONE_ID.test(s || '');
-export const idsIn = (s) => [...new Set((s || '').match(ID) || [])];
+// An ID with a reference's prefix (`openpedd:ENT-20`) is that reference's, never this spec's (FR-VEW-11).
+const PREFIXED = new RegExp(`\\b[a-z][a-z0-9-]*:(?:${ID.source})`, 'g');
+export const idsIn = (s) => [...new Set((s || '').replace(PREFIXED, ' ').match(ID) || [])];
 
 /** The family of an ID, as a node's `type`: `FR-VEW-01` → `fr`, `FR-VEW-01.AC1` → `ac`, `DEC-29` → `dec`. */
 export const familyOf = (id) => (/\.AC\d+$/.test(id) ? 'ac' : id.match(/^(N?FR|[A-Z]+)-/)[1].toLowerCase());
