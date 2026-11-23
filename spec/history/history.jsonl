@@ -454,3 +454,4 @@
 {"path": "foundations/domain/workspace.md", "version": "1.7 → 1.8", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "agents.finder"}
 {"path": "foundations/architecture/reader.md", "version": "1.3 → 1.4", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "mergeQuestions, renderSheet, applyReply"}
 {"path": "capabilities.md", "version": "1.12 → 1.13", "date": "2026-11-23", "change": "CHG-033", "story": null, "stage": "build", "summary": "pedd sweep built, with answer"}
+{"path": "foundations/architecture/sweep.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-034", "story": null, "stage": "specify", "summary": "Who answers: the client the what, the product engineer the how and the look, the AI the plan"}

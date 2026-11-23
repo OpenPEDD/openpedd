@@ -3,7 +3,7 @@ name: sweep
 description: Ask the person every question a change still has, in every stage ahead (specify, architect, design, plan), in one sheet, and write each answer where it belongs. Use before architect and design start, before plan, or whenever someone wants to answer everything at once ("ask me everything now", "sweep CHG-031", "barrido", "preguntame todo junto"). Runs pedd sweep, shows the heavy questions, takes one reply, and has each answer written by the stage that owns it.
 ---
 
-<!-- Source: OpenPEDD spec ARCH-16 (sweep) v1.2, ARCH-23 (weight) v1.2, RULE-26 and RULE-28. Change those first, then this file. -->
+<!-- Source: OpenPEDD spec ARCH-16 (sweep) v1.3, ARCH-23 (weight) v1.2, RULE-26 and RULE-28. Change those first, then this file. -->
 
 # Sweep: every question at once
 
@@ -19,13 +19,14 @@ question, wait, and ask the next.
 
 ## Show the sheet
 
+- The sheet splits them by who answers: **the client** answers the what (specify); **the product engineer** the how and the look (architect, design); the plan's are decided by the AI and only shown. Show each person only theirs to answer.
 - Show the **questions to answer** as the sheet writes them: the question in plain words, what breaks if it is guessed, the options with the recommended one marked, and why. The ID only in parentheses (RULE-20).
 - Then the **decided ones** as one short list: *"I took the recommendation on these; overturn any in the same reply."*
 - End with: *"Reply once: 'all as recommended', or 'all as recommended, except 1: b, 4: …'."*
 
 ## Take the reply
 
-1. Run `pedd sweep CHG-nnn answer "<the person's reply, as they wrote it>"`.
+1. Run `pedd sweep CHG-nnn answer --as client|builder "<the person's reply, as they wrote it>"`, with who answered.
 2. If it says a round 2 is needed, run `pedd sweep CHG-nnn` again: it rewrites only the reopened questions. Show those, take one more reply, answer it. **Never a third round**: what is left stays open.
 
 ## Write each answer where it goes

@@ -94,23 +94,23 @@ test('pedd sweep: finders in parallel, one sheet, one reply, round 2 rewrites on
   try {
     assert.equal(await main(['sweep', 'CHG-001'], io), 1, 'a finder that did not run fails the sweep');
     assert.match(errs.join('\n'), /the design finder did not run: exited 4: no session/);
-    assert.match(lines[0], /^CHG-001: swept specify, architect, plan · 3 question\(s\), 2 to answer, 1 decided by recommendation · 1 already answered$/);
+    assert.match(lines[0], /^CHG-001: swept specify, architect, plan · 4 question\(s\): 1 for the client, 1 for the product engineer, 1 decided by recommendation, 1 decided by the AI · 1 already answered$/);
     const sheet = readFileSync(join(dir, 'spec/changes/CHG-001/sweep.md'), 'utf8');
     assert.match(sheet, /Not run: `design` \(exited 4: no session\)/);
     assert.ok(existsSync(join(dir, 'spec/changes/CHG-001/sweep/findings/specify.json')));
     const state = () => JSON.parse(readFileSync(join(dir, 'spec/changes/CHG-001/sweep/state.json'), 'utf8'));
     const n = (key) => state().questions.find((q) => q.key === key).n;
     lines.length = 0;
-    assert.equal(await main(['sweep', 'CHG-001', 'answer', `todo como recomendado, salvo ${n('who')}: b`], io), 0);
+    assert.equal(await main(['sweep', 'CHG-001', 'answer', '--as', 'client', `todo como recomendado, salvo ${n('who')}: b`], io), 0);
     assert.match(lines.join('\n'), /Round 2: 1 assumed an answer you changed/);
     assert.equal(state().questions.find((q) => q.key === 'store').reopened, true);
     lines.length = 0;
     assert.equal(await main(['sweep', 'CHG-001'], io), 0);
     assert.match(lines[0], /^CHG-001: round 2 · 1 question\(s\) rewritten with your answers/);
     assert.equal(state().questions.find((q) => q.key === 'store').about, 'Where are invoices stored, now that everyone sees them?');
-    assert.equal(await main(['sweep', 'CHG-001', 'answer', `${n('store')}: a`], io), 0);
+    assert.equal(await main(['sweep', 'CHG-001', 'answer', '--as', 'builder', `${n('store')}: a`], io), 0);
     assert.ok(state().questions.every((q) => q.answer));
-    assert.match(readFileSync(join(dir, 'spec/changes/CHG-001/sweep.md'), 'utf8'), /## Answers \(3\)/);
+    assert.match(readFileSync(join(dir, 'spec/changes/CHG-001/sweep.md'), 'utf8'), /## Answers \(4\)/);
     assert.equal(await main(['sweep', 'nope'], io), 1);
   } finally {
     delete process.env.PEDD_FINDER;

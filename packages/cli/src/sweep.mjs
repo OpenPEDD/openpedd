@@ -4,7 +4,7 @@
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { FINDERS, SWEEP_STAGES, answersSoFar, applyReply, leastAdvanced, mergeQuestions, readDefinition, renderSheet, rewriteReopened, stagesAhead } from '@openpedd/reader';
+import { FINDERS, SWEEP_STAGES, answersSoFar, applyReply, decideByAi, leastAdvanced, mergeQuestions, readDefinition, renderSheet, rewriteReopened, stagesAhead } from '@openpedd/reader';
 
 export class SweepError extends Error {}
 
@@ -105,7 +105,7 @@ export async function sweep(root, ws, model, change, opts = {}) {
     write(join(p.findings, `${stage}.json`), JSON.stringify(r.questions, null, 2) + '\n');
   }
   const { questions, dropped, rejected } = mergeQuestions(findings);
-  let state = { change, round: 1, askAll: !!opts.askAll, ran: Object.keys(findings), notRun, passed: where.passed, questions, dropped, rejected };
+  let state = decideByAi({ change, round: 1, askAll: !!opts.askAll, ran: Object.keys(findings), notRun, passed: where.passed, questions, dropped, rejected }, { passed: where.passed });
   if (opts.acceptRecommended) state = applyReply({ ...state, askAll: true }, 'all as recommended', { passed: where.passed }).state;
   write(p.state, JSON.stringify(state, null, 2) + '\n');
   write(p.sheet, renderSheet(state));
@@ -127,7 +127,7 @@ async function secondRound(root, ws, change, state, opts) {
       : await runFinder(command, finderPrompt(ws, change, stage) + extra, root);
     if (r.error) notRun.push({ stage, why: r.error }); else rewritten[stage] = r.questions;
   }));
-  const next = rewriteReopened(state, rewritten);
+  const next = decideByAi(rewriteReopened(state, rewritten), { passed: state.passed || [] });
   next.notRun = notRun;
   write(p.state, JSON.stringify(next, null, 2) + '\n');
   write(p.sheet, renderSheet(next));
@@ -135,12 +135,13 @@ async function secondRound(root, ws, change, state, opts) {
 }
 
 /** The person's reply to the sheet (steps 7 to 9): recorded, and the sheet rewritten. */
-export function answer(root, ws, change, reply) {
+export function answer(root, ws, change, reply, { who = null } = {}) {
   const p = paths(root, ws, change);
   if (!existsSync(p.state)) throw new SweepError(`${change} has no sweep yet: run pedd sweep ${change} first`);
   if (!String(reply || '').trim()) throw new SweepError(`usage: pedd sweep ${change} answer "all as recommended, except 3: b"`);
   const before = JSON.parse(readFileSync(p.state, 'utf8'));
-  const { state, reopened, unknown } = applyReply(before, reply, { passed: before.passed || [] });
+  if (who && !['client', 'builder'].includes(who)) throw new SweepError(`--as is client or builder, not "${who}"`);
+  const { state, reopened, unknown } = applyReply(before, reply, { passed: before.passed || [], who });
   write(p.state, JSON.stringify(state, null, 2) + '\n');
   write(p.sheet, renderSheet(state));
   return { state, reopened, unknown, paths: p };

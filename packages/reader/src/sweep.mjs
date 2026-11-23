@@ -6,6 +6,13 @@ import { weigh } from './weight.mjs';
 /** The stages a sweep looks ahead at, in the order their answers are owned: the what, the how, the look, the cut. */
 export const SWEEP_STAGES = ['specify', 'architect', 'design', 'plan'];
 
+/**
+ * Who answers each stage's questions (ARCH-16, who answers): the client answers the what; the product
+ * engineer building it answers the how and the look; the AI decides what the plan needs, and records it.
+ */
+export const ANSWERER = { specify: 'client', architect: 'builder', design: 'builder', plan: 'ai' };
+export const ANSWERER_LABEL = { client: 'the client', builder: 'the product engineer', ai: 'the AI' };
+
 /** What each finder looks for, and whose checklist it uses (ARCH-16, step 2). */
 export const FINDERS = {
   specify: { looksFor: 'What a builder would have to guess: flows, permissions, who writes each field, outside transitions, copy, the metric', checklist: 'cold-read-judge · prd-judge' },
@@ -49,6 +56,7 @@ export function normalizeQuestion(raw, stage) {
   return {
     key: String(raw.key || '').trim() || null,
     stage,
+    who: ANSWERER[stage],
     about: String(raw.about || '').trim(),
     target: String(raw.target || '').trim(),
     breaks: String(raw.breaks || '').trim(),
@@ -114,7 +122,7 @@ export function mergeQuestions(findings) {
 }
 
 /** Which questions are asked and which are shown decided (ARCH-16, step 7). */
-export const isAsked = (q, { askAll = false } = {}) => askAll || q.reopened === true || q.weight === 'high';
+export const isAsked = (q, { askAll = false } = {}) => q.who !== 'ai' && (askAll || q.reopened === true || q.weight === 'high');
 
 const letter = (i) => String.fromCharCode(97 + i);
 const cell = (s) => String(s || '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -127,9 +135,11 @@ export function renderSheet(state) {
   const answered = questions.filter((q) => q.answer);
   const lines = [`# Sweep · ${change}${round > 1 ? ` · round ${round}` : ''}`, ''];
   if (state.ran?.length) lines.push(`Stages swept: ${state.ran.map((s) => `\`${s}\``).join(', ')}.${state.notRun?.length ? ` Not run: ${state.notRun.map((n) => `\`${n.stage}\` (${n.why})`).join(', ')}.` : ''}`, '');
-  if (asked.length) {
-    lines.push(`## To answer (${asked.length})`, '', 'Answer in one reply: *"all as recommended, except 3: b, 7: …"*. Any line below can be overturned the same way.', '');
-    for (const q of asked) {
+  for (const who of ['client', 'builder']) {
+    const mine = asked.filter((q) => q.who === who);
+    if (!mine.length) continue;
+    lines.push(`## For ${ANSWERER_LABEL[who]} to answer (${mine.length})`, '', 'Answer in one reply: *"all as recommended, except 3: b, 7: …"*. Your lines in the decided list below can be overturned the same way.', '');
+    for (const q of mine) {
       lines.push(`### ${q.n} · ${q.about}`, '', `*${q.says}*${q.alsoAskedBy?.length ? ` · also found by ${q.alsoAskedBy.join(', ')}` : ''}`, '');
       if (q.breaks) lines.push(`**If guessed:** ${q.breaks}`, '');
       lines.push('| | Option | Then |', '|---|---|---|');
@@ -141,8 +151,8 @@ export function renderSheet(state) {
     }
   }
   if (decided.length) {
-    lines.push(`## Decided by their recommendation (${decided.length})`, '', '| # | Question | Taken | Weight |', '|---|---|---|---|');
-    for (const q of decided) lines.push(`| ${q.n} | ${cell(q.about)} | ${letter(q.recommended)}: ${cell(q.options[q.recommended].option)} | ${cell(q.says)} |`);
+    lines.push(`## Decided by their recommendation (${decided.length})`, '', '| # | Question | Taken | Weight | Answers it |', '|---|---|---|---|---|');
+    for (const q of decided) lines.push(`| ${q.n} | ${cell(q.about)} | ${letter(q.recommended)}: ${cell(q.options[q.recommended].option)} | ${cell(q.says)} | ${ANSWERER_LABEL[q.who]} |`);
     lines.push('');
   }
   if (answered.length) {
@@ -160,7 +170,7 @@ export function renderSheet(state) {
  * Every other question takes its recommendation when the reply accepts the rest (all, ok, recommended,
  * todo, recomendado, dale, sí), and only the shown-decided ones otherwise.
  */
-export function parseReply(reply, questions, { askAll = false } = {}) {
+export function parseReply(reply, questions, { askAll = false, who = null } = {}) {
   const text = String(reply || '');
   const picks = new Map();
   const re = /(?:^|[\s,;])(\d+)\s*[:=)]\s*([^,;\n]+?)(?=\s*(?:[,;\n]|\s\d+\s*[:=)]|$))/g;
@@ -169,7 +179,8 @@ export function parseReply(reply, questions, { askAll = false } = {}) {
   const unknown = [...picks.keys()].filter((n) => !questions.some((q) => q.n === n));
   const answers = [];
   for (const q of questions) {
-    if (q.answer) continue;
+    // The AI's questions are decided by it; a person answers only theirs when the reply says who they are.
+    if (q.answer || q.who === 'ai' || (who && q.who !== who)) continue;
     const pick = picks.get(q.n);
     if (pick !== undefined) {
       if (/^(later|despu[eé]s|\?|open|abierta)$/i.test(pick)) { answers.push({ n: q.n, open: true }); continue; }
@@ -194,8 +205,24 @@ export function whereItGoes(stage, gatePassed, open = false) {
  *
  * @returns { state, reopened, unknown }
  */
-export function applyReply(state, reply, { passed = [] } = {}) {
-  const { answers, unknown } = parseReply(reply, state.questions, { askAll: state.askAll });
+export function applyReply(state, reply, { passed = [], who = null } = {}) {
+  const { answers, unknown } = parseReply(reply, state.questions, { askAll: state.askAll, who });
+  const r = applyAnswers(state, answers, { passed, who });
+  return { ...r, unknown: [...unknown, ...r.unknown] };
+}
+
+/**
+ * The same with answers already structured, as the Cloud sends them: [{ n, option } | { n, custom } |
+ * { n, open: true }], each `by` the person or the recommendation.
+ */
+export function applyAnswers(state, answers, { passed = [], who = null } = {}) {
+  const unknown = [];
+  answers = answers.filter((a) => {
+    const q = state.questions.find((x) => x.n === a.n);
+    if (!q || q.who === 'ai' || (who && q.who !== who)) { unknown.push(a.n); return false; }
+    if (a.by === undefined) a.by = a.custom === undefined && !a.open && a.option === q.recommended ? 'recommendation' : 'person';
+    return true;
+  });
   const byN = new Map(state.questions.map((q) => [q.n, q]));
   // First, what an answer other than the recommendation reopens: those are not taken by recommendation now.
   const reopen = new Set();
@@ -219,7 +246,7 @@ export function applyReply(state, reply, { passed = [] } = {}) {
   }
   const next = { ...state, round: reopened.length ? Math.min(2, state.round + 1) : state.round };
   if (state.round >= 2) {
-    for (const q of next.questions) if (!q.answer) q.answer = { text: 'Left open after two rounds', by: 'sweep', goesTo: whereItGoes(q.stage, passed.includes(q.stage), true), open: true };
+    for (const q of next.questions) if (!q.answer && q.who !== 'ai' && (!who || q.who === who)) q.answer = { text: 'Left open after two rounds', by: 'sweep', goesTo: whereItGoes(q.stage, passed.includes(q.stage), true), open: true };
   }
   return { state: next, reopened: [...new Set(reopened)].sort((a, b) => a - b), unknown };
 }
@@ -247,4 +274,21 @@ export function rewriteReopened(state, rewritten) {
 /** What a finder must know to rewrite its reopened questions: the answers given, as plain lines. */
 export function answersSoFar(state) {
   return state.questions.filter((q) => q.answer).map((q) => `- ${q.about} → ${q.answer.text}`).join('\n');
+}
+
+/** The AI's questions (the plan's), decided by their recommendation and recorded as its (ARCH-16, who answers). */
+export function decideByAi(state, { passed = [] } = {}) {
+  for (const q of state.questions) {
+    if (q.who !== 'ai' || q.answer) continue;
+    q.answer = { text: `${letter(q.recommended)}: ${q.options[q.recommended].option}`, by: 'ai', goesTo: whereItGoes(q.stage, passed.includes(q.stage)), option: q.recommended };
+    delete q.reopened;
+  }
+  return state;
+}
+
+/** How many questions are still waiting on each person: { client, builder }. */
+export function pendingFor(state) {
+  const out = { client: 0, builder: 0 };
+  for (const q of state.questions || []) if (!q.answer && isAsked(q, { askAll: state.askAll }) && out[q.who] !== undefined) out[q.who]++;
+  return out;
 }
