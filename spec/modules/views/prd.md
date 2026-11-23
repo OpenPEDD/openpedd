@@ -94,7 +94,7 @@ its view and listed by `pedd check`:
 
 | Step | Role | Does |
 |---|---|---|
-| 1 | — | `pedd check` runs, on the machine or in the CI action on every PR ([`ARCH-13`](../../foundations/architecture/review.md#the-judges-in-ci)) |
+| 1 | Team | Runs `pedd check` on the machine, or the CI action runs it on every PR ([`ARCH-13`](../../foundations/architecture/review.md#the-judges-in-ci)) |
 | 2 | — | Builds the views and lists every loose item, each as written, with its file and line |
 | 3 | — | Fails on each loose item the PR adds or touches; lists the rest as pressure, like a document over budget |
 
