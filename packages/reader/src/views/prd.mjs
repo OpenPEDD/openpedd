@@ -6,6 +6,7 @@ import { stateName } from './entities.mjs';
 import { stateId } from './states.mjs';
 
 const FLOW = /^F(\d+)\s+·\s+(.*)$/;
+const OLD_AC = /^AC-[A-Z]{2,6}-\d+$/;
 
 export function build(model, sources) {
   const c = prep(model, sources);
@@ -52,7 +53,8 @@ export function build(model, sources) {
     const reqT = doc.tables.find((t) => t.rows.some((r) => /^N?FR-/.test(clean(r.cells[0]))));
     const flowsCol = reqT ? colOf(reqT.header, /^flows?$/i) : -1;
     const criteriaCol = reqT ? colOf(reqT.header, /^criteria$/i) : -1;
-    const acs = new Set(doc.tables.flatMap((t) => t.rows.map((r) => clean(r.cells[0]))).filter((x) => /\.AC\d+$/.test(x)));
+    // A criterion is `FR-X-01.AC1` (ENT-04), or the earlier `AC-X-01` (FR-VEW-12).
+    const acs = new Set(doc.tables.flatMap((t) => t.rows.map((r) => clean(r.cells[0]))).filter((x) => /\.AC\d+$/.test(x) || OLD_AC.test(x)));
     for (const r of reqT?.rows ?? []) {
       const id = clean(r.cells[0]);
       if (!isId(id)) continue;
@@ -61,7 +63,7 @@ export function build(model, sources) {
       const carried = flowsCol >= 0 ? (r.cells[flowsCol].match(/F\d+/g) || []) : [];
       for (const f of carried) edges.push({ from: id, to: nid(f), type: 'carried by', at: prd.path, line: r.line });
       if (flows.size && !carried.some((f) => flows.has(f))) out.push(loose('prd', 'no-flow', { id, says: clean(req?.statement ?? r.cells[1]), path: prd.path, line: r.line, message: 'no flow carries it' }));
-      const listed = criteriaCol >= 0 ? code(r.cells[criteriaCol]).map((x) => (x.includes('.') ? x : `${id}.${x}`)) : [];
+      const listed = criteriaCol >= 0 ? code(r.cells[criteriaCol]).map((x) => (x.includes('.') || OLD_AC.test(x) ? x : `${id}.${x}`)) : [];
       if (id.startsWith('FR') && !listed.some((x) => acs.has(x)) && ![...acs].some((x) => x.startsWith(`${id}.`))) out.push(loose('prd', 'no-criterion', { id, says: clean(req?.statement ?? r.cells[1]), path: prd.path, line: r.line, message: 'no acceptance criterion proves it' }));
     }
 

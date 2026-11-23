@@ -276,3 +276,20 @@ test('this repository and the template build, and every loose item names its fil
     for (const l of d.loose) assert.ok(l.at && l.line >= 1 && l.says && l.message, JSON.stringify(l));
   }
 });
+
+test('FR-VEW-11.AC1: an ID with a reference\'s prefix is that reference\'s, never loose nor this spec\'s', () => {
+  const f = product();
+  f['spec/decisions/DEC-01-posts-expire.md'] += 'It builds on `openpedd:ENT-20` and `openpedd:DEC-01`.\n';
+  const d = build(f);
+  assert.deepEqual(d.loose, [], JSON.stringify(d.loose, null, 1));
+  assert.ok(!d.views.decisions.edges.some((e) => e.from === 'DEC-01' && e.to === 'DEC-01'));
+});
+
+test('FR-VEW-12.AC1: a criterion written AC-<MOD>-nn, a row of the criteria table, proves its requirement', () => {
+  const f = product();
+  const p = 'spec/modules/jobs/prd.md';
+  f[p] = f[p].replace('| company | `AC1` | F1 |', '| company | `AC-JOB-01` | F1 |').replace('| `FR-JOB-01.AC1` |', '| `AC-JOB-01` |');
+  assert.match(f[p], /`AC-JOB-01` \| F1/);
+  const d = build(f);
+  assert.ok(!kinds(d, 'prd').includes('no-criterion FR-JOB-01'), JSON.stringify(kinds(d, 'prd')));
+});
