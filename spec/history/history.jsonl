@@ -445,3 +445,7 @@
 {"path": "foundations/market/README.md", "version": "1.10 → 1.11", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "MKT-13 Weighing and completeness"}
 {"path": "open/questions.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "Q-23: the weight table's cells"}
 {"path": "foundations/architecture/reader.md", "version": "1.1 → 1.2", "date": "2026-11-23", "change": "CHG-031", "story": null, "stage": "specify", "summary": "The framework map's skill card, with the documents a skill follows"}
+{"path": "foundations/architecture/weight.md", "version": "1.0 → 1.1", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "How pedd reads each factor, and pedd weigh"}
+{"path": "capabilities.md", "version": "1.11 → 1.12", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "pedd weigh in the CLI table"}
+{"path": "foundations/architecture/reader.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "weigh and weighChange"}
+{"path": "foundations/domain/delta.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-032", "story": null, "stage": "build", "summary": "weight computed by pedd weigh"}

@@ -2,7 +2,7 @@
 title: Delta
 description: ENT-07 · A proposed change to the spec, per ID
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-23"
 ---
 
@@ -26,7 +26,7 @@ the spec itself ([`RULE-10`](../rules/cycle.md#rule-10)). A delta enters the spe
 | `revert` | For an `assumption` or a `deviation`: where it lives (file, function, migration) and what to change to undo it |
 | `evidence` | What backs it: the ID or the file that says it, or `guess` |
 | `if_no` | What changes, in one line, if the person rejects it |
-| `weight` | `high` · `medium` · `low`, with its factors. Computed ([`ARCH-23`](../architecture/weight.md)) |
+| `weight` | `high` · `medium` · `low`, with its factors. Computed by `pedd weigh` ([`ARCH-23`](../architecture/weight.md)) |
 | `impact` | The derived artifacts that go `stale` if it merges. Computed |
 | `decision` | `keep` · `change` · `reject`, set at its gate |
 

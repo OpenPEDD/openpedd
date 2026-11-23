@@ -5,6 +5,7 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- `pedd weigh <change>` (`@openpedd/cli` 0.3.0, `@openpedd/reader` 0.5.0 with `weigh` and `weighChange`): each assumption and deviation of a change weighed high, medium or low from the ARCH-23 table, with the words that set Undo, Reach and Evidence, Fan-out from `--fan-out`, the hard triggers, those with the same target and reason grouped, heaviest first; a missing `revert`, `evidence` or `if_no` is named. `--json` for a report. How each factor is read is in ARCH-23.
 - Each decision the AI takes alone (a sweep question, an assumption, a deviation) gets a weight, high, medium or low, from a fixed table led by how hard it is to undo, then what it touches, what backs it and what builds on it; permissions, billing, personal data and security are always high. `pedd` computes it; the agent writes the evidence and what changes if the answer is no (RULE-28, ARCH-23, MKT-13).
 - The sweep asks only the high; the medium and low appear in the same sheet as decided by their recommendation, and any can be overturned in the same reply. `--ask-all` asks them all.
 - The `Acceptance Report` lists assumptions and deviations heaviest first; `accept` decides the high one by one and the low in one reply, and records the weight with each decision, so the table can be calibrated (Q-23).
