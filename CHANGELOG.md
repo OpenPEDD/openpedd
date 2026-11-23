@@ -5,6 +5,11 @@ the format; the spec of each version is the tag `v<version>`.
 
 ## Unreleased
 
+- Each decision the AI takes alone (a sweep question, an assumption, a deviation) gets a weight, high, medium or low, from a fixed table led by how hard it is to undo, then what it touches, what backs it and what builds on it; permissions, billing, personal data and security are always high. `pedd` computes it; the agent writes the evidence and what changes if the answer is no (RULE-27, ARCH-22, MKT-12).
+- The sweep asks only the high; the medium and low appear in the same sheet as decided by their recommendation, and any can be overturned in the same reply. `--ask-all` asks them all.
+- The `Acceptance Report` lists assumptions and deviations heaviest first; `accept` decides the high one by one and the low in one reply, and records the weight with each decision, so the table can be calibrated (Q-23).
+- Nothing left unrecorded, counted by the tool: a task PR whose Spec section and deltas differ fails; `verify` starts only with every task ticked and merged; the report must hold every delta; `acceptance-merge` needs a decision on each. Assumptions found in the code with no delta are counted per task as undeclared.
+- `@openpedd/reader` 0.2.0: the map's Skills view opens a card per skill, with the steps of its stage and every rule and mechanism it follows shown whole, with their tables and diagrams.
 - `@openpedd/reader` 0.1.0, in `packages/reader`: `readSpec` (the model, with each requirement's status from its PRD's column or the PRD's), `readDefinition` · `writeDefinition`, `nextChangeId`, `mapData` and `renderMap`, and `openpedd-reader map <root>` for the map's data as JSON. `npm run view` runs on it, with the same output. Tagged `reader-v0.1.0`; not on npm yet (ARCH-20).
 - A product starts as one monorepo: `spec/`, `apps/` (app, landing, docs, help) and `packages/` (`ui` with its Storybook, `i18n`), each app deployed on its own. Several repos only for a product adopted that way, or open-source code with a private spec (DEC-22).
 - The code index: one generated file per module and package, regenerated on every merge to the base, that every agent reads first to know where to work (ARCH-19).

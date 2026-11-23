@@ -4,7 +4,7 @@ description: How market documents are written — outside facts that expire
 owner: <owner>
 version: "1.0"
 updated: "2026-11-20"
-source: spec/foundations/market/README.md@1.9
+source: spec/foundations/market/README.md@1.10
 ---
 
 **Market holds what we measured outside**: competitors, tools, market size, studies, prices others

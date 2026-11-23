@@ -161,6 +161,22 @@ details summary{cursor:pointer}
 /* Gaps */
 .gap{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .gap .k{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--warn)}
+/* Skill card: one skill, with the procedure it runs and the documents it follows, whole */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:14px}
+.card h2{margin:0;font-family:var(--mono);font-size:1.15rem}
+.card .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card h3{margin:0 0 6px;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.card ol{margin:0;padding-left:20px;font-size:.88rem;display:flex;flex-direction:column;gap:6px}
+.card details.docw{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--bg)}
+.card details.docw>summary{font-weight:600}
+.card .blk{margin-top:12px;font-size:.88rem}
+.card .blk p{margin:6px 0}
+.card .blk h4{margin:14px 0 4px;font-size:.95rem}
+.card pre{overflow-x:auto;font-family:var(--mono);font-size:.74rem;line-height:1.35;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+.card .tbl table{border-collapse:collapse;font-size:.82rem;margin:8px 0}
+.card .tbl td,.card .tbl th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+button.skn{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+button.skn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.stage{transition:none}}
 </style>
 </head>
@@ -395,7 +411,32 @@ function byArtifact(){
 }
 
 /* ---------------- Skills ---------------- */
-const ks={kind:"all"};
+const ks={kind:"all",sel:null};
+// A document's prose: paragraphs, and lists kept as lists.
+function prosed(t){
+  return String(t||"").split(/\n{2,}/).map(par=>{const ls=par.split("\n");
+    if(ls.every(l=>/^\s*(-|\d+\.)\s/.test(l)||/^\s{2,}\S/.test(l))){const ol=/^\d+\./.test(ls[0]);
+      return `<${ol?"ol":"ul"}>${ls.filter(l=>/^\s*(-|\d+\.)\s/.test(l)).map(l=>`<li>${md(l.replace(/^\s*(-|\d+\.)\s+/,""))}</li>`).join("")}</${ol?"ol":"ul"}>`;}
+    return `<p>${md(par.replace(/\n/g," "))}</p>`;}).join("");
+}
+function docWhole(d){
+  return (d.blocks||[]).map(b=>`<div class="blk">${b.heading&&b.level>1?`<h4>${md(b.heading)}</h4>`:""}${prosed(b.text)}${b.tables.map(t=>table(t.rows,t.header.map(md))).join("")}${b.diagrams.map(g=>`<pre>${esc(g)}</pre>`).join("")}</div>`).join("");
+}
+function skillCard(){
+  const el=$("#skcard");if(!el)return;
+  const x=D.skills.find(y=>y.name+"|"+y.stage===ks.sel);if(!x){el.innerHTML="";return;}
+  const s=D.stages.find(y=>y.id===x.stage), isJ=x.kind==="judge", whole=/whole stage/i.test(x.purpose);
+  const box=(h,v)=>`<div><h3>${h}</h3><div>${v||`<span class="miss">Not said</span>`}</div></div>`;
+  el.innerHTML=`<article class="card" aria-label="${esc(x.name)}">
+    <div><span class="label">${String(s.n).padStart(2,"0")} ${esc(s.id)} · ${isJ?"judge":"skill"}</span><h2>${esc(x.name)}</h2></div>
+    <p style="margin:0">${md(isJ?x.checks:x.purpose)}</p>
+    <div class="grid2">${isJ?box("Passes when",md(x.passes))+box("Takes in",md(D.judgeInput)):box("Takes in",md(x.reads))+box("Leaves",md(x.leaves))+box("Checked by",x.checkedBy.length?x.checkedBy.map(j=>`<span class="sc chk">${esc(j)}</span>`).join(""):md(x.checkedByText))}
+      ${box("Prompt",x.prompt?`<code>${esc(x.prompt)}</code>`:`<span class="miss">Not written</span> <span class="from mono">${esc(x.promptPath)}</span>`)}</div>
+    ${!isJ&&s.steps.length?`<div><h3>${whole?"What it runs":"The procedure of its stage"} · from <code>${esc(s.path)}</code></h3><ol>${s.steps.map(t=>`<li>${md(t)}</li>`).join("")}</ol></div>`:""}
+    ${x.follows.length?`<div><h3>The rules and mechanisms it follows (${x.follows.length})</h3>${x.follows.map((p,i)=>{const d=byPath[p];return `<details class="docw"${i===0&&!whole?" open":""}><summary>${esc(d.title)} <span class="muted" style="font-weight:400">· ${md(d.description)}</span></summary>${docWhole(d)}<p class="from mono">${esc(p)}</p></details>`;}).join("")}</div>`:""}
+  </article>`;
+  el.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+}
 function skillsView(){
   const K=D.skills, sk=K.filter(x=>x.kind==="skill"), jd=K.filter(x=>x.kind==="judge");
   const bar=(label,n,of,note)=>`<div class="bar"><div class="t"><span>${label}</span><b>${n} / ${of}</b></div><div class="track"><i style="width:${of?n/of*100:0}%"></i></div>${note?`<span class="muted" style="font-size:.76rem">${note}</span>`:""}</div>`;
@@ -404,7 +445,8 @@ function skillsView(){
   $("#main").innerHTML=`
   <section class="intro"><span class="label">Skills · from each stage's "Skills, agents and tools" and "Judge" tables</span>
     <h1>Every skill and judge, audited</h1>
-    <p class="muted">One row per skill and per judge: the stage it works in, what it is for, what goes in, what comes out, what checks it, and its prompt. Red is what the spec or the repo does not have yet.</p></section>
+    <p class="muted">One row per skill and per judge: the stage it works in, what it is for, what goes in, what comes out, what checks it, and its prompt. Red is what the spec or the repo does not have yet. Open a name to read how it works: the steps it runs and the rules it follows, with their tables.</p></section>
+  <div id="skcard"></div>
   <section class="bars">
     ${bar("Skills that say what they are for",sk.filter(x=>x.purpose).length,sk.length)}
     ${bar("Skills that say what they read and leave",sk.filter(x=>x.reads&&x.leaves).length,sk.length)}
@@ -418,13 +460,14 @@ function skillsView(){
   ${rows.map(x=>{const s=D.stages.find(y=>y.id===x.stage);
     const g=x.stage!==stg?`<tr class="grp"><td colspan="6">${String(s.n).padStart(2,"0")} ${(stg=x.stage)} · ${s.mode.replace(/`/g,"")}</td></tr>`:"";
     const isJ=x.kind==="judge";
-    return g+`<tr><td class="stg">${esc(x.name)}<br><span class="sc ${isJ?"chk":""}" style="font-family:var(--display)">${isJ?"judge":"skill"}</span></td>
+    return g+`<tr><td class="stg"><button class="skn" data-sk="${esc(x.name+"|"+x.stage)}">${esc(x.name)}</button><br><span class="sc ${isJ?"chk":""}" style="font-family:var(--display)">${isJ?"judge":"skill"}</span></td>
       <td class="w">${md(isJ?x.checks:x.purpose)}</td>
       <td class="w">${isJ?md(D.judgeInput):x.reads?md(x.reads):`<span class="miss">Not said per skill</span><details><summary class="from">What the stage takes in (${s.inputs.length})</summary><span class="from">${s.inputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
       <td class="w">${isJ?`<span class="from">A verdict on the stage's output</span>`:x.leaves?md(x.leaves):`<span class="miss">Not said per skill</span><details><summary class="from">What the stage leaves (${s.outputs.length})</summary><span class="from">${s.outputs.map(r=>md(r[0])).join("; ")}</span></details>`}</td>
       <td class="w">${isJ?(x.passes?`Passes when: ${md(x.passes)}`:`<span class="miss">No pass condition</span>`):(x.checkedBy.length?x.checkedBy.map(j=>`<span class="sc chk">${esc(j)}</span>`).join(""):`<span class="from">${md(x.checkedByText)}</span>`)}</td>
       <td>${x.prompt?`<code>${esc(x.prompt)}</code>`:`<span class="miss">Not written</span><br><span class="from mono">${esc(x.promptPath)}</span>`}</td></tr>`;}).join("")}
   </table></div>`;
+  skillCard();
 }
 
 /* ---------------- Gaps ---------------- */
@@ -445,6 +488,7 @@ function route(){
 }
 document.querySelector('nav a[href="#gaps"]').insertAdjacentHTML("beforeend",D.gaps.length?`<span class="n">${D.gaps.length}</span>`:"");
 document.addEventListener("click",e=>{
+  const sk=e.target.closest("[data-sk]");if(sk){ks.sel=ks.sel===sk.dataset.sk?null:sk.dataset.sk;skillCard();return;}
   const sb=e.target.closest("[data-sub]");if(sb){const [k,v]=sb.dataset.sub.split(":");if(k==="p")st.mode=v;else if(k==="a")as.mode=v;else if(k==="k")ks.kind=v;else cs.mode=v;route();return;}
   const c=e.target.closest("[data-c]");if(c){st.change=+c.dataset.c;process();return;}
   const s=e.target.closest("[data-s]");if(s){st.sel=s.dataset.s;lanes();return;}

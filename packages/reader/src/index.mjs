@@ -6,4 +6,4 @@ export { readDefinition, writeDefinition, DEFINITION_STATUSES, ITEM_STATES } fro
 export { nextChangeId, changeIds } from './changes.mjs';
 export { mapData, renderMap } from './map.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.1.0';
+export const VERSION = '0.2.0';

@@ -2,10 +2,42 @@
 // every label comes from a table or heading of the spec. It reads only the model's files.
 import { readFileSync } from 'node:fs';
 import { dirname, join, normalize, sep } from 'node:path/posix';
-import { code, frontmatter, prose, section, tableWith, tables } from './markdown.mjs';
+import { body, code, frontmatter, headings, prose, section, tableWith, tables } from './markdown.mjs';
 
 // The map's labels are strings: a list or a block in a frontmatter is shown as its text.
 const flat = (fm) => Object.fromEntries(Object.entries(fm).map(([k, v]) => [k, typeof v === 'string' ? v : JSON.stringify(v)]));
+
+// The layers whose documents a skill follows, shown whole in its card.
+const FOLLOWED = new Set(['rules', 'architecture', 'domain']);
+
+/** The spec documents a piece of Markdown links to, as paths from the repository root, in order of first link. */
+function linksIn(md, from) {
+  const out = [];
+  for (const [, target] of (md || '').replace(/```[\s\S]*?```/g, '').matchAll(/\]\(([^)\s]+)\)/g)) {
+    const file = target.split('#')[0];
+    if (/^(https?:|mailto:)/.test(target) || !file.endsWith('.md')) continue;
+    const to = normalize(join(dirname(from), file)).split(sep).join('/');
+    if (to !== from && !out.includes(to)) out.push(to);
+  }
+  return out;
+}
+
+/**
+ * A document cut at its headings: each part with its heading, its prose, its tables and its
+ * diagrams (fenced blocks), in order, so a page can show it whole.
+ */
+export function blocksOf(text) {
+  const md = body(text);
+  const lines = md.split('\n');
+  const hs = headings(md);
+  const cuts = [{ level: 0, heading: '', anchor: '', line: 0 }, ...hs.map((h) => ({ level: h.level, heading: h.text, anchor: h.anchor, line: h.line }))];
+  return cuts.map((c, i) => {
+    const part = lines.slice(c.line, i + 1 < cuts.length ? cuts[i + 1].line - 1 : lines.length).join('\n');
+    const diagrams = [...part.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => m[1].replace(/\n$/, ''));
+    const text = prose(part.replace(/```[\s\S]*?```/g, '')).replace(/\n{3,}/g, '\n\n');
+    return { level: c.level, heading: c.heading, anchor: c.anchor, text, tables: tables(part), diagrams };
+  }).filter((b) => b.heading || b.text || b.tables.length || b.diagrams.length);
+}
 
 /**
  * The map's data, as `npm run view` writes it to `.pedd/view/map.json`.
@@ -37,6 +69,8 @@ export function mapData(model, { built = new Date().toISOString().slice(0, 10) }
       // The PRD's header line: **Gate:** `spec-approval` (or none).
       gate: text.match(/\*\*Gate:\*\* `([\w-]+)`/)?.[1] ?? null,
       what: prose(section(text, 'What it is')),
+      // The procedure's top-level steps, as written: "1. **Reads the pack**, …".
+      steps: (section(text, 'Procedure') || '').split('\n').map((l) => l.match(/^\d+\.\s+(.*)$/)?.[1]).filter(Boolean),
       inputs: tableWith(section(text, 'Inputs'), 'What')?.rows || [],
       outputs: tableWith(section(text, 'Outputs'), 'What')?.rows || [],
       judges: tableWith(judge, 'Agent')?.rows || [],
@@ -93,11 +127,14 @@ export function mapData(model, { built = new Date().toISOString().slice(0, 10) }
     const own = (fm.description || '').match(/^([A-Z]+-\d+)\s·/) || (fm.title || '').match(/^([A-Z]+-\d+)\s·/);
     if (own) ids.add(own[1]);
     for (const [, id] of body.matchAll(/^#+\s+([A-Z]+(?:-[A-Z]+)?-\d+)\s·/gm)) ids.add(id);
+    const layer = layerOf(p);
     return {
-      path: p, layer: layerOf(p), title: (fm.title || p).replace(/^[A-Z]+-\d+\s·\s/, ''),
+      path: p, layer, title: (fm.title || p).replace(/^[A-Z]+-\d+\s·\s/, ''),
       description: (fm.description || '').replace(/^[A-Z]+-\d+\s·\s/, ''), status: fm.status || null,
       version: fm.version || null, updated: fm.updated || null, ids: [...ids],
       links: [...links].map(([to, n]) => ({ to, n })),
+      // The documents a skill follows are shown whole, with their tables and diagrams.
+      ...(FOLLOWED.has(layer) ? { blocks: blocksOf(text) } : {}),
     };
   });
   const docPaths = new Set(docs.map((d) => d.path));
@@ -208,6 +245,9 @@ export function mapData(model, { built = new Date().toISOString().slice(0, 10) }
     for (const name of code(names)) {
       const judge = s.judges.find((r) => code(r[0]).includes(name));
       const path = promptPath(kind, name);
+      // The rules and mechanisms it follows: those its own row links first, then those its stage's PRD links.
+      const follows = [...new Set([...linksIn([purpose, reads, leaves].join(' '), s.path), ...linksIn(has(s.path) ? read(s.path) : '', s.path)])]
+        .filter((t) => docPaths.has(t) && FOLLOWED.has(layerOf(t)));
       skills.push({
         name, kind: kind === 'Skill' ? 'skill' : 'judge', stage: s.id, purpose,
         reads: reads === '—' ? '' : reads, leaves: leaves === '—' ? '' : leaves,
@@ -215,7 +255,7 @@ export function mapData(model, { built = new Date().toISOString().slice(0, 10) }
         passes: judge?.[2] || (kind === 'Agent' ? (s.judgeText.match(/Passes when ([^.]+)/) || [])[1] || '' : ''),
         checkedBy: kind === 'Skill' ? [...s.judges.flatMap((r) => code(r[0])), ...code(s.judgeText).filter((c) => c.endsWith('-judge'))] : [],
         checkedByText: kind === 'Skill' && !s.judges.length && !code(s.judgeText).some((c) => c.endsWith('-judge')) ? s.judgeText : '',
-        prompt: has(path) ? path : null, promptPath: path,
+        prompt: has(path) ? path : null, promptPath: path, follows,
       });
     }
   }

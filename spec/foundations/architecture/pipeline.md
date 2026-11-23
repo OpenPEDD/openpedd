@@ -1,9 +1,9 @@
 ---
 title: Pipeline
-description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, and what each change costs
+description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, what checks nothing went unrecorded, and what each change costs
 owner: Kevin
-version: "1.4"
-updated: "2026-11-20"
+version: "1.5"
+updated: "2026-11-23"
 ---
 
 # ARCH-11 · Pipeline
@@ -22,6 +22,21 @@ has its own set, and the last ones run everything.
 
 **Selecting is never the only net.** The full runs exist to catch what the selection missed, and a
 miss is a bug in the selection. Having no changed test file is not a reason to skip a test.
+
+## Nothing left unrecorded
+
+Whether every decision was recorded, and every task closed, is **counted by the tool, not judged by a
+model** ([`RULE-24`](../rules/cycle.md#rule-24)). Each check fails with what is missing and the command that fixes it.
+
+| Moment | Checks | Fails when |
+|---|---|---|
+| Task PR | The PR's **Spec** section against the change's deltas | An assumption or deviation listed in the PR has no delta, or a delta of the task is not listed; the section is missing, even with nothing to list |
+| Before `verify` builds the report | The implementation sub-issue's checklist ([`ARCH-15`](tracker.md#the-tasks)) | A task is unticked, or ticked without a merged PR |
+| The `Acceptance Report` | The report against the change's deltas | A delta, finding or improvement of the change is not in it, or is not in its place by weight ([`ARCH-22`](weight.md)) |
+| `acceptance-merge` | Every delta of the change | One has no decision |
+
+An assumption the code shows and no delta records is a `finding` of `verify`'s Spec lens, and counts
+in the cycle metrics as **undeclared**, per task.
 
 ## Selecting by the spec
 

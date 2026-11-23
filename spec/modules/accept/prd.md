@@ -2,8 +2,8 @@
 title: accept
 description: Stage 7 · A person decides everything the AI decided without them, from one report
 owner: Kevin
-version: "1.4"
-updated: "2026-11-19"
+version: "1.5"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -34,7 +34,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 
 ## Procedure
 
-1. **The person reads the report** and, if they want, tries the feature in the test environment, with its Walkthrough if it has one.
+1. **The person reads the report**, heaviest first ([`ARCH-22`](../../foundations/architecture/weight.md)), and, if they want, tries the feature in the test environment, with its Walkthrough if it has one.
 2. **Decides each delta**:
 
 | Decision | What happens |
@@ -43,6 +43,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 | `change` | Not like this: it becomes a new task, goes back to `build`, and the delta is dropped |
 | `reject` | Neither kept nor changed now: it is dropped, and a `Q` opens if needed |
 
+   The `high` are decided one by one; **one reply accepts every `low`** with `keep`, or names those that are not. A weight the person disagrees with is noted with the decision.
 3. **Decides each improvement** the agents noted: accepted, it goes to the backlog with its problem; otherwise it is dropped.
 4. **A bug the spec already covered** is recorded with the judge that let it through: it is the cycle metric, and that judge gets fixed.
 5. With everything decided, **`acceptance-merge`**: the `keep`s are ready for `publish`.
@@ -51,7 +52,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 
 | What | Status |
 |---|---|
-| One decision per delta | In the change |
+| One decision per delta, with the weight it had | In the change; per weight, in the cycle metrics |
 | A new task for each `change` | In the tracker, back to `build` |
 | A new `Q` for each `reject` that needs one | Open |
 | The bugs the spec covered, with their judge | In the cycle metric |
@@ -59,7 +60,7 @@ There is no agent: a person reads it. The report has a 3,000-token budget, plus 
 
 ## Judge
 
-None: the person is the gate. Passes when **nothing is left undecided**.
+None: the person is the gate. Passes when **nothing is left undecided**, which `pedd` counts, not the person ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)).
 
 ## Keep in mind
 

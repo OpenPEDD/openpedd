@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.10"
-updated: "2026-11-20"
+version: "1.11"
+updated: "2026-11-23"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -21,7 +21,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Release](release.md) | `ARCH-08` | Environments, deploying and launching, hotfix, rollback, retiring |
 | [Feature flags](flags.md) | `ARCH-09` | OpenFeature, the flags table, and launching with one change |
 | [Testing](testing.md) | `ARCH-10` | Levels, permissions, contracts, languages, AI, measured quality |
-| [Pipeline](pipeline.md) | `ARCH-11` | What runs at each moment, selection by the spec, cost per change |
+| [Pipeline](pipeline.md) | `ARCH-11` | What runs at each moment, selection by the spec, the checks that nothing went unrecorded, cost per change |
 | [Running agents](running.md) | `ARCH-12` | Where agents run, the quota guard, keeping their context small |
 | [Reviewing a change](review.md) | `ARCH-13` | The layers of review, what blocks, the judges in CI, the person's approval |
 | [Review lenses](review-lenses.md) | `ARCH-14` | What each hunter looks at, and the default checklist |
@@ -32,6 +32,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [Code index](code-index.md) | `ARCH-19` | The generated map of the code per module and package, read first by every agent |
 | [Spec reader](reader.md) | `ARCH-20` | The package that reads a spec, shared by the CLI and the Cloud |
 | [A request's branch](requests.md) | `ARCH-21` | Numbering a change, the definition's status, editing once agreed, renaming at approval |
+| [Weight](weight.md) | `ARCH-22` | How each decision the AI takes alone is weighed, so the heavy ones are asked and read first |
 
 ## How an architecture document is written
 
