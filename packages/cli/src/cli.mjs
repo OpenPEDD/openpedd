@@ -1,12 +1,14 @@
 // The commands of `pedd`, with their arguments read. Each returns an exit code.
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
-import { readSpec } from '@openpedd/reader';
+import { readSpec, viewData } from '@openpedd/reader';
 import { readFiles } from '@openpedd/reader/files';
 import { BranchError, cutChange, cutChild, cutEdit, renameChange } from './branch.mjs';
 import { checkBranch } from './branch-check.mjs';
 import { CHECKS, runChecks } from './check.mjs';
 import { Git } from './git.mjs';
+import { changedPaths, filesAt, viewSources } from './sources.mjs';
+import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewTarget, watchViews, writeViews } from './view.mjs';
 import { readWorkspace } from './workspace.mjs';
 import { VERSION } from './version.mjs';
 
@@ -34,8 +36,14 @@ export const NOT_BUILT = {
 
 const HELP = `pedd ${VERSION}
 
-  pedd check [--only ${CHECKS.join(',')}] [--against <ref>] [--root <dir>]
-      The spec checks. --against: the commit a document's size is compared with (default HEAD).
+  pedd check [--only ${CHECKS.join(',')}] [--against <ref>] [--root <dir>] [--json]
+      The spec checks. --against: the commit the change is compared with (default HEAD): a document
+      over budget fails if it grew, a loose item if the change adds or touches it.
+
+  pedd view [<kind> [<id>]] [--depth <n>] [--format mermaid] [--watch] [--no-open] [--root <dir>]
+      Every view of the spec as a map, in .pedd/view/: decisions, entities, states, security, context,
+      code, business, prd, trace, changes. <kind> <id> opens one view on that ID; --format mermaid
+      prints it instead; --watch rebuilds it on each save.
 
   pedd branch change <slug> [--track full|story|fix|chore|hotfix]    (also: pedd branch request <slug>)
       A change's branch, from the base (a hotfix: from production), numbered CHG-nnn, holding only
@@ -69,17 +77,34 @@ function options(args, booleans = []) {
   return { opts, rest };
 }
 
+/** The loose items of the working tree and of the base, and what changed between them (F3). */
+function looseState(root, ws, files, model, against) {
+  const sources = viewSources(root, ws, files);
+  const now = viewData(model, sources).loose;
+  const baseFiles = filesAt(root, against, [ws.spec]);
+  if (!baseFiles) return { now, base: null, changed: null };
+  // The base keeps the working tree's other sources: only the spec is compared.
+  const base = viewData(readSpec(baseFiles, { root: ws.spec }), { ...sources }).loose;
+  return { now, base, changed: changedPaths(root, against) };
+}
+
 async function check(args, { cwd, out }) {
-  const { opts } = options(args);
+  const { opts } = options(args, ['json']);
   const root = resolve(cwd, opts.root || '.');
   const ws = readWorkspace(root);
-  const model = readSpec(readFiles(root), { root: ws.spec });
+  const files = readFiles(root);
+  const model = readSpec(files, { root: ws.spec });
   const against = opts.against || 'HEAD';
   const before = (path) => {
     try { return execFileSync('git', ['show', `${against}:${path}`], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch { return null; }
   };
   const only = opts.only ? opts.only.split(',') : CHECKS;
-  const results = runChecks(model, { root, spec: ws.spec, budgets: ws.budgets, before, only });
+  const loose = only.includes('loose') ? looseState(root, ws, files, model, against) : null;
+  const results = runChecks(model, { root, spec: ws.spec, budgets: ws.budgets, before, only, loose });
+  if (opts.json) {
+    out(JSON.stringify({ against, checks: results }, null, 2));
+    return results.some((r) => r.failures.length) ? 1 : 0;
+  }
   let failed = 0;
   for (const r of results) {
     const where = (f) => `${f.path}${f.line ? `:${f.line}` : ''}`;
@@ -89,6 +114,31 @@ async function check(args, { cwd, out }) {
     failed += r.failures.length;
   }
   return failed ? 1 : 0;
+}
+
+async function view(args, { cwd, out, err }) {
+  const { opts, rest } = options(args, ['watch', 'no-open']);
+  const root = resolve(cwd, opts.root || '.');
+  const target = viewTarget(rest, opts);
+  if (opts.format === 'mermaid') { out(mermaidOf(buildViews(root), target).trimEnd()); return 0; }
+  const summary = (data) => {
+    const n = data.loose.length;
+    out(`${green('✓')} ${Object.values(data.views).filter((v) => !v.empty).length} of 10 views, ${n ? yellow(`${n} loose`) : 'nothing loose'}`);
+  };
+  if (opts.watch) {
+    const w = await watchViews(root, { open: target.kind ? target : null, port: Number(opts.port) || 0, onBuild: (data, e) => (e ? err(red(`✗ ${e.message}`)) : summary(data)) });
+    out(`Serving the views on ${w.url} · rebuilt on each save of the spec · ctrl-c to stop`);
+    if (!opts['no-open']) openInBrowser(w.url);
+    await new Promise((done) => process.once('SIGINT', () => { w.close(); done(); }));
+    return 0;
+  }
+  const data = buildViews(root);
+  const open = target.kind ? target : { kind: firstView(data) };
+  const page = writeViews(root, data, open);
+  summary(data);
+  out(`  ${page}${target.kind ? ` · opens on ${target.kind}${target.id ? ` ${target.id}` : ''}` : ` · opens on ${open.kind}`}`);
+  if (!opts['no-open'] && !process.env.CI) openInBrowser(page);
+  return 0;
 }
 
 function branch(args, { cwd, out }) {
@@ -145,6 +195,7 @@ export async function main(argv, io) {
     switch (command) {
       case 'check': return await check(args, io);
       case 'branch': return branch(args, io);
+      case 'view': return await view(args, io);
       case 'version': case '--version': io.out(VERSION); return 0;
       case undefined: case 'help': case '--help': io.out(HELP); return 0;
       default:
@@ -154,6 +205,7 @@ export async function main(argv, io) {
     }
   } catch (e) {
     if (e instanceof BranchError) { io.err(red(`✗ ${e.message}`)); return 1; }
+    if (e instanceof ViewError) { io.err(red(`✗ ${e.message}`)); return 2; }
     throw e;
   }
 }
