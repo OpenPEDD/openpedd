@@ -420,7 +420,7 @@ function prosed(t){
     return `<p>${md(par.replace(/\n/g," "))}</p>`;}).join("");
 }
 function docWhole(d){
-  return (d.blocks||[]).map(b=>`<div class="blk">${b.heading&&b.level>1?`<h4>${md(b.heading)}</h4>`:""}${prosed(b.text)}${b.tables.map(t=>table(t.rows,t.header.map(md))).join("")}${b.diagrams.map(g=>`<pre>${esc(g)}</pre>`).join("")}</div>`).join("");
+  return (d.blocks||[]).map(b=>`<div class="blk">${b.heading&&b.level>1?`<h4>${md(b.heading)}</h4>`:""}${b.pieces.map(x=>x.table?table(x.table.rows,x.table.header.map(md)):x.diagram!==undefined?`<pre>${esc(x.diagram)}</pre>`:prosed(x.text)).join("")}</div>`).join("");
 }
 function skillCard(){
   const el=$("#skcard");if(!el)return;

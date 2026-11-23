@@ -23,8 +23,9 @@ function linksIn(md, from) {
 }
 
 /**
- * A document cut at its headings: each part with its heading, its prose, its tables and its
- * diagrams (fenced blocks), in order, so a page can show it whole.
+ * A document cut at its headings: each part with its heading and its pieces in the order written,
+ * each `{ text }`, `{ table: { header, rows } }` or `{ diagram }` (a fenced block), so a page can
+ * show it whole.
  */
 export function blocksOf(text) {
   const md = body(text);
@@ -32,11 +33,32 @@ export function blocksOf(text) {
   const hs = headings(md);
   const cuts = [{ level: 0, heading: '', anchor: '', line: 0 }, ...hs.map((h) => ({ level: h.level, heading: h.text, anchor: h.anchor, line: h.line }))];
   return cuts.map((c, i) => {
-    const part = lines.slice(c.line, i + 1 < cuts.length ? cuts[i + 1].line - 1 : lines.length).join('\n');
-    const diagrams = [...part.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => m[1].replace(/\n$/, ''));
-    const text = prose(part.replace(/```[\s\S]*?```/g, '')).replace(/\n{3,}/g, '\n\n');
-    return { level: c.level, heading: c.heading, anchor: c.anchor, text, tables: tables(part), diagrams };
-  }).filter((b) => b.heading || b.text || b.tables.length || b.diagrams.length);
+    const own = lines.slice(c.line, i + 1 < cuts.length ? cuts[i + 1].line - 1 : lines.length);
+    const pieces = [];
+    let buf = [];
+    const flush = () => {
+      const t = buf.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+      if (t) pieces.push({ text: t });
+      buf = [];
+    };
+    for (let j = 0; j < own.length; j++) {
+      if (own[j].startsWith('```')) {
+        flush();
+        const code = [];
+        for (j++; j < own.length && !own[j].startsWith('```'); j++) code.push(own[j]);
+        pieces.push({ diagram: code.join('\n') });
+      } else if (own[j].startsWith('|')) {
+        flush();
+        const rows = [];
+        for (; j < own.length && own[j].startsWith('|'); j++) rows.push(own[j]);
+        j--;
+        const t = tables(rows.join('\n'))[0];
+        if (t) pieces.push({ table: t });
+      } else buf.push(own[j]);
+    }
+    flush();
+    return { level: c.level, heading: c.heading, anchor: c.anchor, pieces };
+  }).filter((b) => b.heading || b.pieces.length);
 }
 
 /**

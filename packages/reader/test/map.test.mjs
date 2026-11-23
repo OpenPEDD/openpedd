@@ -19,13 +19,11 @@ test('mapData: the map of this repository, every part present', () => {
   assert.ok(d.skills.some((s) => s.prompt === 'skills/specify-interview/SKILL.md'));
 });
 
-test('blocksOf: a document cut at its headings, with its prose, tables and diagrams', () => {
-  const b = blocksOf('---\ntitle: x\n---\n\n# A\n\nIntro.\n\n## B [#b]\n\n| H | I |\n|---|---|\n| 1 | 2 |\n\n```\na ──▶ b\n```\n');
+test('blocksOf: a document cut at its headings, its prose, tables and diagrams in the order written', () => {
+  const b = blocksOf('---\ntitle: x\n---\n\n# A\n\nIntro.\n\n## B [#b]\n\n| H | I |\n|---|---|\n| 1 | 2 |\n\nAfter.\n\n```\na ──▶ b\n```\n');
   assert.deepEqual(b.map((x) => [x.level, x.heading, x.anchor]), [[1, 'A', 'a'], [2, 'B', 'b']]);
-  assert.equal(b[0].text, 'Intro.');
-  assert.deepEqual(b[1].tables, [{ header: ['H', 'I'], rows: [['1', '2']] }]);
-  assert.deepEqual(b[1].diagrams, ['a ──▶ b']);
-  assert.equal(b[1].text, '');
+  assert.deepEqual(b[0].pieces, [{ text: 'Intro.' }]);
+  assert.deepEqual(b[1].pieces, [{ table: { header: ['H', 'I'], rows: [['1', '2']] } }, { text: 'After.' }, { diagram: 'a ──▶ b' }]);
 });
 
 test('mapData: each skill card has its stage steps and the documents it follows, shown whole', () => {
