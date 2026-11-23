@@ -2,7 +2,7 @@
 title: Sweep
 description: ARCH-16 · Every question a change still has, from specify, architect, design and plan, asked at once with a recommendation each
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
@@ -54,6 +54,23 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 | `pedd sweep --all` | Also the stages already passed; what it finds there is a `proposal` delta |
 | `pedd sweep --accept-recommended` | Takes every recommendation, the `high` too. Each is recorded as decided by recommendation, and the `Acceptance Report` lists them for `accept`, by weight |
 | `pedd sweep --ask-all` | Asks the `medium` and `low` too |
+| `pedd sweep --from <dir>` | Uses the `<stage>.json` findings in a folder instead of running finders |
+
+## How `pedd` runs it
+
+| Step | How |
+|---|---|
+| The stages ahead | From the least advanced status of the requirements in the PRDs `definition.md` names: `specify` is behind once they are `specified`, `architect` and `design` once `designed`, `plan` once `building`. Without a definition, all four. `--stages` names them; `--all` takes all four |
+| A finder | The command in `workspace.yaml` `agents.finder`, by default `claude -p` with only Read, Grep and Glob allowed; the prompt on its input names its stage, what it looks for and its checklist (`packages/cli/prompts/sweep-finder.md`). Every finder runs at once |
+| What a finder returns | A JSON array: per question `key`, `about`, `target`, `breaks`, `options` (each with what follows), `recommended`, `reason`, `evidence`, `undo`, `depends_on`, `blocks_gate`; or `answered_by` alone, to drop it. One with no `about`, fewer than two options or no reason is left out and named |
+| A finder that fails | Reported as not run, with why; the others go on, and the sweep exits non-zero ([`RULE-22`](../rules/cycle.md#rule-22)) |
+| Duplicates | The same `key`, or the same target and three words or more in common: kept under the earlier owner, the rest named as *also found by* |
+| What it leaves | `changes/<CHG>/sweep.md`, the sheet; `sweep/state.json`; and what each finder returned, in `sweep/findings/` |
+| The reply | `pedd sweep <CHG> answer "…"`: a number and a letter picks an option, other words are a custom answer, `later` leaves it open; *all*, *ok* or *todo* takes every other recommendation |
+| Round 2 | `pedd sweep <CHG>` again: only the reopened questions' finders run, told the answers given, and rewrite those questions under the same number |
+
+The skill `/sweep` (`skills/sweep/SKILL.md`) runs it from a session: it shows the sheet, takes the
+reply, and hands each answer to the stage that writes it.
 
 ## When it runs by itself
 

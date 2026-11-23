@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.12"
+version: "1.13"
 updated: "2026-11-23"
 ---
 
@@ -114,7 +114,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd trace <id>` | One requirement's chain |
 | `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid` |
 | `pedd impact` | What a change affects; `--tests` selects tests |
-| `pedd sweep` | Every open question of a change, at once, with recommendations; `--accept-recommended` |
+| `pedd sweep <change>` | Every open question of a change, at once, with recommendations: the heavy asked, the rest shown decided; `answer "…"` takes the one reply; `--accept-recommended`, `--ask-all` |
 | `pedd weigh <change>` | Each assumption and deviation of a change, weighed high, medium or low with its factors, heaviest first ([weight](foundations/architecture/weight.md#how-pedd-reads-each-factor)) |
 | `pedd branch` | Creates a work branch from the right base, read from the tracker and the change |
 | `pedd overlap` | Which changes in flight touch the same IDs or files |

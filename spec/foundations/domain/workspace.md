@@ -2,8 +2,8 @@
 title: Workspace
 description: ENT-16 · The repos of a project and how they connect
 owner: Kevin
-version: "1.7"
-updated: "2026-11-22"
+version: "1.8"
+updated: "2026-11-23"
 ---
 
 # ENT-16 · Workspace
@@ -29,6 +29,7 @@ shared packages ([`DEC-22`](../../decisions/DEC-22-monorepo-default.md)). It is 
 | `branches` | The base, and the name of each kind of branch ([`ARCH-06`](../architecture/branches.md#configuration)) |
 | `models` | The model profile and overrides ([`DEC-07`](../../decisions/DEC-07-models.md)) |
 | `stages` | Per-stage settings, such as `architect.mode` |
+| `agents` | `finder`: the command a sweep runs each finder with, its prompt on the input ([`ARCH-16`](../architecture/sweep.md#how-pedd-runs-it)) |
 | `runners` | Where each stage runs: `local`, `cloud` or `self-hosted`, its environment and how many in parallel ([`ARCH-12`](../architecture/running.md#where-agents-run)) |
 | `review` | What blocks a change, and whether the judges run on every PR ([`ARCH-13`](../architecture/review.md)) |
 | `budgets` | Token budgets per layer |

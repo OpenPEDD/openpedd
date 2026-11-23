@@ -2,7 +2,7 @@
 title: Weight
 description: ARCH-23 · How each decision the AI takes alone is weighed high, medium or low, so a person is asked, and reads, the heavy ones first
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-23"
 ---
 
@@ -54,8 +54,8 @@ them heaviest first, each with the words that set its factors; `--json` gives th
 | Undo | `high`: `revert` names a migration, `.sql`, data already written, a public API, route or webhook, or something sent (an email); **or `revert` is empty**. `low`: copy, a label, a locale, style, configuration or a flag. Otherwise `medium` |
 | Reach | `high`: the target is an `ENT`, the files of `revert` span more than one module (`apps/x`, `packages/y`, `spec/modules/z`), or a migration. `medium`: a requirement, or an `ARCH`, `ADR`, `SEC`, `INT` or `EVT`. Otherwise `low` |
 | Evidence | `high`: empty, or `guess`. `medium`: starts with *inferred* or *from*, or states without citing. `low`: names an ID or a file |
-| Fan-out | `--fan-out DLT-0001=3` while the plan's dependencies are not read; without it, not applied and shown as unknown |
-| Triggers | The words of permissions, billing, personal data and security, in the target, reason, revert, `if_no` or alternative. **A code span holding one name (`security`, a view) is a name, not a signal**; a path is read word by word (`…_billing.sql`) |
+| Fan-out | For a delta, `--fan-out DLT-0001=3` while the plan's dependencies are not read; without it, not applied. For a sweep question, the questions whose `depends_on` names it. Shown only when it raises the weight |
+| Triggers | The words of permissions, billing, personal data and security, in the target, reason, revert, `if_no` or alternative. **A code span holding one name (`security`, a view) is a name, not a signal**; a path is read word by word (`…_billing.sql`). A sweep question's options are not read: their wording is not what it touches |
 
 A missing `revert`, `evidence` or `if_no` is named next to the item.
 
