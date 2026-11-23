@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.17"
-updated: "2026-11-22"
+version: "1.18"
+updated: "2026-11-23"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -64,6 +64,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
+| Weight: `high` · `medium` · `low` | How costly a decision the AI took alone is to get wrong; decides what is asked and the order it is read in | [`ARCH-23`](architecture/weight.md) |
+| Undeclared assumption | One `verify` finds in the code with no delta | [`ARCH-11`](architecture/pipeline.md#nothing-left-unrecorded) |
 | Request · `requested` · `dropped` · `retired` | A client's ask, which is a change branch from the start; a change dropped before approval, or retired after it | [`ARCH-21`](architecture/requests.md) · [`ENT-06`](domain/change.md) |
 | `draft` · `confirmed` · `agreed` | A request's definition: being defined, confirmed by the client, taken by the builder and queued. `agreed` is not `accepted`, a change's status after `accept` | [`DEC-27`](../decisions/DEC-27-request-agreed.md) |
 | Edit branch · `edit/` | One edit to an agreed request, merged into its branch by the builder | [`ARCH-21`](architecture/requests.md#edit-branch) |
@@ -140,4 +142,4 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | `ready` (status) | `designed`: `ready` read as launched, next to `live` |
 | `product/` (the folder of modules) | `modules/` |
 | Area (level above the PRD) | Module |
-| `BIZ-02` (the landscape) | `MKT-01`. `BIZ-02` stays dead |
+| The landscape, as a Business document | `MKT-01`. Its old Business ID stays dead ([`RULE-03`](rules/writing.md#rule-03)) |

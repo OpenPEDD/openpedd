@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { VERSION, mapData, readSpec, renderMap } from '../src/index.mjs';
+import { blocksOf } from '../src/map.mjs';
 import { readFiles } from '../src/files.mjs';
 
 const REPO = fileURLToPath(new URL('../../..', import.meta.url));
@@ -16,6 +17,24 @@ test('mapData: the map of this repository, every part present', () => {
   assert.equal(d.stages.length, 10);
   assert.ok(d.docs.every((x) => x.path.startsWith('spec/') && !x.path.startsWith('spec/history')));
   assert.ok(d.skills.some((s) => s.prompt === 'skills/specify-interview/SKILL.md'));
+});
+
+test('blocksOf: a document cut at its headings, its prose, tables and diagrams in the order written', () => {
+  const b = blocksOf('---\ntitle: x\n---\n\n# A\n\nIntro.\n\n## B [#b]\n\n| H | I |\n|---|---|\n| 1 | 2 |\n\nAfter.\n\n```\na ──▶ b\n```\n');
+  assert.deepEqual(b.map((x) => [x.level, x.heading, x.anchor]), [[1, 'A', 'a'], [2, 'B', 'b']]);
+  assert.deepEqual(b[0].pieces, [{ text: 'Intro.' }]);
+  assert.deepEqual(b[1].pieces, [{ table: { header: ['H', 'I'], rows: [['1', '2']] } }, { text: 'After.' }, { diagram: 'a ──▶ b' }]);
+});
+
+test('mapData: each skill card has its stage steps and the documents it follows, shown whole', () => {
+  const d = mapData(model, { built: 'x' });
+  const plan = d.stages.find((s) => s.id === 'plan');
+  assert.ok(plan.steps.length > 5 && plan.steps[0].startsWith('**Traceability matrix.**'));
+  const sweep = d.skills.find((s) => s.name === '/sweep');
+  assert.equal(sweep.follows[0], 'spec/foundations/architecture/sweep.md', 'its own row links first');
+  const byPath = new Map(d.docs.map((x) => [x.path, x]));
+  for (const s of d.skills) for (const p of s.follows) assert.ok(byPath.get(p)?.blocks?.length, p);
+  assert.ok(d.docs.filter((x) => x.layer === 'modules').every((x) => !('blocks' in x)), 'module PRDs are not inlined');
 });
 
 test('mapData: the same files give the same JSON, whatever order they come in', () => {

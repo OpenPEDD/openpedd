@@ -1,4 +1,4 @@
-// org: a hierarchical organization chart (MKT-14): a box per role with how many hold it, reporting
+// org: a hierarchical organization chart (MKT-15): a box per role with how many hold it, reporting
 // lines, and each manager's span of control; as-is and to-be side by side (FR-VEW-14).
 import { clean, loose, view } from './common.mjs';
 import { prep } from './prep.mjs';

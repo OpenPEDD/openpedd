@@ -2,8 +2,8 @@
 title: Sweep
 description: ARCH-16 · Every question a change still has, from specify, architect, design and plan, asked at once with a recommendation each
 owner: Kevin
-version: "1.0"
-updated: "2026-11-17"
+version: "1.1"
+updated: "2026-11-23"
 ---
 
 # ARCH-16 · Sweep: every question at once
@@ -31,9 +31,9 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 
 3. **Drops what is already answered**: by the spec, citing the ID ([`RULE-01`](../rules/writing.md#rule-01)), or by the code, citing the file ([`RULE-21`](../rules/cycle.md#rule-21)).
 4. **Merges duplicates**: a question is asked once, by its owner. The what (`specify`) comes before the how (`architect`), and the how before the look (`design`).
-5. **Writes each question** with: what it is about, in words ([`RULE-20`](../rules/cycle.md#rule-20)); what breaks if it is guessed; an options table; **the recommendation and its reason**; and the questions that depend on it.
-6. **Orders them**: what blocks a gate first, then hardest-first. A question that depends on another is written assuming the recommended answer.
-7. **Shows the sheet**, in the chat and in `changes/<CHG>/sweep.md`. The person answers in one reply: *"all as recommended, except 3 and 7: …"*.
+5. **Writes each question** with: what it is about, in words ([`RULE-20`](../rules/cycle.md#rule-20)); what breaks if it is guessed; an options table; **the recommendation and its reason**; what backs it; and the questions that depend on it.
+6. **Weighs and orders them** ([`ARCH-23`](weight.md)): `high` first, and among them what blocks a gate first, then hardest-first. A question that depends on another is written assuming the recommended answer.
+7. **Shows the sheet**, in the chat and in `changes/<CHG>/sweep.md`: the `high` as questions; below them, the `medium` and `low` **as decided by their recommendation**, one line each with its weight. The person answers in one reply, and may overturn any line: *"all as recommended, except 3 and 7: …"*.
 8. **Writes each answer where it belongs**, through the stage that owns it ([`RULE-10`](../rules/cycle.md#rule-10)):
 
 | Answer about | Before its gate | After its gate |
@@ -52,7 +52,8 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 | `pedd sweep` | The stages still ahead of the change |
 | `pedd sweep --stages specify,architect` | Only those stages |
 | `pedd sweep --all` | Also the stages already passed; what it finds there is a `proposal` delta |
-| `pedd sweep --accept-recommended` | Takes every recommendation. Each is recorded as decided by recommendation, and the `Acceptance Report` lists them for `accept` |
+| `pedd sweep --accept-recommended` | Takes every recommendation, the `high` too. Each is recorded as decided by recommendation, and the `Acceptance Report` lists them for `accept`, by weight |
+| `pedd sweep --ask-all` | Asks the `medium` and `low` too |
 
 ## When it runs by itself
 
@@ -67,6 +68,7 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 | Rule | Why |
 |---|---|
 | Every question carries a recommendation | The person corrects; they do not start from blank |
+| Only the `high` are asked; the rest are shown decided | The person spends the reply on what is costly to get wrong, and still sees the rest |
 | A question is asked once, by its owner | The same doubt asked by two stages gets two answers |
 | Answers go to the spec, the decisions or the design branch, never only the chat | Nobody else reads the chat |
 | Finders read; they write nothing | Only the owner of each answer writes it |

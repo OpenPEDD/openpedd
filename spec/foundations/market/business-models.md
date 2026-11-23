@@ -1,18 +1,18 @@
 ---
 title: How the industry models a business
-description: MKT-14 · Processes as-is and to-be, the organization chart and the business glossary, as BPMN, process mapping and data governance define them. Surveyed 2026-11-23
+description: MKT-15 · Processes as-is and to-be, the organization chart and the business glossary, as BPMN, process mapping and data governance define them. Surveyed 2026-11-23
 owner: Kevin
 version: "1.0"
 updated: "2026-11-23"
 ---
 
-# MKT-14 · How the industry models a business
+# MKT-15 · How the industry models a business
 
 Surveyed on 2026-11-23, from search results quoting Camunda's BPMN reference, process-mapping guides
 (Signavio, Lucidchart, Miro, Asana), business-education texts and data-governance vendors. No standard
 was opened in full: the BPMN 2.0 specification, the DAMA-DMBOK and Evans's book were read only through
 those quotes. How a map is drawn with a client is [`MKT-11`](business-mapping.md); what OpenPEDD takes
-is written where it governs ([`RULE-28`](../rules/writing.md#rule-28)).
+is written where it governs ([`RULE-29`](../rules/writing.md#rule-29)).
 
 ## Process (BPMN 2.0)
 

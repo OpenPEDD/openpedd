@@ -1,4 +1,4 @@
-// glossary: a business glossary (MKT-14): each term with its definition, its translations and where it
+// glossary: a business glossary (MKT-15): each term with its definition, its translations and where it
 // is defined; names no longer used beside their new name. From the `Glossary` (FR-VEW-13).
 import { posix } from 'node:path';
 import { clean, colOf, loose, view } from './common.mjs';

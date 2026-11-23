@@ -37,7 +37,7 @@ it; it never redefines it ([`RULE-01`](../rules/writing.md#rule-01)).
 
 ## What is an entity [#what-is-an-entity]
 
-As the entity-relationship model defines it ([`MKT-13`](../market/modeling-standards.md#entity-er-model), [`RULE-28`](../rules/writing.md#rule-28)): **an entity is
+As the entity-relationship model defines it ([`MKT-14`](../market/modeling-standards.md#entity-er-model), [`RULE-29`](../rules/writing.md#rule-29)): **an entity is
 an object, person, event or concept of the real world, physical or abstract, about which the product
 keeps data, and that is told apart from others like it.**
 
@@ -67,7 +67,7 @@ then its tables, under these headings, which the `entities` and `states` views r
 |---|---|---|
 | `Fields` | `Field` · `Type` · `What it holds` | A field that names another entity, by link or by ID, is a relationship; its type gives the cardinality: `ENT-nn` one, `ENT-nn?` zero or one, `ENT-nn[]` many |
 | `States` | `State` · `Means` | Only when it has states |
-| `Transitions` | `From` · `To` · `When` · `By` | As UML's state machine ([`MKT-13`](../market/modeling-standards.md#state-machine-uml)): the first state is where the initial pseudostate leads; `When` is the trigger and its guard, `event [condition]`; `By` is the role or stage that fires it; a state with no row out is final |
+| `Transitions` | `From` · `To` · `When` · `By` | As UML's state machine ([`MKT-14`](../market/modeling-standards.md#state-machine-uml)): the first state is where the initial pseudostate leads; `When` is the trigger and its guard, `event [condition]`; `By` is the role or stage that fires it; a state with no row out is final |
 
 `Type` may be left out of an entity that is never stored. A PRD cites the entity, never copies these
 tables; the modules that use an entity are the ones whose PRDs cite it

@@ -1,4 +1,4 @@
-// activity: a UML activity diagram per business process (MKT-13): one initial node at `Starts with`,
+// activity: a UML activity diagram per business process (MKT-14): one initial node at `Starts with`,
 // each step an action in its role's partition, a decision where an alternate leaves, and one final node
 // per way the process ends; the partitions as a table of lanes (FR-VEW-15).
 import { clean, loose, view } from './common.mjs';

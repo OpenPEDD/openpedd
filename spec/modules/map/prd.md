@@ -87,7 +87,7 @@ in `foundations/business-map/`, in two files.
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 
-| `to-be.md` | Holds. Each mark is the **gap** between as-is and to-be, and each gap goes to a module ([`MKT-14`](../../foundations/market/business-models.md#as-is-to-be-and-the-gap)) |
+| `to-be.md` | Holds. Each mark is the **gap** between as-is and to-be, and each gap goes to a module ([`MKT-15`](../../foundations/market/business-models.md#as-is-to-be-and-the-gap)) |
 |---|---|
 | People | The roles that appear, change or go |
 | Processes | A table `PRC` · `Mark` (`kept` · `changed` · `taken`) · `Module` · `Roles`: the module that takes it, and the roles that run it after |

@@ -1,4 +1,4 @@
-// use-cases: a UML use case diagram (MKT-13): roles as actors, each module as the system boundary, each
+// use-cases: a UML use case diagram (MKT-14): roles as actors, each module as the system boundary, each
 // main flow as a use case associated with the roles of its steps, an «include» to each flow a step
 // names, and each alternate or exception flow as an «extend» of the flow it leaves from (FR-VEW-16).
 import { clean, colOf, loose, view } from './common.mjs';

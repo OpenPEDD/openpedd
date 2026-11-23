@@ -1,17 +1,17 @@
 ---
 title: How the industry defines each model
-description: MKT-13 · Entities, state machines, use cases and activities, as the ER model and UML define them, and what OpenPEDD takes from each. Surveyed 2026-11-23
+description: MKT-14 · Entities, state machines, use cases and activities, as the ER model and UML define them, and what OpenPEDD takes from each. Surveyed 2026-11-23
 owner: Kevin
 version: "1.1"
 updated: "2026-11-23"
 ---
 
-# MKT-13 · How the industry defines each model
+# MKT-14 · How the industry defines each model
 
 Surveyed on 2026-11-23, from search results quoting lecture notes, tool references (IBM, Microsoft,
 Altova, Visual Paradigm) and the UML 2.4.1 superstructure; neither Chen's 1976 paper nor the UML 2.5
 specification was opened. Where sources disagree it is said. What OpenPEDD takes from each is written
-where it governs ([`RULE-28`](../rules/writing.md#rule-28)).
+where it governs ([`RULE-29`](../rules/writing.md#rule-29)).
 
 ## Entity (ER model)
 

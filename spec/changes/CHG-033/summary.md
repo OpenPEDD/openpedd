@@ -1,18 +1,18 @@
 ---
-title: "CHG-031 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
+title: "CHG-033 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
 description: One page — what changed in the framework's spec, and why, found mapping OpenPEDD Cloud with it
 owner: Kevin
 version: "1.1"
 updated: "2026-11-23"
 ---
 
-# CHG-031 · What an entity is, the business's views, and the prd view by levels
+# CHG-033 · What an entity is, the business's views, and the prd view by levels
 
-Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-014`).
+Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-016`).
 
 | What | Where |
 |---|---|
-| **Every kind of model is defined as the industry defines it**, surveyed first | [`RULE-28`](../../foundations/rules/writing.md#rule-28); [`MKT-13`](../../foundations/market/modeling-standards.md) (ER, UML state machine, use case, activity), [`MKT-14`](../../foundations/market/business-models.md) (BPMN, as-is/to-be and the gap, organization chart, business glossary) |
+| **Every kind of model is defined as the industry defines it**, surveyed first | [`RULE-29`](../../foundations/rules/writing.md#rule-29); [`MKT-14`](../../foundations/market/modeling-standards.md) (ER, UML state machine, use case, activity), [`MKT-15`](../../foundations/market/business-models.md) (BPMN, as-is/to-be and the gap, organization chart, business glossary) |
 | **What is an entity**, as the ER model defines it: distinguishable by a key, its own attributes, relevant to the domain, related with a cardinality, strong, weak or associative; transitions as UML's `trigger [guard]` | [Domain](../../foundations/domain/index.md#what-is-an-entity), and its guide in `template/` |
 | The `prd` view opens on modules and their PRDs; one PRD opens to its flows, use cases, transitions, requirements and criteria | [views](../../modules/views/prd.md), `FR-VEW-10` |
 | An ID with a reference's prefix (`openpedd:ENT-20`) is the reference's, never loose | `FR-VEW-11`, [`ARCH-22`](../../foundations/architecture/views.md) |

@@ -93,7 +93,7 @@ criterion, and every ID cited is defined somewhere. **The views of a project are
 what breaks when it changes.** `pedd check` fails on a loose item a change adds or touches
 ([views](../../modules/views/prd.md#loose-items)).
 
-## RULE-28 · Every kind of model is defined as the industry defines it [#rule-28]
+## RULE-29 · Every kind of model is defined as the industry defines it [#rule-29]
 
 An entity, a state machine, a use case, an activity, a process, an organization chart, a glossary, and
 any kind of model added later, is defined from the standard the industry uses for it (the ER model, UML,
