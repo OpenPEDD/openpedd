@@ -18,5 +18,5 @@ conversations**. If deciding needs any of those, the report is badly built.
 
 A report decides, it does not narrate: each delta comes with what has to be decided, not the story of
 how it got there. **Every item is shown as it is written, with its ID only in parentheses**
-([`RULE-20`](../rules/cycle.md#rule-20)): the person reads the requirement, not `FR-JOB-03`. Reports
+([`RULE-20`](../rules/cycle.md#rule-20)): the person reads the requirement, not `FR-VEW-01`. Reports
 live in `changes/<CHG>/reports/`.

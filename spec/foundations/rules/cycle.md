@@ -71,7 +71,7 @@ may go next to it, in parentheses, so it can be found; never alone.
 |---|---|
 | *Shall we close Q-14?* | *Shall we close the scope of the MVP: which stages and adapters ship first? (`Q-14`)* |
 | *DEC-11 applies here* | *The Cloud stays in a private repo; only the framework is public (`DEC-11`)* |
-| *Accept DLT-0142?* | *The design added a confirmation step before deleting a job post. Keep it? (`DLT-0142`)* |
+| *Accept DLT-nnnn?* | *The design added a confirmation step before deleting a job post. Keep it? (`DLT-nnnn`)* |
 
 **Why:** an ID means nothing to someone who does not have the spec open. A person cannot answer a
 question about `Q-14` without looking it up, and a decision made without reading what it decides is

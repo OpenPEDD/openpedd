@@ -15,7 +15,7 @@ the spec itself ([`RULE-10`](../rules/cycle.md#rule-10)). A delta enters the spe
 | Field | What it holds |
 |---|---|
 | `id` | `DLT-nnnn` |
-| `target` | The ID it changes: `FR-JOB-03` |
+| `target` | The ID it changes: `FR-VEW-01` |
 | `op` | `ADDED` · `MODIFIED` · `REMOVED` |
 | `type` | See below |
 | `stage` | The stage that wrote it |

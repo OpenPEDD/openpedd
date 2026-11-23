@@ -142,4 +142,4 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | `ready` (status) | `designed`: `ready` read as launched, next to `live` |
 | `product/` (the folder of modules) | `modules/` |
 | Area (level above the PRD) | Module |
-| `BIZ-02` (the landscape) | `MKT-01`. `BIZ-02` stays dead |
+| The landscape, as a Business document | `MKT-01`. Its old Business ID stays dead ([`RULE-03`](rules/writing.md#rule-03)) |
