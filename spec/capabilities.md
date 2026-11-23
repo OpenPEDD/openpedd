@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.10"
-updated: "2026-11-22"
+version: "1.11"
+updated: "2026-11-23"
 ---
 
 # What OpenPEDD can do
@@ -33,7 +33,7 @@ updated: "2026-11-22"
 | Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/requests.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
 | Let a client define what they want, in a conversation | `/specify-interview`: asks only what is missing, counts how complete the definition is, ends with a summary to confirm | [Guided definition](foundations/architecture/definition.md) |
-| Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each | [Sweep](foundations/architecture/sweep.md) |
+| Answer everything once, then let the agents run | `pedd sweep`: every open question of specify, architect, design and plan, in one sheet with a recommendation each; only the heavy ones asked, the rest shown decided | [Sweep](foundations/architecture/sweep.md) |
 | Land many parallel changes without a pile of conflicts | `pedd overlap` warns early, `pedd sync` keeps them close to the base, `pedd land` computes the order | [Landing](foundations/architecture/landing.md) |
 | Let agents work without bending the spec | Only `specify` writes it; everything else proposes deltas, decided at a gate | [Merge Gate](foundations/domain/merge-gate.md) |
 | Have the AI reviewed by something other than itself | A judge per stage, in another session and model | [Judge](foundations/domain/judge.md) |
@@ -41,7 +41,7 @@ updated: "2026-11-22"
 | Run the judges on every PR, on your own subscription | The CI action: one required check, one comment edited in place, `/pedd recheck` and `/pedd override` | [Judges in CI](foundations/architecture/review.md#the-judges-in-ci) |
 | Know whether a judge got worse | `pedd judges bench` over past changes; precision as a process metric | [Measuring judges](foundations/architecture/agents.md#measuring-judges) |
 | Let the agent install safely | `--dry-run`, backups, sensitive paths denied, the agent never installed for you | [Writing safely](modules/workspace/prd.md#writing-safely) |
-| Decide only what nobody defined | One report with each assumption and deviation | [accept](modules/accept/prd.md) |
+| Decide only what nobody defined | One report with each assumption and deviation, heaviest first; the light ones accepted in one reply ([weight](foundations/architecture/weight.md)) | [accept](modules/accept/prd.md) |
 | Design with the real brand | A mockup in code, with real components and every state | [design](modules/design/prd.md) |
 | Define what is acceptable before code exists | Tests written red from the criteria, locked from `build` | [plan](modules/plan/prd.md) |
 | Prove the tests can fail | Mutation testing, and each criterion rerun with new data | [verify](modules/verify/prd.md) |

@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.5"
-updated: "2026-11-13"
+version: "1.6"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -93,6 +93,8 @@ stage, to improve the process: `pedd status --time` and the Cloud dashboard.
 | Agent cost | Tokens and cost per stage, and the context each call rereads: the first number to look at when a task cost too much. A task over 100,000 tokens is marked as badly cut |
 | Pipeline | CI time, and reruns of unstable tests |
 | Assumptions per task | Many means the spec came incomplete |
+| Undeclared assumptions | Per task, those `verify` found in the code with no delta: the agent hid a decision |
+| Decisions per weight | Per weight, how many were kept, changed or rejected at `accept`: a `low` often changed means the weight table is wrong ([`ARCH-23`](../../foundations/architecture/weight.md#calibration)) |
 | Delivery | Deploy frequency, change lead time, change failure rate and time to restore, from `publish` and Launch |
 
 **They measure the process, not people.** Waiting at a gate is shown per stage, never ranked by

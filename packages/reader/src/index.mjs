@@ -8,4 +8,4 @@ export { nextChangeId, changeIds } from './changes.mjs';
 export { mapData, renderMap } from './map.mjs';
 export { viewData, renderViews, toMermaid, scopeView, firstView, KINDS, VIEWS_FORMAT } from './views/index.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.3.0';
+export const VERSION = '0.4.0';

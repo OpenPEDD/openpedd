@@ -2,8 +2,8 @@
 title: Open questions
 description: What is still to be decided. Each closes only with a DEC
 owner: Kevin
-version: "1.2"
-updated: "2026-11-10"
+version: "1.3"
+updated: "2026-11-23"
 ---
 
 Each question closes only with a new `DEC` that names it ([`RULE-08`](../foundations/rules/writing.md#rule-08)).
@@ -22,3 +22,4 @@ Closed so far: `Q-01` to `Q-06`, `Q-10` and `Q-20` (`DEC-01` to `DEC-06`, `DEC-1
 | Q-19 | Trackers besides Linear (Jira, GitHub Issues), and when | — | — |
 | Q-21 | OpenPEDD's north-star metric | Products whose spec stays `fresh` week over week, or bugs found at acceptance that the spec already covered | `BIZ-05` |
 | Q-22 | How `pedd init` detects the stack: Specfy's Stack Analyser or its own rules | Stack Analyser, tried on Reclee first (`MKT-02`) | `pedd init` |
+| Q-23 | The cells of the weight table and the fan-out threshold (`ARCH-23`) | The first cut as written; reviewed after ten changes, from the decisions per weight | Trusting the `low` to one reply |
