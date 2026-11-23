@@ -149,7 +149,7 @@ async function view(args, { cwd, out, err }) {
   if (opts.format === 'mermaid') { out(mermaidOf(buildViews(root), target).trimEnd()); return 0; }
   const summary = (data) => {
     const n = data.loose.length;
-    out(`${green('✓')} ${Object.values(data.views).filter((v) => !v.empty).length} of 10 views, ${n ? yellow(`${n} loose`) : 'nothing loose'}`);
+    out(`${green('✓')} ${Object.values(data.views).filter((v) => !v.empty).length} of ${Object.keys(data.views).length} views, ${n ? yellow(`${n} loose`) : 'nothing loose'}`);
   };
   if (opts.watch) {
     const w = await watchViews(root, { open: target.kind ? target : null, port: Number(opts.port) || 0, onBuild: (data, e) => (e ? err(red(`✗ ${e.message}`)) : summary(data)) });

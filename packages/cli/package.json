@@ -1,6 +1,6 @@
 {
   "name": "@openpedd/cli",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "pedd, the OpenPEDD command line: the spec checks, the project views, and the one way a work branch is cut",
   "license": "Apache-2.0",
   "type": "module",
@@ -26,7 +26,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@openpedd/reader": "0.8.0"
+    "@openpedd/reader": "0.9.0"
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"

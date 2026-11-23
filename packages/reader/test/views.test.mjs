@@ -9,7 +9,7 @@ const REPO = fileURLToPath(new URL('../../..', import.meta.url));
 const build = (files, sources = {}) => viewData(readSpec(files), sources);
 const kinds = (data, view) => data.loose.filter((l) => !view || l.view === view).map((l) => `${l.kind} ${l.id}`);
 
-test('FR-VEW-01.AC1: the ten kinds, and nothing loose opens on context', () => {
+test('FR-VEW-01.AC1: the fourteen kinds, and nothing loose opens on context', () => {
   const d = build(product());
   assert.deepEqual(Object.keys(d.views), KINDS);
   assert.equal(d.format, 1);
@@ -116,7 +116,7 @@ test('NFR-VEW-02.AC1: 500 documents build in under 5 seconds, and the page needs
   assert.ok(Date.now() - t < 5000, `${Date.now() - t} ms`);
   const html = renderViews(d);
   assert.doesNotMatch(html, /<(?:script|link|img)[^>]+(?:src|href)=["']?https?:/i);
-  assert.match(html, /function mount\(/);
+  assert.match(html, /function mountViews\(/);
   assert.match(html, /function scopeView\(/);
   assert.ok(html.includes('"format":1'));
 });
@@ -275,4 +275,147 @@ test('this repository and the template build, and every loose item names its fil
     assert.deepEqual(Object.keys(d.views), KINDS);
     for (const l of d.loose) assert.ok(l.at && l.line >= 1 && l.says && l.message, JSON.stringify(l));
   }
+});
+
+test('FR-VEW-11.AC1: an ID with a reference\'s prefix is that reference\'s, never loose nor this spec\'s', () => {
+  const f = product();
+  f['spec/decisions/DEC-01-posts-expire.md'] += 'It builds on `openpedd:ENT-20` and `openpedd:DEC-01`.\n';
+  const d = build(f);
+  assert.deepEqual(d.loose, [], JSON.stringify(d.loose, null, 1));
+  assert.ok(!d.views.decisions.edges.some((e) => e.from === 'DEC-01' && e.to === 'DEC-01'));
+});
+
+test('FR-VEW-12.AC1: a criterion written AC-<MOD>-nn, a row of the criteria table, proves its requirement', () => {
+  const f = product();
+  const p = 'spec/modules/jobs/prd.md';
+  f[p] = f[p].replace('| company | `AC1` | F1 |', '| company | `AC-JOB-01` | F1 |').replace('| `FR-JOB-01.AC1` |', '| `AC-JOB-01` |');
+  assert.match(f[p], /`AC-JOB-01` \| F1/);
+  const d = build(f);
+  assert.ok(!kinds(d, 'prd').includes('no-criterion FR-JOB-01'), JSON.stringify(kinds(d, 'prd')));
+});
+
+const fmx = (title) => `---\ntitle: ${title}\ndescription: ${title}\nowner: Ana\nversion: "1.0"\nupdated: "2026-11-23"\n---\n\n`;
+const withBusiness = () => {
+  const f = product();
+  f['spec/foundations/business-map/as-is.md'] = `${fmx('Business Map · as-is')}## People
+
+| Role | How many | Reports to | Does |
+|---|---|---|---|
+| Founder | 1 | — | Runs it |
+| Seller | 1 | Founder | Sells |
+| Product engineer | 2 | Founder | Builds |
+
+## Processes
+
+| ID | Process | Starts with | Roles | Tools | How often | Confirmed by |
+|---|---|---|---|---|---|---|
+| \`PRC-01\` | Ask for a change | The client wants something | Seller · Product engineer | WhatsApp | Weekly | Seller |
+
+### PRC-01 · Ask for a change
+
+| Step | Role | Does | Tool |
+|---|---|---|---|
+| 1 | Seller | Hears the request | WhatsApp |
+| 2 | Product engineer | Writes it down | Linear |
+| 3 | Seller | Confirms it with the client | WhatsApp |
+
+| Flow | From | What changes | Ends in |
+|---|---|---|---|
+| Alternate · Not worth it | 2 | The engineer says no | Declined |
+
+## Tools and spreadsheets
+
+## Pains
+`;
+  f['spec/foundations/glossary.md'] = `${fmx('Glossary')}## Jobs
+
+| Name | Is | Defined in |
+|---|---|---|
+| Job post | What a company publishes | [\`ENT-01\`](domain/job-post.md) |
+
+## Names no longer used
+
+| Old name | Now |
+|---|---|
+| Offer | Job post |
+`;
+  return f;
+};
+
+test('FR-VEW-10.AC1: the prd view has modules and PRDs as its first level, each PRD linked to its flows', () => {
+  const d = build(product());
+  const level1 = d.views.prd.nodes.filter((n) => n.level === 1);
+  assert.deepEqual(level1.map((n) => n.id).sort(), ['module:billing', 'module:jobs', 'prd:spec/modules/billing/prd.md', 'prd:spec/modules/jobs/prd.md']);
+  assert.ok(d.views.prd.edges.some((e) => e.from === 'prd:spec/modules/jobs/prd.md' && e.to === 'jobs:F1'));
+  assert.deepEqual(level1.find((n) => n.id === 'prd:spec/modules/jobs/prd.md').requirements, ['2 draft']);
+});
+
+test('FR-VEW-13.AC1: the glossary lists each name with what it is, and its old names apart', () => {
+  const d = build(withBusiness());
+  const m = d.views.glossary.matrix;
+  assert.deepEqual(m.map((x) => x.title), ['Jobs', 'Names no longer used']);
+  assert.deepEqual(m[0].rows, ['Job post']);
+  assert.deepEqual(m[0].cells[0], ['What a company publishes', 'ENT-01']);
+  assert.deepEqual(kinds(d, 'glossary'), []);
+  const f = withBusiness();
+  f['spec/foundations/glossary.md'] = f['spec/foundations/glossary.md'].replace('[`ENT-01`](domain/job-post.md)', '[post](domain/post.md)');
+  assert.deepEqual(kinds(build(f), 'glossary'), ['undefined-term Job post']);
+});
+
+test('FR-VEW-14.AC1: the org view is the reporting tree, with each manager\'s span of control', () => {
+  const d = build(withBusiness());
+  const v = d.views.org;
+  assert.ok(v.edges.some((e) => e.from === 'org:as-is:Seller' && e.to === 'org:as-is:Founder' && e.type === 'reports to'));
+  assert.equal(v.nodes.find((n) => n.id === 'org:as-is:Founder').span, 2);
+  const f = withBusiness();
+  f['spec/foundations/business-map/as-is.md'] = f['spec/foundations/business-map/as-is.md'].replace('| Seller | 1 | Founder |', '| Seller | 1 | CEO |');
+  assert.deepEqual(kinds(build(f), 'org'), ['unknown-role org:as-is:Seller']);
+});
+
+test('FR-VEW-15.AC1: an activity has one initial node, actions in lanes, a decision where an alternate leaves, and a final per ending', () => {
+  const d = build(withBusiness());
+  const v = d.views.activity;
+  const of = (t) => v.nodes.filter((n) => n.type === t);
+  assert.equal(of('initial').length, 1);
+  assert.equal(of('initial')[0].label, 'The client wants something');
+  assert.deepEqual(of('action').map((n) => n.lane), ['Seller', 'Product engineer', 'Seller']);
+  assert.equal(of('decision').length, 1);
+  assert.deepEqual(of('final').map((n) => n.label).sort(), ['Declined', 'Ends']);
+  assert.ok(v.edges.some((e) => e.from === 'act:as-is:PRC-01:2' && e.to === 'act:as-is:PRC-01:decision-2'));
+  assert.deepEqual(v.matrix[0].cols, ['Seller', 'Product engineer', 'Tool']);
+  assert.deepEqual(kinds(d, 'activity'), []);
+});
+
+test('FR-VEW-16.AC1: use cases have actors, a boundary per module, «include» from a step naming a flow, and «extend» from an alternate', () => {
+  const f = product();
+  f['spec/modules/jobs/prd.md'] = f['spec/modules/jobs/prd.md'].replace('| 2 | company | Publishes it |', '| 2 | company | Publishes it, after billing F1 |');
+  const d = build(f);
+  const v = d.views['use-cases'];
+  assert.ok(v.edges.some((e) => e.from === 'actor:company' && e.to === 'uc:jobs:F1' && e.type === 'uses'));
+  assert.ok(v.edges.some((e) => e.from === 'uc:jobs:F1' && e.to === 'uc:billing:F1' && e.type === '«include»'));
+  assert.ok(v.edges.some((e) => e.to === 'uc:jobs:F1' && e.type === '«extend»' && e.label === 'at F1.1'));
+  assert.equal(v.nodes.find((n) => n.id === 'uc:jobs:F1').group, 'jobs');
+});
+
+test('FR-VEW-17.AC1: use cases export as usecase-beta', () => {
+  const d = build(product());
+  const md = toMermaid(d.views['use-cases'], 'use-cases');
+  assert.match(md, /usecase-beta/);
+  assert.match(md, /<<extend>>/);
+});
+
+test('FR-VEW-18.AC1: diffViews gives per kind what was added, changed and removed, and refuses two formats', async () => {
+  const { diffViews } = await import('../src/views/diff.mjs');
+  const a = build(product());
+  const f = product();
+  f['spec/decisions/DEC-02-posts-expire-later.md'] = '---\ntitle: DEC-02 · Posts expire after 60 days\ndescription: DEC-02 · Posts expire after 60 days\nowner: Ana\nversion: "1.0"\nupdated: "2026-11-23"\n---\n\n# DEC-02 · Posts expire after 60 days\n\nIt changes `FR-JOB-02`.\n';
+  f['spec/foundations/domain/job-post.md'] = f['spec/foundations/domain/job-post.md'].replace('# ENT-01 · Job Post', '# ENT-01 · Job Offer');
+  const b = build(f);
+  const d = diffViews(a, b);
+  assert.deepEqual(d.kinds.decisions.added, ['DEC-02']);
+  assert.deepEqual(d.kinds.entities.changed, ['ENT-01']);
+  assert.equal(d.kinds.states.count.added + d.kinds.states.count.changed + d.kinds.states.count.removed, 0);
+  assert.deepEqual(d.kinds.security.changed, ['ENT-01'], 'a security rule cites the entity');
+  assert.deepEqual(diffViews(b, a).kinds.decisions.removed.map((n) => n.id), ['DEC-02']);
+  assert.throws(() => diffViews({ ...a, format: 0 }, b), /format/);
 });

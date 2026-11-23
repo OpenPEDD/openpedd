@@ -2,8 +2,8 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.1"
-updated: "2026-11-22"
+version: "1.2"
+updated: "2026-11-23"
 ---
 
 These rules apply to every document in every spec that uses OpenPEDD, this one included.
@@ -92,3 +92,12 @@ criterion, and every ID cited is defined somewhere. **The views of a project are
 ([`ARCH-22`](../architecture/views.md)), so an item with none is invisible in them, and nobody knows
 what breaks when it changes.** `pedd check` fails on a loose item a change adds or touches
 ([views](../../modules/views/prd.md#loose-items)).
+
+## RULE-29 · Every kind of model is defined as the industry defines it [#rule-29]
+
+An entity, a state machine, a use case, an activity, a process, an organization chart, a glossary, and
+any kind of model added later, is defined from the standard the industry uses for it (the ER model, UML,
+BPMN…), **surveyed and dated in `market/` first**, with its sources, and cited where the framework
+defines it. Where OpenPEDD departs from the standard, the definition says how and why. **A model the
+industry already defines is read the same way by every person and tool that knows it; one made up here
+has to be learned, and drifts.**

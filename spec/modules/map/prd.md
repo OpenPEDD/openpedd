@@ -2,8 +2,8 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "1.6"
-updated: "2026-11-22"
+version: "1.9"
+updated: "2026-11-23"
 status: draft
 ---
 
@@ -82,12 +82,12 @@ in `foundations/business-map/`, in two files.
 
 | `as-is.md` | Holds |
 |---|---|
-| People | Teams, roles, how many people each, who reports to whom. Roles, not names |
-| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps as `Step` · `Role` · `Does` · `Tool`. **Confirmed by** the role that runs it |
+| People | A table `Role` · `How many` · `Reports to` · `Does`: roles, not names. **One role per job**, even when one person holds several today: say so in `How many` |
+| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 
-| `to-be.md` | Holds |
+| `to-be.md` | Holds. Each mark is the **gap** between as-is and to-be, and each gap goes to a module ([`MKT-15`](../../foundations/market/business-models.md#as-is-to-be-and-the-gap)) |
 |---|---|
 | People | The roles that appear, change or go |
 | Processes | A table `PRC` · `Mark` (`kept` · `changed` · `taken`) · `Module` · `Roles`: the module that takes it, and the roles that run it after |

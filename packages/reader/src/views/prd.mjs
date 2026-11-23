@@ -6,6 +6,7 @@ import { stateName } from './entities.mjs';
 import { stateId } from './states.mjs';
 
 const FLOW = /^F(\d+)\s+·\s+(.*)$/;
+const OLD_AC = /^AC-[A-Z]{2,6}-\d+$/;
 
 export function build(model, sources) {
   const c = prep(model, sources);
@@ -20,6 +21,13 @@ export function build(model, sources) {
     const group = prd.path;
     const nid = (x) => `${mod}:${x}`;
 
+    // Level 1 (FR-VEW-10): the module and its PRD, with its requirements counted by status.
+    const counts = {};
+    for (const r of prd.requirements) counts[r.status || 'no status'] = (counts[r.status || 'no status'] || 0) + 1;
+    nodes.push({ id: `module:${mod}`, type: 'module', label: mod, group: 'modules', level: 1, at: at(prd.path, null), line: 1 });
+    nodes.push({ id: `prd:${prd.path}`, type: 'prd', label: `${prd.title || prd.path} · ${prd.requirements.length} requirements`, status: prd.status || undefined, group, level: 1, at: at(prd.path, null), line: 1, requirements: Object.entries(counts).sort().map(([k, v]) => `${v} ${k}`) });
+    edges.push({ from: `module:${mod}`, to: `prd:${prd.path}`, type: 'has', at: prd.path, line: 1 });
+
     // Flows: one `### F<n> · <name>` each, with its `Step · Role · Does` table.
     const flows = new Map();
     for (const h of doc.headings) {
@@ -31,6 +39,7 @@ export function build(model, sources) {
     }
     for (const f of flows.values()) {
       nodes.push({ id: nid(f.id), type: 'flow', label: `${f.id} · ${f.name}`, group, at: at(prd.path, f.anchor), line: f.line });
+      edges.push({ from: `prd:${prd.path}`, to: nid(f.id), type: 'has', at: prd.path, line: f.line });
       f.steps.forEach((s, i) => {
         nodes.push({ id: nid(`${f.id}.${s.n}`), type: 'step', label: clean(s.does), role: s.role && s.role !== '—' ? s.role : null, group, at: at(prd.path, f.anchor), line: s.line });
         edges.push(i === 0
@@ -52,7 +61,8 @@ export function build(model, sources) {
     const reqT = doc.tables.find((t) => t.rows.some((r) => /^N?FR-/.test(clean(r.cells[0]))));
     const flowsCol = reqT ? colOf(reqT.header, /^flows?$/i) : -1;
     const criteriaCol = reqT ? colOf(reqT.header, /^criteria$/i) : -1;
-    const acs = new Set(doc.tables.flatMap((t) => t.rows.map((r) => clean(r.cells[0]))).filter((x) => /\.AC\d+$/.test(x)));
+    // A criterion is `FR-X-01.AC1` (ENT-04), or the earlier `AC-X-01` (FR-VEW-12).
+    const acs = new Set(doc.tables.flatMap((t) => t.rows.map((r) => clean(r.cells[0]))).filter((x) => /\.AC\d+$/.test(x) || OLD_AC.test(x)));
     for (const r of reqT?.rows ?? []) {
       const id = clean(r.cells[0]);
       if (!isId(id)) continue;
@@ -61,7 +71,7 @@ export function build(model, sources) {
       const carried = flowsCol >= 0 ? (r.cells[flowsCol].match(/F\d+/g) || []) : [];
       for (const f of carried) edges.push({ from: id, to: nid(f), type: 'carried by', at: prd.path, line: r.line });
       if (flows.size && !carried.some((f) => flows.has(f))) out.push(loose('prd', 'no-flow', { id, says: clean(req?.statement ?? r.cells[1]), path: prd.path, line: r.line, message: 'no flow carries it' }));
-      const listed = criteriaCol >= 0 ? code(r.cells[criteriaCol]).map((x) => (x.includes('.') ? x : `${id}.${x}`)) : [];
+      const listed = criteriaCol >= 0 ? code(r.cells[criteriaCol]).map((x) => (x.includes('.') || OLD_AC.test(x) ? x : `${id}.${x}`)) : [];
       if (id.startsWith('FR') && !listed.some((x) => acs.has(x)) && ![...acs].some((x) => x.startsWith(`${id}.`))) out.push(loose('prd', 'no-criterion', { id, says: clean(req?.statement ?? r.cells[1]), path: prd.path, line: r.line, message: 'no acceptance criterion proves it' }));
     }
 
