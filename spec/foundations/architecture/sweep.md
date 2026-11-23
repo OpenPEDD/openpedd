@@ -2,7 +2,7 @@
 title: Sweep
 description: ARCH-16 · Every question a change still has, from specify, architect, design and plan, asked at once with a recommendation each
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-23"
 ---
 
@@ -55,6 +55,16 @@ The tool runs the steps; each finder is a session that only reads ([`RULE-24`](.
 | `pedd sweep --accept-recommended` | Takes every recommendation, the `high` too. Each is recorded as decided by recommendation, and the `Acceptance Report` lists them for `accept`, by weight |
 | `pedd sweep --ask-all` | Asks the `medium` and `low` too |
 | `pedd sweep --from <dir>` | Uses the `<stage>.json` findings in a folder instead of running finders |
+
+## Who answers [#who-answers]
+
+| Questions of | Answered by | How |
+|---|---|---|
+| `specify`: the what | The client | Asked |
+| `architect` and `design`: the how and the look | The product engineer building it | Asked |
+| `plan`: what the tasks need | The AI | Decided by its recommendation, never asked, and recorded as the AI's |
+
+Each person answers only theirs, in one reply each (`answer --as client|builder`), and sees the rest.
 
 ## How `pedd` runs it
 

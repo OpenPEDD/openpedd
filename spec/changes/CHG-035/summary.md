@@ -1,12 +1,12 @@
 ---
-title: "CHG-034 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
+title: "CHG-035 · What an entity is, the business's views, and the prd view by levels: summary for Kevin"
 description: One page — what changed in the framework's spec, and why, found mapping OpenPEDD Cloud with it
 owner: Kevin
 version: "1.2"
 updated: "2026-11-23"
 ---
 
-# CHG-034 · What an entity is, the business's views, and the prd view by levels
+# CHG-035 · What an entity is, the business's views, and the prd view by levels
 
 Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-016`).
 
