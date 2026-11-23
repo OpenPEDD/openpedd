@@ -8,7 +8,7 @@ updated: "2026-11-23"
 
 # CHG-035 · What an entity is, the business's views, and the prd view by levels
 
-Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-016`).
+Stage: `specify`. Found while mapping OpenPEDD Cloud with the framework (`cloud:CHG-017`).
 
 | What | Where |
 |---|---|
