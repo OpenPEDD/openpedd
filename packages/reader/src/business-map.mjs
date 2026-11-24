@@ -3,7 +3,7 @@
 //
 // Each file is read by its sections, the headings `map` writes:
 //
-//   as-is.md   ## People · ## Processes · ## Tools and spreadsheets · ## Pains
+//   as-is.md   ## People · ## Business use cases · ## Processes · ## Tools and spreadsheets · ## Pains
 //   to-be.md   ## People · ## Processes · ## Modules · ## Order
 //
 // A process is a row whose first or `ID` column holds `PRC-nn`, or a `### PRC-nn · Name` heading
@@ -13,9 +13,20 @@ import { frontmatter, headings, stripCode, tables } from './markdown.mjs';
 
 export const PROCESS_MARKS = ['kept', 'changed', 'taken'];
 const PRC = /\bPRC-\d+\b/;
+const BUC = /\bBUC-\d+\b/;
+export const USE_CASE_KINDS = ['core', 'supporting', 'management'];
+const list = (s) => clean(s).split(/\s*(?:·|,|;|\/)\s*/).filter((x) => x && x !== '—' && x !== '-');
+
+/** A business use case row: its ID, name, kind, business actors and the processes that realize it (MKT-16). */
+function useCaseOf(r) {
+  const id = (r.buc || r.id || '').match(BUC)?.[0];
+  if (!id) return null;
+  const raw = (r.kind || '').toLowerCase();
+  return { id, name: r.business_use_case || r.name || id, kind: USE_CASE_KINDS.find((k) => raw.includes(k)) ?? null, actors: list(r.business_actor || r.business_actors || r.actor || ''), processes: (r.processes || '').match(/\bPRC-\d+\b/g) ?? [] };
+}
 
 const SECTIONS = {
-  asIs: { people: 'People', processes: 'Processes', tools: 'Tools and spreadsheets', pains: 'Pains' },
+  asIs: { people: 'People', useCases: 'Business use cases', processes: 'Processes', tools: 'Tools and spreadsheets', pains: 'Pains' },
   toBe: { people: 'People', processes: 'Processes', modules: 'Modules', order: 'Order' },
 };
 
@@ -118,5 +129,8 @@ export function readBusinessMap(files, prefix = 'spec/') {
     const will = map.toBe?.processes.find((p) => p.id === id) ?? null;
     return { id, name: was?.name || will?.name || null, asIs: !!was, mark: will?.mark ?? null, module: will?.module ?? null };
   });
+  // The business use cases, from the as-is; the to-be keeps them, and may list its own (map, business mode).
+  const ucRows = [...(map.asIs?.useCases ?? []), ...(map.toBe?.useCases ?? [])].map(useCaseOf).filter(Boolean);
+  map.useCases = [...new Map(ucRows.map((u) => [u.id, u])).values()];
   return map;
 }

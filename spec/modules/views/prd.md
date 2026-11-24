@@ -2,8 +2,8 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.3"
-updated: "2026-11-23"
+version: "1.4"
+updated: "2026-11-24"
 status: draft
 ---
 
@@ -71,6 +71,7 @@ its view and listed by `pedd check`. **A module listed `unmapped` in the modules
 | A role or action in a PRD's `Permissions` that `Roles & Permissions` does not have | `security` · `prd` |
 | A table nothing protects, when the project lists its tables | `security` |
 | A to-be process with no mark, or taken by a module that does not exist; a module listed `unmapped` in the index exists | `business` |
+| When the as-is lists business use cases: a process no business use case holds, a `core` business use case with no business actor, a business use case naming a process that does not exist | `business` |
 
 ## Flows
 

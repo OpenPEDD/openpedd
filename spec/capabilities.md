@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.13"
-updated: "2026-11-23"
+version: "1.14"
+updated: "2026-11-24"
 ---
 
 # What OpenPEDD can do
@@ -30,6 +30,7 @@ updated: "2026-11-23"
 | See everything the spec defines, as maps | `pedd view`: decisions, entities and their states, security, context, code, business, each PRD, traceability and changes in flight, generated from the spec on every change | [views](modules/views/prd.md) |
 | Catch what is left unconnected | `pedd check` fails on a decision that changes nothing, an entity no module uses, a requirement no flow carries, an ID defined nowhere | [Loose items](modules/views/prd.md#loose-items) |
 | Map a client's business before designing its system | `/map --business`: how the organization works today and will work with the system, approved by the client; it feeds the foundations, the modules and the first roadmap | [Business mode](modules/map/prd.md#business-mode) |
+| Know every level of a definition and where it lives | From the business context and the business use cases to the PRD's flows and the data model, in order, each as the industry defines it | [Map of a definition](foundations/architecture/definition-map.md) |
 | Turn a client's request into work at once | The request is a change branch holding its definition; dropped before approval, the branch is deleted | [A request](foundations/architecture/requests.md) |
 | Use your own tools | Each stage asks for a capability, never a brand | [Workspace](modules/workspace/prd.md#the-tools-of-each-stage) |
 | Let a client define what they want, in a conversation | `/specify-interview`: asks only what is missing, counts how complete the definition is, ends with a summary to confirm | [Guided definition](foundations/architecture/definition.md) |

@@ -1,6 +1,7 @@
 // use-cases: a UML use case diagram (MKT-14): roles as actors, each module as the system boundary, each
 // main flow as a use case associated with the roles of its steps, an «include» to each flow a step
-// names, and each alternate or exception flow as an «extend» of the flow it leaves from (FR-VEW-16).
+// names, and each alternate or exception flow as an «extend» of the flow it leaves from (FR-VEW-16);
+// before them, the business use cases inside the business's boundary with their business actors (FR-VEW-21).
 import { clean, colOf, loose, view } from './common.mjs';
 import { prep } from './prep.mjs';
 
@@ -21,8 +22,18 @@ export function build(model, sources) {
       flows.set(`${prd.module}:F${m[1]}`, { module: prd.module, n: `F${m[1]}`, name: m[2], prd, doc, line: h.line, anchor: h.anchor, steps });
     }
   }
-  if (!flows.size) return { view: view({ sources: [`${c.root}/modules/`], empty: { artifact: 'flows of a PRD', fill: 'one `### F<n> · <name>` per flow in a PRD, with a table `Step` · `Role` · `Does`' } }), loose: [] };
+  const ucs = model.businessMap?.useCases ?? [];
+  if (!flows.size && !ucs.length) return { view: view({ sources: [`${c.root}/modules/`], empty: { artifact: 'flows of a PRD', fill: 'one `### F<n> · <name>` per flow in a PRD, with a table `Step` · `Role` · `Does`' } }), loose: [] };
   const nodes = [], edges = [], out = [];
+  // The business use case diagram first (FR-VEW-21): business actors outside the business, its use cases inside.
+  const ucPath = model.businessMap?.asIs?.path ?? model.businessMap?.toBe?.path;
+  for (const u of ucs) {
+    nodes.push({ id: `buc:${u.id}`, type: 'usecase', label: `${u.name}${u.kind ? ` · ${u.kind}` : ''}`, group: 'the business', at: ucPath, line: 1 });
+    for (const a of u.actors) {
+      nodes.push({ id: `bactor:${a}`, type: 'actor', label: a, group: 'business actors', at: ucPath, line: 1 });
+      edges.push({ from: `bactor:${a}`, to: `buc:${u.id}`, type: 'uses', at: ucPath, line: 1 });
+    }
+  }
   const uc = (k) => `uc:${k}`;
   for (const [k, f] of flows) {
     nodes.push({ id: uc(k), type: 'usecase', label: `${f.n} · ${f.name}`, group: f.module, at: `${f.prd.path}#${f.anchor}`, line: f.line });
@@ -54,5 +65,5 @@ export function build(model, sources) {
       edges.push({ from: id, to: uc(base), type: '«extend»', label: `at ${from}`, at: prd.path, line: r.line });
     });
   }
-  return { view: view({ sources: [...new Set([...flows.values()].map((f) => f.prd.path))], nodes, edges }), loose: out };
+  return { view: view({ sources: [...new Set([...(ucPath && ucs.length ? [ucPath] : []), ...[...flows.values()].map((f) => f.prd.path)])], nodes, edges }), loose: out };
 }

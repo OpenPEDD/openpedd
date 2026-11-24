@@ -489,3 +489,13 @@
 {"path": "modules/views/prd.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "specify", "summary": "Unmapped modules exist for the loose check; FR-VEW-20"}
 {"path": "open/README.md", "version": "1.2 → 1.3", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "specify", "summary": "Roadmap: later modules, each PRD when its module is next"}
 {"path": "changes/CHG-036/summary.md", "version": "1.0", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "specify", "summary": "Summary of CHG-036"}
+{"path": "foundations/market/analysis-order.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "How a business is analyzed: the order each source gives, the business use case and its three kinds"}
+{"path": "foundations/market/README.md", "version": "1.12 → 1.13", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "MKT-16 listed"}
+{"path": "foundations/architecture/definition-map.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "ARCH-24: every level of a definition, in order, and where it lives"}
+{"path": "foundations/architecture/README.md", "version": "1.12 → 1.13", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "ARCH-24 listed"}
+{"path": "capabilities.md", "version": "1.13 → 1.14", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "Know every level of a definition and where it lives"}
+{"path": "modules/map/prd.md", "version": "2.0 → 2.1", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "Business mode: the as-is lists its business use cases; every process belongs to one; map-judge checks it"}
+{"path": "modules/views/business.md", "version": "1.2 → 1.3", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "FR-VEW-21: business use cases in use-cases and business"}
+{"path": "modules/views/prd.md", "version": "1.3 → 1.4", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "Loose items: a process no business use case holds; a core one with no business actor"}
+{"path": "foundations/glossary.md", "version": "1.18 → 1.19", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "Business use case, business actor, its kinds; map of a definition; BUC-nn"}
+{"path": "changes/CHG-037/summary.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-037", "story": null, "stage": "specify", "summary": "Summary of CHG-037"}

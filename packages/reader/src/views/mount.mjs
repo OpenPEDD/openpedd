@@ -105,7 +105,7 @@ export function mountViews(root, data, options) {
     return lines.slice(0, 4).map((l, i, a) => (i === 3 && words.join(' ').length > a.join(' ').length ? `${l.slice(0, width - 1)}…` : l));
   }
   const color = (type) => {
-    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change', 'prd', 'initial', 'action', 'decision', 'final', 'actor', 'usecase'];
+    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'buc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change', 'prd', 'initial', 'action', 'decision', 'final', 'actor', 'usecase'];
     const i = all.indexOf(type);
     return `var(--t${((i < 0 ? type.length : i) % 9) + 1})`;
   };

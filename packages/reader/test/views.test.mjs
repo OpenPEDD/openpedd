@@ -435,3 +435,19 @@ test('FR-VEW-20.AC1: a module listed unmapped exists, and an entity another docu
   assert.deepEqual(kinds(off, 'business'), ['unknown-module PRC-01']);
   assert.deepEqual(kinds(off, 'entities'), ['not-cited ENT-01']);
 });
+
+test('FR-VEW-21.AC1: business use cases inside the business boundary with their actors, each realized by its processes', () => {
+  const f = product();
+  f['spec/foundations/business-map/as-is.md'] = '# As-is\n\n## Business use cases\n\n| BUC | Business use case | Kind | Business actor | Processes |\n|---|---|---|---|---|\n| `BUC-01` | Sell by the box | core | Market customer | `PRC-01` |\n| `BUC-02` | Know the day\'s result | management | — | `PRC-02` |\n| `BUC-03` | Supply a supermarket | core | — | `PRC-09` |\n\n## Processes\n\n| PRC | Process | Roles |\n|---|---|---|\n| PRC-01 | Sell | seller |\n| PRC-02 | Close the day | owner |\n| PRC-03 | Count the stock | worker |\n';
+  const d = build(f);
+  const u = d.views['use-cases'];
+  assert.ok(u.nodes.some((n) => n.id === 'bactor:Market customer' && n.type === 'actor'));
+  assert.equal(u.nodes.find((n) => n.id === 'buc:BUC-01').group, 'the business');
+  assert.match(u.nodes.find((n) => n.id === 'buc:BUC-02').label, /management/);
+  assert.ok(u.edges.some((e) => e.from === 'bactor:Market customer' && e.to === 'buc:BUC-01'));
+  const b = d.views.business;
+  assert.ok(b.edges.some((e) => e.from === 'BUC-01' && e.to === 'PRC-01' && e.type === 'realized by'));
+  assert.ok(b.edges.some((e) => e.from === 'BUC-02' && e.to === 'PRC-02'));
+  assert.deepEqual(kinds(d, 'business').sort(), ['no-business-actor BUC-03', 'no-use-case PRC-03', 'undefined-id BUC-03']);
+  assert.ok(!kinds(d).some((k) => /BUC-0[12]$/.test(k)));
+});
