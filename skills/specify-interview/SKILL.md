@@ -3,7 +3,7 @@ name: specify-interview
 description: Interview a client, usually not technical, until what they want built is defined. Use when someone wants to define a new product, a new module or a request in a conversation ("I want an app that…", "we need a module for…", "quiero pedir…"), or asks to resume a definition in progress. Asks only what is missing, a few questions per turn, counts how complete the definition is, and ends with a short summary the client confirms. Leaves the notes that /specify writes the PRD from; it never writes the spec itself.
 ---
 
-<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.4, DEC-30 v1.0, DEC-20 v1.0 and DEC-21 v1.0. Change those first, then this file. -->
+<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.5, DEC-30 v1.0, DEC-31 v1.0, DEC-20 v1.0 and DEC-21 v1.0. Change those first, then this file. -->
 
 # Guided definition interview
 
@@ -23,7 +23,18 @@ in one line, then ask.
 
 1. **Resume if there is something to resume.** Look for `changes/*/definition.md` with `status: in progress`. If the client is continuing, read it, say in two lines where you left off, and go on from the first missing item.
 2. **Read what exists**, through the OpenPEDD MCP when it is available (`search_spec`, `get_doc`), or the files: `workspace.yaml`, the foundations, the module index, and the `live` PRD of the module the request touches. You need this to drop what is already answered.
-3. **Open with:** *"Tell me what you need, the way you would tell a colleague. Voice or text, as long as you like."* Then read it back in at most three lines and ask if that is it.
+3. **Start from the client's stage** (DEC-31). Run `pedd view stages`, or `npx openpedd-reader stages <repo>`: it says the current stage and what is next in it. Ask only that stage's pieces, and do not open a later stage until this one is done:
+
+   | Stage | You do |
+   |---|---|
+   | 0 · Industry | Nothing with the client yet: the team researches the industry's glossary and rules first |
+   | 1 · Diagnosis | How they work today: the `New product` row of the business, through `/map --business`; no goal, modules or screens yet |
+   | 2 · Project | Goal, metric, what is left out, the modules and their order, the roles |
+   | 3 · Specification | The `New module` items of the next module in the to-be's order, one module at a time |
+   | 4 · Construction | A request on what exists |
+
+   When a stage is done and not approved, the next step is the client's approval: say what it delivers and ask for it; the team records it in `foundations/business/stages.md`.
+4. **Open with:** *"Tell me what you need, the way you would tell a colleague. Voice or text, as long as you like."* Then read it back in at most three lines and ask if that is it.
 
 ## Fix the scope and the conditions
 

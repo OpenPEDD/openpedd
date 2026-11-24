@@ -516,3 +516,11 @@
 {"path": "foundations/architecture/definition.md", "version": "1.3 → 1.4", "date": "2026-11-24", "change": "CHG-038", "story": null, "stage": "specify", "summary": "The product map item names the discovery pieces; scope in the goal"}
 {"path": "foundations/glossary.md", "version": "1.19 → 1.20", "date": "2026-11-24", "change": "CHG-038", "story": null, "stage": "specify", "summary": "Business worker, discovery, industry glossary"}
 {"path": "changes/CHG-038/summary.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-038", "story": null, "stage": "specify", "summary": "Summary of the change"}
+{"path": "decisions/DEC-31-client-stages.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "Five client stages, each read from the spec; approvals in stages.md"}
+{"path": "modules/views/business.md", "version": "1.5 → 1.6", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "The stages view, F5, FR-VEW-25"}
+{"path": "modules/views/prd.md", "version": "1.4 → 1.5", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "The stages view among the business's views; fifteen kinds"}
+{"path": "modules/map/prd.md", "version": "2.3 → 2.4", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "The client's approval of the map recorded in stages.md"}
+{"path": "foundations/architecture/views.md", "version": "1.2 → 1.3", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "What the stages view reads and links"}
+{"path": "foundations/architecture/definition.md", "version": "1.4 → 1.5", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "The interview starts from the client's stage"}
+{"path": "foundations/glossary.md", "version": "1.20 → 1.21", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "Client stage"}
+{"path": "changes/CHG-039/summary.md", "version": "1.0", "date": "2026-11-24", "change": "CHG-039", "story": null, "stage": "specify", "summary": "Summary of the change"}

@@ -42,8 +42,8 @@ const HELP = `pedd ${VERSION}
       over budget fails if it grew, a loose item if the change adds or touches it.
 
   pedd view [<kind> [<id>]] [--depth <n>] [--format mermaid] [--watch] [--no-open] [--root <dir>]
-      Every view of the spec as a map, in .pedd/view/: decisions, entities, states, security, context,
-      code, business, prd, trace, changes. <kind> <id> opens one view on that ID; --format mermaid
+      Every view of the spec as a map, in .pedd/view/: stages, decisions, entities, states, security,
+      context, code, business, org, activity, prd, use-cases, glossary, trace, changes. <kind> <id> opens one view on that ID; --format mermaid
       prints it instead; --watch rebuilds it on each save.
 
   pedd branch change <slug> [--track full|story|fix|chore|hotfix]    (also: pedd branch request <slug>)

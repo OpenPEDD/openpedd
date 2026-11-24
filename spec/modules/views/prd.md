@@ -2,7 +2,7 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-24"
 status: draft
 ---
@@ -29,7 +29,7 @@ so the same views render locally and in OpenPEDD Cloud, which specifies its own 
 
 ## Appetite and out of scope
 
-Two weeks of `build` for the ten views and the checks; one more for the four of [the business's views](business.md). Out of scope:
+Two weeks of `build` for the ten views and the checks; one more for the five of [the business's views](business.md). Out of scope:
 
 - Editing a view, or saving a layout: the layout is computed on each render ([`MKT-12`](../../foundations/market/view-generation.md)).
 - A view written or summarized by a model.
@@ -50,7 +50,7 @@ no other edit. What each source table holds is defined where its artifact is.
 | `code` | Modules, packages and their main symbols, each linked to the requirements anchored in it | The code index | [`ARCH-19`](../../foundations/architecture/code-index.md) |
 | `business` | Roles × business processes, as-is and to-be, each process with its mark and the module that takes it | The `Business Map` | [map](../map/prd.md#business-mode) |
 | `prd` | **Modules and their PRDs**, each PRD with its requirements counted by status. **One PRD opens** to its flows as flowcharts, its use cases (roles × actions), the transitions it touches, its requirements and their criteria | The module folders, and each PRD's flows, `Permissions`, `States`, requirements and criteria | [Modules](../README.md#the-sections-of-a-prd-in-order) |
-| `glossary` · `org` · `activity` · `use-cases` | The names; who reports to whom; each business process in swimlanes; who uses which flow | The `Glossary`, the `Business Map` and the PRDs' flows | [the business's views](business.md) |
+| `glossary` · `org` · `activity` · `use-cases` · `stages` | The names; who reports to whom; each business process in swimlanes; who uses which flow; where the work with the client stands | The `Glossary`, the `Business Map`, the PRDs' flows and statuses | [the business's views](business.md) |
 | `trace` | Per requirement: spec → design → code → test → deploy, each link with its state and freshness | `.pedd/spec-graph.json` and `.pedd/trace/` | [`ARCH-05`](../../foundations/architecture/traceability.md) |
 | `changes` | The changes in flight, the IDs each touches, and where two overlap | `changes/` on the base and on every change branch | [`ARCH-17`](../../foundations/architecture/landing.md#before-the-overlap-of-changes-in-flight) |
 
@@ -139,7 +139,7 @@ its view and listed by `pedd check`. **A module listed `unmapped` in the modules
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `FR-VEW-01.AC1` | The template's spec with one entity, one PRD and one decision | `pedd view` runs | `views.json` holds the fourteen kinds, and the page opens on `context` |
+| `FR-VEW-01.AC1` | The template's spec with one entity, one PRD and one decision | `pedd view` runs | `views.json` holds the fifteen kinds, and the page opens on `context` |
 | `FR-VEW-01.AC2` | A decision citing an ID defined nowhere | `pedd view` runs | The page opens on `decisions`, the decision marked loose |
 | `FR-VEW-02.AC1` | A PRD with flows `F1` and `F2` | `pedd view prd <its path>` | Only that PRD's use cases, flowcharts and transitions are shown |
 | `FR-VEW-03.AC1` | A spec and its `views.json` | Every node and edge is looked up | Each names the file and line it came from |

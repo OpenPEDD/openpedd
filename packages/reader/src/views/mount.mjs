@@ -23,8 +23,9 @@ export function mountViews(root, data, options) {
   const L = (key, fallback) => (options.labels && options.labels[key]) || fallback;
   const useHash = options.hash !== false;
   if (options.sourceBase == null) options = { ...options, sourceBase: '' };
-  const KINDS = ['decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'trace', 'changes'];
+  const KINDS = ['stages', 'decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'trace', 'changes'];
   const SHOWS0 = {
+    stages: 'The stages of the work with the client: where it stands, what each delivers, what is missing and what is next',
     decisions: 'Every decision: its status, what supersedes what, and what it cites',
     entities: 'Each entity with its fields, its relations, and the modules that use it',
     states: 'One state machine per entity',
@@ -105,7 +106,7 @@ export function mountViews(root, data, options) {
     return lines.slice(0, 4).map((l, i, a) => (i === 3 && words.join(' ').length > a.join(' ').length ? `${l.slice(0, width - 1)}…` : l));
   }
   const color = (type) => {
-    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'buc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change', 'prd', 'initial', 'action', 'decision', 'final', 'actor', 'usecase', 'object'];
+    const all = ['dec', 'adr', 'entity', 'module', 'state', 'role', 'action', 'table', 'policy', 'sec', 'system', 'app', 'package', 'external', 'symbol', 'prc', 'buc', 'flow', 'step', 'alternate', 'exception', 'fr', 'nfr', 'change', 'prd', 'initial', 'action', 'decision', 'final', 'actor', 'usecase', 'object', 'stage', 'piece'];
     const i = all.indexOf(type);
     return `var(--t${((i < 0 ? type.length : i) % 9) + 1})`;
   };

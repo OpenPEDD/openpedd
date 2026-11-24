@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.20"
+version: "1.21"
 updated: "2026-11-24"
 ---
 
@@ -73,6 +73,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Business Map · as-is · to-be · business mode · product engineer | How a client's organization works today and with the system; `map`'s mode that draws it; the person who runs it | [map](../modules/map/prd.md#business-mode) |
 | Business use case (`BUC`) · business actor · business worker · `core` · `supporting` · `management` | What the business does that yields a result of value to a business actor, outside it; `core` for an outside actor, `supporting` and `management` for itself; a business worker is a role inside that realizes it; `Includes` and `Extends` relate two of them | [`MKT-16`](market/analysis-order.md#a-business-use-case), [map](../modules/map/prd.md#business-mode) |
 | Discovery · industry glossary | The pieces every client answers, in order, before any PRD; the words of an industry, researched once in `industries/` and linked by each project | [`DEC-30`](../decisions/DEC-30-discovery-before-prds.md) |
+| Client stage | One of the five stages of the work with a client: industry, diagnosis, project, specification, construction; each read from the spec, its approvals in `foundations/business/stages.md` | [`DEC-31`](../decisions/DEC-31-client-stages.md) |
 | Map of a definition | Every level of a definition, from the business to the data model, in order | [`ARCH-24`](architecture/definition-map.md) |
 | Branding change | The change that fills the `Brand System` before a product's first screens | [open](../open/README.md#the-roadmap) |
 | Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |
