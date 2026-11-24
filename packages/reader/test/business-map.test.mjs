@@ -18,6 +18,13 @@ updated: "2026-11-20"
 |---|---|---|---|
 | Sales | \`seller\` | 4 | \`sales_lead\` |
 
+## Business use cases
+
+| BUC | Business use case | Kind | Business actor | Processes |
+|---|---|---|---|---|
+| \`BUC-01\` | Do a job for a client | Core | Client · Insurer | \`PRC-01\` · \`PRC-02\` |
+| \`BUC-02\` | Know the month's margin | management | — | — |
+
 ## Processes
 
 | ID | Name | Starts with | Role | Tool | How often | Confirmed by |
@@ -113,4 +120,12 @@ test('readSpec: the business map in the model; null without one; another root', 
   const only = readSpec({ 'docs/foundations/business-map/as-is.md': asIs }, { root: 'docs' }).businessMap;
   assert.equal(only.toBe, null);
   assert.equal(only.processes.length, 2);
+});
+
+test('readBusinessMap: business use cases with their kind, business actors and processes (FR-VEW-21)', () => {
+  const m = readBusinessMap(files);
+  assert.deepEqual(m.useCases, [
+    { id: 'BUC-01', name: 'Do a job for a client', kind: 'core', actors: ['Client', 'Insurer'], processes: ['PRC-01', 'PRC-02'] },
+    { id: 'BUC-02', name: "Know the month's margin", kind: 'management', actors: [], processes: [] },
+  ]);
 });

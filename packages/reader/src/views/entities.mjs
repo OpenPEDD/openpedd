@@ -29,7 +29,10 @@ export function build(model, sources) {
       nodes.push({ id: `module:${m}`, type: 'module', label: m, group: m, at: c.modules.get(m)?.prds[0] ?? x.path, line: 1 });
       edges.push({ from: `module:${m}`, to: e.id, type: 'used by', at: x.path, line: x.line });
     }
-    if (!users.size) out.push(loose('entities', 'not-cited', { id: e.id, says: e.name, path: e.path, line: e.line, message: 'no PRD cites it' }));
+    // While modules wait for their PRDs (RULE-30), an entity another document cites is planned, not loose.
+    const citedElsewhere = c.unmapped.size && (c.ids.cited.some((x) => x.id === e.id && x.path !== e.path && !x.path.endsWith('/domain/index.md'))
+      || c.links.some((l) => l.to === e.path && l.from !== e.path && !l.from.endsWith('/domain/index.md')));
+    if (!users.size && !citedElsewhere) out.push(loose('entities', 'not-cited', { id: e.id, says: e.name, path: e.path, line: e.line, message: 'no PRD cites it' }));
   }
   return { view: view({ sources: [dir], nodes, edges }), loose: out };
 }

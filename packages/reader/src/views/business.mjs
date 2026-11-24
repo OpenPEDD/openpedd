@@ -1,5 +1,6 @@
 // business: roles × business processes, as-is and to-be, each process with its mark and the module
-// that takes it; from the `Business Map` (map, business mode).
+// that takes it; and each business use case with the processes that realize it (FR-VEW-21); from the
+// `Business Map` (map, business mode).
 import { clean, loose, readDoc, view } from './common.mjs';
 import { prep } from './prep.mjs';
 
@@ -14,7 +15,8 @@ export function build(model, sources) {
   const files = { asIs: bm.asIs && readDoc(bm.asIs.path, c.byPath.get(bm.asIs.path)?.text), toBe: bm.toBe && readDoc(bm.toBe.path, c.byPath.get(bm.toBe.path)?.text) };
   const lineIn = (doc, id) => (doc ? Math.max(1, doc.lines.findIndex((l) => l.includes(id)) + 1) : 1);
   const nodes = [], edges = [], out = [], matrix = [];
-  const known = new Set([...c.modules.keys(), ...[...c.modules.values()].map((m) => m.code).filter(Boolean)]);
+  // A module the index lists as `unmapped` exists: it waits for its PRD (RULE-30, FR-VEW-20).
+  const known = new Set([...c.modules.keys(), ...c.unmapped.keys(), ...[...c.modules.values(), ...c.unmapped.values()].map((m) => m.code).filter(Boolean)]);
 
   for (const [side, file] of [['as-is', bm.asIs], ['to-be', bm.toBe]]) {
     if (!file) continue;
@@ -38,6 +40,23 @@ export function build(model, sources) {
       nodes.push({ id: `module:${m}`, type: 'module', label: m, group: m, at: c.modules.get(m)?.prds[0] ?? bm.toBe.path, line: 1 });
       edges.push({ from: p.id, to: `module:${m}`, type: 'taken by', at: bm.toBe.path, line: tline });
     }
+  }
+  // Business use cases: each with the processes that realize it; loose only once the as-is lists them.
+  const ucs = bm.useCases ?? [];
+  if (ucs.length) {
+    const ucPath = bm.asIs?.path ?? bm.toBe.path, ucDoc = bm.asIs ? files.asIs : files.toBe;
+    const procIds = new Set(bm.processes.map((p) => p.id));
+    for (const u of ucs) {
+      const line = lineIn(ucDoc, u.id);
+      nodes.push({ id: u.id, type: 'buc', label: u.name, status: u.kind ?? undefined, group: 'business use cases', at: ucPath, line });
+      if (u.kind === 'core' && !u.actors.length) out.push(loose('business', 'no-business-actor', { id: u.id, says: u.name, path: ucPath, line, message: 'a `core` business use case with no business actor' }));
+      for (const p of u.processes) {
+        if (!procIds.has(p)) continue; // an ID defined nowhere: the common check names it
+        edges.push({ from: u.id, to: p, type: 'realized by', at: ucPath, line });
+      }
+    }
+    const held = new Set(ucs.flatMap((u) => u.processes));
+    for (const p of bm.processes) if (p.asIs && !held.has(p.id)) out.push(loose('business', 'no-use-case', { id: p.id, says: p.name || p.id, path: bm.asIs.path, line: lineIn(files.asIs, p.id), message: 'no business use case holds this process' }));
   }
   return { view: view({ sources: [dir], nodes, edges, matrix }), loose: out };
 }

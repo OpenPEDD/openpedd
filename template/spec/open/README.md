@@ -2,9 +2,9 @@
 title: Open
 description: How questions, ideas and the roadmap are written
 owner: <owner>
-version: "1.0"
-updated: "2026-11-20"
-source: spec/open/README.md@1.2
+version: "1.1"
+updated: "2026-11-23"
+source: spec/open/README.md@1.3
 ---
 
 Nothing here governs ([`ENT-19`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/open-item.md)). An agent never reads it as a
@@ -34,3 +34,4 @@ Each step is a change, or a group of changes, in the order they land.
 |---|---|
 | **A product with screens and no `Brand System` gets a branding change before its first screens**: colors, type, tokens, the logo and the first components in `packages/ui`, extracted from what exists or chosen ([`ENT-02`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/foundation.md)) | `design` requires it; planned, it does not stop the first screen halfway |
 | A product mapped as a business takes its first steps from the to-be of its `Business Map`: the modules, in its order ([map](https://github.com/openpedd/openpedd/blob/main/spec/modules/map/prd.md#business-mode)) | The order was approved by the client with the map |
+| The roadmap holds the later modules too; **each PRD is written when its module is next**, not all at the start ([`RULE-30`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/definition.md#rule-30)) | The foundations hold the whole road; a PRD written early is written without its answers |

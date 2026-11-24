@@ -38,6 +38,11 @@ test('size: over budget fails only when it grew', () => {
   assert.equal(run(big).warnings.length, 1);
   assert.equal(budgetOf('spec/changes/CHG-001/deltas/DLT-0001.md', 'spec'), 1000);
   assert.equal(budgetOf('spec/modules/a/prd.md', 'spec', { modules: 5000 }), 5000);
+  // RULE-04: a folder's budget wins over its layer's; the longest folder wins.
+  assert.equal(budgetOf('spec/foundations/business-map/as-is.md', 'spec'), 8000);
+  assert.equal(budgetOf('spec/foundations/domain/lot.md', 'spec'), 2000);
+  assert.equal(budgetOf('spec/open/questions.md', 'spec', { 'open/questions.md': 4000 }), 4000);
+  assert.equal(budgetOf('spec/foundations/business-map/to-be.md', 'spec', { foundations: 3000, 'foundations/business-map/': 6000 }), 6000);
 });
 
 test('history: each line is JSON with every field', () => {

@@ -2,7 +2,7 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.2"
+version: "1.3"
 updated: "2026-11-23"
 ---
 
@@ -42,6 +42,7 @@ means two topics share a file. **Split by topic, not by size.**
 |---|---|
 | A module PRD (`modules/`) | 4,000 |
 | An entity, rule file, architecture document or business document | 2,000 |
+| A file of the `Business Map` (`foundations/business-map/`), with every process's steps | 8,000 |
 | The glossary | 4,000; split by module beyond that |
 | A decision | 1,000 |
 | A delta | 1,000 |
@@ -52,7 +53,8 @@ means two topics share a file. **Split by topic, not by size.**
 
 The `Context Pack` budget is the one that matters most: it is what the agent holds while it works.
 The document budgets exist so the pack fits. The check fails only when a document **already over
-budget grows**.
+budget grows**. A project changes a budget in `workspace.yaml`, by layer or by folder
+([`ENT-16`](../domain/workspace.md)).
 
 ## RULE-05 · Names in English, with the shape the code uses [#rule-05]
 

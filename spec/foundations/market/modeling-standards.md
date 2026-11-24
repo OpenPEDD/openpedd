@@ -2,8 +2,8 @@
 title: How the industry defines each model
 description: MKT-14 · Entities, state machines, use cases and activities, as the ER model and UML define them, and what OpenPEDD takes from each. Surveyed 2026-11-23
 owner: Kevin
-version: "1.1"
-updated: "2026-11-23"
+version: "1.2"
+updated: "2026-11-24"
 ---
 
 # MKT-14 · How the industry defines each model
@@ -55,3 +55,16 @@ where it governs ([`RULE-29`](../rules/writing.md#rule-29)).
 | Fork · join | A bar: one flow into several in parallel, and several back into one | Same |
 | Partition | The UML 2 name for a swimlane: actions grouped by who is responsible | Altova |
 | Final nodes | Zero or more. Activity final ends every flow, the first reached wins; flow final ends one path only. **OpenPEDD draws one activity final per way the activity ends** | uml-diagrams.org; Agile Modeling; Edinburgh lecture notes |
+| Object node · object flow | An object node is an entity **in a particular state**, `Name [state]`; an object flow shows an action creating or using it | RUP, *Activity diagram in the business use-case model* **(unverified)** |
+
+**In business modeling** (RUP, read 2026-11-24 from secondary sources, **(unverified)**): a business use case's
+realization is drawn first as an activity diagram whose **partitions are the business workers** taking
+part, one per responsibility, their order meaningless; **object flows** show how business entities are
+created and used. A large workflow gets **one overview diagram without partitions**, its parts as macro
+activities, and **one detailed diagram with partitions per macro activity**, each on one page. A class
+diagram of workers and entities and sequence diagrams of the interactions are its companions. Sources:
+swi.cs.vsb.cz/RUPLarge/extend.bus_model/guidances/guidelines/activity_diagram_in_the_business_use-case_model_5862EB50.html;
+cin.ufpe.br/~if682/RUP/process/modguide/md_bactdbom.htm; cin.ufpe.br/~if682/RUP/process/artifact/ar_bucr.htm;
+sceweb.uhcl.edu/helm/ROLE-Tester/myfiles/IBMRUP/process/workguid/wg_bomws.htm. **OpenPEDD draws** a process
+as the detailed diagram (partitions = roles, object nodes from `Object`) and a business use case as the
+overview, its processes as macro activities ([views](../../modules/views/business.md)).

@@ -22,7 +22,8 @@ Then:
 
 1. Replace the placeholders in `workspace.yaml` (`<project>`, `<owner>`, `<command>`, `<domain>`, `<environment>`).
 2. If the repo already has an `AGENTS.md` or `CLAUDE.md`, keep it and paste in only the block between `<!-- pedd -->` and `<!-- /pedd -->`.
-3. Define the product with `/specify-interview`, in your agent: a conversation that asks only what is missing and ends with a summary to confirm ([the skill](https://github.com/openpedd/openpedd/blob/main/skills/specify-interview/SKILL.md)).
+3. Push the first commit as `main` and, from it, the base `dev` (`branches.base`): every work branch is cut from the base, and the branch check fails a PR from any other ([`ARCH-06`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/branches.md#creating-a-branch)). Work done on an agent's own session branch (`claude/…`) goes, before its PR, onto the branch `pedd branch` names.
+4. Define the product with `/specify-interview`, in your agent: a conversation that asks only what is missing and ends with a summary to confirm ([the skill](https://github.com/openpedd/openpedd/blob/main/skills/specify-interview/SKILL.md)).
 
 ## What is in it
 

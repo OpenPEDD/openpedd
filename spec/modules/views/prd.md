@@ -2,8 +2,8 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.2"
-updated: "2026-11-23"
+version: "1.4"
+updated: "2026-11-24"
 status: draft
 ---
 
@@ -57,20 +57,21 @@ no other edit. What each source table holds is defined where its artifact is.
 ## Loose items [#loose-items]
 
 **Nothing in the spec stands alone** ([`RULE-27`](../../foundations/rules/writing.md#rule-27)). Each loose item is marked in
-its view and listed by `pedd check`:
+its view and listed by `pedd check`. **A module listed `unmapped` in the modules index is a module still to define**, not a gap: while a business map waits for its PRDs, one at a time ([`RULE-30`](../../foundations/rules/definition.md#rule-30)), what only those PRDs would cite is not loose:
 
 | Loose item | Found in |
 |---|---|
 | An ID cited, in the spec, a code anchor, a test name or a delta, that is defined nowhere | Every view |
 | A decision that cites no requirement, entity, rule, architecture document or module | `decisions` |
 | A `Supersedes` that names no decision, or a loop of them | `decisions` |
-| An entity no PRD cites | `entities` |
+| An entity no PRD cites, unless modules are still `unmapped` and another document cites it | `entities` |
 | A requirement no flow carries, in a PRD with flows | `prd` |
 | A `FR` with no criterion | `prd` |
 | A transition in a PRD's `States` that its entity does not have | `prd` · `states` |
 | A role or action in a PRD's `Permissions` that `Roles & Permissions` does not have | `security` · `prd` |
 | A table nothing protects, when the project lists its tables | `security` |
-| A to-be process with no mark, or taken by a module that does not exist | `business` |
+| A to-be process with no mark, or taken by a module that does not exist; a module listed `unmapped` in the index exists | `business` |
+| When the as-is lists business use cases: a process no business use case holds, a `core` business use case with no business actor, a business use case naming a process that does not exist | `business` |
 
 ## Flows
 
@@ -123,6 +124,7 @@ its view and listed by `pedd check`:
 | `FR-VEW-12` | The system shall take as a requirement's criteria the IDs in its `Criteria` column that are rows of the PRD's criteria table, in the form of [`ENT-04`](../../foundations/domain/acceptance-criterion.md) or the earlier `AC-<MOD>-nn` | A spec written before `ENT-04`'s form is not missing its criteria | Team | `AC1` | F1 · F3 | `draft` |
 | `FR-VEW-18` | When two `views.json` of one `format` are compared, the system shall give per kind the nodes and edges added, removed or changed, with their counts | `pedd view` and the Cloud mark the same changes | Team | `AC1` | F2 | `draft` |
 | `FR-VEW-19` | The system shall offer its renderer as a module an app mounts, taking links per node, live data by ID and a diff to mark | One renderer for every host ([`ARCH-22`](../../foundations/architecture/views.md#rendering)) | Team | `AC1` | F1 | `draft` |
+| `FR-VEW-20` | While the modules index lists a module as `unmapped`, the system shall take it as existing, and an entity another document cites as not loose for lack of a PRD | The PRDs come one at a time; the modules waiting are the plan, not a gap | Team | `AC1` | F3 | `draft` |
 | `NFR-VEW-01` | The system shall give the same `views.json`, byte for byte, for the same files | The Cloud and a test can compare two builds | — | `AC1` | F1 | `draft` |
 | `NFR-VEW-02` | The system shall build every view of a 500-document spec in under 5 seconds on a laptop, and render them offline from one HTML file | It runs on every save and every PR | — | `AC1` | F1 | `draft` |
 
@@ -153,6 +155,7 @@ its view and listed by `pedd check`:
 | `FR-VEW-12.AC1` | A requirement whose `Criteria` holds a criterion written `AC-<MOD>-nn`, a row of the criteria table | `pedd check` runs | The requirement is not loose for lacking a criterion |
 | `FR-VEW-18.AC1` | Two builds, the second with one decision more and one entity renamed | `diffViews` runs | `decisions`: one node added; `entities`: one node changed; every other kind zero |
 | `FR-VEW-19.AC1` | An app that mounts the renderer with a link per node, a live state and a diff | A node is clicked | Its detail shows the app's link and the live state; added nodes are marked |
+| `FR-VEW-20.AC1` | A to-be process taken by `stock`, listed `unmapped` in the modules index with no folder, and an entity cited only by a decision | `pedd check` runs | Neither is loose; with `stock` gone from the index, both are |
 | `NFR-VEW-01.AC1` | The same commit | The views are built twice | The two `views.json` are identical |
 | `NFR-VEW-02.AC1` | A generated spec of 500 documents | `pedd view` runs, network off | Built in under 5 seconds, and the page renders |
 

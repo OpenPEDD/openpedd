@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.18"
-updated: "2026-11-23"
+version: "1.19"
+updated: "2026-11-24"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -71,6 +71,8 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Edit branch · `edit/` | One edit to an agreed request, merged into its branch by the builder | [`ARCH-21`](architecture/requests.md#edit-branch) |
 | `@openpedd/reader` | The package that reads a spec, shared by the CLI and the Cloud | [`ARCH-20`](architecture/reader.md) |
 | Business Map · as-is · to-be · business mode · product engineer | How a client's organization works today and with the system; `map`'s mode that draws it; the person who runs it | [map](../modules/map/prd.md#business-mode) |
+| Business use case (`BUC`) · business actor · `core` · `supporting` · `management` | What the business does that yields a result of value to a business actor, outside it; `core` for an outside actor, `supporting` and `management` for itself | [`MKT-16`](market/analysis-order.md#a-business-use-case), [map](../modules/map/prd.md#business-mode) |
+| Map of a definition | Every level of a definition, from the business to the data model, in order | [`ARCH-24`](architecture/definition-map.md) |
 | Branding change | The change that fills the `Brand System` before a product's first screens | [open](../open/README.md#the-roadmap) |
 | Guided definition · minimum map · `/specify-interview` | A client's definition in a conversation; what each scope needs, item by item, with who answers it | [`ARCH-18`](architecture/definition.md) |
 | Footprint · overlap · queue · landing order · `pedd overlap` · `pedd sync` · `pedd land` | What a change touches, two changes sharing it, the order requests were queued in, and the order changes reach the base | [`ARCH-17`](architecture/landing.md) |
@@ -114,7 +116,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 
 | Prefix | Is |
 |---|---|
-| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `PRC-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations; `PRC` is a process of the `Business Map` |
+| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `PRC-nn` · `BUC-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations; `PRC` is a process of the `Business Map`, `BUC` one of its business use cases |
 | `FR-<MOD>-nn` · `NFR-<MOD>-nn` · `FR-<MOD>-nn.ACn` | Requirements and criteria |
 | `DEC-nn` · `ADR-nn` | Decisions |
 | `Q-nn` | Open questions |

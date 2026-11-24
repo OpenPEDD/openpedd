@@ -2,8 +2,8 @@
 title: Architecture
 description: How architecture documents are written
 owner: Kevin
-version: "1.12"
-updated: "2026-11-23"
+version: "1.13"
+updated: "2026-11-24"
 ---
 
 Architecture says **how the product is built and run**. What it is and what it must do live in the
@@ -34,6 +34,7 @@ domain and the modules; a technical choice with options is an `ADR` in `decision
 | [A request's branch](requests.md) | `ARCH-21` | Numbering a change, the definition's status, editing once agreed, renaming at approval |
 | [Project views](views.md) | `ARCH-22` | How the reader makes the data of every view of a project, and how it is rendered |
 | [Weight](weight.md) | `ARCH-23` | How each decision the AI takes alone is weighed, so the heavy ones are asked and read first |
+| [The map of a definition](definition-map.md) | `ARCH-24` | Every level of a definition, from the business to the data model, in order, and where each lives |
 
 ## How an architecture document is written
 

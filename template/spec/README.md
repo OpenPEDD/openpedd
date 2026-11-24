@@ -15,7 +15,8 @@ the format of [OpenPEDD](https://github.com/openpedd/openpedd).
 
 The hierarchy is **Product → Module → PRD → Requirement** ([`ENT-20`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/product.md)).
 Every kind of artifact, what it defines and how it is written, is in
-[**Artifacts**](foundations/artifacts.md).
+[**Artifacts**](foundations/artifacts.md). Every level of a definition, from the business to the data model, in
+order, what it means and where it lives, is in [**The map of a definition**](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/definition-map.md).
 
 ## Reading order
 

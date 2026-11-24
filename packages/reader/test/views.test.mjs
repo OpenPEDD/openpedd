@@ -386,6 +386,28 @@ test('FR-VEW-15.AC1: an activity has one initial node, actions in lanes, a decis
   assert.deepEqual(kinds(d, 'activity'), []);
 });
 
+test('FR-VEW-22.AC1: an activity shows each object in its state, and a business use case an overview of its processes', () => {
+  const f = withBusiness();
+  const p = 'spec/foundations/business-map/as-is.md';
+  f[p] = f[p]
+    .replace('| Step | Role | Does | Tool |\n|---|---|---|---|\n| 1 | Seller | Hears the request | WhatsApp |\n| 2 | Product engineer | Writes it down | Linear |',
+      '| Step | Role | Does | Tool | Object |\n|---|---|---|---|---|\n| 1 | Seller | Hears the request | WhatsApp | |\n| 2 | Product engineer | Writes it down | Linear | [`ENT-01`](../domain/job-post.md) · `draft` |')
+    .replace('| 3 | Seller | Confirms it with the client | WhatsApp |', '| 3 | Seller | Confirms it with the client | WhatsApp | ENT-01 · published; ENT-09 · sent |')
+    .replace('## Processes', '## Business use cases\n\n| BUC | Business use case | Kind | Business actor | Processes |\n|---|---|---|---|---|\n| `BUC-01` | Change the product | `core` | Client | `PRC-01` |\n\n## Processes');
+  const d = build(f);
+  const v = d.views.activity;
+  const objects = v.nodes.filter((n) => n.type === 'object');
+  assert.deepEqual(objects.map((n) => n.label), ['Job Post [draft]', 'Job Post [published]']);
+  assert.ok(v.edges.some((e) => e.type === 'object-flow' && e.from === 'act:as-is:PRC-01:2' && e.to === objects[0].id));
+  const macro = v.nodes.filter((n) => n.group === 'overview:BUC-01');
+  assert.deepEqual(macro.map((n) => n.type).sort(), ['action', 'final', 'initial']);
+  assert.equal(macro.find((n) => n.type === 'action').lane, undefined);
+  assert.ok(v.edges.some((e) => e.type === 'detail' && e.from === 'act:overview:BUC-01:PRC-01' && e.to === 'act:as-is:PRC-01:start'));
+  assert.deepEqual(kinds(d, 'activity'), ['unknown-entity PRC-01']);
+  f[p] = f[p].replace('ENT-09 · sent', 'ENT-01 · archived');
+  assert.deepEqual(kinds(build(f), 'activity'), ['unknown-state PRC-01']);
+});
+
 test('FR-VEW-16.AC1: use cases have actors, a boundary per module, «include» from a step naming a flow, and «extend» from an alternate', () => {
   const f = product();
   f['spec/modules/jobs/prd.md'] = f['spec/modules/jobs/prd.md'].replace('| 2 | company | Publishes it |', '| 2 | company | Publishes it, after billing F1 |');
@@ -418,4 +440,36 @@ test('FR-VEW-18.AC1: diffViews gives per kind what was added, changed and remove
   assert.deepEqual(d.kinds.security.changed, ['ENT-01'], 'a security rule cites the entity');
   assert.deepEqual(diffViews(b, a).kinds.decisions.removed.map((n) => n.id), ['DEC-02']);
   assert.throws(() => diffViews({ ...a, format: 0 }, b), /format/);
+});
+
+test('FR-VEW-20.AC1: a module listed unmapped exists, and an entity another document cites is not loose', () => {
+  const entity = '---\ntitle: Stock\ndescription: x\n---\n\n# ENT-01 · Stock\n\nWhat is in a cold room.\n\n## Fields\n\n| Field | Type | What it holds |\n|---|---|---|\n| `qty` | number | How much |\n';
+  const files = (listed) => ({
+    'spec/modules/README.md': `---\ntitle: Modules\n---\n\n| Module | Code | PRDs |\n|---|---|---|\n${listed ? '| `stock` | `STK` | `unmapped` |\n' : ''}`,
+    'spec/foundations/domain/stock.md': entity,
+    'spec/decisions/DEC-01-one-stock.md': '---\ntitle: One stock\n---\n\n# DEC-01 · One stock\n\nOne stock for every company ([`ENT-01`](../foundations/domain/stock.md)).\n',
+    'spec/foundations/business-map/to-be.md': '---\ntitle: To-be\n---\n\n## People\n\n| Role | How many | Reports to | Does |\n|---|---|---|---|\n| Worker | 1 | — | Counts |\n\n## Processes\n\n| ID | Process | Mark | Module | Roles |\n|---|---|---|---|---|\n| `PRC-01` | Count the stock | `taken` | `stock` | Worker |\n\n## Modules\n\n## Order\n',
+  });
+  const on = build(files(true));
+  assert.deepEqual(kinds(on, 'business'), []);
+  assert.deepEqual(kinds(on, 'entities'), []);
+  const off = build(files(false));
+  assert.deepEqual(kinds(off, 'business'), ['unknown-module PRC-01']);
+  assert.deepEqual(kinds(off, 'entities'), ['not-cited ENT-01']);
+});
+
+test('FR-VEW-21.AC1: business use cases inside the business boundary with their actors, each realized by its processes', () => {
+  const f = product();
+  f['spec/foundations/business-map/as-is.md'] = '# As-is\n\n## Business use cases\n\n| BUC | Business use case | Kind | Business actor | Processes |\n|---|---|---|---|---|\n| `BUC-01` | Sell by the box | core | Market customer | `PRC-01` |\n| `BUC-02` | Know the day\'s result | management | — | `PRC-02` |\n| `BUC-03` | Supply a supermarket | core | — | `PRC-09` |\n\n## Processes\n\n| PRC | Process | Roles |\n|---|---|---|\n| PRC-01 | Sell | seller |\n| PRC-02 | Close the day | owner |\n| PRC-03 | Count the stock | worker |\n';
+  const d = build(f);
+  const u = d.views['use-cases'];
+  assert.ok(u.nodes.some((n) => n.id === 'bactor:Market customer' && n.type === 'actor'));
+  assert.equal(u.nodes.find((n) => n.id === 'buc:BUC-01').group, 'the business');
+  assert.match(u.nodes.find((n) => n.id === 'buc:BUC-02').label, /management/);
+  assert.ok(u.edges.some((e) => e.from === 'bactor:Market customer' && e.to === 'buc:BUC-01'));
+  const b = d.views.business;
+  assert.ok(b.edges.some((e) => e.from === 'BUC-01' && e.to === 'PRC-01' && e.type === 'realized by'));
+  assert.ok(b.edges.some((e) => e.from === 'BUC-02' && e.to === 'PRC-02'));
+  assert.deepEqual(kinds(d, 'business').sort(), ['no-business-actor BUC-03', 'no-use-case PRC-03', 'undefined-id BUC-03']);
+  assert.ok(!kinds(d).some((k) => /BUC-0[12]$/.test(k)));
 });

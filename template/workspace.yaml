@@ -81,7 +81,8 @@ views: {}                               # files in the code a view reads instead
 #    permissions: { path: <path>, format: toml }   # role → action → yes · own · no
 #    policies: { path: <migrations dir>, format: sql }  # each CREATE POLICY … ON <table>
 
-budgets:                                # tokens per document, by layer (RULE-04): the numbers npm run check:size uses
+budgets:                                # tokens per document, by layer or by folder (RULE-04); a folder wins over its layer
+#  foundations/business-map/: 8000     # the default: a business map with every process's steps
   modules: 4000
   foundations: 2000
   glossary: 4000

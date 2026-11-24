@@ -2,8 +2,8 @@
 title: Open
 description: How questions, ideas and the roadmap are written
 owner: Kevin
-version: "1.2"
-updated: "2026-11-20"
+version: "1.3"
+updated: "2026-11-23"
 ---
 
 Nothing here governs ([`ENT-19`](../foundations/domain/open-item.md)). An agent never reads it as a
@@ -33,3 +33,4 @@ Each step is a change, or a group of changes, in the order they land.
 |---|---|
 | **A product with screens and no `Brand System` gets a branding change before its first screens**: colors, type, tokens, the logo and the first components in `packages/ui`, extracted from what exists or chosen ([`ENT-02`](../foundations/domain/foundation.md)) | `design` requires it; planned, it does not stop the first screen halfway |
 | A product mapped as a business takes its first steps from the to-be of its `Business Map`: the modules, in its order ([map](../modules/map/prd.md#business-mode)) | The order was approved by the client with the map |
+| The roadmap holds the later modules too; **each PRD is written when its module is next**, not all at the start ([`RULE-30`](../foundations/rules/definition.md#rule-30)) | The foundations hold the whole road; a PRD written early is written without its answers |

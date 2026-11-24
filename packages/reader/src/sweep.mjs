@@ -34,7 +34,7 @@ export function stagesAhead(leastStatus) {
   return SWEEP_STAGES.filter((s) => at < ORDER.indexOf(GATE_STATUS[s]));
 }
 
-const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|SEC|INT|EVT)-\d+)\b/g;
+const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|BUC|SEC|INT|EVT)-\d+)\b/g;
 const tokens = (s) => new Set(String(s || '').toLowerCase().replace(/`[^`]*`/g, ' ').match(/[a-z0-9]{3,}/g) || []);
 const similar = (a, b) => {
   const x = tokens(a), y = tokens(b);
