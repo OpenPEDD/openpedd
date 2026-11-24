@@ -8,7 +8,8 @@ OpenPEDD is specified with OpenPEDD. This folder follows the format it defines, 
 
 The hierarchy is **Product → Module → PRD → Requirement** ([`ENT-20`](foundations/domain/product.md)).
 Every kind of artifact, what it defines and how it is written, is in
-[**Artifacts**](foundations/artifacts.md).
+[**Artifacts**](foundations/artifacts.md). Every level of a definition, from the business to the data model, in
+order, what it means and where it lives, is in [**The map of a definition**](foundations/architecture/definition-map.md).
 
 **To see what the framework can do, start with [What OpenPEDD can do](capabilities.md).**
 

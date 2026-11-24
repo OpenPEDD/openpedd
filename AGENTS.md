@@ -7,7 +7,7 @@ anything. It does not repeat the rules: it points to where each one lives.
 
 1. **Search the whole spec first.** If the thing already exists, reference it by ID; never define it twice ([`RULE-01`](spec/foundations/rules/writing.md#rule-01)).
 2. **Analyze the alternatives first.** Before adding anything to the framework, survey exhaustively who already solves it, read their docs, code and issues, take the best of each and fit it to what is here. What is found goes to `spec/foundations/market/`, dated.
-3. **Find where it goes**, top to bottom, and stop at the first match. Every kind of artifact, and how each is written, is in [Artifacts](spec/foundations/artifacts.md):
+3. **Find where it goes**, top to bottom, and stop at the first match. Every kind of artifact, and how each is written, is in [Artifacts](spec/foundations/artifacts.md); every level of a definition, in order, in [the map of a definition](spec/foundations/architecture/definition-map.md):
 
 | If it is… | It goes in | ID |
 |---|---|---|

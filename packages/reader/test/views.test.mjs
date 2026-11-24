@@ -386,6 +386,28 @@ test('FR-VEW-15.AC1: an activity has one initial node, actions in lanes, a decis
   assert.deepEqual(kinds(d, 'activity'), []);
 });
 
+test('FR-VEW-22.AC1: an activity shows each object in its state, and a business use case an overview of its processes', () => {
+  const f = withBusiness();
+  const p = 'spec/foundations/business-map/as-is.md';
+  f[p] = f[p]
+    .replace('| Step | Role | Does | Tool |\n|---|---|---|---|\n| 1 | Seller | Hears the request | WhatsApp |\n| 2 | Product engineer | Writes it down | Linear |',
+      '| Step | Role | Does | Tool | Object |\n|---|---|---|---|---|\n| 1 | Seller | Hears the request | WhatsApp | |\n| 2 | Product engineer | Writes it down | Linear | [`ENT-01`](../domain/job-post.md) · `draft` |')
+    .replace('| 3 | Seller | Confirms it with the client | WhatsApp |', '| 3 | Seller | Confirms it with the client | WhatsApp | ENT-01 · published; ENT-09 · sent |')
+    .replace('## Processes', '## Business use cases\n\n| BUC | Business use case | Kind | Business actor | Processes |\n|---|---|---|---|---|\n| `BUC-01` | Change the product | `core` | Client | `PRC-01` |\n\n## Processes');
+  const d = build(f);
+  const v = d.views.activity;
+  const objects = v.nodes.filter((n) => n.type === 'object');
+  assert.deepEqual(objects.map((n) => n.label), ['Job Post [draft]', 'Job Post [published]']);
+  assert.ok(v.edges.some((e) => e.type === 'object-flow' && e.from === 'act:as-is:PRC-01:2' && e.to === objects[0].id));
+  const macro = v.nodes.filter((n) => n.group === 'overview:BUC-01');
+  assert.deepEqual(macro.map((n) => n.type).sort(), ['action', 'final', 'initial']);
+  assert.equal(macro.find((n) => n.type === 'action').lane, undefined);
+  assert.ok(v.edges.some((e) => e.type === 'detail' && e.from === 'act:overview:BUC-01:PRC-01' && e.to === 'act:as-is:PRC-01:start'));
+  assert.deepEqual(kinds(d, 'activity'), ['unknown-entity PRC-01']);
+  f[p] = f[p].replace('ENT-09 · sent', 'ENT-01 · archived');
+  assert.deepEqual(kinds(build(f), 'activity'), ['unknown-state PRC-01']);
+});
+
 test('FR-VEW-16.AC1: use cases have actors, a boundary per module, «include» from a step naming a flow, and «extend» from an alternate', () => {
   const f = product();
   f['spec/modules/jobs/prd.md'] = f['spec/modules/jobs/prd.md'].replace('| 2 | company | Publishes it |', '| 2 | company | Publishes it, after billing F1 |');

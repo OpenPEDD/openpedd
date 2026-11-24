@@ -2,7 +2,7 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "2.1"
+version: "2.2"
 updated: "2026-11-24"
 status: draft
 ---
@@ -84,7 +84,7 @@ in `foundations/business-map/`, in two files.
 |---|---|
 | People | A table `Role` · `How many` · `Reports to` · `Does`: roles, not names. **One role per job**, even when one person holds several today: say so in `How many` |
 | Business use cases | A table `BUC` · `Business use case` · `Kind` (`core` · `supporting` · `management`) · `Business actor` · `Processes`: what the business does, and for whom, as UML and RUP define it ([`MKT-16`](../../foundations/market/analysis-order.md#a-business-use-case)). A `core` one has a business actor outside the business; the work the business does for itself is `supporting` or `management`. **Every process belongs to at least one.** The to-be keeps them: what the business does rarely changes, how it does it does |
-| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
+| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and optionally `Object`: the business entity the step creates or changes and the state it leaves it in, `ENT-nn · <state>`, several separated by `;` (an object node, [`MKT-14`](../../foundations/market/modeling-standards.md#activity-diagram-uml)), and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 

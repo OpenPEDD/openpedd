@@ -2,7 +2,7 @@
 title: "CHG-036 · Foundations first, PRDs one at a time: summary for Kevin"
 description: One page — what changed in the framework, found mapping Grupo Origen's business
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-24"
 ---
 
@@ -34,7 +34,9 @@ actors, where does internal work go, and is a PRD a system use case?
 | **Every level of a definition, in order**: what it is, the question it answers, where it lives, who writes it, what it feeds; a PRD's flows are its system use cases, and a PRD holds more | [`ARCH-24`](../../foundations/architecture/definition-map.md) |
 | The as-is lists its **business use cases**, `core`, `supporting` or `management`; every process belongs to one; `map-judge` checks it | [map, business mode](../../modules/map/prd.md#business-mode) |
 | `use-cases` draws them in the business's boundary with their business actors; `business` links each to its processes; two new loose items | [views](../../modules/views/business.md), `FR-VEW-21`; [loose items](../../modules/views/prd.md#loose-items) |
+| **Activity diagrams as RUP draws a business use case**: a step's `Object` (`ENT-nn · <state>`) is an object node with its object flow; each business use case gets an overview of its processes as macro activities | [`MKT-14`](../../foundations/market/modeling-standards.md#activity-diagram-uml), [map](../../modules/map/prd.md#business-mode), `FR-VEW-22` |
+| The map of a definition is linked from the README, the spec's README, AGENTS.md and the template | `README.md`, [spec](../../README.md) |
 | The names | [Glossary](../../foundations/glossary.md) |
 
-Built: `@openpedd/reader` 0.10.0 (`useCases` in the business map, `BUC-nn` as an ID, both views),
-`@openpedd/cli` 0.8.0, with tests.
+Built: `@openpedd/reader` 0.11.0 (`useCases` in the business map, `BUC-nn` as an ID, both views; object
+nodes and overviews in `activity`), `@openpedd/cli` 0.9.0, with tests.

@@ -10,7 +10,7 @@ lives. How the spec is laid out is in [spec/README.md](spec/README.md).
 ### Before writing
 
 1. **Search the whole spec first.** If the thing already exists, reference it by ID; never define it twice ([`RULE-01`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/rules/writing.md#rule-01)).
-2. **Find where it goes**, top to bottom, and stop at the first match. Every kind of artifact, and how each is written, is in [Artifacts](spec/foundations/artifacts.md):
+2. **Find where it goes**, top to bottom, and stop at the first match. Every kind of artifact, and how each is written, is in [Artifacts](spec/foundations/artifacts.md); every level of a definition, in order, in [the map of a definition](https://github.com/openpedd/openpedd/blob/main/spec/foundations/architecture/definition-map.md):
 
 | If it is… | It goes in | ID |
 |---|---|---|
