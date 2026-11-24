@@ -1,12 +1,12 @@
 ---
-title: "CHG-036 · Foundations first, PRDs one at a time: summary for Kevin"
+title: "CHG-037 · Foundations first, PRDs one at a time: summary for Kevin"
 description: One page — what changed in the framework, found mapping Grupo Origen's business
 owner: Kevin
 version: "1.2"
 updated: "2026-11-24"
 ---
 
-# CHG-036 · Foundations first, PRDs one at a time
+# CHG-037 · Foundations first, PRDs one at a time
 
 Stages: `specify` and `build`. Found mapping a client's business (Grupo Origen) with `/map --business`:
 the map gave eleven modules at once, and writing eleven PRDs before any answer is unsustainable.

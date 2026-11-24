@@ -2,7 +2,7 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, what checks nothing went unrecorded, and what each change costs
 owner: Kevin
-version: "1.5"
+version: "1.6"
 updated: "2026-11-23"
 ---
 
@@ -37,6 +37,17 @@ model** ([`RULE-24`](../rules/cycle.md#rule-24)). Each check fails with what is 
 
 An assumption the code shows and no delta records is a `finding` of `verify`'s Spec lens, and counts
 in the cycle metrics as **undeclared**, per task.
+
+`pedd records <CHG> pr|tasks|report|accept` runs each one, and exits non-zero with every problem and its fix:
+
+| Moment | Reads |
+|---|---|
+| `pr` | The PR's body, from the GitHub event or `--body`. Its **Spec** section is a `## Spec` heading, then one line each: `Covers:`, `Assumptions:` and `Deviations:`, with IDs or `none`. The task comes from the task branch's name; a delta is the task's by its `task` field ([`ENT-07`](../domain/delta.md)) |
+| `tasks` | The implementation sub-issue's checklist, given with `--checklist` while the tracker is not read: one `- [ ]` or `- [x]` line per task, a ticked one naming its PR (`#123`). A PR is merged when the change branch's history holds its merge (`Merge pull request #123`, or a subject ending in `(#123)`) |
+| `report` | The `.md` in `changes/<CHG>/reports/` whose name says *acceptance*, or `--report`. Every delta's ID in it, and the assumptions and deviations in the order `pedd weigh` gives |
+| `accept` | Each delta's `decision` |
+
+The improvements the agents note have no record of their own yet, so the report check does not count them.
 
 ## Selecting by the spec
 
