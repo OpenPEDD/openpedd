@@ -481,3 +481,7 @@
 {"path": "foundations/architecture/views.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "specify", "summary": "diffViews and mountViews; the Cloud mounts the renderer"}
 {"path": "modules/views/prd.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "specify", "summary": "FR-VEW-18 diffViews, FR-VEW-19 the renderer as a module"}
 {"path": "changes/CHG-035/summary.md", "version": "1.2", "date": "2026-11-23", "change": "CHG-035", "story": null, "stage": "specify", "summary": "mountViews and diffViews, reader 0.7.0"}
+{"path": "foundations/architecture/pipeline.md", "version": "1.5 → 1.6", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "build", "summary": "pedd records: how each of the four checks reads its input, and the Spec section's format"}
+{"path": "modules/build/prd.md", "version": "1.12 → 1.13", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "build", "summary": "The Spec section's format points to ARCH-11"}
+{"path": "foundations/architecture/reader.md", "version": "1.4 → 1.5", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "build", "summary": "checkTaskPr, checkChecklist, checkReport, checkDecisions"}
+{"path": "capabilities.md", "version": "1.13 → 1.14", "date": "2026-11-23", "change": "CHG-036", "story": null, "stage": "build", "summary": "pedd records"}
