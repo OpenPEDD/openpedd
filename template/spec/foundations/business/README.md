@@ -25,6 +25,7 @@ what is free and what is paid, how success is measured. What we measured outside
 | Pricing and plans | What is charged, how, and for what. Private if the spec is public |
 | North-star metric | The one number every module metric hangs from |
 | Positioning | Why it is chosen over the alternatives in Market |
+| [Stages](stages.md) | Who approved each stage of the work with the client, and when |
 
 ## How a business document is written
 

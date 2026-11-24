@@ -2,7 +2,7 @@
 title: Guided definition
 description: ARCH-18 · The minimum each scope needs to be defined, who answers each item, and the conversation that fills it until it is complete
 owner: Kevin
-version: "1.4"
+version: "1.5"
 updated: "2026-11-24"
 ---
 
@@ -11,7 +11,9 @@ updated: "2026-11-24"
 A client says what they want in a conversation. The agent takes notes, asks only what is still
 missing, **counts how complete the definition is** against the minimum its scope needs, and ends with
 a summary the client confirms ([`DEC-20`](../../decisions/DEC-20-definition-chat.md)). It runs with
-`/specify-interview`; what it leaves is what `specify` writes the PRD or the delta from.
+`/specify-interview`; what it leaves is what `specify` writes the PRD or the delta from. **It starts from the
+client's stage** ([`DEC-31`](../../decisions/DEC-31-client-stages.md)): the `stages` view says which one, and
+what is next in it; a later stage is not opened until the current one is done.
 
 ## The minimum map
 

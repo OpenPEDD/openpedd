@@ -17,6 +17,7 @@ hands it, as path → text: it never reads the spec from a disk.
 | `renderViews(data, { open, sourceBase, live })` | `views.json` | One HTML page, no network: the renderer and ELK, the layout, inlined. `open` is `{ kind, id, depth }`; `sourceBase` is what a node's file is joined to for its link (`../../` from `.pedd/view/`, or a URL) |
 | `toMermaid(view, kind)` | One view | Markdown to paste in a PR: the graph in a ```` ```mermaid ```` block (`stateDiagram-v2` for `states`, `erDiagram` for `entities`, `flowchart` for the rest), each matrix as a table |
 | `scopeView(view, id, depth)` | One view, an ID, a group or a path | The part of it that ID reaches within `depth` edges; a group (a PRD's path, an entity's states, a requirement's chain) whole |
+| `readStages(model, sources)` | The model | The stages of the work with a client ([DEC-31](../../spec/decisions/DEC-31-client-stages.md)): `current`, and per stage its `state`, `items` (each `key`, `state` `missing` · `partial` · `done` · `approved`, `at`, `detail`, `next`), `delivers`, `approver`, `approval` and `next`; what the `stages` view draws |
 | `firstView(data)` · `KINDS` | `views.json` | The view a page opens on: the first with loose items, or `context`; the ten kinds in order |
 
 ## The project views
@@ -32,6 +33,7 @@ hands it, as path → text: it never reads the spec from a disk.
 | `context` | `sources.workspace.components`, `sources.packages` (the workspace graph), `sources.stack`, the `Providers` of `Integrations` |
 | `code` | `sources.codeIndex`: each entry's `Where`, `IDs` and `Symbols` |
 | `business` | The `Business Map` |
+| `stages` | The five stages of the work with a client (DEC-31): the `Glossary`, the `Business Map`, the entities, `foundations/business/` and its `stages.md` approvals, `Roles & Permissions`, the modules and their statuses, the roadmap; a piece not written names `where` it goes instead of `at` |
 | `prd` | Each PRD's `### F<n> ·` flows, the alternate flows table, `Requirements`, `States`, `Permissions` and criteria |
 | `trace` | `sources.specGraph` and `sources.traceEvents` |
 | `changes` | `changes/<CHG>/` in the spec and in `sources.branches` |
@@ -61,6 +63,7 @@ openpedd-reader spec <root>                        # the model, as JSON
 openpedd-reader business-map <root>                # the Business Map, as JSON; null when there is none
 openpedd-reader problems <root>                    # what cannot be read, one per line; exits 1 when any
 openpedd-reader next-id <root>                     # the next CHG-nnn on this tree
+openpedd-reader stages <root>                      # the stages of the work with the client, as JSON
 openpedd-reader views <root>                       # views.json from the spec alone; pedd view adds the code index, trace and branches
 openpedd-reader views-html <root>                  # its page
 openpedd-reader version

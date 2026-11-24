@@ -7,11 +7,12 @@
 //   openpedd-reader business-map [root]                → the Business Map, as JSON (null when absent)
 //   openpedd-reader problems [root]                    → what cannot be read: broken frontmatter, history lines; exits 1 when any
 //   openpedd-reader next-id [root]                     → the next CHG-nnn on this tree
+//   openpedd-reader stages [root]                      → the stages of the work with the client (DEC-31), as JSON
 //   openpedd-reader views [root]                       → views.json from the spec alone (pedd view adds the rest)
 //   openpedd-reader views-html [root]                  → its page
 //   openpedd-reader version
 import { resolve } from 'node:path';
-import { VERSION, mapData, nextChangeId, readSpec, renderMap, renderViews, viewData } from '../src/index.mjs';
+import { VERSION, mapData, nextChangeId, readSpec, readStages, renderMap, renderViews, viewData } from '../src/index.mjs';
 import { readFiles } from '../src/files.mjs';
 
 const args = process.argv.slice(2);
@@ -33,10 +34,11 @@ switch (command) {
     break;
   }
   case 'next-id': console.log(nextChangeId(files())); break;
+  case 'stages': process.stdout.write(JSON.stringify(readStages(readSpec(files())))); break;
   case 'views': process.stdout.write(JSON.stringify(viewData(readSpec(files())))); break;
   case 'views-html': process.stdout.write(renderViews(viewData(readSpec(files())))); break;
   case 'version': console.log(VERSION); break;
   default:
-    console.error('usage: openpedd-reader map|html|spec|business-map|problems|next-id|views|views-html [root] [--built YYYY-MM-DD] · version');
+    console.error('usage: openpedd-reader map|html|spec|business-map|problems|next-id|stages|views|views-html [root] [--built YYYY-MM-DD] · version');
     process.exit(2);
 }

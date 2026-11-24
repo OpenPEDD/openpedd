@@ -9,7 +9,7 @@ const REPO = fileURLToPath(new URL('../../..', import.meta.url));
 const build = (files, sources = {}) => viewData(readSpec(files), sources);
 const kinds = (data, view) => data.loose.filter((l) => !view || l.view === view).map((l) => `${l.kind} ${l.id}`);
 
-test('FR-VEW-01.AC1: the fourteen kinds, and nothing loose opens on context', () => {
+test('FR-VEW-01.AC1: the fifteen kinds, and nothing loose opens on context', () => {
   const d = build(product());
   assert.deepEqual(Object.keys(d.views), KINDS);
   assert.equal(d.format, 1);
@@ -49,6 +49,8 @@ test('FR-VEW-03.AC1: every node and edge names the file and line it came from', 
   const files = product();
   const d = build(files);
   for (const [k, v] of Object.entries(d.views)) for (const x of [...v.nodes, ...v.edges]) {
+    // A stage's piece not written yet names where it goes instead (FR-VEW-25).
+    if (k === 'stages' && !x.at) { assert.ok(x.where && !(x.where.split('#')[0] in files), `stages: ${JSON.stringify(x)}`); continue; }
     assert.ok(x.at && Number.isInteger(x.line) && x.line >= 1, `${k}: ${JSON.stringify(x)}`);
     const file = x.at.split('#')[0];
     assert.ok(file in files, `${k}: ${file}`);

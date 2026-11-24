@@ -2,8 +2,8 @@
 title: Project views
 description: ARCH-22 · How the reader turns a project's spec into the data of every view, and how pedd view and the Cloud render it
 owner: Kevin
-version: "1.2"
-updated: "2026-11-23"
+version: "1.3"
+updated: "2026-11-24"
 ---
 
 # ARCH-22 · Project views
@@ -82,6 +82,7 @@ format has its own `format` number; a change to its shape is a major of the read
 | `org` | `People` of `as-is.md` and `to-be.md` | Role → the role it reports to |
 | `activity` | Each `### PRC-nn` steps table | Step → next step, each in its role's lane |
 | `use-cases` | Every PRD's `### F<n>` steps | Role → flow, inside its module |
+| `stages` | The `Glossary`, the `Business Map`, the entities, `foundations/business/` with `stages.md`, `Roles & Permissions`, the modules index and statuses, the roadmap | Stage → next stage; stage → each piece it needs; a piece not written names where it goes ([`DEC-31`](../../decisions/DEC-31-client-stages.md)) |
 | `trace` | `spec-graph.json` and the events in `.pedd/trace/` | One chain per requirement, each link with its state ([`ENT-22`](../domain/trace-link.md)) |
 | `changes` | `changes/` on the base and each change branch, through the same listing `nextChangeId` uses | Change → each ID its deltas target; two changes on one ID → `overlaps` |
 
@@ -90,7 +91,7 @@ are built.
 
 ## Rendering
 
-The page is the same for `pedd view` and the Cloud: a sidebar of the fourteen kinds with their loose count,
+The page is the same for `pedd view` and the Cloud: a sidebar of the fifteen kinds with their loose count,
 the view in the middle, and the item as written on the right. **Layout is ELK** (layered for graphs and
 flows), bundled into the page; a graph over 150 nodes opens grouped by module, a group expanding on
 click. `renderViews` inlines `mountViews` into one file; the Cloud mounts it with its own links, live
