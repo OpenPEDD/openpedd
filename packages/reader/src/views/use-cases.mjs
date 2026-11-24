@@ -1,7 +1,8 @@
 // use-cases: a UML use case diagram (MKT-14): roles as actors, each module as the system boundary, each
 // main flow as a use case associated with the roles of its steps, an «include» to each flow a step
 // names, and each alternate or exception flow as an «extend» of the flow it leaves from (FR-VEW-16);
-// before them, the business use cases inside the business's boundary with their business actors (FR-VEW-21).
+// before them, the business use cases inside the business's boundary with their business actors (FR-VEW-21),
+// and the «include» and «extend» between them (FR-VEW-23).
 import { clean, colOf, loose, view } from './common.mjs';
 import { prep } from './prep.mjs';
 
@@ -32,6 +33,20 @@ export function build(model, sources) {
     for (const a of u.actors) {
       nodes.push({ id: `bactor:${a}`, type: 'actor', label: a, group: 'business actors', at: ucPath, line: 1 });
       edges.push({ from: `bactor:${a}`, to: `buc:${u.id}`, type: 'uses', at: ucPath, line: 1 });
+    }
+  }
+  // Between business use cases (FR-VEW-23): «include» from the base to what it always runs; «extend»
+  // from the one that adds on a condition to its base, labelled with the condition.
+  const bucs = new Set(ucs.map((u) => u.id));
+  const ucLine = (id) => { const t = c.byPath.get(ucPath)?.text ?? ''; return Math.max(1, t.split('\n').findIndex((l) => l.includes(id)) + 1); };
+  for (const u of ucs) {
+    for (const to of u.includes ?? []) {
+      if (!bucs.has(to)) { out.push(loose('use-cases', 'missing-end', { id: `buc:${u.id}`, says: u.name, path: ucPath, line: ucLine(u.id), message: `includes \`${to}\`, a business use case that does not exist` })); continue; }
+      edges.push({ from: `buc:${u.id}`, to: `buc:${to}`, type: '«include»', at: ucPath, line: ucLine(u.id) });
+    }
+    for (const x of u.extends ?? []) {
+      if (!bucs.has(x.id)) { out.push(loose('use-cases', 'missing-end', { id: `buc:${u.id}`, says: u.name, path: ucPath, line: ucLine(u.id), message: `extends \`${x.id}\`, a business use case that does not exist` })); continue; }
+      edges.push({ from: `buc:${u.id}`, to: `buc:${x.id}`, type: '«extend»', ...(x.when ? { label: `when ${x.when}` } : {}), at: ucPath, line: ucLine(u.id) });
     }
   }
   const uc = (k) => `uc:${k}`;

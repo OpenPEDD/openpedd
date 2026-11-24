@@ -48,6 +48,18 @@ updated: "2026-11-20"
 |---|---|---|---|
 | Quotes.xlsx | Every quote | \`seller\` | \`PRC-01\` |
 
+## Documents
+
+| Document | Comes in from · goes out to | Processes | How many |
+|---|---|---|---|
+| Quote PDF | Goes out to the client | \`PRC-01\` | 30 a week |
+
+## Rules and regulations
+
+| Rule | Comes from | Processes |
+|---|---|---|
+| Every invoice carries its tax ID | Tax law | \`PRC-02\` |
+
 ## Pains
 
 | Pain | Who said it | Process |
@@ -125,7 +137,54 @@ test('readSpec: the business map in the model; null without one; another root', 
 test('readBusinessMap: business use cases with their kind, business actors and processes (FR-VEW-21)', () => {
   const m = readBusinessMap(files);
   assert.deepEqual(m.useCases, [
-    { id: 'BUC-01', name: 'Do a job for a client', kind: 'core', actors: ['Client', 'Insurer'], processes: ['PRC-01', 'PRC-02'] },
-    { id: 'BUC-02', name: "Know the month's margin", kind: 'management', actors: [], processes: [] },
+    { id: 'BUC-01', name: 'Do a job for a client', kind: 'core', actors: ['Client', 'Insurer'], processes: ['PRC-01', 'PRC-02'], includes: [], extends: [] },
+    { id: 'BUC-02', name: "Know the month's margin", kind: 'management', actors: [], processes: [], includes: [], extends: [] },
   ]);
+});
+
+test('readBusinessMap: «include» and «extend» between business use cases, written and from the steps (FR-VEW-23)', () => {
+  const text = `## Business use cases
+
+| BUC | Business use case | Kind | Business actor | Processes | Includes | Extends |
+|---|---|---|---|---|---|---|
+| \`BUC-01\` | Insure a building | core | Administrator | \`PRC-01\` | — | — |
+| \`BUC-02\` | Survey a building | supporting | — | \`PRC-02\` | — | — |
+| \`BUC-03\` | Handle a claim | core | Administrator | \`PRC-03\` | \`BUC-02\` | — |
+| \`BUC-04\` | Ask the insurer for a discount | supporting | Insurer | \`PRC-04\` | — | \`BUC-01\` · when the quote is above the market; \`BUC-03\` |
+
+## Processes
+
+| PRC | Process | Roles |
+|---|---|---|
+| \`PRC-01\` | Quote | Production |
+| \`PRC-02\` | Survey | Production |
+| \`PRC-03\` | Claim | Claims |
+| \`PRC-04\` | Discount | Sales |
+
+### PRC-01 · Quote
+
+| Step | Role | Does |
+|---|---|---|
+| 1 | Production | Runs \`PRC-02\` for the building |
+| 2 | Production | Loads the quotes |
+
+## Rules and regulations
+
+| Rule | Comes from | Processes |
+|---|---|---|
+| Only a registered PAS intermediates | Ley 22.400 | \`PRC-01\` |
+
+## Documents
+
+| Document | Comes in from · goes out to | Processes | How many |
+|---|---|---|---|
+| Policy PDF | Insurer | \`PRC-01\` | 40 a month |
+`;
+  const m = readBusinessMap(new Map([['spec/foundations/business-map/as-is.md', text]]));
+  const uc = Object.fromEntries(m.useCases.map((u) => [u.id, u]));
+  assert.deepEqual(uc['BUC-01'].includes, ['BUC-02']);
+  assert.deepEqual(uc['BUC-03'].includes, ['BUC-02']);
+  assert.deepEqual(uc['BUC-04'].extends, [{ id: 'BUC-01', when: 'the quote is above the market' }, { id: 'BUC-03', when: null }]);
+  assert.equal(m.asIs.rules[0].comes_from, 'Ley 22.400');
+  assert.equal(m.asIs.documents[0].how_many, '40 a month');
 });

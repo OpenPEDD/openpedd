@@ -12,4 +12,4 @@ export { weigh, weighChange, deltaOf, WEIGHTS, SIGNALS, FAN_OUT_THRESHOLD } from
 export { SWEEP_STAGES, FINDERS, stagesAhead, normalizeQuestion, questionProblems, mergeQuestions, isAsked, renderSheet, parseReply, whereItGoes, applyReply, applyAnswers, rewriteReopened, answersSoFar, decideByAi, pendingFor, ANSWERER, ANSWERER_LABEL } from './sweep.mjs';
 export { changeDeltas, readSpecSection, checkTaskPr, checkChecklist, checkReport, checkDecisions } from './records.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.11.0';
+export const VERSION = '0.12.0';

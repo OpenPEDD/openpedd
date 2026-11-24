@@ -2,7 +2,7 @@
 title: How a business is analyzed before its software
 description: MKT-16 · The order and the levels of analyzing a business, as RUP, the BPM lifecycle, APQC, BABOK and Larman give them, and what a business use case is. Surveyed 2026-11-24
 owner: Kevin
-version: "1.0"
+version: "1.1"
 updated: "2026-11-24"
 ---
 
@@ -33,6 +33,10 @@ full. **(unverified)** marks what only a secondary source said. The models thems
 | **Supporting** | Builds and keeps the infrastructure the core relies on: systems, premises, people. Mostly internal. Core or supporting depends on the business | Same |
 | **Management** | Internal: coordinates the value chain, and how the business relates to its owners. *Strategic Planning* | Same |
 | From business to system | Each business use case the system takes part in yields candidate system use cases; business entities become analysis classes | RUP, *Business Use-Case Model* **(unverified)** |
+| Business worker | A role inside the business (a person, software or both) that takes part in realizing a business use case; it is not an actor. Each one takes part in at least one realization | RUP, *Guideline: Business Worker* (swi.cs.vsb.cz mirror) **(unverified)** |
+| `«include»` between business use cases | Partitions out a part of the workflow the base depends on only for its result, or that several bases reuse. The included one is **abstract**: it runs only inside a base and needs no business actor. More than one level of includes is a smell | RUP, *Include-relationship in the business use-case model* (swi.cs.vsb.cz mirror) **(unverified)** |
+| `«extend»` between business use cases | From the extension to the base, inserted at an extension point of the base's workflow when a condition holds: *special baggage handling* extends *individual check-in* when a passenger needs it. The base stays complete without it | RUP, *Extend-relationship in the business use-case model* (cin.ufpe.br mirror, md_bext) **(unverified)** |
+| Workers across the relationship | In the realization, a worker of the base links to the worker that starts the included or extending workflow | RUP, *Business use-case realization* (swi.cs.vsb.cz mirror) **(unverified)** |
 
 ## What it shows
 

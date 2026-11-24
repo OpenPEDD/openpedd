@@ -2,8 +2,8 @@
 title: Guided definition
 description: ARCH-18 · The minimum each scope needs to be defined, who answers each item, and the conversation that fills it until it is complete
 owner: Kevin
-version: "1.3"
-updated: "2026-11-20"
+version: "1.4"
+updated: "2026-11-24"
 ---
 
 # ARCH-18 · Guided definition
@@ -25,8 +25,8 @@ dropped, citing it:
 
 | Item | Answers | Required by |
 |---|---|---|
-| How the organization works today and will work with the system | A product engineer, from calls and documents | `Business Map`, when the product changes how an organization works |
-| Goal, audience, and the job the product is hired for | Client | `Business Context` ([`ENT-02`](../domain/foundation.md)) |
+| How the organization works today and will work with the system: the pieces every client answers, in order ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | A product engineer, from calls, documents and the industry's glossary | `Business Map`, when the product changes how an organization works |
+| Goal, audience, the job the product is hired for, and what is left out | Client | `Business Context` ([`ENT-02`](../domain/foundation.md)) |
 | How it is paid for | Client | `Business Context` |
 | The north-star metric | Proposed, from the goal | `Business Context` |
 | The modules, one line each | Client, read back as a list | [`ENT-21`](../domain/module.md) |

@@ -362,6 +362,12 @@ test('FR-VEW-13.AC1: the glossary lists each name with what it is, and its old n
   assert.deepEqual(kinds(build(f), 'glossary'), ['undefined-term Job post']);
 });
 
+test('FR-VEW-24.AC1: a name defined in an industry glossary links to it and is not loose', () => {
+  const f = withBusiness();
+  f['spec/foundations/glossary.md'] = f['spec/foundations/glossary.md'].replace('[`ENT-01`](domain/job-post.md)', '[industry](https://github.com/openpedd/openpedd/blob/main/industries/property-insurance-ar/glossary.md#la-plata)');
+  assert.deepEqual(kinds(build(f), 'glossary'), []);
+});
+
 test('FR-VEW-14.AC1: the org view is the reporting tree, with each manager\'s span of control', () => {
   const d = build(withBusiness());
   const v = d.views.org;
@@ -472,4 +478,16 @@ test('FR-VEW-21.AC1: business use cases inside the business boundary with their 
   assert.ok(b.edges.some((e) => e.from === 'BUC-02' && e.to === 'PRC-02'));
   assert.deepEqual(kinds(d, 'business').sort(), ['no-business-actor BUC-03', 'no-use-case PRC-03', 'undefined-id BUC-03']);
   assert.ok(!kinds(d).some((k) => /BUC-0[12]$/.test(k)));
+});
+
+test('FR-VEW-23.AC1: «include» and «extend» between business use cases, the condition on the extend', () => {
+  const f = product();
+  f['spec/foundations/business-map/as-is.md'] = '# As-is\n\n## Business use cases\n\n| BUC | Business use case | Kind | Business actor | Processes | Includes | Extends |\n|---|---|---|---|---|---|---|\n| `BUC-01` | Sell by the box | core | Market customer | `PRC-01` | `BUC-02` | — |\n| `BUC-02` | Weigh the box | supporting | — | `PRC-02` | — | — |\n| `BUC-03` | Sell on credit | core | Market customer | `PRC-03` | — | `BUC-01` · when the customer has an account |\n| `BUC-04` | Return a box | core | Market customer | `PRC-04` | `BUC-09` | — |\n\n## Processes\n\n| PRC | Process | Roles |\n|---|---|---|\n| PRC-01 | Sell | seller |\n| PRC-02 | Weigh | seller |\n| PRC-03 | Credit | seller |\n| PRC-04 | Return | seller |\n';
+  const d = build(f);
+  const u = d.views['use-cases'];
+  assert.ok(u.edges.some((e) => e.from === 'buc:BUC-01' && e.to === 'buc:BUC-02' && e.type === '«include»'));
+  const ext = u.edges.find((e) => e.from === 'buc:BUC-03' && e.to === 'buc:BUC-01');
+  assert.equal(ext.type, '«extend»');
+  assert.equal(ext.label, 'when the customer has an account');
+  assert.ok(kinds(d, 'use-cases').includes('missing-end buc:BUC-04'));
 });
