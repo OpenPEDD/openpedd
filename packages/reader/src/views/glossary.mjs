@@ -22,7 +22,8 @@ export function build(model, sources) {
     if (where < 0) continue;
     for (const r of t.rows) {
       const cell = r.cells[where] ?? '';
-      const files = [...cell.matchAll(/\]\(([^)#\s]+\.md)/g)].map((m) => posix.normalize(posix.join(posix.dirname(doc.path), m[1])));
+      // A link to a web address (an industry glossary, FR-VEW-24) is the industry's, never loose.
+      const files = [...cell.matchAll(/\]\(([^)#\s]+\.md)/g)].filter((m) => !/^[a-z][a-z0-9+.-]*:/i.test(m[1])).map((m) => posix.normalize(posix.join(posix.dirname(doc.path), m[1])));
       // An ID defined nowhere is listed once, for every view (viewData); here, a link to no document.
       const missing = files.filter((f) => !c.byPath.has(f) && !c.docOf.has(f));
       if (missing.length) out.push(loose('glossary', 'undefined-term', { id: clean(r.cells[0]), says: clean(r.cells[0]), path: doc.path, line: r.line, message: `its \`Defined in\` points to ${missing.map((m) => `\`${m}\``).join(', ')}, which does not exist` }));

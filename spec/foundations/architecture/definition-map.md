@@ -2,7 +2,7 @@
 title: The map of a definition
 description: ARCH-24 · Every level of a product's definition, from the business to the data model, in order — what each is, the question it answers, where it lives and who writes it
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-24"
 ---
 
@@ -16,13 +16,13 @@ organization to change starts at level 8.
 
 | # | Level: what it is | Answers | Lives in | Written by · stage | Feeds |
 |---|---|---|---|---|---|
-| 1 | **Business context**: the goal, the audience, the north star | Why it exists, for whom | `foundations/business/`, `BIZ-nn` | Client, with the product engineer · `map`, `specify` | Everything below |
+| 1 | **Business context**: the goal, the audience, the north star, and what is left out | Why it exists, for whom, and how far it goes | `foundations/business/`, `BIZ-nn` | Client, with the product engineer · `map`, `specify` | Everything below |
 | 2 | **Organization**: roles, how many, who reports to whom | Who works there | `Business Map`, `People` | Product engineer, confirmed by the client · `map` | Roles & Permissions |
-| 3 | **Business use cases**: what the business does that yields a result of value to a business actor; `core` (for an outside actor), `supporting`, `management` (for itself) | What the business does, and for whom | `Business Map`, `Business use cases`, `BUC-nn` | Same | The processes that realize each |
+| 3 | **Business use cases**: what the business does that yields a result of value to a business actor; `core` (for an outside actor), `supporting`, `management` (for itself); `«include»` what one always runs, `«extend»` what one adds on a condition | What the business does, and for whom | `Business Map`, `Business use cases`, `BUC-nn` | Same | The processes that realize each |
 | 4 | **Business processes**: the work that realizes a business use case, start to end | How it is done | `Business Map`, `Processes`, `PRC-nn` | Same; each confirmed by the role that runs it | Activities, the to-be |
 | 5 | **Activities**: the steps of a process, by role and tool, and the entity each leaves in a state; drawn as RUP draws a business use case: an overview of its processes, then one diagram per process with a partition per role ([`MKT-14`](../market/modeling-standards.md#activity-diagram-uml)) | Who does each step, with what, and what it changes | `### PRC-nn`, `Step` · `Role` · `Does` · `Tool` · `Object` | Same | The `activity` view; system use cases |
 | 6 | **Business entities**: the things processes handle, with their states | What it works with | `Domain Model`, `ENT-nn` | Derived from the map · `map`, `specify` | Every PRD, the data model |
-| 7 | **Business rules and glossary**: what always holds; one name per thing | What must be true; what each word means | `rules/` (`RULE-nn`), `DEC-nn`; `Glossary` | Client decides, `specify` writes | PRDs, screens |
+| 7 | **Business rules and glossary**: what always holds, from a law, a regulator, a contract or a policy; one name per thing, the industry's first | What must be true; what each word means | `Business Map`, `Rules and regulations`, then `rules/` (`RULE-nn`), `DEC-nn`; `Glossary`, linking the [industry glossary](../../../industries/README.md) | Product engineer from the sources and the web; client decides, `specify` writes | PRDs, screens |
 | 8 | **To-be and modules**: each process marked `kept` · `changed` · `taken`, the module that takes it, the later modules too | What the system will change, in what order | `Business Map` to-be; modules index (`unmapped`) | Product engineer, approved by the client · `map` | The roadmap; one PRD per module |
 | 9 | **System use cases**: a PRD's flows, `F<n>`, with `«include»` and `«extend»` | What a user does with the system, step by step | `modules/<m>/prd.md`, `Flows` | Client and `specify`, one module at a time | Requirements, criteria |
 | 10 | **Requirements**: what the system shall do, in EARS | What exactly it must do | PRD, `FR-<MOD>-nn` · `NFR-<MOD>-nn` | `specify` | Tests, traceability |

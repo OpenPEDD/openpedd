@@ -3,7 +3,7 @@ name: specify-interview
 description: Interview a client, usually not technical, until what they want built is defined. Use when someone wants to define a new product, a new module or a request in a conversation ("I want an app that…", "we need a module for…", "quiero pedir…"), or asks to resume a definition in progress. Asks only what is missing, a few questions per turn, counts how complete the definition is, and ends with a short summary the client confirms. Leaves the notes that /specify writes the PRD from; it never writes the spec itself.
 ---
 
-<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.1, DEC-20 v1.0 and DEC-21 v1.0. Change those first, then this file. -->
+<!-- Source: OpenPEDD spec ARCH-18 (guided definition) v1.4, DEC-30 v1.0, DEC-20 v1.0 and DEC-21 v1.0. Change those first, then this file. -->
 
 # Guided definition interview
 
@@ -42,7 +42,8 @@ the client accept it in the summary. **Team**: never ask the client; list it for
 
 | Item | Who |
 |---|---|
-| Goal, who it is for, and the job they hire it for | Client |
+| How the organization works today, when the product changes it: the people, the words of its industry, what it does and for whom, each process step by step with how often and how many, the documents that come in and go out, the rules it must follow, and what hurts. A product engineer maps it first (`/map --business`); drop every item below it already answers | Product engineer |
+| Goal, who it is for, the job they hire it for, and what is left out | Client |
 | How it is paid for | Client |
 | The one number that says it works (north-star metric) | Proposed, from the goal |
 | Its parts (modules), one line each | Client; read the list back |

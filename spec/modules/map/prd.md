@@ -2,7 +2,7 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "2.2"
+version: "2.3"
 updated: "2026-11-24"
 status: draft
 ---
@@ -78,14 +78,18 @@ For a product that **changes how an organization works** and has no code yet
 ([`DEC-24`](../../decisions/DEC-24-business-map.md)). A **product engineer** runs it, from calls with
 the client (their transcripts), the documents and spreadsheets the client shares, and the guided
 conversation ([`ARCH-18`](../../foundations/architecture/definition.md)). It leaves the `Business Map`
-in `foundations/business-map/`, in two files.
+in `foundations/business-map/`, in two files. **What every client answers, in order, is fixed**
+([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)): goal, metric and what is left out go to
+`Business Context`, never to the map.
 
 | `as-is.md` | Holds |
 |---|---|
 | People | A table `Role` · `How many` · `Reports to` · `Does`: roles, not names. **One role per job**, even when one person holds several today: say so in `How many` |
-| Business use cases | A table `BUC` · `Business use case` · `Kind` (`core` · `supporting` · `management`) · `Business actor` · `Processes`: what the business does, and for whom, as UML and RUP define it ([`MKT-16`](../../foundations/market/analysis-order.md#a-business-use-case)). A `core` one has a business actor outside the business; the work the business does for itself is `supporting` or `management`. **Every process belongs to at least one.** The to-be keeps them: what the business does rarely changes, how it does it does |
-| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and optionally `Object`: the business entity the step creates or changes and the state it leaves it in, `ENT-nn · <state>`, several separated by `;` (an object node, [`MKT-14`](../../foundations/market/modeling-standards.md#activity-diagram-uml)), and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
+| Business use cases | A table `BUC` · `Business use case` · `Kind` (`core` · `supporting` · `management`) · `Business actor` · `Processes`: what the business does, and for whom, as UML and RUP define it ([`MKT-16`](../../foundations/market/analysis-order.md#a-business-use-case)). A `core` one has a business actor outside the business; the work the business does for itself is `supporting` or `management`. **Every process belongs to at least one.** Optionally `Includes`: the business use cases it always runs, abstract parts with no actor of their own; and `Extends`: the one it adds to on a condition, `BUC-nn · when <condition>`, several separated by `;`. A step of one of its processes that names a process of another business use case (*runs the survey*) is an `«include»` too. The to-be keeps them: what the business does rarely changes, how it does it does |
+| Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` (how often **and how many**: *daily, 40 a month*) · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and optionally `Object`: the business entity the step creates or changes and the state it leaves it in, `ENT-nn · <state>`, several separated by `;` (an object node, [`MKT-14`](../../foundations/market/modeling-standards.md#activity-diagram-uml)), and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
+| Documents | A table `Document` · `Comes in from · goes out to` · `Processes` · `How many`: the forms, PDFs and papers the business receives and issues. A sample of each is kept with the sources |
+| Rules and regulations | A table `Rule` · `Comes from` · `Processes`: what always holds, from a law, a regulator, a contract or an internal policy. They become the product's rules and the PRDs' requirements |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 
 | `to-be.md` | Holds. Each mark is the **gap** between as-is and to-be, and each gap goes to a module ([`MKT-15`](../../foundations/market/business-models.md#as-is-to-be-and-the-gap)) |
@@ -95,10 +99,11 @@ in `foundations/business-map/`, in two files.
 | Modules | The modules that follow, each with the processes it takes and the pains it removes |
 | Order | The order they are built in, and why |
 
-1. **Drafts the as-is** from the sources, top down: the people, the business use cases, then the processes that realize each ([`ARCH-24`](../../foundations/architecture/definition-map.md)); a draft from transcripts is never final until its process is confirmed.
+0. **Reads the industry first**: its glossary in `industries/<industry>/`; if there is none, researches it on the web and adds it, each term with its source ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)). The project's `Glossary` links the terms it uses and writes only where the client differs.
+1. **Drafts the as-is** from the sources, top down: the people, the business use cases, then the processes that realize each ([`ARCH-24`](../../foundations/architecture/definition-map.md)), then the documents, the rules and the pains; a draft from transcripts is never final until its process is confirmed.
 2. **Draws the to-be** as a marked copy of the as-is, process by process, with **the later modules too**: what the client wants after the first version, each with the processes it will take and when ([`RULE-30`](../../foundations/rules/definition.md#rule-30)).
-3. **Derives**, never restating the map, for the first version and the later modules alike: roles to `Roles & Permissions`, the things processes and spreadsheets handle to the `Domain Model`, goal and audience to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
-4. **`map-judge`**: the tables are the ones the `business` view reads ([views](../views/prd.md#the-views)); every business use case its kind and, if `core`, its business actor; every process a business use case, its roles and a confirmation; every pain a source, every to-be process a mark, every module the processes it takes.
+3. **Derives**, never restating the map, for the first version and the later modules alike: roles to `Roles & Permissions`, the things processes, spreadsheets and documents handle to the `Domain Model`, the client's own words to the `Glossary`, the rules to the product's rules, goal, audience, metric and what is left out to `Business Context`, the modules to the index (each `unmapped` until its PRD), the order to the first roadmap ([open](../../open/README.md#the-roadmap)).
+4. **`map-judge`**: the tables are the ones the `business` view reads ([views](../views/prd.md#the-views)); every business use case its kind and, if `core`, its business actor, and every `Includes` and `Extends` an existing one; every rule and document the processes it touches; every process a business use case, its roles and a confirmation; every pain a source, every to-be process a mark, every module the processes it takes.
 5. **`spec-approval` is the client's**: they approve the as-is as true and the to-be as wanted.
 
 The PRDs come after, **one per module as it is defined**, in the order of the to-be ([`RULE-30`](../../foundations/rules/definition.md#rule-30)). Until then each module is `unmapped` in the index, and `pedd check` reads it as the list of what is still to define, not as loose ([views](../views/prd.md#loose-items)).
