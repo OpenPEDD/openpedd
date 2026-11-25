@@ -2,8 +2,8 @@
 title: Baseline
 description: What every project starts with, as a versioned baseline, and how a product already built keeps up with it
 owner: Kevin
-version: "1.0"
-updated: "2026-11-20"
+version: "1.1"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -34,7 +34,7 @@ has it**.
 | Skills, judges and MCP | Installed in each agent found, recorded in `.pedd/manifest.json` | Required | [Capabilities](../../capabilities.md#skills) |
 | Tools per stage | Each capability, with its own level, and what is lost without it | Per row | [workspace](prd.md#the-tools-of-each-stage) |
 | Safety | `--dry-run`, backups, secrets denied | Required | [workspace](prd.md#writing-safely) |
-| Branches and tracker | One branch per change, cut by `pedd branch`; one sub-issue per stage | Required | [`ARCH-06`](../../foundations/architecture/branches.md) · [`ARCH-15`](../../foundations/architecture/tracker.md) |
+| Branches and tracker | One branch per change, cut by `pedd branch`; one sub-issue and one PR per stage, the tasks as commits | Required | [`ARCH-06`](../../foundations/architecture/branches.md) · [`ARCH-15`](../../foundations/architecture/tracker.md) |
 | Pipeline | The moments of the pipeline, and the judges on every PR | Required | [`ARCH-11`](../../foundations/architecture/pipeline.md) |
 
 ## The version [#the-version]

@@ -122,20 +122,27 @@ test('pedd sweep: finders in parallel, one sheet, one reply, round 2 rewrites on
   }
 });
 
-test('pedd records: the PR against the task\'s deltas, the checklist against the branch\'s merges, the decisions', async () => {
+test('pedd records: a task commit against its deltas, the implementation PR against all, the checklist against the branch\'s commits, the decisions', async () => {
   const { writeFileSync } = await import('node:fs');
   const { join } = await import('node:path');
   const d = (id, type, extra = '') => `---\ntitle: "${id} · t"\ndescription: d\nowner: K\nversion: "1.0"\nupdated: "2026-11-23"\n---\n\n# ${id} · t\n\n| Field | Value |\n|---|---|\n| \`type\` | \`${type}\` |\n| \`task\` | export |\n${extra}`;
   const r = repo({ 'spec/changes/CHG-001/deltas/DLT-0001.md': d('DLT-0001', 'assumption', '| `decision` | keep |\n'), 'spec/changes/CHG-001/deltas/DLT-0002.md': d('DLT-0002', 'deviation') });
-  sh(r.work, 'commit', '--allow-empty', '--quiet', '-m', 'Merge pull request #12 from acme/task/claims-export');
-  sh(r.work, 'commit', '--allow-empty', '--quiet', '-m', 'Filter claims (#13)');
+  sh(r.work, 'commit', '--allow-empty', '--quiet', '-m', 'feat(claims): export claims\n\n## Spec\n- Covers: FR-CLM-01\n- Assumptions: DLT-0001\n- Deviations: none');
+  const exportSha = sh(r.work, 'rev-parse', 'HEAD');
+  sh(r.work, 'commit', '--allow-empty', '--quiet', '-m', 'feat(claims): filter claims\n\n## Spec\n- Covers: FR-CLM-02\n- Assumptions: none\n- Deviations: none');
+  const filterSha = sh(r.work, 'rev-parse', 'HEAD');
   const lines = [];
   const io = { cwd: r.work, out: (s) => lines.push(s), err: (s) => lines.push(s) };
-  writeFileSync(join(r.work, 'pr.md'), '## Spec\n- Covers: FR-CLM-01\n- Assumptions: DLT-0001\n- Deviations: none\n');
-  assert.equal(await main(['records', 'CHG-001', 'pr', '--body', 'pr.md', '--head', 'task/claims-export', '--base', 'feat/claims'], io), 1);
-  assert.match(lines.join('\n'), /DLT-0002 \(deviation\) belongs to task export and the PR does not list it/);
+  assert.equal(await main(['records', 'CHG-001', 'commit', '--commit', exportSha], io), 1, 'the task is read from the subject: export');
+  assert.match(lines.join('\n'), /DLT-0002 \(deviation\) belongs to task export and the commit does not list it/);
   lines.length = 0;
-  writeFileSync(join(r.work, 'list.md'), '- [x] Export #12\n- [x] Filter #13\n- [ ] Paginate\n');
+  assert.equal(await main(['records', 'CHG-001', 'commit'], io), 0, 'HEAD is task filter, which owns no delta');
+  lines.length = 0;
+  writeFileSync(join(r.work, 'pr.md'), '## Spec\n- Covers: FR-CLM-01\n- Assumptions: DLT-0001\n- Deviations: none\n');
+  assert.equal(await main(['records', 'CHG-001', 'pr', '--body', 'pr.md'], io), 1);
+  assert.match(lines.join('\n'), /DLT-0002 \(deviation\) is of CHG-001 and the PR does not list it/);
+  lines.length = 0;
+  writeFileSync(join(r.work, 'list.md'), `- [x] export · ${exportSha.slice(0, 7)}\n- [x] filter · ${filterSha.slice(0, 9)}\n- [ ] Paginate\n`);
   assert.equal(await main(['records', 'CHG-001', 'tasks', '--checklist', 'list.md'], io), 1);
   assert.deepEqual(lines.filter((l) => l.includes('✗')).map((l) => l.replace(/\x1b\[\d+m/g, '').split('\n')[0]), ['✗ task not done: Paginate', '✗ CHG-001: the task checklist: 1 problem(s)']);
   lines.length = 0;

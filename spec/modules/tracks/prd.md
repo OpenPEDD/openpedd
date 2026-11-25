@@ -2,8 +2,8 @@
 title: Tracks
 description: Which stages each change runs, by the IDs it touches, and when a story becomes full
 owner: Kevin
-version: "1.4"
-updated: "2026-11-11"
+version: "1.5"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -35,8 +35,8 @@ Vertical slices and the cycle do not compete: the slice says **how the work is c
 ## Branches
 
 Every track gets its own branch from the base, and the stages it runs decide what is cut from it: a
-design branch only if `design` runs, an architecture branch only if `architect` runs, one task branch
-per task. A change with one task is one branch
+design branch only if `design` runs, an architecture branch only if `architect` runs, and one implementation branch
+whose tasks are commits. A change with no design and no architecture branch is one branch
 and one PR ([`ARCH-06`](../../foundations/architecture/branches.md)). A `hotfix` branches from production
 and merges back into the base ([`ARCH-08`](../../foundations/architecture/release.md)).
 

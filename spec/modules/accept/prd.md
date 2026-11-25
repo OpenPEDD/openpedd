@@ -2,8 +2,8 @@
 title: accept
 description: Stage 7 · A person decides everything the AI decided without them, from one report
 owner: Kevin
-version: "1.5"
-updated: "2026-11-23"
+version: "1.6"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -65,7 +65,7 @@ None: the person is the gate. Passes when **nothing is left undecided**, which `
 ## Keep in mind
 
 - **It is the only human review of the delegated block.** If the person has to read code, PRs or conversations to decide, the report is badly built, and `verify` is fixed.
-- **Merging a task is not acceptance.** Task PRs merge into the change branch earlier; **the PR from the change branch to the base merges here**, at `acceptance-merge`, after the person tried it on the branch's preview ([`ARCH-06`](../../foundations/architecture/branches.md)). In production it ships **off for customers** until it is launched ([`ARCH-08`](../../foundations/architecture/release.md)).
+- **Merging the implementation is not acceptance.** The implementation PR merges into the change branch earlier; **the PR from the change branch to the base merges here**, at `acceptance-merge`, after the person tried it on the branch's preview ([`ARCH-06`](../../foundations/architecture/branches.md)). In production it ships **off for customers** until it is launched ([`ARCH-08`](../../foundations/architecture/release.md)).
 - **The cycle metric** is the bugs the person finds here that the spec already covered. The target is zero.
 
 ## Skills, agents and tools

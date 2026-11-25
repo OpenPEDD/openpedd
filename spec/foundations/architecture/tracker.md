@@ -2,8 +2,8 @@
 title: The tracker
 description: ARCH-15 · The issues of a change, its tasks, who creates them without duplicates, what moves their status, and how the tracker is kept clean
 owner: Kevin
-version: "1.1"
-updated: "2026-11-20"
+version: "1.2"
+updated: "2026-11-25"
 ---
 
 # ARCH-15 · The tracker
@@ -45,10 +45,10 @@ that is dropped would leave them orphaned, and assigning is a person's call when
 ## The tasks
 
 **Each task is one item of a checklist in the implementation sub-issue, not an issue.** The item is
-one line: the task's name, its IDs and what blocks it. Its pack is not copied there: `build` asks
+one line: the task's ID and name, the spec IDs it covers and what blocks it. Its pack is not copied there: `build` asks
 `get_context_for` for it by the task ([`ENT-13`](../domain/context-pack.md)). `plan` writes the
-list; `build` writes each session's link next to its item and ticks it when the task's PR merges
-into the change branch. One issue per task would put ten or fifteen issues that live for a day into
+list; `build` writes each session's link next to its item and ticks it when the task's commit is pushed
+to the implementation branch, naming the commit (`- [x] 1.1 triggers · a1b2c3d`). One issue per task would put ten or fifteen issues that live for a day into
 every change, in trackers with a cap on active issues (Linear's is 250).
 
 Below the tasks, the same sub-issue carries **the change's definition of done**: one line per
@@ -70,10 +70,10 @@ request, and the tracker's git integration moves the issue the PR names:
 | Issue | Its PR names it with |
 |---|---|
 | Architecture · design | A closing word (`Closes RECLEE-1231`) in the stage branch's PR: its merge is the gate |
-| Implementation | A non-closing word (`Part of RECLEE-1230`) in every task PR: the first one starts it and no merge closes it; the PR to the base, at `acceptance-merge`, closes it |
+| Implementation | A non-closing word (`Part of RECLEE-1230`) in the implementation PR, opened as a draft with the first task commit's push: its merge into the change branch does not close it; the PR to the base, at `acceptance-merge`, closes it |
 | Parent | Nothing: the tool moves it, to in progress with the first sub-issue and to done when the launch reaches everyone |
 
-The task branch carries no issue ID, so no task PR closes the sub-issue by its name. Each status
+The implementation branch carries no issue ID, so its PR does not close the sub-issue by its name. Each status
 change adds its stage's start and end to the trace ([`ENT-23`](../domain/trace-event.md#steps)).
 
 ## Kept clean

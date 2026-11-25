@@ -56,16 +56,21 @@ test('pedd branch change: a clash on the number tries the next', () => {
   assert.equal(sh(r.work, 'ls-tree', '--name-only', 'origin/feat/mine', 'spec/changes/'), 'spec/changes/CHG-003\nspec/changes/CHG-009\nspec/changes/archive');
 });
 
-test('pedd branch design · architecture · task: from the change branch, found by its folder or its name', () => {
+test('pedd branch design · architecture · implementation: from the change branch, found by its folder or its name', () => {
   const r = repo(base);
   const ws = readWorkspace(r.work);
   const c = cutChange(r.git, ws, { slug: 'automations' });
   const tip = sh(r.work, 'rev-parse', 'origin/feat/automations');
   assert.equal(cutChild(r.git, ws, { kind: 'design', change: c.id }).branch, 'design/automations');
   assert.equal(cutChild(r.git, ws, { kind: 'architecture', change: 'feat/automations' }).branch, 'arch/automations');
-  const t = cutChild(r.git, ws, { kind: 'task', change: c.id, task: 'Triggers' });
-  assert.equal(t.branch, 'task/automations-triggers');
-  for (const b of ['design/automations', 'arch/automations', 'task/automations-triggers']) assert.equal(sh(r.work, 'rev-parse', `origin/${b}`), tip);
+  const t = cutChild(r.git, ws, { kind: 'implementation', change: c.id });
+  assert.equal(t.branch, 'impl/automations');
+  for (const b of ['design/automations', 'arch/automations', 'impl/automations']) assert.equal(sh(r.work, 'rev-parse', `origin/${b}`), tip);
+  assert.throws(() => cutChild(r.git, ws, { kind: 'design', change: c.id }), /already exists/);
+  commitOn(r, 'impl/automations', { 'apps/a.js': '1' });
+  const again = cutChild(r.git, ws, { kind: 'implementation', change: c.id });
+  assert.equal(again.existed, true, 'one implementation branch per change: the second call returns it');
+  assert.equal(again.commit, sh(r.work, 'rev-parse', 'origin/impl/automations'));
   assert.deepEqual(findChange(r.git, ws, c.id), { id: c.id, branch: 'feat/automations', kind: 'change', prefix: 'feat', slug: 'automations' });
   assert.throws(() => cutChild(r.git, ws, { kind: 'design', change: 'CHG-099' }), /no change branch/);
 });

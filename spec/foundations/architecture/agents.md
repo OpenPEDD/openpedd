@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.9"
-updated: "2026-11-20"
+version: "1.10"
+updated: "2026-11-25"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -60,7 +60,7 @@ not shipped.
 |---|---|
 | **Where each agent runs, and how its context stays small**, is in [`ARCH-12`](running.md) | — |
 | **Whatever coordinates is not a model.** `pedd`, or a workflow script, launches one agent per step and checks the precondition before the next ([`RULE-24`](../rules/cycle.md#rule-24)) | A model coordinating for hours forgets the order it was given |
-| **Small scope**: one agent per task or step, with its pack and nothing else. A task is cut by vertical slice that fits a reviewable PR, never by layer | Less text makes each rule weigh more; cutting smaller than that costs more in coordination than it saves |
+| **Small scope**: one agent per task or step, with its pack and nothing else. A task is cut by vertical slice that fits one reviewable commit, never by layer | Less text makes each rule weigh more; cutting smaller than that costs more in coordination than it saves |
 | **The checklist is the output**: the agent delivers each item, and the judge checks it | An agent that ticks its own list can tick and skip |
 | **One writer per set of files.** Two run in parallel only if they do not touch the same files; in a shared file (translations), each touches only its keys | Two writers on one file overwrite each other |
 | **The brief** has the goal, the rules, the checks, the report format and what not to touch. It never contradicts `AGENTS.md`: what the project already says is not repeated or changed in it | The agent knows only what the brief says |

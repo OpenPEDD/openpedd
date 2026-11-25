@@ -11,6 +11,6 @@ export { diffViews } from './views/diff.mjs';
 export { readStages, STAGES, STAGE_STATES, PIECE_STATES } from './views/stages.mjs';
 export { weigh, weighChange, deltaOf, WEIGHTS, SIGNALS, FAN_OUT_THRESHOLD } from './weight.mjs';
 export { SWEEP_STAGES, FINDERS, stagesAhead, normalizeQuestion, questionProblems, mergeQuestions, isAsked, renderSheet, parseReply, whereItGoes, applyReply, applyAnswers, rewriteReopened, answersSoFar, decideByAi, pendingFor, ANSWERER, ANSWERER_LABEL } from './sweep.mjs';
-export { changeDeltas, readSpecSection, checkTaskPr, checkChecklist, checkReport, checkDecisions } from './records.mjs';
+export { changeDeltas, readSpecSection, checkTaskCommit, checkImplementationPr, checkChecklist, checkReport, checkDecisions } from './records.mjs';
 export * as markdown from './markdown.mjs';
-export const VERSION = '0.13.0';
+export const VERSION = '0.14.0';

@@ -9,13 +9,12 @@ export const PREFIXES = [...new Set(Object.values(TRACK_PREFIX))];
 const PART = {
   prefix: `(?:${PREFIXES.join('|')})`,
   slug: '[a-z0-9]+(?:-[a-z0-9]+)*',
-  task: '[a-z0-9]+(?:-[a-z0-9]+)*',
   change: 'CHG-\\d+',
   n: '\\d+',
 };
 
 /** The kinds in the order a name is read: the most specific first. */
-export const KINDS = ['edit', 'design', 'architecture', 'task', 'hotfix', 'change'];
+export const KINDS = ['edit', 'design', 'architecture', 'implementation', 'hotfix', 'change'];
 
 const escape = (s) => s.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
 
@@ -41,20 +40,13 @@ export function formatName(pattern, values) {
 }
 
 /**
- * What a branch name is: { kind, ...placeholders }, or null when it is no work branch.
- * A task name is read against the change it belongs to when `slug` is given, since both hold hyphens.
+ * What a branch name is: { kind, ...placeholders }, or null when it is no work branch. A task's short
+ * branch (`impl/{slug}--{task}`, ARCH-06) is no work branch: it never opens a PR.
  */
-export function parseName(name, branches, { slug } = {}) {
+export function parseName(name, branches) {
   for (const kind of KINDS) {
     const m = name.match(patternRegex(branches[kind]));
-    if (!m) continue;
-    const g = { ...m.groups };
-    if (kind === 'task' && slug && branches.task.includes('{task}')) {
-      const before = branches.task.slice(0, branches.task.indexOf('{task}')).replace('{slug}', slug);
-      const task = name.startsWith(before) ? name.slice(before.length) : '';
-      return new RegExp(`^${PART.task}$`).test(task) ? { kind, slug, task } : { kind, slug: null, task: null };
-    }
-    return { kind, ...g };
+    if (m) return { kind, ...m.groups };
   }
   return null;
 }

@@ -2,8 +2,8 @@
 title: plan
 description: Stage 4 · Translates the merged spec into atomic tasks, failing tests and a context pack per task
 owner: Kevin
-version: "1.13"
-updated: "2026-11-23"
+version: "1.14"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -41,7 +41,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 6. **Leaves the contracts empty**: the signatures, the endpoints and the real version of the seam, answering *not implemented*. The tests compile against them, and `build` fills them.
 7. **Write the tests, failing**, each at the cheapest level that proves it ([`ARCH-10`](../../foundations/architecture/testing.md)): one per `AC` with its `level`; one per **contract × error × role**; one per cell of the permission matrix, allowed and denied; the `NFR` fitness functions; one per operation with more than one write, **cut in the middle**, from `architect`'s design; and `eval`s over a golden set for what varies between runs. **Acceptance tests run against the real version of the seam, never the sample data**: the mockup already shows the right screen, so a test on it passes with nothing built. Each test is run and **seen failing on an assertion**, for the reason its criterion states.
 8. **Creates the flag**, off, if the change has one, with its removal task ([`ARCH-09`](../../foundations/architecture/flags.md)).
-9. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any PR that changes one.
+9. **Locks the tests.** `tests.lock`, in the code repo, holds the path and hash of each one. **Tests are part of the contract**: a `Delivery Pipeline` check rejects any commit or PR that changes one. `plan` commits them first on the implementation branch ([`ARCH-06`](../../foundations/architecture/branches.md)).
 10. **Build each task's context pack**: its IDs, criteria, tests, mockups, the `ADR`s that affect it, the foundations it names, **the files it will touch and their relevant line ranges**, and **what the project's own checks will ask of it** (a REST route per action, an integration test per file, enums matching the database). If it does not fit in 20,000 tokens, the task is badly cut.
 11. **Write the tasks as a checklist in the change's implementation sub-issue**, one line per task with its name, its IDs and what blocks it; the pack is served by `get_context_for`, not copied there ([`ARCH-15`](../../foundations/architecture/tracker.md#the-tasks)).
 12. **Lists the contradictions.** Crosses the plan and the architecture decisions against the spec in scope. Each clash (a limit, a retry, a role) goes to the person before `build`, with what each one says. The spec wins ([`RULE-23`](../../foundations/rules/cycle.md#rule-23)); the person decides whether the spec is what changes.
@@ -64,7 +64,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 | Criterion | How it is measured |
 |---|---|
 | It covers a vertical slice of few IDs | It lists its IDs and criteria |
-| It fits a reviewable PR | Within the line budget of the `Delivery Pipeline` |
+| It fits one reviewable commit | Within the line budget of the `Delivery Pipeline` |
 | It compiles and passes its tests on its own | Its tests do not depend on another open task |
 | Its context fits | Context pack ≤ 20,000 tokens |
 | It says what it depends on | `blocks` / `blocked by` in the tracker |
@@ -80,7 +80,7 @@ The `FR`s, `NFR`s and `AC`s in scope · the area's `ARCH` and `ADR` · the mocku
 
 - **If the plan decides product, it is an `assumption`**, not a line in a task.
 - **Tests must fail** when `plan` ends, for the right reason, except on the `cover` track, where each one is proved by breaking the code ([`ARCH-10`](../../foundations/architecture/testing.md#covering-what-exists)). A test that already passes proves nothing new, and one that does not compile is not red: it says nothing about the behavior.
-- **Only open tasks may be red.** On the change branch, the pipeline requires the tests of every merged task and expects the rest to fail; the PR to the base requires them all.
+- **Only open tasks may be red.** On the implementation branch, the pipeline requires the tests of every committed task and expects the rest to fail; the implementation PR and the PR to the base require them all.
 - **Technical tasks** (migrations, configuration) exist, are marked `technical`, and say which product task they unblock.
 
 ## Skills, agents and tools

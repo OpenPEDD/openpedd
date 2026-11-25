@@ -2,8 +2,8 @@
 title: A request's branch
 description: ARCH-21 · How a request's change branch is numbered, cut, edited once agreed, renamed at approval and dropped
 owner: Kevin
-version: "1.0"
-updated: "2026-11-20"
+version: "1.1"
+updated: "2026-11-25"
 ---
 
 # ARCH-21 · A request's branch [#a-request]
@@ -53,7 +53,7 @@ Until where an edit is accepted is the product's call: OpenPEDD Cloud closes it 
 The branch is `feat/` while the track is unknown. **At `spec-approval`, `specify` renames it once**: the
 prefix of the computed track, and, when the tracker links a branch by its issue key (Linear,
 [`MKT-05`](../market/trackers.md)), the parent issue's key: `feat/rec-412-automations`. The rename is
-the new name pushed and the old one deleted; the design, architecture and task branches are cut after it.
+the new name pushed and the old one deleted; the design, architecture and implementation branches are cut after it.
 
 ## Dropped
 

@@ -1,4 +1,4 @@
-// The four counted checks that nothing went unrecorded (ARCH-11, nothing left unrecorded). Each takes
+// The five counted checks that nothing went unrecorded (ARCH-11, nothing left unrecorded). Each takes
 // text and the change's deltas, and gives { ok, problems }, each problem with what is missing and the
 // fix. No model judges any of them (RULE-24).
 import { deltaOf, weighChange } from './weight.mjs';
@@ -36,49 +36,59 @@ export function readSpecSection(body) {
 }
 
 /**
- * Task PR: its Spec section against the change's deltas. Fails when the section is missing or does not
- * say both kinds (even as `none`), when a listed delta does not exist or is of another kind, or when a
- * delta whose `task` is this one is not listed.
+ * A task commit (ARCH-06, the tasks are commits): the Spec section in its message against the change's
+ * deltas. Fails when the section is missing or does not say both kinds (even as `none`), when a listed
+ * delta does not exist or is of another kind, or when a delta whose `task` is this one is not listed.
  */
-export function checkTaskPr({ body, deltas, task, change }) {
+export function checkTaskCommit({ message, deltas, task, change }) {
+  return checkSection({ text: message, where: 'the commit', deltas, change, owes: (d) => task && clean(d.task) === task, whose: `belongs to task ${task}` });
+}
+
+/** The implementation PR: its Spec section lists every assumption and deviation of the change. */
+export function checkImplementationPr({ body, deltas, change }) {
+  return checkSection({ text: body, where: 'the PR', deltas, change, owes: () => true, whose: `is of ${change}` });
+}
+
+function checkSection({ text, where, deltas, change, owes, whose }) {
   const problems = [];
-  const s = readSpecSection(body);
-  if (!s) return { ok: false, problems: [{ what: 'the PR has no `## Spec` section', fix: 'add it: `Covers:`, `Assumptions:` and `Deviations:`, each with IDs or `none`' }] };
+  const s = readSpecSection(text);
+  if (!s) return { ok: false, problems: [{ what: `${where} has no \`## Spec\` section`, fix: 'add it: `Covers:`, `Assumptions:` and `Deviations:`, each with IDs or `none`' }] };
   for (const kind of ['assumptions', 'deviations']) if (!s.said[kind]) problems.push({ what: `the Spec section does not say its ${kind}`, fix: `add \`${kind[0].toUpperCase()}${kind.slice(1)}: none\` if there are none` });
   const byId = new Map(deltas.map((d) => [d.id, d]));
   for (const kind of ['assumptions', 'deviations']) {
     const type = kind.slice(0, -1);
     for (const id of s[kind]) {
       const d = byId.get(id);
-      if (!d) problems.push({ what: `${id} is listed as ${type}, and ${change} has no such delta`, fix: `record it in changes/${change}/deltas/${id}.md, or drop it from the PR` });
+      if (!d) problems.push({ what: `${id} is listed as ${type}, and ${change} has no such delta`, fix: `record it in changes/${change}/deltas/${id}.md, or drop it from ${where}` });
       else if (d.type !== type) problems.push({ what: `${id} is listed as ${type}, but it is a ${d.type || 'delta with no type'}`, fix: `list it under ${d.type === 'deviation' ? 'Deviations' : 'Assumptions'}` });
     }
   }
   const listed = new Set([...s.assumptions, ...s.deviations]);
-  if (task) {
-    for (const d of deltas.filter((x) => isRecorded(x) && clean(x.task) === task && !listed.has(x.id))) {
-      problems.push({ what: `${d.id} (${d.type}) belongs to task ${task} and the PR does not list it`, fix: `add it under ${d.type === 'deviation' ? 'Deviations' : 'Assumptions'}` });
-    }
+  for (const d of deltas.filter((x) => isRecorded(x) && owes(x) && !listed.has(x.id))) {
+    problems.push({ what: `${d.id} (${d.type}) ${whose} and ${where} does not list it`, fix: `add it under ${d.type === 'deviation' ? 'Deviations' : 'Assumptions'}` });
   }
   return { ok: !problems.length, problems, section: s };
 }
 
+/** The commit a checklist line names: the last 7-to-40 hex word outside a link (`1.1 triggers · a1b2c3d`). */
+const commitOf = (text) => (text.replace(/https?:\/\/\S+/g, ' ').match(/\b[0-9a-f]{7,40}\b/gi) || []).pop()?.toLowerCase() || null;
+
 /**
  * The implementation sub-issue's checklist, as Markdown: one `- [ ]` or `- [x]` line per task, a ticked
- * one naming its PR (`#123` or `…/pull/123`). `merged` says which PR numbers are merged into the change
- * branch. Fails on an unticked task, or a ticked one with no PR or with a PR not merged.
+ * one naming its commit (ARCH-15, the tasks). `commits` are the full hashes on the implementation branch.
+ * Fails on an unticked task, or a ticked one with no commit or with a commit not on the branch.
  */
-export function checkChecklist({ checklist, merged }) {
+export function checkChecklist({ checklist, commits }) {
   const items = String(checklist || '').split(/\r?\n/).map((l) => l.match(/^\s*[-*]\s+\[( |x|X)\]\s+(.*)$/)).filter(Boolean)
-    .map(([, mark, rest]) => ({ ticked: mark !== ' ', text: rest.trim(), pr: Number((rest.match(/(?:#|\/pull\/)(\d+)\b/) || [])[1]) || null }));
+    .map(([, mark, rest]) => ({ ticked: mark !== ' ', text: rest.trim(), commit: commitOf(rest) }));
   const problems = [];
   if (!items.length) problems.push({ what: 'the checklist holds no task', fix: 'paste the implementation sub-issue\'s checklist, one `- [ ]` line per task' });
-  const has = new Set(merged || []);
+  const all = (commits || []).map((c) => c.toLowerCase());
   for (const i of items) {
-    const name = i.text.replace(/\s*(?:—|-)?\s*(?:#\d+|https?:\/\/\S+)\s*$/, '');
+    const name = i.text.replace(/\s+(?:(?:·|—|-)\s*)?[0-9a-f]{7,40}\s*$/i, '');
     if (!i.ticked) problems.push({ what: `task not done: ${name}`, fix: 'finish it, or take it out of the change through plan' });
-    else if (!i.pr) problems.push({ what: `ticked with no PR: ${name}`, fix: 'name its PR on the line (#123)' });
-    else if (!has.has(i.pr)) problems.push({ what: `ticked, but #${i.pr} is not merged into the change branch: ${name}`, fix: `merge #${i.pr}, or untick it` });
+    else if (!i.commit) problems.push({ what: `ticked with no commit: ${name}`, fix: 'name its commit on the line (· a1b2c3d)' });
+    else if (!all.some((c) => c.startsWith(i.commit))) problems.push({ what: `ticked, but ${i.commit} is not on the implementation branch: ${name}`, fix: `push ${i.commit} to the implementation branch, or untick it` });
   }
   return { ok: !problems.length, problems, items };
 }

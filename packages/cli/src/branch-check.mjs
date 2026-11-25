@@ -9,18 +9,15 @@ const fixes = {
   change: () => 'pedd branch change <slug> [--track full|story|fix|chore|hotfix]',
   design: (c) => `pedd branch design ${c}`,
   architecture: (c) => `pedd branch architecture ${c}`,
-  task: (c) => `pedd branch task ${c} <task>`,
+  implementation: (c) => `pedd branch implementation ${c}`,
   edit: (c) => `pedd branch edit ${c}`,
 };
 
-/** The change branch a design, architecture, task or edit branch belongs to, read from the remote. */
-function changeBranchOf(git, ws, head, me) {
+/** The change branch a design, architecture, implementation or edit branch belongs to, read from the remote. */
+function changeBranchOf(git, ws, me) {
   const changes = git.remoteBranches().filter((x) => ['change', 'hotfix'].includes(parseName(x, ws.branches)?.kind));
   if (me.kind === 'edit') return changes.find((x) => git.paths(git.remoteSha(x), `${ws.spec}/changes/${me.change}`).length > 0) || null;
-  return changes.find((x) => {
-    const slug = parseName(x, ws.branches).slug;
-    return me.kind === 'task' ? parseName(head, ws.branches, { slug }).slug === slug : slug === me.slug;
-  }) || null;
+  return changes.find((x) => parseName(x, ws.branches).slug === me.slug) || null;
 }
 
 /**
@@ -38,16 +35,16 @@ export function checkBranch(git, ws, { head, target, commit = 'HEAD' }) {
   const result = (kind) => ({ ok: problems.length === 0, kind, head, target, problems, fix: problems.length ? fix : null });
   const parsedTarget = parseName(target, b);
   const targetIsChange = parsedTarget && ['change', 'hotfix'].includes(parsedTarget.kind);
-  const me = parseName(head, b, targetIsChange ? { slug: parsedTarget.slug } : {});
+  const me = parseName(head, b);
 
   if (!me) {
-    problems.push(`"${head}" is not named as a work branch: ${['change', 'design', 'architecture', 'task', 'edit', 'hotfix'].map((k) => b[k].replace('{prefix}', 'feat|fix|chore')).join(' · ')}`);
-    fix = targetIsChange ? `${fixes.task(target)}, or ${fixes.design(target)}` : fixes.change();
+    problems.push(`"${head}" is not named as a work branch: ${['change', 'design', 'architecture', 'implementation', 'edit', 'hotfix'].map((k) => b[k].replace('{prefix}', 'feat|fix|chore')).join(' · ')}`);
+    fix = targetIsChange ? `${fixes.implementation(target)}, or ${fixes.design(target)}: a task is a commit on the implementation branch, never a PR (ARCH-06)` : fixes.change();
     return result(null);
   }
 
   // Where it may merge (ARCH-06, the branches): the base, production, or its own change branch.
-  const owner = me.kind === 'change' || me.kind === 'hotfix' ? null : changeBranchOf(git, ws, head, me);
+  const owner = me.kind === 'change' || me.kind === 'hotfix' ? null : changeBranchOf(git, ws, me);
   const want = { change: [b.base], hotfix: [ws.production, b.base] }[me.kind] || (owner ? [owner] : []);
   if (!want.includes(target)) {
     const where = { change: `the base, ${b.base}`, hotfix: `production, ${ws.production}, or the base, ${b.base}` }[me.kind]
@@ -76,10 +73,10 @@ export function checkBranch(git, ws, { head, target, commit = 'HEAD' }) {
   // from the other, so both are named.
   const mine = new Set(git.only(headSha, targetSha));
   const isChild = (p) => me.kind === 'change' && p && (
-    (['design', 'architecture', 'task'].includes(p.kind) && p.slug === me.slug) || p.kind === 'edit');
+    (['design', 'architecture', 'implementation'].includes(p.kind) && p.slug === me.slug) || p.kind === 'edit');
   for (const other of problems.length ? [] : git.remoteBranches()) {
     if ([head, target, b.base, ws.production].includes(other)) continue;
-    const p = parseName(other, b, me.kind === 'change' ? { slug: me.slug } : {});
+    const p = parseName(other, b);
     if (!p || isChild(p)) continue;
     const otherSha = git.remoteSha(other);
     if (!otherSha) continue;
