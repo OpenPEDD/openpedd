@@ -2,8 +2,8 @@
 title: verify
 description: Stage 6 · The product judge of the delegated block, and the Acceptance Report
 owner: Kevin
-version: "1.9"
-updated: "2026-11-23"
+version: "1.10"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -41,8 +41,8 @@ Per area, never the whole change: the area's `FR`s, `NFR`s and `AC`s · the diff
 3. **Tests that can catch**, **only in the last round**: once no high finding is left, with the whole suite run once and green, and nothing else changing. Runs mutation testing over the change's code, breaking it on purpose; a mutant that survives in code implementing an `AC` is a `finding`. Then runs each `AC` again **with data it varies itself**, once `build` is done, so `build` could not have seen it. A criterion that passes only with the original data is a high `finding`.
 4. **Tracking**: the `Tracking Plan` events the metric needs are instrumented.
 5. **Tries to refute what is serious**: every `high` finding goes to `confirm-judge`, whose job is to prove it wrong from the code and the spec. Only what survives counts.
-6. **`pedd` decides, not a judge**: it first checks that every task is ticked with its PR merged ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)). With blocking findings ([`ARCH-13`](../../foundations/architecture/review.md#what-blocks)), back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)), and `pedd` checks that it holds every delta of the change, in its place by weight.
-7. **Opens the PR to the base**: merges the base into the change branch, solves the conflicts there, runs the pipeline again and opens the PR with the whole change's **Spec** section ([`ARCH-06`](../../foundations/architecture/branches.md)). It merges at `acceptance-merge`, once a person approves it ([`ARCH-13`](../../foundations/architecture/review.md#the-persons-last-step)).
+6. **`pedd` decides, not a judge**: it first checks that every task is ticked with its commit on the implementation branch ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)). With blocking findings ([`ARCH-13`](../../foundations/architecture/review.md#what-blocks)), back to `build` with new tasks (three rounds at most). Without them, builds the **`Acceptance Report`** ([`ENT-08`](../../foundations/domain/report.md)), and `pedd` checks that it holds every delta of the change, in its place by weight.
+7. **Marks the implementation PR ready**, with every task's IDs, assumptions and deviations in its **Spec** section; it merges into the change branch when its checks are green. Fixes `verify` asked for are commits on the implementation branch, never a PR of their own. **Then opens the PR to the base**: merges the base into the change branch, solves the conflicts there, runs the pipeline again and opens the PR with the whole change's **Spec** section ([`ARCH-06`](../../foundations/architecture/branches.md)). It merges at `acceptance-merge`, once a person approves it ([`ARCH-13`](../../foundations/architecture/review.md#the-persons-last-step)).
 
 ## The `Acceptance Report`
 
@@ -87,7 +87,7 @@ Budget: **3,000 tokens without screenshots**. A person reads it: it must be read
 
 | Kind | Name | For | Reads | Leaves |
 |---|---|---|---|---|
-| Skill | `/verify` | The whole stage: splits by area and builds the report | The PRs and their Spec section; the spec in scope and the traceability matrix; every delta; the tests, green | The `Acceptance Report`; `finding` deltas; a screenshot per `AC` with a screen; the Walkthrough draft, from the green tests' steps; the PR to the base |
+| Skill | `/verify` | The whole stage: splits by area and builds the report | The task commits and their Spec section; the spec in scope and the traceability matrix; every delta; the tests, green | The `Acceptance Report`; `finding` deltas; a screenshot per `AC` with a screen; the Walkthrough draft, from the green tests' steps; the implementation PR ready; the PR to the base |
 | Agent | `verify-judge` · `confirm-judge` | The judges | — | — |
 | MCP | `get_context_for` · `get_freshness` · `propose_delta` | Read and report | — | — |
 

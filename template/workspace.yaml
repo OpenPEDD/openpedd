@@ -52,7 +52,7 @@ branches:                               # ARCH-06
   change: "{prefix}/{slug}"             # feat/, fix/ or chore/, by track
   design: "design/{slug}"
   architecture: "arch/{slug}"
-  task: "task/{slug}-{task}"            # one per checklist item
+  implementation: "impl/{slug}"         # one per change; its tasks are commits
   edit: "edit/{change}-{n}"             # one per edit to an agreed request
 
 models:

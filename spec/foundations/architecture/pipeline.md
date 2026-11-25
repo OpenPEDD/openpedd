@@ -2,8 +2,8 @@
 title: Pipeline
 description: ARCH-11 · What runs at each moment so the pipeline stays fast without losing quality, what checks nothing went unrecorded, and what each change costs
 owner: Kevin
-version: "1.6"
-updated: "2026-11-23"
+version: "1.7"
+updated: "2026-11-25"
 ---
 
 # ARCH-11 · Pipeline
@@ -14,7 +14,8 @@ has its own set, and the last ones run everything.
 | Moment | Runs | Selects tests? |
 |---|---|---|
 | Agent working | Lint, types, tests of what was touched | Yes |
-| Task PR | Affected `unit`, `integration` and `contract`; the task's `e2e`; mutation on the changed lines | Yes |
+| Task commit, before it is made | Affected `unit`, `integration` and `contract`; the task's `e2e`; by the one local command | Yes |
+| Implementation PR, marked ready when `verify` passes | Affected `unit`, `integration` and `contract` of the whole change; its `e2e`; mutation on the changed lines; the CI judges ([`ARCH-13`](review.md#the-judges-in-ci)). A draft runs only the cheap checks | Only by change |
 | PR to the base | Everything of the change, `e2e` in parallel shards; the permission matrix; each locale | Only by change |
 | Merge to the base | The [code index](code-index.md), regenerated for what changed and committed | — |
 | Promotion to the `public` environment | **The whole suite** | **Never** |
@@ -30,20 +31,22 @@ model** ([`RULE-24`](../rules/cycle.md#rule-24)). Each check fails with what is 
 
 | Moment | Checks | Fails when |
 |---|---|---|
-| Task PR | The PR's **Spec** section against the change's deltas | An assumption or deviation listed in the PR has no delta, or a delta of the task is not listed; the section is missing, even with nothing to list |
-| Before `verify` builds the report | The implementation sub-issue's checklist ([`ARCH-15`](tracker.md#the-tasks)) | A task is unticked, or ticked without a merged PR |
+| Task commit | The commit's **Spec** section, in its body, against the task's deltas | An assumption or deviation listed has no delta, or a delta of the task is not listed; the section is missing, even with nothing to list |
+| Implementation PR | The PR's **Spec** section against every delta of the change | The same, for every assumption and deviation of the change |
+| Before `verify` builds the report | The implementation sub-issue's checklist ([`ARCH-15`](tracker.md#the-tasks)) | A task is unticked, or ticked without a commit on the implementation branch |
 | The `Acceptance Report` | The report against the change's deltas | A delta, finding or improvement of the change is not in it, or is not in its place by weight ([`ARCH-23`](weight.md)) |
 | `acceptance-merge` | Every delta of the change | One has no decision |
 
 An assumption the code shows and no delta records is a `finding` of `verify`'s Spec lens, and counts
 in the cycle metrics as **undeclared**, per task.
 
-`pedd records <CHG> pr|tasks|report|accept` runs each one, and exits non-zero with every problem and its fix:
+`pedd records <CHG> commit|pr|tasks|report|accept` runs each one, and exits non-zero with every problem and its fix:
 
 | Moment | Reads |
 |---|---|
-| `pr` | The PR's body, from the GitHub event or `--body`. Its **Spec** section is a `## Spec` heading, then one line each: `Covers:`, `Assumptions:` and `Deviations:`, with IDs or `none`. The task comes from the task branch's name; a delta is the task's by its `task` field ([`ENT-07`](../domain/delta.md)) |
-| `tasks` | The implementation sub-issue's checklist, given with `--checklist` while the tracker is not read: one `- [ ]` or `- [x]` line per task, a ticked one naming its PR (`#123`). A PR is merged when the change branch's history holds its merge (`Merge pull request #123`, or a subject ending in `(#123)`) |
+| `commit` | A task commit's message, `--commit <ref>` (`HEAD` by default). Its **Spec** section is a `## Spec` heading, then one line each: `Covers:`, `Assumptions:` and `Deviations:`, with IDs or `none`. The task is `--task`, or the ID that opens the subject after its type (`feat(automations): 1.1 triggers` → `1.1`); a delta is the task's by its `task` field ([`ENT-07`](../domain/delta.md)) |
+| `pr` | The PR's body, from the GitHub event or `--body`, with the same **Spec** section; every assumption and deviation of the change must be listed |
+| `tasks` | The implementation sub-issue's checklist, given with `--checklist` while the tracker is not read: one `- [ ]` or `- [x]` line per task, a ticked one naming its commit (`a1b2c3d`, 7 to 40 hex). The commit counts when the implementation branch's history holds it (`--branch`, `HEAD` by default) |
 | `report` | The `.md` in `changes/<CHG>/reports/` whose name says *acceptance*, or `--report`. Every delta's ID in it, and the assumptions and deviations in the order `pedd weigh` gives |
 | `accept` | Each delta's `decision` |
 

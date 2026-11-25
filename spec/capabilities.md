@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.15"
-updated: "2026-11-24"
+version: "1.16"
+updated: "2026-11-25"
 ---
 
 # What OpenPEDD can do
@@ -42,7 +42,7 @@ updated: "2026-11-24"
 | Run the judges on every PR, on your own subscription | The CI action: one required check, one comment edited in place, `/pedd recheck` and `/pedd override` | [Judges in CI](foundations/architecture/review.md#the-judges-in-ci) |
 | Know whether a judge got worse | `pedd judges bench` over past changes; precision as a process metric | [Measuring judges](foundations/architecture/agents.md#measuring-judges) |
 | Let the agent install safely | `--dry-run`, backups, sensitive paths denied, the agent never installed for you | [Writing safely](modules/workspace/prd.md#writing-safely) |
-| Decide only what nobody defined | One report with each assumption and deviation, heaviest first; the light ones accepted in one reply ([weight](foundations/architecture/weight.md)) | [accept](modules/accept/prd.md) |
+| Decide only what nobody defined | One | `pedd records <change> commit|pr|tasks|report|accept` | That nothing went unrecorded: each task commit's and the implementation PR's Spec section, the tasks ticked with their commit, with each assumption and deviation, heaviest first; the light ones accepted in one reply ([weight](foundations/architecture/weight.md)) | [accept](modules/accept/prd.md) |
 | Design with the real brand | A mockup in code, with real components and every state | [design](modules/design/prd.md) |
 | Define what is acceptable before code exists | Tests written red from the criteria, locked from `build` | [plan](modules/plan/prd.md) |
 | Prove the tests can fail | Mutation testing, and each criterion rerun with new data | [verify](modules/verify/prd.md) |
@@ -96,7 +96,7 @@ Each change runs only what applies to it ([tracks](modules/tracks/prd.md)):
 | `cover` | Criteria, tests and docs for what already works, changing none of it |
 | `chore` | Technical work with no product ID |
 
-Branches: one per change, with design, architecture and task branches inside it
+Branches: one per change, with design, architecture and implementation branches inside it; one PR per stage, the | `pedd records <change> commit|pr|tasks|report|accept` | That nothing went unrecorded: each task commit's and the implementation PR's Spec section, the tasks ticked with their commit, as commits
 ([Branches](foundations/architecture/branches.md)).
 
 ## Tools
@@ -116,7 +116,7 @@ Branches: one per change, with design, architecture and task branches inside it
 | `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid` |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd sweep <change>` | Every open question of a change, at once, with recommendations: the heavy asked, the rest shown decided; `answer "…"` takes the one reply; `--accept-recommended`, `--ask-all` |
-| `pedd records <change> pr\|tasks\|report\|accept` | That nothing went unrecorded: the PR's Spec section, the tasks ticked and merged, the report, every delta decided ([pipeline](foundations/architecture/pipeline.md#nothing-left-unrecorded)) |
+| `pedd records <change> commit\|pr\|tasks\|report\|accept` | That nothing went unrecorded: each task commit's and the implementation PR's Spec section, the tasks ticked with their commit, the report, every delta decided ([pipeline](foundations/architecture/pipeline.md#nothing-left-unrecorded)) |
 | `pedd weigh <change>` | Each assumption and deviation of a change, weighed high, medium or low with its factors, heaviest first ([weight](foundations/architecture/weight.md#how-pedd-reads-each-factor)) |
 | `pedd branch` | Creates a work branch from the right base, read from the tracker and the change |
 | `pedd overlap` | Which changes in flight touch the same IDs or files |

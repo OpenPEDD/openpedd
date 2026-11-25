@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.21"
-updated: "2026-11-24"
+version: "1.22"
+updated: "2026-11-25"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -62,7 +62,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Mode: `interactive` · `delegated` · `human` | How a stage runs | [`ENT-10`](domain/stage.md) |
 | `architect.mode`: `guided` · `delegated` | How architecture runs | [`DEC-08`](../decisions/DEC-08-architect-mode.md) |
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
-| Change branch · design branch · architecture branch · task branch · base | The branches of a change | [`ARCH-06`](architecture/branches.md) |
+| Change branch · design branch · architecture branch · implementation branch · base | The branches of a change; a task is a commit on the implementation branch | [`ARCH-06`](architecture/branches.md) |
 | Sweep · `pedd sweep` · `/sweep` | Every open question of a change, from every stage ahead, in one sheet with a recommendation each | [`ARCH-16`](architecture/sweep.md) |
 | Weight: `high` · `medium` · `low` | How costly a decision the AI took alone is to get wrong; decides what is asked and the order it is read in | [`ARCH-23`](architecture/weight.md) |
 | Undeclared assumption | One `verify` finds in the code with no delta | [`ARCH-11`](architecture/pipeline.md#nothing-left-unrecorded) |
@@ -138,6 +138,7 @@ Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` s
 | Especificación, Arquitectura, Diseño, Planificación, Desarrollo, Testing, Documentación | `specify`, `architect`, `design`, `plan`, `build`, `verify`, `publish` |
 | Testing (as a stage after development) | Tests are written in `plan`; `verify` is the judge |
 | Changes (as a history) | `History` for versions; `changes/` for work in flight |
+| Task branch · task PR | A commit on the implementation branch ([`DEC-32`](../decisions/DEC-32-one-pr-per-stage.md)) |
 | Camino feliz · alternativo · de excepción | `Main flow` · `Alternate flows` · `Exception flows` |
 | Finalizado (PRD status) | `live` |
 | En mejora (PRD status) | `changing` |

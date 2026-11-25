@@ -2,8 +2,8 @@
 title: build
 description: Stage 5 · One agent, one task, one context pack, until its tests pass
 owner: Kevin
-version: "1.13"
-updated: "2026-11-23"
+version: "1.14"
+updated: "2026-11-25"
 status: draft
 ---
 
@@ -32,14 +32,14 @@ opens to work.
 
 ## Procedure
 
-0. **Runs where the workspace says**: by default, one cloud session per task, launched by `pedd` once the quota allows ([`ARCH-12`](../../foundations/architecture/running.md#where-agents-run)). **Cuts the task branch** from the change branch, named after the task ([`ARCH-06`](../../foundations/architecture/tracker.md#the-tasks)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
+0. **Runs where the workspace says**: by default, one cloud session per task, launched by `pedd` once the quota allows ([`ARCH-12`](../../foundations/architecture/running.md#where-agents-run)). **Works on the implementation branch**, `impl/{slug}`: `pedd branch implementation <change>` cuts it from the change branch the first time and returns it after. A task run in parallel works on a short branch of its own and merges it locally into the implementation branch ([`ARCH-06`](../../foundations/architecture/branches.md#the-tasks-are-commits)). With screens in scope, it starts from the mockup the design merged, and wires it by filling the real version of the seam, the one file its data goes through, which `plan` left empty.
 1. **Reads the pack**, nothing else, and **one task per session**: never the next one in the same context ([`ARCH-12`](../../foundations/architecture/running.md#keeping-the-context-small)). If something is missing to build, it is an `assumption` (product) or a technical question to whoever runs the stage (technical).
 2. **Makes the tests pass in small, steady steps**, one criterion at a time, and cleans up. Unit tests are its call: where the logic deserves them, without a ritual around them.
 3. **Anchors the code** to the IDs it implements: `@spec FR-VEW-01@<hash>`, or a line in `spec.lock`.
 4. **Runs the `Delivery Pipeline` checks**: lint, types, tests, fitness functions.
 5. **Records deltas** ([`ENT-07`](../../foundations/domain/delta.md)): a `deviation` when the spec cannot be met as written (with the technical reason and the alternative); an `assumption` when it had to fill a gap. Each says what backs it and what changes if it is rejected; `pedd` weighs it ([`ARCH-23`](../../foundations/architecture/weight.md)).
-6. **Opens the PR against the change branch**, never the base, with the **Spec** section: IDs covered, deviations, assumptions, as `## Spec` and one line each ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)). Even if it says there are none. A check fails the PR if the section and the task's deltas do not match ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)).
-7. **Ticks the task** in the implementation sub-issue's checklist when the PR merges into the change branch. The PR names that sub-issue with a non-closing word (`Part of …`), so the merge does not close it.
+6. **Commits the task, once, and pushes**: the task's ID first in the title (`feat(automations): 1.1 triggers`), and the **Spec** section in the body: IDs covered, deviations, assumptions, as `## Spec` and one line each, even if it says there are none. `pedd records <change> commit` fails if the section and the task's deltas do not match ([`ARCH-11`](../../foundations/architecture/pipeline.md#nothing-left-unrecorded)). It opens no PR: the first push opens the implementation PR as a draft, and it is marked ready when `verify` passes ([`ARCH-06`](../../foundations/architecture/branches.md)).
+7. **Ticks the task** in the implementation sub-issue's checklist when its commit is pushed, naming the commit ([`ARCH-15`](../../foundations/architecture/tracker.md#the-tasks)).
 
 ## When findings come back [#when-findings-come-back]
 
@@ -48,7 +48,7 @@ one at a time:
 
 | The finding is | The agent |
 |---|---|
-| Real, and fixable in the code | Fixes it, test first, and answers the finding with the commit |
+| Real, and fixable in the code | Fixes it, test first, on the implementation branch, and answers the finding with the commit. No PR of its own |
 | Wrong | Answers why, citing the code ([`RULE-21`](../../foundations/rules/cycle.md#rule-21)); the finding goes back to `confirm-judge`, never closed by the agent |
 | Real, but the spec or the architecture is what is wrong | **Stops on that finding**: records a `deviation` with the alternative, and a person decides it in `accept`. It does not fix around the spec |
 
@@ -58,7 +58,7 @@ Every finding gets an answer in its thread; one left unanswered keeps the check 
 
 | What | Anchored to |
 |---|---|
-| The PR, with its Spec section | The task's IDs |
+| One commit per task on the implementation branch, with its Spec section | The task's IDs |
 | Anchored code | `@spec` or `spec.lock` |
 | Green tests | The ones from `plan`, unchanged |
 | `deviation` and `assumption` deltas | In the change |
@@ -70,7 +70,7 @@ is `verify`. Passes when everything is green.
 
 ## Keep in mind
 
-- **The tests from `plan` are not touched**, and the pipeline rejects a PR that touches them. If a test is wrong, it is a `deviation` explaining why, and the test and its line in `tests.lock` change only if `accept` decides so.
+- **The tests from `plan` are not touched**, and the pipeline rejects a commit or a PR that touches them. If a test is wrong, it is a `deviation` explaining why, and the test and its line in `tests.lock` change only if `accept` decides so.
 - **Time is a parameter.** Code that depends on the time takes the clock as an input, never reads it inside; its tests cover a daylight-saving change and another time zone.
 - **Make the rule pass, not the example.** Code that answers a test's exact data instead of what the criterion says fails in `verify`.
 - **Contracts are not touched.** The agent works inside them.
@@ -84,8 +84,8 @@ is `verify`. Passes when everything is green.
 
 | Kind | Name | For | Reads | Leaves |
 |---|---|---|---|---|
-| Skill | `/build` | One whole task | One task's context pack and its red tests | Anchored code; the tests green; the PR with its Spec section; `deviation` and `assumption` deltas |
-| Skill | `/build-batch` | Several tasks with no dependencies between them, each in its own session | The tasks with no blockers between them | One session and one PR per task |
+| Skill | `/build` | One whole task | One task's context pack and its red tests | Anchored code; the tests green; the task's commit with its Spec section, pushed; `deviation` and `assumption` deltas |
+| Skill | `/build-batch` | Several tasks with no dependencies between them and no file in common, each in its own session | The tasks with no blockers between them | One session per task, each on a short branch merged locally into the implementation branch; no PR |
 | Skill | `/build-findings` | The findings that came back: fix, answer or stop ([above](#when-findings-come-back)) | The findings that came back, one at a time | A fix with its test, an answer that cites the code, or a `deviation` |
 | MCP | `get_context_for` · `propose_delta` · the tracker's MCP | The pack, the deltas, and ticking the task. Statuses move from the PRs ([`ARCH-15`](../../foundations/architecture/tracker.md#what-moves-a-status)) | — | — |
 
@@ -100,5 +100,5 @@ is `verify`. Passes when everything is green.
 ## Sources
 
 TDD · ODD (contracts are not changed) · OpenSpec (`/opsx:apply`) · Spec Kit (`/implement`) · Reclee
-Spec (the PR's Spec section) · Crysk (`crysk-loop`: fix, answer each thread, stop on design),
+Spec (the Spec section, now per task commit) · Crysk (`crysk-loop`: fix, answer each thread, stop on design),
 surveyed in [`MKT-04`](../../foundations/market/agent-tooling.md).

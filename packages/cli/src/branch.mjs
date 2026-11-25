@@ -4,7 +4,8 @@
 // printed. Where it is cut from follows from its kind, never from a choice:
 //
 //   change · request   the base (a hotfix: production), numbered CHG-nnn, holding changes/<CHG>/definition.md
-//   design · architecture · task · edit   the change branch
+//   design · architecture · implementation · edit   the change branch (an implementation branch that
+//   exists is returned as it is: every task of the change commits on it)
 import { nextChangeId, readDefinition, writeDefinition } from '@openpedd/reader';
 import { TRACK_PREFIX, formatName, parseName, slugify } from './names.mjs';
 
@@ -78,12 +79,20 @@ export function cutChange(git, ws, { slug: raw, track, push = true }) {
   throw new BranchError(`numbering clashed ${RETRIES + 1} times (${clashed.join(', ')}): try again`);
 }
 
-/** A design, architecture or task branch, from its change branch. */
-export function cutChild(git, ws, { kind, change, task, push = true }) {
+/**
+ * A design, architecture or implementation branch, from its change branch. The implementation branch
+ * is one per change and every task commits on it, so when it exists it is returned as it is.
+ */
+export function cutChild(git, ws, { kind, change, push = true }) {
   git.fetch();
   const c = findChange(git, ws, change);
-  const name = formatName(ws.branches[kind], { slug: c.slug, task: task && slugify(task) });
-  if (git.remoteSha(name)) throw new BranchError(`${name} already exists on ${git.remote}`);
+  const name = formatName(ws.branches[kind], { slug: c.slug });
+  const existing = git.remoteSha(name);
+  if (existing && kind === 'implementation') {
+    if (push) git.track(name);
+    return { branch: name, from: c.branch, id: c.id, commit: existing, pushed: push, existed: true };
+  }
+  if (existing) throw new BranchError(`${name} already exists on ${git.remote}`);
   const commit = git.remoteSha(c.branch);
   if (push) {
     if (!git.pushNew(commit, name)) throw new BranchError(`${name} was created on ${git.remote} meanwhile`);
@@ -127,8 +136,8 @@ export function renameChange(git, ws, { change, track, key, push = true }) {
   const name = formatName(ws.branches.change, { prefix: TRACK_PREFIX[track], slug });
   if (name === c.branch) return { branch: name, from: c.branch, id: c.id, renamed: false };
   const children = git.remoteBranches().filter((b) => {
-    const p = parseName(b, ws.branches, { slug: c.slug });
-    return (['design', 'architecture'].includes(p?.kind) && p.slug === c.slug) || (p?.kind === 'task' && p.slug === c.slug) || (p?.kind === 'edit' && p.change === c.id);
+    const p = parseName(b, ws.branches);
+    return (['design', 'architecture', 'implementation'].includes(p?.kind) && p.slug === c.slug) || (p?.kind === 'edit' && p.change === c.id);
   });
   if (children.length) throw new BranchError(`branches were cut from ${c.branch} before the rename: ${children.join(', ')}. The rename comes first (ARCH-21)`);
   if (git.remoteSha(name)) throw new BranchError(`${name} already exists on ${git.remote}`);

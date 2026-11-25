@@ -15,12 +15,12 @@ function setup() {
 
 test('branch check: each kind into its target passes', () => {
   const { r, ws, c, check } = setup();
-  cutChild(r.git, ws, { kind: 'task', change: c.id, task: 'triggers' });
+  cutChild(r.git, ws, { kind: 'implementation', change: c.id });
   cutChild(r.git, ws, { kind: 'design', change: c.id });
-  commitOn(r, 'task/automations-triggers', { 'apps/a.js': '1' });
+  commitOn(r, 'impl/automations', { 'apps/a.js': '1' });
   commitOn(r, 'design/automations', { 'apps/screen.js': '1' });
   assert.equal(check('feat/automations', 'dev').ok, true);
-  assert.equal(check('task/automations-triggers', 'feat/automations').ok, true);
+  assert.equal(check('impl/automations', 'feat/automations').ok, true);
   assert.equal(check('design/automations', 'feat/automations').ok, true);
   const hot = cutChange(r.git, ws, { slug: 'login', track: 'hotfix' });
   assert.equal(check(hot.branch, 'main').ok, true);
@@ -37,8 +37,8 @@ test('branch check: a name that is no work branch fails, with the command that f
 
 test('branch check: the wrong target fails', () => {
   const { r, ws, c, check } = setup();
-  cutChild(r.git, ws, { kind: 'task', change: c.id, task: 'triggers' });
-  const toBase = check('task/automations-triggers', 'dev');
+  cutChild(r.git, ws, { kind: 'implementation', change: c.id });
+  const toBase = check('impl/automations', 'dev');
   assert.equal(toBase.ok, false);
   assert.match(toBase.problems[0], /merges into its change branch, feat\/automations; this PR targets dev/);
   assert.equal(toBase.fix, 'retarget the PR to feat/automations');
@@ -66,25 +66,34 @@ test('branch check: a change branch holding two new changes was cut from another
   assert.match(out.problems[0], /holds 2 new changes \(CHG-001, CHG-002\)/);
 });
 
-test('branch check: the change is not held against its own task branches', () => {
+test('branch check: the change is not held against its own implementation branch', () => {
   const { r, ws, c, check } = setup();
-  cutChild(r.git, ws, { kind: 'task', change: c.id, task: 'triggers' });
+  cutChild(r.git, ws, { kind: 'implementation', change: c.id });
   commitOn(r, 'feat/automations', { 'apps/x.js': '1' });
-  sh(r.work, 'push', '--quiet', '--force', 'origin', 'origin/feat/automations:refs/heads/task/automations-triggers');
-  commitOn(r, 'task/automations-triggers', { 'apps/a.js': '1' });
+  sh(r.work, 'push', '--quiet', '--force', 'origin', 'origin/feat/automations:refs/heads/impl/automations');
+  commitOn(r, 'impl/automations', { 'apps/a.js': '1' });
   assert.equal(check('feat/automations', 'dev').ok, true);
-  assert.equal(check('task/automations-triggers', 'feat/automations').ok, true);
+  assert.equal(check('impl/automations', 'feat/automations').ok, true);
 });
 
-test('branch check: a task cut from a sibling task fails', () => {
+test('branch check: an implementation branch cut from the design branch fails', () => {
   const { r, ws, c, check } = setup();
-  cutChild(r.git, ws, { kind: 'task', change: c.id, task: 'triggers' });
-  commitOn(r, 'task/automations-triggers', { 'apps/a.js': '1' });
-  sh(r.work, 'push', '--quiet', 'origin', 'origin/task/automations-triggers:refs/heads/task/automations-actions');
-  const out = check('task/automations-actions', 'feat/automations');
+  cutChild(r.git, ws, { kind: 'design', change: c.id });
+  commitOn(r, 'design/automations', { 'apps/screen.js': '1' });
+  sh(r.work, 'push', '--quiet', 'origin', 'origin/design/automations:refs/heads/impl/automations');
+  const out = check('impl/automations', 'feat/automations');
   assert.equal(out.ok, false);
-  assert.match(out.problems[0], /with task\/automations-triggers/);
-  assert.equal(out.fix, 'pedd branch task feat/automations <task>');
+  assert.match(out.problems[0], /with design\/automations/);
+  assert.equal(out.fix, 'pedd branch implementation feat/automations');
+});
+
+test('branch check: a PR from a task, short branch or old task branch, fails: a task is a commit', () => {
+  const { r, check } = setup();
+  sh(r.work, 'push', '--quiet', 'origin', 'origin/feat/automations:refs/heads/impl/automations--1-2');
+  const out = check('impl/automations--1-2', 'feat/automations');
+  assert.equal(out.ok, false);
+  assert.match(out.problems[0], /not named as a work branch/);
+  assert.match(out.fix, /^pedd branch implementation feat\/automations, or .*a task is a commit on the implementation branch, never a PR/);
 });
 
 test('branch check: an edit branch goes to the change holding its folder, and holds only the definition', () => {

@@ -51,7 +51,8 @@ const HELP = `pedd ${VERSION}
       its changes/<CHG>/definition.md, pushed.
   pedd branch design <change>          design/{slug}, from the change branch
   pedd branch architecture <change>    arch/{slug}, from the change branch
-  pedd branch task <change> <task>     task/{slug}-{task}, from the change branch
+  pedd branch implementation <change>  impl/{slug}, from the change branch; returned as it is when it exists.
+      Every task is one commit on it, never a branch or a PR of its own (also: pedd branch impl)
   pedd branch edit <change>            edit/{change}-{n}, from the change branch of an agreed request
   pedd branch rename <change> --track <track> [--key <issue key>]
       The rename at spec-approval: feat/automations → feat/rec-412-automations.
@@ -72,11 +73,13 @@ const HELP = `pedd ${VERSION}
       answers the specify questions, the product engineer the architect and design ones; --as takes
       only that person's. The plan's are decided by the AI.
 
-  pedd records <change> pr|tasks|report|accept [--json]
+  pedd records <change> commit|pr|tasks|report|accept [--json]
       That nothing went unrecorded (ARCH-11), counted, never judged:
-        pr      the PR's Spec section against the change's deltas: --body <file|-> or the GitHub event;
-                the task from --task, or the task branch (--head/--base, or GITHUB_HEAD_REF/BASE_REF)
-        tasks   every task of the checklist ticked with its PR merged: --checklist <file|->, the merges
+        commit  a task commit's Spec section against the task's deltas: --commit <ref> (default HEAD);
+                the task from --task, or the ID that opens the subject (feat(x): 1.1 … → 1.1)
+        pr      the implementation PR's Spec section against every delta of the change: --body <file|->
+                or the GitHub event
+        tasks   every task of the checklist ticked with its commit: --checklist <file|->, the commits
                 read from --branch (default HEAD)
         report  every delta in the Acceptance Report, heaviest first: changes/<change>/reports/, or --report
         accept  every delta decided: keep, change or reject
@@ -247,7 +250,7 @@ function recordsCmd(args, { cwd, out }) {
   const model = readSpec(readFiles(root), { root: ws.spec });
   const r = records({ root, cwd, ws, model, git: new Git(root), change, moment, opts });
   if (opts.json) { out(JSON.stringify(r, null, 2)); return r.ok ? 0 : 1; }
-  const label = { pr: `the PR${r.task ? ` of task ${r.task}` : ''}`, tasks: 'the task checklist', report: 'the Acceptance Report', accept: 'the decisions' }[moment];
+  const label = { commit: `the commit${r.task ? ` of task ${r.task}` : ''}`, pr: 'the implementation PR', tasks: 'the task checklist', report: 'the Acceptance Report', accept: 'the decisions' }[moment];
   if (r.ok) { out(green(`✓ ${change}: ${label} records everything`)); return 0; }
   for (const p of r.problems) out(red(`✗ ${p.what}`) + `\n    fix: ${p.fix}`);
   out(red(`✗ ${change}: ${label}: ${r.problems.length} problem(s)`));
@@ -263,7 +266,7 @@ function branch(args, { cwd, out }) {
   const push = !opts['no-push'];
   const report = (r) => {
     out(r.branch);
-    out(`  from ${r.from}${r.id ? ` · ${r.id}` : ''}${r.pushed === false ? ' · not pushed (--no-push)' : ` · pushed to ${git.remote}`}`);
+    out(`  from ${r.from}${r.id ? ` · ${r.id}` : ''}${r.existed ? ` · already on ${git.remote}: commit each task on it` : r.pushed === false ? ' · not pushed (--no-push)' : ` · pushed to ${git.remote}`}`);
     if (r.clashed?.length) out(`  numbering clashed with ${r.clashed.join(', ')} on another branch; took the next`);
     return 0;
   };
@@ -272,7 +275,9 @@ function branch(args, { cwd, out }) {
     case 'request': return report(cutChange(git, ws, { slug: params.join(' '), track: opts.track, push }));
     case 'design':
     case 'architecture': return report(cutChild(git, ws, { kind: sub, change: need(params[0], `pedd branch ${sub} <change>`), push }));
-    case 'task': return report(cutChild(git, ws, { kind: 'task', change: need(params[0], 'pedd branch task <change> <task>'), task: need(params.slice(1).join(' '), 'pedd branch task <change> <task>'), push }));
+    case 'impl':
+    case 'implementation': return report(cutChild(git, ws, { kind: 'implementation', change: need(params[0], 'pedd branch implementation <change>'), push }));
+    case 'task': throw new BranchError('a task has no branch: it is one commit on the implementation branch (ARCH-06). pedd branch implementation <change>');
     case 'edit': return report(cutEdit(git, ws, { change: need(params[0], 'pedd branch edit <change>'), push }));
     case 'rename': {
       const r = renameChange(git, ws, { change: need(params[0], 'pedd branch rename <change> --track <track>'), track: opts.track, key: opts.key, push });
@@ -291,9 +296,9 @@ function branch(args, { cwd, out }) {
       if (r.fix) out(`  fix: ${r.fix}`);
       return 1;
     }
-    case undefined: throw new BranchError('pedd branch change|design|architecture|task|edit|rename|check … (pedd help)');
+    case undefined: throw new BranchError('pedd branch change|design|architecture|implementation|edit|rename|check … (pedd help)');
     default:
-      throw new BranchError(`pedd branch ${sub}: cutting a branch from a tracker issue needs the tracker adapter (ARCH-15), not built yet. Name the kind: pedd branch change|design|architecture|task|edit …`);
+      throw new BranchError(`pedd branch ${sub}: cutting a branch from a tracker issue needs the tracker adapter (ARCH-15), not built yet. Name the kind: pedd branch change|design|architecture|implementation|edit …`);
   }
 }
 

@@ -9,7 +9,7 @@ export const BRANCH_DEFAULTS = {
   change: '{prefix}/{slug}',
   design: 'design/{slug}',
   architecture: 'arch/{slug}',
-  task: 'task/{slug}-{task}',
+  implementation: 'impl/{slug}',
   edit: 'edit/{change}-{n}',
   hotfix: 'hotfix/{slug}',
 };
