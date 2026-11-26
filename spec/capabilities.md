@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.18"
+version: "1.19"
 updated: "2026-11-26"
 ---
 
@@ -19,6 +19,7 @@ updated: "2026-11-26"
 | Know whether anything derived is still up to date | Every derived artifact is anchored to a hash: `fresh`, `stale` or `uncovered` | [Freshness](foundations/architecture/freshness.md) |
 | Follow a requirement from the request to the metric | Its chain, link by link, with what is holding it | [Traceability](foundations/architecture/traceability.md) |
 | Measure how long each stage takes | Work, wait and rounds per step, stamped by the tool; lead time, cost and delivery metrics | [Process metrics](modules/cycle/prd.md#process-metrics) |
+| Know how many hours of people each stage and each kind of piece takes | `pedd time`: from the messages each person typed, never their words, by stage, person, piece kind and credit | [Human time](foundations/domain/trace-event.md#human-time) |
 | Start from zero or on running software | `pedd init` | [Workspace](modules/workspace/prd.md) |
 | Keep a built product up to the current practices | A versioned baseline: `pedd doctor` lists what it lacks, red if required, yellow if recommended; `pedd update` turns a gap into a small change | [Baseline](modules/workspace/baseline.md#keeping-up) |
 | See everything a new project comes with | One table: spec, `workspace.yaml`, i18n, checks, stages, skills; copied today from `template/` | [What a project starts with](modules/workspace/baseline.md#what-a-project-starts-with) |
@@ -111,6 +112,8 @@ Branches: one per change, with design, architecture and implementation branches 
 | `pedd install` | Sets up whoever clones the project |
 | `pedd index` | Builds the spec graph |
 | `pedd check` | Runs the checks |
+| `pedd step start <stage>` · `deliver` · `pass` · `reject` | A step's clock, stamped by the tool, with its change, PRD, flow, piece kinds and person ([steps](foundations/domain/trace-event.md#steps)) |
+| `pedd time` | Hours of people by stage, person, piece kind and credit, for a change, a PRD or the product ([human time](foundations/domain/trace-event.md#human-time)) |
 | `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption`, `--landing` |
 | `pedd trace <id>` | One requirement's chain |
 | `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid`, `--locale` for the names' labels |

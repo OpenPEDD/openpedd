@@ -64,6 +64,21 @@ name. `--no-push` builds without pushing; `--remote <name>` picks the remote (de
 `pedd branch <issue>`, read from the tracker, waits for the tracker adapter
 ([ARCH-15](../../spec/foundations/architecture/tracker.md)).
 
+## `pedd step`, `pedd time` and the human clock
+
+The step clock and human time ([ENT-23](../../spec/foundations/domain/trace-event.md#human-time),
+[DEC-35](../../spec/decisions/DEC-35-human-time.md)), all in `.pedd/trace/events.jsonl`:
+
+| Command | Writes |
+|---|---|
+| `pedd step start <stage> [--change CHG-nnn] [--prd <path>] [--flow F<n>] [--piece a,b]` | A `step` event `started`, with the tool's time and git `user.email`; prints the step's ID. Its piece kinds: `--piece`, else the flow's `Piece:` line, else every one the PRD names |
+| `pedd step deliver\|pass\|reject [<step>]` | `delivered`, `passed` or `rejected`; without `<step>`, the person's open step |
+| `pedd time [--change CHG-nnn \| --prd <path>] [--since d] [--until d] [--json]` | Nothing: hours of people by stage, person, piece kind, kind × stage and credit (`workspace.yaml` `pieces`) |
+| `pedd init [--dry-run]` | For now only the human clock: [`hooks/human.mjs`](hooks/human.mjs) copied to `.pedd/hooks/`, its `UserPromptSubmit` entry in `.claude/settings.json`, and `merge=union` for the events in `.gitattributes` |
+
+The hook appends one `human` event per message the person types: time, person, session, open step.
+It drops the prompt unread, prints nothing and always exits 0.
+
 ## Not built yet
 
 Every other command in [the CLI](../../spec/capabilities.md#cli) answers that it is not built, and

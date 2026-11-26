@@ -2,7 +2,7 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.15"
+version: "1.16"
 updated: "2026-11-26"
 ---
 
@@ -30,6 +30,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [How a business is analyzed](analysis-order.md) | `MKT-16` | The order and the levels of analyzing a business, and the kinds of business use case |
 | [Domain labels per language](domain-labels.md) | `MKT-17` | How frameworks keep one name in code and show it in each language |
 | [How the industry writes qualities and risks](quality-and-risk.md) | `MKT-18` | ISO/IEC 25010's product quality, and the risk register or RAID log |
+| [Measuring effort](effort-measurement.md) | `MKT-19` | How tools count a person's hours, and how the industry sizes software by its functional pieces |
 
 ## How a market document is written
 

@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.10"
-updated: "2026-11-25"
+version: "1.11"
+updated: "2026-11-26"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -82,7 +82,7 @@ not shipped.
 | `changes_since` | Which IDs changed since a date, commit or hash | `plan` · `publish` |
 | `get_freshness` | For a file, task or article: its anchors and which are stale | `verify` · `publish` |
 | `list_stale` | Every stale or uncovered derived artifact in a scope | `publish` · the dashboard |
-| `start_step` · `deliver_step` | Records that a step started or is delivered, with the tool's clock ([`ENT-23`](../domain/trace-event.md#steps)) | Every stage |
+| `start_step` · `deliver_step` | Records that a step started or is delivered, with the tool's clock, its stage, PRD, flow, piece kinds and person ([`ENT-23`](../domain/trace-event.md#steps)). Also `pedd step start` · `pedd step deliver` | Every stage |
 | `propose_delta` | Creates a delta in `changes/<CHG>/deltas/`. Never touches the spec | Every stage but `specify` |
 | `get_change` | A change with its deltas and reports | `accept` · `publish` |
 
