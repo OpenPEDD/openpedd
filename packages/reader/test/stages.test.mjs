@@ -92,6 +92,10 @@ const mapped = () => {
 2. billing
 `;
   f['spec/foundations/business/product.md'] = `${fm('Business Context')}## Goal\n\nFill roles faster.\n\n## North-star metric\n\nDays to fill.\n\n## Out of scope\n\nPayroll.\n`;
+  f['spec/foundations/architecture/system.md'] = `${fm('System architecture')}# ARCH-01 · The system
+
+A web app, an API and Postgres; each role sees its rows.
+`;
   f['spec/open/roadmap.md'] = `${fm('Roadmap')}| # | Step | Leaves |\n|---|---|---|\n| 1 | jobs | The posts in the app |\n`;
   return f;
 };

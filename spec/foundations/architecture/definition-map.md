@@ -2,7 +2,7 @@
 title: The map of a definition
 description: ARCH-24 · Every level of a product's definition, from the business to the data model, in order — what each is, the question it answers, where it lives and who writes it
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-26"
 ---
 
@@ -24,11 +24,12 @@ organization to change starts at level 8.
 | 6 | **Business entities**: the things processes handle, with their states | What it works with | `Domain Model`, `ENT-nn` | Derived from the map · `map`, `specify` | Every PRD, the data model |
 | 7 | **Business rules and glossary**: what always holds, from a law, a regulator, a contract or a policy; one name per thing, the industry's first | What must be true; what each word means | `Business Map`, `Rules and regulations`, then `rules/` (`RULE-nn`), `DEC-nn`; `Glossary`, linking the [industry glossary](../../../industries/README.md) | Product engineer from the sources and the web; client decides, `specify` writes | PRDs, screens |
 | 8 | **To-be and modules**: each process marked `kept` · `changed` · `taken`, the module that takes it, the later modules too. The modules are proposed, not asked: each process crossed with the entities it creates, reads, updates or deletes, a module being the steps that create and keep the same entities, as information engineering's affinity analysis and domain-driven design's bounded contexts cut them; first the module that creates what the others use, then what hurts most | What the system will change, in what order | `Business Map` to-be, `Modules` with the entities each owns, and `Order`; modules index (`unmapped`) | Product engineer, approved by the client · `map` | The roadmap; one PRD per module |
-| 9 | **System use cases**: a PRD's flows, `F<n>`, with `«include»` and `«extend»` | What a user does with the system, step by step | `modules/<m>/prd.md`, `Flows` | Client and `specify`, one module at a time | Requirements, criteria |
-| 10 | **Requirements**: what the system shall do, in EARS | What exactly it must do | PRD, `FR-<MOD>-nn` · `NFR-<MOD>-nn` | `specify` | Tests, traceability |
-| 11 | **Acceptance criteria**: Given · When · Then | How we know it works | PRD, `FR-…-nn.ACn` | Proposed, confirmed by the client · `specify`, `plan` | Tests written red |
-| 12 | **The rest of a PRD**: permissions, states touched, contracts, screens and copy, test data, variations | Who may, what it returns, what it shows | PRD sections ([modules](../../modules/README.md)) | `specify`, `design` | Build |
-| 13 | **Data model**: tables, keys, policies | How it is stored | `foundations/architecture/`, `ADR-nn` | `architect` | Build |
+| 9 | **System architecture**: the system in context and its containers, as C4 draws them (front end, back end and API, database, sign-in, outside services, environments), how roles and permissions are stored and enforced (a roles table, its permissions, the database filtering what each role sees), and how the running system is migrated to; one `ADR` per decision | How it is built, and how each piece of data is protected | `foundations/architecture/`, `ADR-nn`; the `context` view | Product engineer, approved by the client · `architect` | Every PRD; the data model |
+| 10 | **System use cases**: a PRD's flows, `F<n>`, with `«include»` and `«extend»` | What a user does with the system, step by step | `modules/<m>/prd.md`, `Flows` | Client and `specify`, one module at a time | Requirements, criteria |
+| 11 | **Requirements**: what the system shall do, in EARS | What exactly it must do | PRD, `FR-<MOD>-nn` · `NFR-<MOD>-nn` | `specify` | Tests, traceability |
+| 12 | **Acceptance criteria**: Given · When · Then | How we know it works | PRD, `FR-…-nn.ACn` | Proposed, confirmed by the client · `specify`, `plan` | Tests written red |
+| 13 | **The rest of a PRD**: permissions, states touched, contracts, screens and copy, test data, variations | Who may, what it returns, what it shows | PRD sections ([modules](../../modules/README.md)) | `specify`, `design` | Build |
+| 14 | **Data model**: tables, keys, policies | How it is stored | `foundations/architecture/`, `ADR-nn` | `architect` | Build |
 
 ## What is what
 

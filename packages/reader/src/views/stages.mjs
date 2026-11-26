@@ -116,6 +116,7 @@ function piecesOf(model, sources, c) {
   const unmarked = (bm?.processes ?? []).filter((p) => p.asIs && !p.mark).map((p) => p.id);
   const mods = modulesOf(c, model);
   const roles = c.foundation('Roles & Permissions');
+  const archDocs = [...c.docOf.values()].filter((d) => d.path.startsWith(`${c.root}/foundations/architecture/`) && !/README.md$/i.test(d.path));
   const rolesRows = (roles?.tables ?? []).filter((t) => /^action$/i.test(clean(t.header[0]))).flatMap((t) => t.rows);
   const roadmapPath = `${c.root}/open/roadmap.md`;
   const roadmapRows = (c.docOf.get(roadmapPath)?.tables ?? []).flatMap((t) => t.rows).filter((r) => r.cells.some((x) => clean(x)));
@@ -125,6 +126,8 @@ function piecesOf(model, sources, c) {
     piece('modules', 'Modules', tb?.modules.length && mods.length ? 'done' : tb?.modules.length || mods.length ? 'partial' : 'missing', { at: tb?.modules.length ? toBePath : `${c.root}/modules/README.md`, line: tb ? headingLine(c, toBePath, 'Modules') : 1, next: 'List the modules in the to-be and in the modules index, each `unmapped` until its PRD' }),
     piece('order', 'The order they are built in', tb?.order.length ? 'done' : 'missing', { at: toBePath, line: tb ? headingLine(c, toBePath, 'Order') : 1, next: 'Write the order the modules are built in, and why, in the to-be' }),
     piece('roles', 'Roles and permissions', rolesRows.length ? 'done' : 'missing', { at: roles?.path ?? `${c.root}/foundations/`, next: 'Derive `Roles & Permissions` from the people: one column per role, one row per action' }),
+    // ARCH-24 level 9: how the system is built and how each piece of data is protected, before any PRD.
+    piece('architecture', 'System architecture: context, containers and how data is protected', archDocs.length ? 'done' : 'missing', { at: archDocs[0]?.path ?? `${c.root}/foundations/architecture/`, next: 'Write the system architecture in `foundations/architecture/`: the system in context, its containers, how roles and permissions are enforced, one ADR per decision' }),
     piece('roadmap', 'Roadmap', roadmapRows.length ? 'done' : 'missing', { at: roadmapPath, next: 'Write the roadmap from the to-be\'s order: one step per delivery' }),
   ];
 
