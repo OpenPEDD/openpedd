@@ -108,7 +108,7 @@ test('FR-VEW-25.AC1: a spec with no business map stands at stage 0, and what is 
   delete f['spec/modules/billing/prd.md'];
   const s = stagesOf(f);
   assert.equal(s.current, 0);
-  assert.deepEqual(s.stages.map((x) => x.state), ['not started', 'in progress', 'in progress', 'not started', 'not started']);
+  assert.deepEqual(s.stages.map((x) => x.state), ['not started', 'not started', 'in progress', 'not started', 'not started']);
   assert.match(s.stages[0].next, /industries\//);
   assert.equal(s.stages[0].items[0].state, 'missing');
 });
@@ -117,7 +117,7 @@ test('FR-VEW-25.AC2: a whole diagnosis approved in stages.md is approved; stage 
   const s = stagesOf(approve(mapped(), ['| 1 · Diagnosis | Ana, the owner | 2026-11-20 | In the call |']));
   assert.equal(s.stages[0].state, 'done');
   assert.ok(s.stages[0].complete);
-  assert.deepEqual(pieces(s.stages[1]), { people: 'done', 'business-use-cases': 'done', processes: 'done', confirmed: 'done', tools: 'done', documents: 'done', rules: 'done', pains: 'done', glossary: 'done', entities: 'done', linked: 'done' });
+  assert.deepEqual(pieces(s.stages[1]), { people: 'done', 'business-use-cases': 'done', processes: 'done', confirmed: 'done', tools: 'done', documents: 'done', rules: 'done', pains: 'done', glossary: 'done', linked: 'done' });
   assert.equal(s.stages[1].state, 'approved');
   assert.deepEqual(s.stages[1].approval, { by: 'Ana, the owner', on: '2026-11-20', notes: 'In the call', line: 11 });
   assert.equal(s.stages[2].state, 'done');

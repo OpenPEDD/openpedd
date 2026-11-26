@@ -14,8 +14,8 @@ import * as glossary from './glossary.mjs';
 /** The stages, in order (DEC-31). `approvedIn`: where its approval is recorded: `none`, `table` (stages.md) or `modules`. */
 export const STAGES = [
   { n: 0, key: 'industry', name: 'Industry', names: ['industria'], delivers: 'The industry\'s glossary and its rules, researched before the first meeting', approver: 'Nobody: done is enough', approvedIn: 'none' },
-  { n: 1, key: 'diagnosis', name: 'Diagnosis', names: ['diagnóstico', 'diagnostico'], delivers: 'How the business works today, and where it hurts: the as-is, the client\'s glossary and the entities', approver: 'The client', approvedIn: 'table' },
-  { n: 2, key: 'project', name: 'Project', names: ['proyecto'], delivers: 'Where we go and what we build: the business context, the to-be, roles and permissions, the modules and the roadmap', approver: 'The client', approvedIn: 'table' },
+  { n: 1, key: 'diagnosis', name: 'Diagnosis', names: ['diagnóstico', 'diagnostico'], delivers: 'How the business works today, and where it hurts: the as-is and the client\'s glossary', approver: 'The client', approvedIn: 'table' },
+  { n: 2, key: 'project', name: 'Project', names: ['proyecto'], delivers: 'Where we go and what we build: the business context, the entities the system keeps, the to-be, roles and permissions, the modules and the roadmap', approver: 'The client', approvedIn: 'table' },
   { n: 3, key: 'specification', name: 'Specification', names: ['especificación', 'especificacion'], delivers: 'One PRD per module, in the to-be\'s order, with its flows', approver: 'The client, per module, at spec-approval', approvedIn: 'modules' },
   { n: 4, key: 'construction', name: 'Construction', names: ['construcción', 'construccion'], delivers: 'Each module built and delivered', approver: 'The client, per module, at acceptance', approvedIn: 'modules' },
 ];
@@ -79,7 +79,7 @@ function piecesOf(model, sources, c) {
   // Stage 0 · Industry
   const s0 = [piece('industry-glossary', 'Industry glossary, linked', industryRow ? 'done' : 'missing', { at: glossaryPath, line: industryRow?.line ?? 1, next: 'Research the industry\'s glossary and rules on the web into `industries/<industry>/`, and link it from the `Glossary`' })];
 
-  // Stage 1 · Diagnosis: the as-is, section by section (map, business mode), the glossary, the entities.
+  // Stage 1 · Diagnosis: the as-is, section by section (map, business mode), and the glossary: the business today.
   const asIs = bm?.asIs;
   const section = (key, label, heading, rows, next) => {
     const state = !asIs || asIs.missing.includes(heading) || !rows.length ? 'missing' : 'done';
@@ -102,11 +102,10 @@ function piecesOf(model, sources, c) {
     section('rules', 'Rules and regulations', 'Rules and regulations', asIs?.rules ?? [], 'List the rules it must follow: `Rule` · `Comes from` · `Processes`'),
     section('pains', 'Pains', 'Pains', asIs?.pains ?? [], 'Write down what hurts, in the client\'s words, with who said it and its process'),
     piece('glossary', 'The client\'s glossary', gRows.some((r) => !industryLink.test(r.cells.join(' '))) ? 'done' : 'missing', { at: glossaryPath, next: 'Write the client\'s own words in the `Glossary`, linking the industry\'s' }),
-    piece('entities', 'Entities and their states', c.entities.size ? 'done' : 'missing', { at: `${c.root}/foundations/domain/`, next: 'Derive the entities from what the processes and documents handle, each with its states' }),
     piece('linked', 'The map holds together', asIs && !mapLoose.length ? 'done' : asIs ? 'partial' : 'missing', { at: mapLoose[0]?.at ?? asIsPath, line: mapLoose[0]?.line ?? 1, detail: [...new Set(mapLoose.map((l) => l.id))], next: 'Link what is loose in the map: `pedd view business`' }),
   ];
 
-  // Stage 2 · Project
+  // Stage 2 · Project: what the system keeps (the entities, as the to-be handles them), then the to-be cut into modules.
   const bizDir = `${c.root}/foundations/business/`;
   const bizDocs = c.docs.filter((d) => d.path.startsWith(bizDir) && !/\/(README|stages)\.md$/.test(d.path));
   const bizText = bizDocs.map((d) => d.text.replace(/^---[\s\S]*?\n---/, '')).join('\n');
@@ -122,6 +121,7 @@ function piecesOf(model, sources, c) {
   const roadmapRows = (c.docOf.get(roadmapPath)?.tables ?? []).flatMap((t) => t.rows).filter((r) => r.cells.some((x) => clean(x)));
   const s2 = [
     piece('business-context', 'Business context: goal, metric, what is left out', !bizDocs.length ? 'missing' : bizMissing.length ? 'partial' : 'done', { at: bizDocs[0]?.path ?? bizDir, detail: bizDocs.length ? bizMissing : [], next: 'Write the goal, the one metric that says it works, and what is left out, in `foundations/business/`', owner: 'client' }),
+    piece('entities', 'Entities and their states', c.entities.size ? 'done' : 'missing', { at: `${c.root}/foundations/domain/`, next: 'Derive the entities the system keeps from what the processes and documents handle, each with its states' }),
     piece('to-be', 'To-be: every process marked', !tb ? 'missing' : !tb.processes.length || unmarked.length ? 'partial' : 'done', { at: toBePath, line: tb ? headingLine(c, toBePath, 'Processes') : 1, detail: unmarked, next: 'Mark each process in the to-be: `kept`, `changed` or `taken`, and the module that takes it' }),
     piece('modules', 'Modules', tb?.modules.length && mods.length ? 'done' : tb?.modules.length || mods.length ? 'partial' : 'missing', { at: tb?.modules.length ? toBePath : `${c.root}/modules/README.md`, line: tb ? headingLine(c, toBePath, 'Modules') : 1, next: 'List the modules in the to-be and in the modules index, each `unmapped` until its PRD' }),
     piece('order', 'The order they are built in', tb?.order.length ? 'done' : 'missing', { at: toBePath, line: tb ? headingLine(c, toBePath, 'Order') : 1, next: 'Write the order the modules are built in, and why, in the to-be' }),
