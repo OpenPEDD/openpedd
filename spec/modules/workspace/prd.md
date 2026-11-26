@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.13"
+version: "1.14"
 updated: "2026-11-26"
 status: draft
 ---
@@ -175,6 +175,7 @@ a count and a percentage.
 |---|---|
 | A gap is never filled outside a change | Each piece is reviewed, and the trace records it |
 | What `cover` finds wrong is not fixed there | It opens a `Q` or a `fix`; covering and changing are kept apart |
+| With a security-audit extension installed, `adopt` offers to run it once over the whole repository before ordering; each confirmed finding is a `fix`, each it could not validate a `Q` ([`DEC-35`](../../decisions/DEC-35-whole-repo-audit.md)) | The diff review never reads code nobody changes; a running product has never been audited whole |
 | The order is a proposal; the person may change it | They know what the business needs first |
 
 ## Alternate flows

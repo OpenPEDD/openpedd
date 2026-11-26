@@ -588,3 +588,10 @@
 {"path": "modules/views/project.md", "version": "1.0", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "FR-VEW-30 to 32: risks, the system's qualities, approvals in force"}
 {"path": "modules/views/prd.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "risks among the views; eighteen kinds"}
 {"path": "foundations/architecture/views.md", "version": "1.5 → 1.6", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Eighteen kinds"}
+{"path": "foundations/market/security-audit.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "MKT-19: how agents audit a codebase's security"}
+{"path": "foundations/market/README.md", "version": "1.15 → 1.16", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "MKT-19 listed"}
+{"path": "decisions/DEC-35-whole-repo-audit.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "A whole-repository security audit is an extension"}
+{"path": "foundations/architecture/review-lenses.md", "version": "1.1 → 1.2", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "What a security finding names; Security reads ASVS 5.0 and the LLM Top 10"}
+{"path": "modules/verify/prd.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "Security's reading points to ARCH-14"}
+{"path": "modules/workspace/prd.md", "version": "1.13 → 1.14", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "adopt offers a whole-repository security audit"}
+{"path": "changes/CHG-042/summary.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "Summary of CHG-042"}
