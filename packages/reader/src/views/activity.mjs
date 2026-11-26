@@ -41,7 +41,9 @@ export function build(model, sources) {
     const lineOf = (needle) => Math.max(1, file.headings.find((h) => h.text.includes(p.id))?.line ?? 1);
     const roles = new Set(roleList(row?.fields.roles ?? p.fields.roles ?? ''));
     const rows = steps.rows.filter((r) => clean(r.step));
-    nodes.push({ id: id('start'), type: 'initial', label: clean(row?.fields.starts_with ?? '') || `${p.name} starts`, group: g, at: file.path, line: lineOf() });
+    // With the system, a process starts as it does today: the to-be takes the as-is's `Starts with` when it has none.
+    const today = bm?.asIs?.processes.find((x) => x.id === p.id && !x.tables.length);
+    nodes.push({ id: id('start'), type: 'initial', label: clean(row?.fields.starts_with ?? '') || clean(today?.fields.starts_with ?? '') || `${p.name} starts`, group: g, at: file.path, line: lineOf() });
     rows.forEach((r, i) => {
       const role = clean(r.role ?? '');
       nodes.push({ id: id(clean(r.step)), type: 'action', label: clean(r.does), lane: role || undefined, tool: clean(r.tool ?? '') || undefined, group: g, at: file.path, line: lineOf() });

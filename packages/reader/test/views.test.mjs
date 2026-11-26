@@ -461,6 +461,15 @@ test('FR-VEW-15.AC1: an activity has one initial node, actions in lanes, a decis
   assert.deepEqual(kinds(d, 'activity'), []);
 });
 
+test('FR-VEW-15.AC1: a process with the system starts as it does today when the to-be does not say', () => {
+  const f = withBusiness();
+  const toBe = f['spec/foundations/business-map/to-be.md'] ?? '---\ntitle: To-be\n---\n\n# To-be\n\n## Processes\n';
+  f['spec/foundations/business-map/to-be.md'] = `${toBe}\n### PRC-01 · Answer a client\n\n| Step | Role | Does | Tool |\n|---|---|---|---|\n| 1 | Seller | Loads the request | System |\n`;
+  const v = build(f).views.activity;
+  const start = v.nodes.find((n) => n.group === 'to-be:PRC-01' && n.type === 'initial');
+  assert.equal(start?.label, 'The client wants something');
+});
+
 test('FR-VEW-22.AC1: an activity shows each object in its state, and a business use case an overview of its processes', () => {
   const f = withBusiness();
   const p = 'spec/foundations/business-map/as-is.md';
