@@ -570,3 +570,9 @@ test('FR-VEW-26.AC3: a label that is a name and what the view adds keeps the res
   assert.equal(d.views.activity.nodes[0].lane, 'Encargada');
   assert.equal(d.views.activity.nodes[0].label, 'Carga el pedido');
 });
+
+test('FR-VEW-26.AC3: a process with its ID in front reads by its label', async () => {
+  const { labelOf } = await import('../src/views/names.mjs');
+  const names = { 'Take the supermarket orders': { es: 'Tomar los pedidos de los súper' } };
+  assert.equal(labelOf(names, 'es', 'PRC-01 · Take the supermarket orders'), 'PRC-01 · Tomar los pedidos de los súper');
+});

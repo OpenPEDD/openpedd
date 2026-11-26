@@ -17,18 +17,17 @@ export function namesLocales(names) {
 
 /**
  * One name's label for a locale; the name itself when it has none. A label that is a name and what the
- * view adds after it (`Supply a supermarket · core`) gives the name's label with the rest as it is.
+ * view adds around it (`Supply a supermarket · core`, `PRC-01 · Take the orders`) gives the name's label, the rest as it is.
  */
 export function labelOf(names, locale, name) {
   if (!names || name == null) return name;
   const n = names[name] || names[String(name).trim()];
   if (n && n[locale]) return n[locale];
-  const at = String(name).indexOf(' · ');
-  if (at > 0) {
-    const head = names[name.slice(0, at)];
-    if (head && head[locale]) return head[locale] + name.slice(at);
-  }
-  return name;
+  // Said in parts (`PRC-01 · Take the orders`, `Supply a supermarket · core`): each part that is a name.
+  const parts = String(name).split(' · ');
+  if (parts.length < 2) return name;
+  const said = parts.map((p) => (names[p] && names[p][locale]) || p);
+  return said.some((p, i) => p !== parts[i]) ? said.join(' · ') : name;
 }
 
 /**
