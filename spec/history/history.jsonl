@@ -568,3 +568,10 @@
 {"path": "modules/views/prd.md", "version": "1.8 → 1.9", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "rules among the business views; sixteen kinds"}
 {"path": "foundations/architecture/views.md", "version": "1.3 → 1.4", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Sixteen kinds"}
 {"path": "modules/map/prd.md", "version": "2.4 → 2.5", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Rules and regulations: an optional Entities column"}
+{"path": "modules/map/prd.md", "version": "2.5 → 2.6", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "stories.md: the user stories per module"}
+{"path": "foundations/architecture/definition-map.md", "version": "1.4 → 1.5", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Level 8 holds the user stories"}
+{"path": "foundations/market/business-models.md", "version": "1.0 → 1.1", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "User stories and the story map, surveyed"}
+{"path": "foundations/glossary.md", "version": "1.23 → 1.24", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "US-nn"}
+{"path": "modules/views/business.md", "version": "1.9 → 1.10", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "FR-VEW-29: the stories view"}
+{"path": "modules/views/prd.md", "version": "1.9 → 1.10", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "stories among the business views; seventeen kinds"}
+{"path": "foundations/architecture/views.md", "version": "1.4 → 1.5", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Seventeen kinds"}

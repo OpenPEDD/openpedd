@@ -1,9 +1,9 @@
 ---
 title: How the industry models a business
-description: MKT-15 · Processes as-is and to-be, the organization chart and the business glossary, as BPMN, process mapping and data governance define them. Surveyed 2026-11-23
+description: MKT-15 · Processes as-is and to-be, the organization chart the business glossary and user stories, as BPMN, process mapping, data governance and agile practice define them. Surveyed 2026-11-23 and 2026-11-26
 owner: Kevin
-version: "1.0"
-updated: "2026-11-23"
+version: "1.1"
+updated: "2026-11-26"
 ---
 
 # MKT-15 · How the industry models a business
@@ -52,3 +52,15 @@ is written where it governs ([`RULE-29`](../rules/writing.md#rule-29)).
 | Synonyms · acronyms · related terms | Other names the term is known by | Microsoft Purview, *Business glossary* |
 | Owner · status | Who stewards it, whether it is approved | Collibra; Actian |
 | Ubiquitous language | One language, structured around the domain model, used by everyone and in every artifact: screens, code, documents; it holds within one bounded context | The Open Group quoting Evans; Martin Fowler, *Bounded context* |
+
+## User stories
+
+Surveyed on 2026-11-26, from search results quoting Wikipedia, Mountain Goat Software, the Agile Alliance
+and practitioners' guides; Cohn's and Patton's books were read only through them.
+
+| Element | The industry says | Source |
+|---|---|---|
+| Form | *As a <role>, I want <goal>, so that <benefit>*: the Connextra template, 2001; the *so that* is optional but helps | Wikipedia, *User story*; Mountain Goat Software |
+| INVEST | Independent, Negotiable, Valuable, Estimable, Small, Testable: a prompt for judgement, split the story that fails it | Bill Wake, 2003; Cohn, *User Stories Applied*, 2004 |
+| Acceptance criteria | What the story must do to be accepted: examples, rules or tests, often Given · When · Then, each true or false | Cohn, as quoted by Agile Alliance and guides |
+| Story map | The user's activities as a backbone, left to right; the stories of each under it, by priority; a first slice that runs end to end, the walking skeleton, then one slice per release | Jeff Patton, *User Story Mapping*, 2014, as quoted by Agile Alliance and guides |

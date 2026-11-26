@@ -10,7 +10,7 @@ const REPO = fileURLToPath(new URL('../../..', import.meta.url));
 const build = (files, sources = {}) => viewData(readSpec(files), sources);
 const kinds = (data, view) => data.loose.filter((l) => !view || l.view === view).map((l) => `${l.kind} ${l.id}`);
 
-test('FR-VEW-01.AC1: the sixteen kinds, and nothing loose opens on context', () => {
+test('FR-VEW-01.AC1: the seventeen kinds, and nothing loose opens on context', () => {
   const d = build(product());
   assert.deepEqual(Object.keys(d.views), KINDS);
   assert.equal(d.format, 1);

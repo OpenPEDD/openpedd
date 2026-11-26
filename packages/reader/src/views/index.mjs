@@ -18,10 +18,11 @@ import * as useCases from './use-cases.mjs';
 import * as glossary from './glossary.mjs';
 import * as stages from './stages.mjs';
 import * as rules from './rules.mjs';
+import * as stories from './stories.mjs';
 
 /** The kinds, in the order the page lists them ([views](spec/modules/views/prd.md#the-views)). */
-export const KINDS = ['stages', 'decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'rules', 'trace', 'changes'];
-const BUILDERS = { stages, decisions, entities, states, security, context, code, business, org, activity, prd, 'use-cases': useCases, glossary, rules, trace, changes };
+export const KINDS = ['stages', 'decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'rules', 'stories', 'trace', 'changes'];
+const BUILDERS = { stages, decisions, entities, states, security, context, code, business, org, activity, prd, 'use-cases': useCases, glossary, rules, stories, trace, changes };
 
 /** The format of `views.json`; a change to its shape is a major of the reader (ARCH-20). */
 export const VIEWS_FORMAT = 1;
@@ -32,6 +33,7 @@ function viewOfPath(c, path) {
   if (rel.startsWith('decisions/')) return 'decisions';
   if (rel === 'foundations/business/stages.md') return 'stages';
   if (rel.startsWith('foundations/domain/')) return 'entities';
+  if (rel === 'foundations/business-map/stories.md') return 'stories';
   if (rel.startsWith('foundations/business-map/')) return 'business';
   if (rel.startsWith('modules/')) return 'prd';
   if (rel.startsWith('changes/')) return 'changes';

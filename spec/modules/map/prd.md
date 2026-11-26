@@ -2,7 +2,7 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "2.5"
+version: "2.6"
 updated: "2026-11-24"
 status: draft
 ---
@@ -78,7 +78,7 @@ For a product that **changes how an organization works** and has no code yet
 ([`DEC-24`](../../decisions/DEC-24-business-map.md)). A **product engineer** runs it, from calls with
 the client (their transcripts), the documents and spreadsheets the client shares, and the guided
 conversation ([`ARCH-18`](../../foundations/architecture/definition.md)). It leaves the `Business Map`
-in `foundations/business-map/`, in two files. **What every client answers, in order, is fixed**
+in `foundations/business-map/`, in three files. **What every client answers, in order, is fixed**
 ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)): goal, metric and what is left out go to
 `Business Context`, never to the map.
 
@@ -98,6 +98,10 @@ in `foundations/business-map/`, in two files. **What every client answers, in or
 | Processes | A table `PRC` · `Mark` (`kept` · `changed` · `taken`) · `Module` · `Roles`: the module that takes it, and the roles that run it after |
 | Modules | The modules that follow, each with the processes it takes and the pains it removes |
 | Order | The order they are built in, and why |
+
+| `stories.md` | Holds |
+|---|---|
+| One section per module | `## `<module>` · <what it does>`, in the order of the to-be, then a table `Story` (`US-nn`) · `As` · `I want` · `So that` · `Said` · `Source` · `Process`: what the client asked for, in Connextra's form, in the order it is built, with their own words and the call and line they come from ([`MKT-15`](../../foundations/market/business-models.md#user-stories)). Each becomes requirements of its module's PRD |
 
 0. **Reads the industry first**: its glossary in `industries/<industry>/`; if there is none, researches it on the web and adds it, each term with its source ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)). The project's `Glossary` links the terms it uses and writes only where the client differs.
 1. **Drafts the as-is** from the sources, top down: the people, the business use cases, then the processes that realize each ([`ARCH-24`](../../foundations/architecture/definition-map.md)), then the documents, the rules and the pains; a draft from transcripts is never final until its process is confirmed.

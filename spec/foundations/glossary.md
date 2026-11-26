@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.23"
+version: "1.24"
 updated: "2026-11-26"
 ---
 
@@ -119,7 +119,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 
 | Prefix | Is |
 |---|---|
-| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `PRC-nn` · `BUC-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` | Foundations; `PRC` is a process of the `Business Map`, `BUC` one of its business use cases |
+| `BIZ-nn` · `MKT-nn` · `MKG-nn` · `ENT-nn` · `RULE-nn` · `ARCH-nn` · `PRC-nn` · `BUC-nn` · `SEC-nn` · `INT-nn` · `EVT-nn` · `US-nn` | Foundations; `PRC` is a process of the `Business Map`, `US` one of its user stories, `BUC` one of its business use cases |
 | `FR-<MOD>-nn` · `NFR-<MOD>-nn` · `FR-<MOD>-nn.ACn` | Requirements and criteria |
 | `DEC-nn` · `ADR-nn` | Decisions |
 | `Q-nn` | Open questions |
