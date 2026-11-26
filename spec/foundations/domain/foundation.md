@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.9"
-updated: "2026-11-22"
+version: "1.10"
+updated: "2026-11-26"
 ---
 
 # ENT-02 · Foundation
@@ -18,7 +18,7 @@ includes.
 | `Business Map` | How the client's organization works today (**as-is**: people and roles, processes, tools and spreadsheets, pains) and how it will work with the system (**to-be**: what changes, which processes the system takes, the modules and their order). Required when the product changes how an organization works; optional otherwise ([`DEC-24`](../../decisions/DEC-24-business-map.md), [map](../../modules/map/prd.md#business-mode)) | `specify` · `map` |
 | `Market` | Competitors, tools, market size, studies: what we measured outside, each with its survey date | `specify` |
 | `Domain Model` | Each entity (`ENT`), once: fields, states, transitions | All |
-| `Glossary` | What each thing is called in code and on screen, per language; names no longer used | All |
+| `Glossary` | What each thing is called in code (`Name`) and on screen, one column per locale headed by its code (`en`, `es`); names no longer used ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | All |
 | `Roles & Permissions` | Which role performs which action | `specify` · `design` · `verify` |
 | `Brand System` | Colors, type, tokens, components, UI libraries and preferences; the pattern each recurring piece follows (filters, badges, toasts, settings, paywalls); the widths a screen is checked at; and its **component catalog**: every reusable piece with a story per state and when to use it, served to agents through an MCP ([`MKT-06`](../market/component-catalogs.md)) | `design` · `build` |
 | `Voice & Tone` | How the product speaks to its users, inside the product | `design` · `publish` |

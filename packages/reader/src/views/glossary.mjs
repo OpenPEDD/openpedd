@@ -31,3 +31,36 @@ export function build(model, sources) {
   }
   return { view: view({ sources: [doc.path], matrix }), loose: out };
 }
+
+/** The locales a Glossary may have a column for: `en`, the workspace's `locales` and its prose `language` (DEC-33). */
+export const localesOf = (workspace) => [...new Set(['en', ...(Array.isArray(workspace?.locales) ? workspace.locales : []), workspace?.language].filter((x) => typeof x === 'string' && x).map((x) => x.toLowerCase()))];
+
+/**
+ * Each Glossary name with what a person reads in each locale (DEC-33, FR-VEW-26): `{ 'Job post': { es: 'Aviso' } }`.
+ * A column headed by a locale's code is that locale's label; a cell left empty gives none. A name cell
+ * with several names (`A · B`) gives each the label in the same place, when the label has as many.
+ */
+export function names(model, sources) {
+  const c = prep(model, sources);
+  const doc = c.docOf.get(`${c.root}/foundations/glossary.md`) ?? c.foundation('Glossary');
+  const out = {};
+  if (!doc) return out;
+  const locales = localesOf(sources?.workspace);
+  for (const t of doc.tables) {
+    if (!t.rows.length || isOld(t)) continue;
+    const cols = t.header.map((h, i) => [clean(h).toLowerCase(), i]).filter(([h, i]) => i > 0 && locales.includes(h));
+    if (!cols.length) continue;
+    for (const r of t.rows) {
+      const said = clean(r.cells[0]).split(/\s+·\s+/).filter(Boolean);
+      for (const [locale, i] of cols) {
+        const labels = clean(r.cells[i]).split(/\s+·\s+/).filter(Boolean);
+        if (!labels.length) continue;
+        const each = said.length === 1 ? [clean(r.cells[i])] : labels.length === said.length ? labels : null;
+        if (!each) continue;
+        said.forEach((n, k) => { (out[n] ??= {})[locale] = each[k]; });
+      }
+    }
+  }
+  // Sorted, so the same files give the same views.json byte for byte.
+  return Object.fromEntries(Object.keys(out).sort().map((n) => [n, Object.fromEntries(Object.keys(out[n]).sort().map((l) => [l, out[n][l]]))]));
+}

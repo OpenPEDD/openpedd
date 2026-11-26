@@ -42,7 +42,7 @@ publish:                                # which artifacts the project has, and w
   release_notes: { target: help }
 #  walkthroughs: { target: help }
 
-locales: [en]                           # the languages of the interface; the first is the base, always en (DEC-21)
+locales: [en]                           # the languages of the interface; the first is the base, always en (DEC-21). Add the prose's language (es) to show names in it; each is a Glossary column (DEC-33)
 
 environments:                           # where code runs, in order; one marked public (ARCH-08)
   - { name: production, branch: main, public: true }

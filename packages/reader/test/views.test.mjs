@@ -370,6 +370,22 @@ test('FR-VEW-24.AC1: a name defined in an industry glossary links to it and is n
   assert.deepEqual(kinds(build(f), 'glossary'), []);
 });
 
+test('FR-VEW-26.AC1: each Glossary name carries its label per locale column, and none when the Glossary has no such column', () => {
+  const f = withBusiness();
+  assert.equal(build(f, { workspace: { locales: ['en', 'es'] } }).names, undefined);
+  f['spec/foundations/glossary.md'] = f['spec/foundations/glossary.md'].replace(`| Name | Is | Defined in |
+|---|---|---|
+| Job post | What a company publishes | [\`ENT-01\`](domain/job-post.md) |`, `| Name | Is | Defined in | en | es |
+|---|---|---|---|---|
+| Job post | What a company publishes | [\`ENT-01\`](domain/job-post.md) | Job post | Aviso |
+| \`open\` · \`closed\` | States of a job post | [\`ENT-01\`](domain/job-post.md) | Open · Closed | abierto · cerrado |
+| Recruiter | A role | [\`ENT-01\`](domain/job-post.md) | | |`);
+  assert.deepEqual(build(f, { workspace: { locales: ['en', 'es'] } }).names, { 'Job post': { en: 'Job post', es: 'Aviso' }, closed: { en: 'Closed', es: 'cerrado' }, open: { en: 'Open', es: 'abierto' } });
+  // The prose's language counts as a locale; a column of a locale not declared is not a label.
+  assert.deepEqual(Object.keys(build(f, { workspace: { language: 'es' } }).names.open), ['en', 'es']);
+  assert.deepEqual(Object.keys(build(f).names.open), ['en']);
+});
+
 test('FR-VEW-14.AC1: the org view is the reporting tree, with each manager\'s span of control', () => {
   const d = build(withBusiness());
   const v = d.views.org;

@@ -2,8 +2,8 @@
 title: Workspace
 description: ENT-16 · The repos of a project and how they connect
 owner: Kevin
-version: "1.9"
-updated: "2026-11-23"
+version: "1.10"
+updated: "2026-11-26"
 ---
 
 # ENT-16 · Workspace
@@ -24,7 +24,7 @@ shared packages ([`DEC-22`](../../decisions/DEC-22-monorepo-default.md)). It is 
 | `tools` | The tool chosen for each capability a stage needs |
 | `references` | Other specs this one builds on, read-only |
 | `publish` | Which artifacts the project has, and where each is published |
-| `locales` | The languages of the product's interface. The first is the base, always `en`; `init` writes `[en]` ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md)) |
+| `locales` | The languages of the product's interface. The first is the base, always `en`; `init` asks for the others, proposing the prose's `language`. Each one is a column of the `Glossary` ([`DEC-21`](../../decisions/DEC-21-i18n-from-day-one.md), [`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) |
 | `environments` | Where code runs, in order; one marked `public` |
 | `branches` | The base, and the name of each kind of branch ([`ARCH-06`](../architecture/branches.md#configuration)) |
 | `models` | The model profile and overrides ([`DEC-07`](../../decisions/DEC-07-models.md)) |

@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.16"
-updated: "2026-11-25"
+version: "1.17"
+updated: "2026-11-26"
 ---
 
 # What OpenPEDD can do
@@ -62,7 +62,7 @@ updated: "2026-11-25"
 | Capability | Turned on with |
 |---|---|
 | API Reference · MCP · Help Center · Release Notes · Walkthroughs | `publish` in `workspace.yaml` |
-| Languages besides English | `locales`; English and i18n come with every project |
+| Languages besides English | `locales`; English and i18n come with every project; each name's label per locale in the Glossary ([`DEC-33`](decisions/DEC-33-names-per-locale.md)) |
 | A staging environment | `environments` |
 | Feature flags | `tools.flags` |
 | Row-level security tests · Evals · Observability · Mutation testing | `tools` |

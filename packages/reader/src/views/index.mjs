@@ -55,6 +55,8 @@ const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
  *   traceEvents   the events of `.pedd/trace/`, parsed, in the order they were appended
  *   branches      [{ name, files: path → text of its `changes/` }]: every change branch
  *   product · commit   what the file names it was built from
+ *
+ * `names`, when the Glossary has a column per locale: each name → { locale → label } (DEC-33).
  */
 export function viewData(model, sources = {}) {
   const c = prep(model, sources);
@@ -76,7 +78,10 @@ export function viewData(model, sources = {}) {
     all.push(loose(viewOfPath(c, x.path), 'undefined-id', { id: item.id, says: item.says, path: x.path, line: x.line, message: `cites \`${x.id}\`, defined nowhere` }));
   }
   all.sort((a, b) => cmp(KINDS.indexOf(a.view), KINDS.indexOf(b.view)) || cmp(a.at, b.at) || a.line - b.line || cmp(a.kind, b.kind) || cmp(a.id, b.id) || cmp(a.message, b.message));
-  return { format: VIEWS_FORMAT, product: sources.product ?? sources.workspace?.project ?? null, commit: sources.commit ?? null, views, loose: all };
+  // Each name's label per locale, from the Glossary (DEC-33); left out when there is none, so a spec without
+  // labels gives the same views.json as before.
+  const labels = glossary.names(model, sources);
+  return { format: VIEWS_FORMAT, product: sources.product ?? sources.workspace?.project ?? null, commit: sources.commit ?? null, views, loose: all, ...(Object.keys(labels).length ? { names: labels } : {}) };
 }
 
 /** The view a page opens on: the first with loose items, or `context` (F1.3). */

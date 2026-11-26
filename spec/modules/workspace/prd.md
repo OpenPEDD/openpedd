@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.12"
-updated: "2026-11-20"
+version: "1.13"
+updated: "2026-11-26"
 status: draft
 ---
 
@@ -37,7 +37,7 @@ pedd init reclee
 | 1 | **Reads the situation**: an empty folder, code already there, or OpenPEDD already installed (then it runs `doctor` and offers `update`) |
 | 2 | **Settles the layout**, on two axes ([below](#the-layout)): detects what it can and confirms |
 | 3 | Creates the monorepo, or connects the repos that exist; in `split`, writes a `link.yaml` in each pointing back to the spec |
-| 4 | **Installs the structure** from the [project template](baseline.md#the-project-template): `spec/` with its foundations marked empty, the apps and packages of a new product, `workspace.yaml` with `locales: [en]`, and the language of the prose. Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
+| 4 | **Installs the structure** from the [project template](baseline.md#the-project-template): `spec/` with its foundations marked empty, the apps and packages of a new product, `workspace.yaml` with the language of the prose and the `locales`: `en` first, then the ones it asks for, proposing the prose's language. The `Glossary` gets one column per locale ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)). Existing docs stay where they are, as reading material for `map` and `specify`; they are not converted |
 | 5 | **Adopts the agents' instructions**: an `AGENTS.md` or `CLAUDE.md` already written is kept, and OpenPEDD's block goes between `<!-- pedd -->` markers; it sends every agent to the [code index](../../foundations/architecture/code-index.md) first. Nothing outside them is touched |
 | 6 | **Finds out the stack** ([below](#the-stack)) |
 | 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
@@ -80,7 +80,7 @@ publish:
   help: { path: apps/help, url: https://help.reclee.com }
   docs: { path: apps/docs, url: https://docs.reclee.com }
   release_notes: { target: help }
-locales: [en, es]   # en is the base (DEC-21)
+locales: [en, es]   # en is the base (DEC-21); one Glossary column each (DEC-33)
 run:
   command: pnpm dev
   test_user: E2E_TEST_USER   # the name of the variable, never its value

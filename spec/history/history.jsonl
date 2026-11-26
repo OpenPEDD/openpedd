@@ -544,3 +544,14 @@
 {"path": "capabilities.md", "version": "1.15 → 1.16", "date": "2026-11-25", "change": "CHG-040", "story": null, "stage": "specify", "summary": "pedd records commit; implementation branches"}
 {"path": "open/backlog.md", "version": "1.8 → 1.9", "date": "2026-11-25", "change": "CHG-040", "story": null, "stage": "specify", "summary": "The implementation PR says Part of"}
 {"path": "changes/CHG-040/summary.md", "version": "1.0", "date": "2026-11-25", "change": "CHG-040", "story": null, "stage": "specify", "summary": "Summary of the change"}
+{"path": "decisions/DEC-33-names-per-locale.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "A name is shown by its label per locale, from the Glossary"}
+{"path": "foundations/market/domain-labels.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "How tools keep a name in code and a label per language, surveyed"}
+{"path": "foundations/market/README.md", "version": "1.13 → 1.14", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Lists MKT-17"}
+{"path": "foundations/glossary.md", "version": "1.22 → 1.23", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Label and locale column"}
+{"path": "foundations/domain/foundation.md", "version": "1.9 → 1.10", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "The Glossary has one column per locale"}
+{"path": "foundations/domain/workspace.md", "version": "1.9 → 1.10", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "init asks the locales; each is a Glossary column"}
+{"path": "modules/workspace/prd.md", "version": "1.12 → 1.13", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "init writes the locales asked and a Glossary column each"}
+{"path": "modules/specify/prd.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Every name a change adds gets its label per locale"}
+{"path": "modules/views/business.md", "version": "1.6 → 1.7", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "FR-VEW-26: names shown by their label in the reader's locale"}
+{"path": "capabilities.md", "version": "1.16 → 1.17", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Labels per locale in the Glossary"}
+{"path": "changes/CHG-041/summary.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Summary of the change"}

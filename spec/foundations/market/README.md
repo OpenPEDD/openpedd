@@ -2,8 +2,8 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.13"
-updated: "2026-11-24"
+version: "1.14"
+updated: "2026-11-26"
 ---
 
 **Market holds what we measured outside**: competitors, tools, market size, studies, prices others
@@ -28,6 +28,7 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [How the industry defines each model](modeling-standards.md) | `MKT-14` | Entities, state machines, use cases and activities, as the ER model and UML define them |
 | [How the industry models a business](business-models.md) | `MKT-15` | Processes as-is and to-be, the organization chart and the business glossary |
 | [How a business is analyzed](analysis-order.md) | `MKT-16` | The order and the levels of analyzing a business, and the kinds of business use case |
+| [Domain labels per language](domain-labels.md) | `MKT-17` | How frameworks keep one name in code and show it in each language |
 
 ## How a market document is written
 

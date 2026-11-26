@@ -2,8 +2,8 @@
 title: specify
 description: Stage 1 · Defines what is built and why; the only stage that writes the spec
 owner: Kevin
-version: "1.10"
-updated: "2026-11-20"
+version: "1.11"
+updated: "2026-11-26"
 status: draft
 ---
 
@@ -40,7 +40,7 @@ complete the PRD, the fewer assumptions in the middle.**
 6. **Permissions and data.** A matrix of role × action, allowed and denied. **Who writes each field, and through which door**: the screen, the API, the assistant, a trigger or only the system. Which fields are personal, how long they are kept and how they are deleted, from `Privacy`.
 7. **States.** The transitions the flow touches, valid and invalid, cited from the domain. **Also those that come from outside the flow**: a plan that goes down, a parent that closes, a subject that is deleted. Each with what happens to the work in progress.
 8. **Contracts.** For each action: input, output, errors ([`ENT-05`](../../foundations/domain/contract.md)).
-9. **Screens and copy.** Each state (empty, error, loading, no permission, no quota) with its text, from the glossary, per locale. **So does every notice the system sends**: notification, email, banner.
+9. **Screens and copy.** Each state (empty, error, loading, no permission, no quota) with its text, from the glossary, per locale. **Every name the change adds** (entity, state, field, role) gets its label in each locale column of the Glossary ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)). **So does every notice the system sends**: notification, email, banner.
 10. **Criteria.** At least one `AC` per flow, in `Given / When / Then`, each with its `FR` ([`ENT-04`](../../foundations/domain/acceptance-criterion.md)).
 11. **Test data.** The same data for the mockup, the tests and the final check.
 12. **Variations.** Where it works in more than one way: a flag, a plan, an A/B test. Whether the change ships behind a flag.
