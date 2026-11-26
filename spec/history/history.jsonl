@@ -558,3 +558,4 @@
 {"path": "modules/views/business.md", "version": "1.7 → 1.8", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "pedd view by locale; a missing label is loose"}
 {"path": "modules/views/prd.md", "version": "1.5 → 1.6", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "A name with no label in a declared locale is a loose item"}
 {"path": "capabilities.md", "version": "1.17 → 1.18", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "pedd view --locale"}
+{"path": "foundations/architecture/definition-map.md", "version": "1.2 → 1.3", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Level 8: modules proposed by crossing processes and entities"}

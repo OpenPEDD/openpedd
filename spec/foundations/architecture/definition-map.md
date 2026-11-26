@@ -2,8 +2,8 @@
 title: The map of a definition
 description: ARCH-24 · Every level of a product's definition, from the business to the data model, in order — what each is, the question it answers, where it lives and who writes it
 owner: Kevin
-version: "1.2"
-updated: "2026-11-24"
+version: "1.3"
+updated: "2026-11-26"
 ---
 
 # ARCH-24 · The map of a definition
@@ -23,7 +23,7 @@ organization to change starts at level 8.
 | 5 | **Activities**: the steps of a process, by role and tool, and the entity each leaves in a state; drawn as RUP draws a business use case: an overview of its processes, then one diagram per process with a partition per role ([`MKT-14`](../market/modeling-standards.md#activity-diagram-uml)) | Who does each step, with what, and what it changes | `### PRC-nn`, `Step` · `Role` · `Does` · `Tool` · `Object` | Same | The `activity` view; system use cases |
 | 6 | **Business entities**: the things processes handle, with their states | What it works with | `Domain Model`, `ENT-nn` | Derived from the map · `map`, `specify` | Every PRD, the data model |
 | 7 | **Business rules and glossary**: what always holds, from a law, a regulator, a contract or a policy; one name per thing, the industry's first | What must be true; what each word means | `Business Map`, `Rules and regulations`, then `rules/` (`RULE-nn`), `DEC-nn`; `Glossary`, linking the [industry glossary](../../../industries/README.md) | Product engineer from the sources and the web; client decides, `specify` writes | PRDs, screens |
-| 8 | **To-be and modules**: each process marked `kept` · `changed` · `taken`, the module that takes it, the later modules too | What the system will change, in what order | `Business Map` to-be; modules index (`unmapped`) | Product engineer, approved by the client · `map` | The roadmap; one PRD per module |
+| 8 | **To-be and modules**: each process marked `kept` · `changed` · `taken`, the module that takes it, the later modules too. The modules are proposed, not asked: each process crossed with the entities it creates, reads, updates or deletes, a module being the steps that create and keep the same entities, as information engineering's affinity analysis and domain-driven design's bounded contexts cut them; first the module that creates what the others use, then what hurts most | What the system will change, in what order | `Business Map` to-be, `Modules` with the entities each owns, and `Order`; modules index (`unmapped`) | Product engineer, approved by the client · `map` | The roadmap; one PRD per module |
 | 9 | **System use cases**: a PRD's flows, `F<n>`, with `«include»` and `«extend»` | What a user does with the system, step by step | `modules/<m>/prd.md`, `Flows` | Client and `specify`, one module at a time | Requirements, criteria |
 | 10 | **Requirements**: what the system shall do, in EARS | What exactly it must do | PRD, `FR-<MOD>-nn` · `NFR-<MOD>-nn` | `specify` | Tests, traceability |
 | 11 | **Acceptance criteria**: Given · When · Then | How we know it works | PRD, `FR-…-nn.ACn` | Proposed, confirmed by the client · `specify`, `plan` | Tests written red |
