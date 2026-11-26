@@ -12,13 +12,15 @@ import { RecordsError, records } from './records.mjs';
 import { SweepError, answer as sweepAnswer, sweep as runSweep } from './sweep.mjs';
 import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewLocale, viewTarget, watchViews, writeViews } from './view.mjs';
 import { readWorkspace } from './workspace.mjs';
+import { ClockError, installClock } from './clock.mjs';
+import { StepError, closeStep, readEvents, startStep } from './steps.mjs';
+import { formatTime, humanTime } from './time.mjs';
 import { VERSION } from './version.mjs';
 
 const red = (s) => `\x1b[31m${s}\x1b[0m`, yellow = (s) => `\x1b[33m${s}\x1b[0m`, green = (s) => `\x1b[32m${s}\x1b[0m`;
 
 /** The commands the spec names (capabilities.md, CLI) that this version does not build, and why. */
 export const NOT_BUILT = {
-  init: 'onboarding a project (modules/workspace): the template is copied by hand for now',
   doctor: 'needs the stack detection and the baseline gaps (modules/workspace)',
   update: 'needs the manifest pedd init writes (.pedd/manifest.json)',
   install: 'needs the skills, judges and MCP to install; it will also install the permission rule that denies agents git checkout -b',
@@ -89,6 +91,21 @@ const HELP = `pedd ${VERSION}
       The weight of each assumption and deviation of a change, high, medium or low, with the factors
       that set it, heaviest first, those with the same target and reason grouped (ARCH-23).
       --fan-out: how many tasks build on each, while the plan's dependencies are not read.
+
+  pedd step start <stage> [--change CHG-nnn] [--prd <path in the spec>] [--flow F<n>] [--piece a,b]
+      start_step: a step's clock, stamped by the tool, with the person's git user.email; prints the step's
+      ID. Its piece kinds: --piece, else the flow's Piece: line, else every one the PRD names.
+  pedd step deliver|pass|reject [<step>]
+      deliver_step, and the judge's verdict. Without <step>: the person's open step. A rejected step opens again.
+
+  pedd time [--change CHG-nnn | --prd <path in the spec>] [--since YYYY-MM-DD] [--until YYYY-MM-DD] [--json]
+      Hours of people, from the messages each person typed (never their words), by stage, person,
+      piece kind and credit (workspace.yaml pieces). 15 minutes between messages, 2 for the last.
+
+  pedd init [--dry-run]
+      For now, installs only the human clock: the UserPromptSubmit hook in .claude/settings.json,
+      .pedd/hooks/human.mjs and the union merge for .pedd/trace/events.jsonl. The rest of the
+      onboarding: copy template/ by hand.
 
   pedd version · pedd help
 
@@ -304,6 +321,51 @@ function branch(args, { cwd, out }) {
   }
 }
 
+/** The project's root: --root, else the git top level of cwd, else cwd. */
+function projectRoot(cwd, opts) {
+  if (opts.root) return resolve(cwd, opts.root);
+  try { return execFileSync('git', ['rev-parse', '--show-toplevel'], { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return cwd; }
+}
+
+function stepCmd(args, { cwd, out }) {
+  const { opts, rest } = options(args, ['json']);
+  const [sub, arg] = rest;
+  const root = projectRoot(cwd, opts);
+  const ws = readWorkspace(root);
+  let e;
+  if (sub === 'start') {
+    e = startStep(root, { stage: arg, change: opts.change || null, prd: opts.prd || null, flow: opts.flow || null, pieces: opts.piece ? opts.piece.split(',').map((p) => p.trim()).filter(Boolean) : null, spec: ws.spec, as: opts.as || null });
+  } else if (['deliver', 'pass', 'reject'].includes(sub)) {
+    e = closeStep(root, { to: { deliver: 'delivered', pass: 'passed', reject: 'rejected' }[sub], step: arg || null, as: opts.as || null });
+  } else throw new StepError('pedd step start|deliver|pass|reject … (pedd help)');
+  if (opts.json) { out(JSON.stringify(e)); return 0; }
+  out(e.id);
+  out(`  ${e.to} · ${e.stage}${e.prd ? ` · ${e.prd}${e.flow ? ` ${e.flow}` : ''}` : ''}${e.pieces.length ? ` · ${e.pieces.join(', ')}` : ''} · ${e.actor} · ${e.at}`);
+  return 0;
+}
+
+function timeCmd(args, { cwd, out }) {
+  const { opts } = options(args, ['json']);
+  const root = projectRoot(cwd, opts);
+  const ws = readWorkspace(root);
+  const catalog = ws.data.pieces && typeof ws.data.pieces === 'object' ? ws.data.pieces : {};
+  const r = humanTime(readEvents(root), { change: opts.change || null, prd: opts.prd || null, since: opts.since || null, until: opts.until || null, catalog });
+  out(opts.json ? JSON.stringify(r, null, 2) : formatTime(r));
+  return 0;
+}
+
+function initCmd(args, { cwd, out }) {
+  const { opts } = options(args, ['dry-run']);
+  const root = projectRoot(cwd, opts);
+  if (!readWorkspace(root).found) throw new ClockError(`no workspace.yaml in ${root}: the onboarding is not built yet; copy template/ first (pedd init installs only the human clock)`);
+  const done = installClock(root, { dryRun: !!opts['dry-run'] });
+  out(`The human clock${opts['dry-run'] ? ' (dry run: nothing written)' : ''}:`);
+  for (const d of done) out(`  ${d.what === 'already there' ? green('✓') : yellow(opts['dry-run'] ? '~' : '+')} ${d.path}: ${d.what}${d.backup ? ` · backup in ${d.backup}` : ''}`);
+  out('  Each message a person types appends its time, never its words, to .pedd/trace/events.jsonl. Commit these files.');
+  out('  The rest of the onboarding is not built yet: copy template/ by hand.');
+  return 0;
+}
+
 function need(v, usage) {
   if (!v) throw new BranchError(`usage: ${usage}`);
   return v;
@@ -319,6 +381,9 @@ export async function main(argv, io) {
       case 'weigh': return weighCmd(args, io);
       case 'records': return recordsCmd(args, io);
       case 'sweep': return await sweepCmd(args, io);
+      case 'step': return stepCmd(args, io);
+      case 'time': return timeCmd(args, io);
+      case 'init': return initCmd(args, io);
       case 'version': case '--version': io.out(VERSION); return 0;
       case undefined: case 'help': case '--help': io.out(HELP); return 0;
       default:
@@ -327,7 +392,7 @@ export async function main(argv, io) {
         return 2;
     }
   } catch (e) {
-    if (e instanceof BranchError || e instanceof SweepError || e instanceof RecordsError) { io.err(red(`✗ ${e.message}`)); return 1; }
+    if (e instanceof BranchError || e instanceof SweepError || e instanceof RecordsError || e instanceof StepError || e instanceof ClockError) { io.err(red(`✗ ${e.message}`)); return 1; }
     if (e instanceof ViewError) { io.err(red(`✗ ${e.message}`)); return 2; }
     throw e;
   }
