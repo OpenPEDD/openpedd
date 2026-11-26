@@ -1,8 +1,9 @@
-// context: C4 levels 1 and 2. The system, the roles that use it, its apps and packages, and the
-// external services each talks to; from workspace.yaml's components, .pedd/stack.json and `Integrations`.
+// context: the architecture (ARCH-24, level 9). C4 levels 1 and 2: the system, the roles that use it, its
+// apps and packages, and the external services each talks to, from workspace.yaml's components,
+// .pedd/stack.json and `Integrations`; and how the data is protected, from `Security Policy`.
 import { at, clean, loose, rowsOf, tableUnder, view } from './common.mjs';
 import { prep } from './prep.mjs';
-import { permissionsOf } from './security.mjs';
+import { permissionsOf, protectionOf } from './security.mjs';
 
 /** The detected stack as a list of { name, kind, file, component }, whichever shape `.pedd/stack.json` takes. */
 function stackOf(stack) {
@@ -20,9 +21,10 @@ export function build(model, sources) {
   const providersT = integ && (tableUnder(integ, 'Providers', ['Provider']) ?? integ.tables.find((t) => t.header.some((h) => /^provider$/i.test(clean(h)))));
   const providers = rowsOf(providersT).map((r) => ({ id: clean(r['int-nn'] ?? r.id ?? r.int ?? Object.values(r)[0]), name: clean(r.provider), usedFor: r['used for'] ?? '', usedBy: clean(r['used by'] ?? ''), line: r.line })).filter((p) => p.name);
   const perms = permissionsOf(c);
-  const srcs = ['workspace.yaml', c.sources.stack ? '.pedd/stack.json' : null, integ?.path].filter(Boolean);
-  if (!components.length && !stack.length && !providers.length) {
-    return { view: view({ sources: srcs, empty: { artifact: '`components` in workspace.yaml · `.pedd/stack.json` · Integrations', fill: '`components` in `workspace.yaml`, `pedd doctor` for the stack, and the `Providers` table of `Integrations`' } }), loose: [] };
+  const guard = protectionOf(c);
+  const srcs = ['workspace.yaml', c.sources.stack ? '.pedd/stack.json' : null, integ?.path, ...(guard?.sources ?? [])].filter(Boolean);
+  if (!components.length && !stack.length && !providers.length && !guard) {
+    return { view: view({ sources: srcs, empty: { artifact: '`components` in workspace.yaml · `.pedd/stack.json` · Integrations · Security Policy', fill: '`components` in `workspace.yaml`, `pedd doctor` for the stack, the `Providers` table of `Integrations`, and the `Tables` of `Security Policy`' } }), loose: [] };
   }
 
   const system = ws.project || 'system';
@@ -53,5 +55,6 @@ export function build(model, sources) {
     if (matched.length) for (const m of matched) edges.push({ from: `component:${m.path}`, to: pid, type: 'talks to', label: clean(p.usedFor) || undefined, at: integ.path, line: p.line });
     else edges.push({ from: `system:${system}`, to: pid, type: 'talks to', label: clean(p.usedFor) || undefined, at: integ.path, line: p.line });
   }
-  return { view: view({ sources: srcs, nodes, edges }), loose: out };
+  if (guard) { nodes.push(...guard.nodes); edges.push(...guard.edges); out.push(...guard.loose); }
+  return { view: view({ sources: srcs, nodes, edges, matrix: guard?.matrix ?? [] }), loose: out };
 }

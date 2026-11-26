@@ -77,7 +77,7 @@ test('FR-VEW-05: a node is its item as written, its ID next to it, its file at i
   assert.deepEqual(e.fields.map((x) => x.name), ['title', 'invoices']);
   const r = d.views.prd.nodes.find((n) => n.id === 'FR-JOB-01');
   assert.equal(r.at, 'spec/modules/jobs/prd.md#requirements');
-  const sec = d.views.security.nodes.find((n) => n.id === 'SEC-01');
+  const sec = d.views.context.nodes.find((n) => n.id === 'SEC-01');
   assert.equal(sec.at, 'spec/foundations/security/README.md#sec-01-a-company-sees-only-its-own-posts');
 });
 
@@ -186,8 +186,8 @@ test('security: from the files workspace.yaml names, and a table nothing protect
   assert.deepEqual(m.cols, ['candidate', 'company']);
   assert.deepEqual(m.rows, ['apply', 'pay', 'publish']);
   assert.deepEqual(m.cells, [['yes', 'no'], ['no', 'own'], ['no', 'yes']]);
-  assert.ok(d.views.security.edges.some((e) => e.from === 'policy:posts_rls' && e.to === 'table:job_posts'));
-  assert.deepEqual(kinds(d, 'security'), ['unprotected table:invoices']);
+  assert.ok(d.views.context.edges.some((e) => e.from === 'policy:posts_rls' && e.to === 'table:job_posts'));
+  assert.deepEqual(kinds(d, 'context'), ['unprotected table:invoices']);
 });
 
 test('context: the system, its roles, its components and the services each talks to', () => {
@@ -512,7 +512,7 @@ test('FR-VEW-18.AC1: diffViews gives per kind what was added, changed and remove
   assert.deepEqual(d.kinds.decisions.added, ['DEC-02']);
   assert.deepEqual(d.kinds.entities.changed, ['ENT-01']);
   assert.equal(d.kinds.states.count.added + d.kinds.states.count.changed + d.kinds.states.count.removed, 0);
-  assert.deepEqual(d.kinds.security.changed, ['ENT-01'], 'a security rule cites the entity');
+  assert.deepEqual(d.kinds.context.changed, ['ENT-01'], 'a security rule, in the architecture, cites the entity');
   assert.deepEqual(diffViews(b, a).kinds.decisions.removed.map((n) => n.id), ['DEC-02']);
   assert.throws(() => diffViews({ ...a, format: 0 }, b), /format/);
 });

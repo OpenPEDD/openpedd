@@ -2,7 +2,7 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.6"
+version: "1.7"
 updated: "2026-11-26"
 status: draft
 ---
@@ -45,8 +45,8 @@ no other edit. What each source table holds is defined where its artifact is.
 | `decisions` | Every `DEC` and `ADR`: its status, what supersedes what, the IDs it cites and the modules they belong to | The decision files | [Decisions](../../decisions/README.md#a-decision) |
 | `entities` | Each entity with its fields; a field that names another entity is a relation; the modules whose PRDs cite it | The entity files | [Domain](../../foundations/domain/index.md#how-an-entity-is-written) |
 | `states` | One state machine per entity | The entity's `States` and `Transitions` | [Domain](../../foundations/domain/index.md#how-an-entity-is-written) |
-| `security` | Role × action; what protects each table; the security rules | `Roles & Permissions` and `Security Policy`, or the files `workspace.yaml` names | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read) |
-| `context` | C4 levels 1 and 2: the system, the roles that use it, its apps and packages, and the external services each talks to | `workspace.yaml` components, `.pedd/stack.json`, `Integrations` | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read), [`ENT-16`](../../foundations/domain/workspace.md) |
+| `security` | Roles and permissions: role × action | `Roles & Permissions`, or the file `workspace.yaml` names | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read) |
+| `context` | The architecture: C4 levels 1 and 2, and what protects each table and the security rules | `workspace.yaml` components, `.pedd/stack.json`, `Integrations`, `Security Policy` | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read), [`ENT-16`](../../foundations/domain/workspace.md) |
 | `code` | Modules, packages and their main symbols, each linked to the requirements anchored in it | The code index | [`ARCH-19`](../../foundations/architecture/code-index.md) |
 | `business` | Roles × business processes, as-is and to-be, each process with its mark and the module that takes it | The `Business Map` | [map](../map/prd.md#business-mode) |
 | `prd` | **Modules and their PRDs**, each PRD with its requirements counted by status. **One PRD opens** to its flows as flowcharts, its use cases (roles × actions), the transitions it touches, its requirements and their criteria | The module folders, and each PRD's flows, `Permissions`, `States`, requirements and criteria | [Modules](../README.md#the-sections-of-a-prd-in-order) |
@@ -69,7 +69,7 @@ its view and listed by `pedd check`. **A module listed `unmapped` in the modules
 | A `FR` with no criterion | `prd` |
 | A transition in a PRD's `States` that its entity does not have | `prd` · `states` |
 | A role or action in a PRD's `Permissions` that `Roles & Permissions` does not have | `security` · `prd` |
-| A table nothing protects, when the project lists its tables | `security` |
+| A table nothing protects, when the project lists its tables | `context` |
 | A to-be process with no mark, or taken by a module that does not exist; a module listed `unmapped` in the index exists | `business` |
 | When the as-is lists business use cases: a process no business use case holds, a `core` business use case with no business actor, a business use case naming a process that does not exist | `business` |
 | A Glossary name with no label in a declared locale | `glossary` |

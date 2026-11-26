@@ -35,7 +35,7 @@ function viewOfPath(c, path) {
   if (rel.startsWith('modules/')) return 'prd';
   if (rel.startsWith('changes/')) return 'changes';
   if (rel === 'foundations/glossary.md') return 'glossary';
-  if ([c.foundation('Roles & Permissions'), c.foundation('Security Policy')].some((d) => d?.path === path)) return 'security';
+  if (c.foundation('Roles & Permissions')?.path === path) return 'security';
   return 'context';
 }
 
