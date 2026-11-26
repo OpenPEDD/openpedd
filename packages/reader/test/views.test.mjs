@@ -560,3 +560,13 @@ test('FR-VEW-23.AC1: «include» and «extend» between business use cases, the 
   assert.equal(ext.label, '[the customer has an account]');
   assert.ok(kinds(d, 'use-cases').includes('missing-end buc:BUC-04'));
 });
+
+test('FR-VEW-26.AC3: a label that is a name and what the view adds keeps the rest, and a lane is a name', async () => {
+  const { labelOf, localizeViews } = await import('../src/views/names.mjs');
+  const names = { 'Supply a supermarket': { es: 'Abastecer a un supermercado' }, Manager: { es: 'Encargada' } };
+  assert.equal(labelOf(names, 'es', 'Supply a supermarket · core'), 'Abastecer a un supermercado · core');
+  assert.equal(labelOf(names, 'es', 'Sell · core'), 'Sell · core');
+  const d = localizeViews({ names, views: { activity: { nodes: [{ id: 'a', type: 'action', label: 'Carga el pedido', lane: 'Manager' }], edges: [] } } }, 'es');
+  assert.equal(d.views.activity.nodes[0].lane, 'Encargada');
+  assert.equal(d.views.activity.nodes[0].label, 'Carga el pedido');
+});

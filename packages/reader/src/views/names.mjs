@@ -15,10 +15,20 @@ export function namesLocales(names) {
   return [...all].sort((a, b) => (a === 'en' ? -1 : b === 'en' ? 1 : a < b ? -1 : a > b ? 1 : 0));
 }
 
-/** One name's label for a locale; the name itself when it has none. */
+/**
+ * One name's label for a locale; the name itself when it has none. A label that is a name and what the
+ * view adds after it (`Supply a supermarket · core`) gives the name's label with the rest as it is.
+ */
 export function labelOf(names, locale, name) {
-  const n = names && (names[name] || names[String(name).trim()]);
-  return (n && n[locale]) || name;
+  if (!names || name == null) return name;
+  const n = names[name] || names[String(name).trim()];
+  if (n && n[locale]) return n[locale];
+  const at = String(name).indexOf(' · ');
+  if (at > 0) {
+    const head = names[name.slice(0, at)];
+    if (head && head[locale]) return head[locale] + name.slice(at);
+  }
+  return name;
 }
 
 /**
@@ -45,7 +55,7 @@ export function localizeViews(data, locale) {
   if (!names || !Object.keys(names).length || !locale) return data;
   const node = (n) => {
     const label = labelOf(names, locale, n.label);
-    return { ...n, label, ...(label !== n.label ? { written: n.label } : {}), ...(n.fields ? { fields: n.fields.map((f) => ({ ...f, name: labelOf(names, locale, f.name), ...(labelOf(names, locale, f.name) !== f.name ? { written: f.name } : {}) })) } : {}) };
+    return { ...n, label, ...(label !== n.label ? { written: n.label } : {}), ...(n.lane ? { lane: labelOf(names, locale, n.lane) } : {}), ...(n.fields ? { fields: n.fields.map((f) => ({ ...f, name: labelOf(names, locale, f.name), ...(labelOf(names, locale, f.name) !== f.name ? { written: f.name } : {}) })) } : {}) };
   };
   const edge = (e) => (e.label ? { ...e, label: localizeLabel(names, locale, e.label) } : e);
   const views = Object.fromEntries(Object.entries(data.views).map(([k, v]) => [k, { ...v, nodes: (v.nodes || []).map(node), edges: (v.edges || []).map(edge) }]));
