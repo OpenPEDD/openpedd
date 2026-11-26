@@ -2,7 +2,7 @@
 title: map
 description: Stage 0 · Reads an existing product and builds its spec, module by module, until every module has its PRD; in business mode, maps the organization a new system will change
 owner: Kevin
-version: "2.4"
+version: "2.5"
 updated: "2026-11-24"
 status: draft
 ---
@@ -89,7 +89,7 @@ in `foundations/business-map/`, in two files. **What every client answers, in or
 | Processes | A table `PRC` · `Process` · `Starts with` · `Roles` · `Tools` · `How often` (how often **and how many**: *daily, 40 a month*) · `Confirmed by`, then each process's steps under `### PRC-nn · <name>`, as `Step` · `Role` · `Does` · `Tool`, and optionally `Object`: the business entity the step creates or changes and the state it leaves it in, `ENT-nn · <state>`, several separated by `;` (an object node, [`MKT-14`](../../foundations/market/modeling-standards.md#activity-diagram-uml)), and its alternates as a PRD's (`Flow` · `From` · `What changes` · `Ends in`). **Confirmed by** the role that runs it |
 | Tools and spreadsheets | Each one: what it holds, who writes it, which processes use it |
 | Documents | A table `Document` · `Comes in from · goes out to` · `Processes` · `How many`: the forms, PDFs and papers the business receives and issues. A sample of each is kept with the sources |
-| Rules and regulations | A table `Rule` · `Comes from` · `Processes`: what always holds, from a law, a regulator, a contract or an internal policy. They become the product's rules and the PRDs' requirements |
+| Rules and regulations | A table `Rule` · `Comes from` · `Processes` · `Entities` (optional): what always holds, from a law, a regulator, a contract or an internal policy. They become the product's rules and the PRDs' requirements |
 | Pains | Each with the client's own words, who said it and the process it sits in |
 
 | `to-be.md` | Holds. Each mark is the **gap** between as-is and to-be, and each gap goes to a module ([`MKT-15`](../../foundations/market/business-models.md#as-is-to-be-and-the-gap)) |

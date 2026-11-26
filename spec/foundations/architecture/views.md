@@ -2,7 +2,7 @@
 title: Project views
 description: ARCH-22 · How the reader turns a project's spec into the data of every view, and how pedd view and the Cloud render it
 owner: Kevin
-version: "1.3"
+version: "1.4"
 updated: "2026-11-24"
 ---
 
@@ -91,7 +91,7 @@ are built.
 
 ## Rendering
 
-The page is the same for `pedd view` and the Cloud: a sidebar of the fifteen kinds with their loose count,
+The page is the same for `pedd view` and the Cloud: a sidebar of the sixteen kinds with their loose count,
 the view in the middle, and the item as written on the right. **Layout is ELK** (layered for graphs and
 flows), bundled into the page; a graph over 150 nodes opens grouped by module, a group expanding on
 click. `renderViews` inlines `mountViews` into one file; the Cloud mounts it with its own links, live
