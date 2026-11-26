@@ -2,8 +2,8 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.3"
-updated: "2026-11-23"
+version: "1.4"
+updated: "2026-11-26"
 ---
 
 These rules apply to every document in every spec that uses OpenPEDD, this one included.
@@ -103,3 +103,13 @@ BPMN…), **surveyed and dated in `market/` first**, with its sources, and cited
 defines it. Where OpenPEDD departs from the standard, the definition says how and why. **A model the
 industry already defines is read the same way by every person and tool that knows it; one made up here
 has to be learned, and drifts.**
+
+## RULE-31 · A many-to-many relationship is always resolved by an associative entity [#rule-31]
+
+When two entities relate **many to many** (each holds many of the other), the domain never leaves it so:
+it adds an **associative entity** between them (`**Kind:** associative, of ENT-nn and ENT-nn`), and the
+relationship becomes two of one to many, **the associative entity on the many side of both**: A `1` ──
+`*` AB `*` ── `1` B. It carries what belongs to the pair (a quantity, a price, a date). A recipe between
+a customer and a product is one: the customer has many recipes, the product too, each recipe one of
+each. **A many-to-many cannot be stored as it is drawn, and what belongs to the pair has nowhere to
+live.** `pedd check` takes one left as such as loose ([views](../../modules/views/prd.md#loose-items)).

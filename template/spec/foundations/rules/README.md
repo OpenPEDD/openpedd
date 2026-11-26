@@ -4,7 +4,7 @@ description: How rules are written
 owner: <owner>
 version: "1.2"
 updated: "2026-11-23"
-source: spec/foundations/rules/README.md@1.8
+source: spec/foundations/rules/README.md@1.9
 ---
 
 A rule is something **every module, stage or document follows**. A rule of a single module lives in

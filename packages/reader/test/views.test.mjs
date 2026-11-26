@@ -586,3 +586,13 @@ test('FR-VEW-14.AC2: a role that answers to two reports to the first, and also t
   assert.equal(v.nodes.find((n) => n.id === 'org:as-is:Founder').span, 2);
   assert.equal(v.nodes.find((n) => n.id === 'org:as-is:Seller').span, undefined);
 });
+
+test('RULE-31: two entities that hold many of each other are loose until an associative entity sits between them', () => {
+  const f = product();
+  f['spec/foundations/domain/invoice.md'] += '| `posts` | ENT-01[] | The posts it bills |\n';
+  assert.deepEqual(kinds(build(f), 'entities').filter((k) => k.startsWith('many-to-many')), ['many-to-many ENT-01']);
+  assert.match(build(f).loose.find((l) => l.kind === 'many-to-many').message, /associative entity/);
+  // Each side holding one of the other, a one to many: nothing loose.
+  f['spec/foundations/domain/invoice.md'] = f['spec/foundations/domain/invoice.md'].replace('| `posts` | ENT-01[] |', '| `post` | ENT-01 |');
+  assert.deepEqual(kinds(build(f), 'entities').filter((k) => k.startsWith('many-to-many')), []);
+});

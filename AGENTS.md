@@ -40,6 +40,7 @@ anything. It does not repeat the rules: it points to where each one lives.
 | A claim about the current system cites the code that proves it | [`RULE-21`](spec/foundations/rules/cycle.md#rule-21) |
 | A check that did not run is reported as not run | [`RULE-22`](spec/foundations/rules/cycle.md#rule-22) |
 | Every kind of model is defined as the industry defines it, surveyed first | [`RULE-29`](spec/foundations/rules/writing.md#rule-29) |
+| A many-to-many becomes two one-to-many through an associative entity | [`RULE-31`](spec/foundations/rules/writing.md#rule-31) |
 
 ## Language
 

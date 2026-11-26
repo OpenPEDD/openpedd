@@ -65,6 +65,7 @@ its view and listed by `pedd check`. **A module listed `unmapped` in the modules
 | A decision that cites no requirement, entity, rule, architecture document or module | `decisions` |
 | A `Supersedes` that names no decision, or a loop of them | `decisions` |
 | An entity no PRD cites, unless modules are still `unmapped` and another document cites it | `entities` |
+| A many-to-many with no associative entity (`RULE-31`) | `entities` |
 | A requirement no flow carries, in a PRD with flows | `prd` |
 | A `FR` with no criterion | `prd` |
 | A transition in a PRD's `States` that its entity does not have | `prd` · `states` |

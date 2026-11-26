@@ -34,6 +34,14 @@ export function build(model, sources) {
       || c.links.some((l) => l.to === e.path && l.from !== e.path && !l.from.endsWith('/domain/index.md')));
     if (!users.size && !citedElsewhere) out.push(loose('entities', 'not-cited', { id: e.id, says: e.name, path: e.path, line: e.line, message: 'no PRD cites it' }));
   }
+  // RULE-31: two entities that hold many of each other want an associative entity between them.
+  const many = edges.filter((x) => x.type === 'relation' && x.from !== x.to && x.label?.endsWith(' []'));
+  for (const x of many) {
+    const back = many.find((y) => y.from === x.to && y.to === x.from);
+    if (!back || x.from > x.to) continue;
+    const a = c.entities.get(x.from), b = c.entities.get(x.to);
+    out.push(loose('entities', 'many-to-many', { id: a.id, says: a.name, path: a.path, line: x.line, message: `holds many ${b.name} and ${b.name} holds many of it: add an associative entity between them, on the many side of both (RULE-31)` }));
+  }
   return { view: view({ sources: [dir], nodes, edges }), loose: out };
 }
 
