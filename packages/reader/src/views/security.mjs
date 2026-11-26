@@ -1,6 +1,5 @@
-// security: roles and permissions, role × action, from `Roles & Permissions` or the file workspace.yaml names
-// under `views.security` (ENT-02). How the data is protected (each table and its policies, the security
-// rules) is the architecture's: `protectionOf` gives it to the `context` view (ARCH-24, level 9).
+// security: role × action; what protects each table; the security rules. From the `Roles & Permissions`
+// and `Security Policy` foundations, or from the files workspace.yaml names under `views.security` (ENT-02).
 import { at, clean, familyOf, loose, rowsOf, tableUnder, view } from './common.mjs';
 import { prep } from './prep.mjs';
 
@@ -88,9 +87,13 @@ function tablesOf(c) {
 export function build(model, sources) {
   const c = prep(model, sources);
   const perms = permissionsOf(c);
-  if (!perms) return { view: view({ sources: [`${c.root}/foundations/`], empty: { artifact: 'Roles & Permissions', fill: 'its `Permissions` table: one column per role, one row per action; or the file `workspace.yaml` names under `views.security.permissions`' } }), loose: [] };
-  const nodes = [], edges = [], matrix = [];
-  {
+  const tables = tablesOf(c);
+  const policyDoc = c.foundation('Security Policy');
+  const srcs = [perms?.path, tables?.path, policyDoc?.path].filter(Boolean);
+  if (!perms && !tables && !policyDoc) return { view: view({ sources: [`${c.root}/foundations/`], empty: { artifact: 'Roles & Permissions · Security Policy', fill: 'their `Permissions` and `Tables` tables, or the files `workspace.yaml` names under `views.security`' } }), loose: [] };
+
+  const nodes = [], edges = [], out = [], matrix = [];
+  if (perms) {
     matrix.push({ id: 'permissions', title: 'Who does what', group: 'permissions', rows: perms.actions, cols: perms.roles, cells: perms.actions.map((a) => perms.roles.map((r) => perms.cells[a][r] || '')), at: at(perms.path, perms.anchor), line: perms.line });
     for (const r of perms.roles) nodes.push({ id: `role:${r}`, type: 'role', label: r, group: 'roles', at: at(perms.path, perms.anchor), line: perms.line });
     for (const a of perms.actions) {
@@ -98,19 +101,6 @@ export function build(model, sources) {
       for (const r of perms.roles) if (/^(yes|own)$/.test(perms.cells[a][r])) edges.push({ from: `role:${r}`, to: `action:${a}`, type: 'may', label: perms.cells[a][r] === 'own' ? 'own' : undefined, at: perms.path, line: perms.lines[a] ?? perms.line });
     }
   }
-  return { view: view({ sources: [perms.path], nodes, edges, matrix }), loose: [] };
-}
-
-/**
- * How the data is protected: each table with the policies that protect it, a table nothing protects loose,
- * and the security rules (`SEC-nn`) with what they cite. From `Security Policy` or the SQL workspace.yaml
- * names under `views.security.policies`; null when there is none.
- */
-export function protectionOf(c) {
-  const tables = tablesOf(c);
-  const policyDoc = c.foundation('Security Policy');
-  if (!tables && !policyDoc) return null;
-  const nodes = [], edges = [], out = [], matrix = [];
   if (tables) {
     const byTable = new Map();
     for (const r of tables.rows) (byTable.get(r.table) ?? byTable.set(r.table, []).get(r.table)).push(r);
@@ -125,7 +115,7 @@ export function protectionOf(c) {
         nodes.push({ id: `policy:${r.protectedBy}`, type: 'policy', label: r.protectedBy, group: 'policies', at: at(r.path, null), line: r.line });
         edges.push({ from: `policy:${r.protectedBy}`, to: `table:${n}`, type: 'protects', label: r.roles || undefined, at: r.path, line: r.line });
       }
-      if (!protectedBy.length) out.push(loose('context', 'unprotected', { id: `table:${n}`, says: n, path: first.path, line: first.line, message: 'nothing protects this table' }));
+      if (!protectedBy.length) out.push(loose('security', 'unprotected', { id: `table:${n}`, says: n, path: first.path, line: first.line, message: 'nothing protects this table' }));
     }
   }
   // The rules: one `SEC-nn` heading each, and what it cites.
@@ -141,6 +131,6 @@ export function protectionOf(c) {
       edges.push({ from: m[1], to: x.id, type: 'cites', at: policyDoc.path, line: x.line });
     }
   }
-  return { sources: [tables?.path, policyDoc?.path].filter(Boolean), nodes, edges, matrix, loose: out };
+  return { view: view({ sources: srcs, nodes, edges, matrix }), loose: out };
 }
 
