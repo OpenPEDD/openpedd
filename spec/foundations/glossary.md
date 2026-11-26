@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.25"
+version: "1.26"
 updated: "2026-11-26"
 ---
 
@@ -61,6 +61,9 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 |---|---|---|
 | Stage: `map` · `specify` · `architect` · `design` · `plan` · `build` · `verify` · `accept` · `publish` · `measure` | One step of the cycle | [`ENT-10`](domain/stage.md) |
 | Mode: `interactive` · `delegated` · `human` | How a stage runs | [`ENT-10`](domain/stage.md) |
+| Step · `started` · `delivered` · `passed` · `rejected` | One item of a stage's checklist, and its clock | [`ENT-23`](domain/trace-event.md#steps) |
+| Human time | The hours of people a step took, from the messages they typed | [`ENT-23`](domain/trace-event.md#human-time) |
+| Piece kind | What a flow or a screen is, as a sizing catalog names it: `form.compound`. Not a piece of the component catalog | [`ENT-23`](domain/trace-event.md#pieces) |
 | `architect.mode`: `guided` · `delegated` | How architecture runs | [`DEC-08`](../decisions/DEC-08-architect-mode.md) |
 | Track: `full` · `story` · `fix` · `hotfix` · `cover` · `chore` | The path of a change | [`ENT-11`](domain/track.md) |
 | Change branch · design branch · architecture branch · implementation branch · base | The branches of a change; a task is a commit on the implementation branch | [`ARCH-06`](architecture/branches.md) |

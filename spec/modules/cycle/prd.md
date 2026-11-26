@@ -2,8 +2,8 @@
 title: Cycle
 description: The stages in order, their modes, the two kinds of 10-80-10, and where people intervene
 owner: Kevin
-version: "1.6"
-updated: "2026-11-23"
+version: "1.7"
+updated: "2026-11-26"
 status: draft
 ---
 
@@ -81,12 +81,13 @@ with the judge that let it through, and that judge is fixed: the 80 improves wit
 ## Process metrics
 
 Measured from the trace ([`ENT-23`](../../foundations/domain/trace-event.md#steps)), per change and per
-stage, to improve the process: `pedd status --time` and the Cloud dashboard.
+stage, to improve the process: `pedd status --time`, `pedd time` and the Cloud dashboard.
 
 | Metric | Shows |
 |---|---|
 | Lead time | From the approved spec to production |
 | Work and wait | Of each stage's time, how much was work and how much waiting |
+| Human time | Hours of people per stage, per person, per piece kind and per credit, from the messages they typed ([`DEC-35`](../../decisions/DEC-35-human-time.md)): `pedd time`. It calibrates the weights of the sizing catalog |
 | Rounds | How many times each judge rejected, and how many findings went back to `build` |
 | Judge precision | Per judge, the findings it raised that `confirm-judge` or `accept` dismissed, and its score on the bench ([`ARCH-04`](../../foundations/architecture/agents.md#measuring-judges)) |
 | Overrides | How many blocking findings a person let through in CI, and which judge raised them |

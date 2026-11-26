@@ -2,7 +2,7 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.13"
+version: "1.14"
 updated: "2026-11-26"
 status: draft
 ---
@@ -42,7 +42,7 @@ pedd init reclee
 | 6 | **Finds out the stack** ([below](#the-stack)) |
 | 7 | **Asks what the code does not say**: areas not to touch, commands with a catch, why a convention exists, how to run it locally and with which test user, which branch is the base |
 | 8 | **Checks the tools of each stage** ([below](#the-tools-of-each-stage)) and offers what is missing |
-| 9 | Installs the skills, the judges and the MCP in the agents it detects, and records each file and its hash in `.pedd/manifest.json` |
+| 9 | Installs the skills, the judges, the MCP and [the human clock](#the-human-clock) in the agents it detects, and records each file and its hash in `.pedd/manifest.json` |
 | 10 | **Reports which stages are ready** and what each lacks |
 | 11 | Offers the next step: `map` if there is code; `map --business` if the product changes how an organization works; `specify` otherwise |
 
@@ -132,6 +132,20 @@ missing tool never stops `init`.
 
 MCP servers go in the project's config only without secrets; credentials stay in each person's
 environment.
+
+## The human clock [#the-human-clock]
+
+`init` installs what records [human time](../../foundations/domain/trace-event.md#human-time), in files
+the project versions, so whoever clones it records too:
+
+| File | Holds |
+|---|---|
+| `.pedd/hooks/human.mjs` | The hook: reads the agent's event, keeps its time and session, appends one `human` event to `.pedd/trace/events.jsonl` with the person's git `user.email` and their open step. It drops the message unread, prints nothing, and never stops the agent |
+| `.claude/settings.json` | The `UserPromptSubmit` hook that runs it, added beside the hooks already there |
+| `.gitattributes` | `.pedd/trace/events.jsonl merge=union`: two branches that each appended events merge without a conflict |
+
+The weights of the project's sizing catalog go in `workspace.yaml` `pieces`, one line per
+[piece kind](../../foundations/domain/trace-event.md#pieces): `form.compound: 2`.
 
 ## Writing safely [#writing-safely]
 
