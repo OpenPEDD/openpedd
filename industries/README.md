@@ -2,8 +2,8 @@
 title: Industries
 description: The glossaries of each industry, researched once and reused by every project in it
 owner: Kevin
-version: "1.0"
-updated: "2026-11-24"
+version: "1.1"
+updated: "2026-11-26"
 ---
 
 # Industries
@@ -17,6 +17,7 @@ writes its own meaning only where the client differs.
 | Industry | Folder | Language |
 |---|---|---|
 | Property and casualty insurance, Argentina, for buildings under horizontal property | [`property-insurance-ar/`](property-insurance-ar/glossary.md) | Spanish (Río de la Plata) |
+| Wholesale fruit and vegetables, Uruguay, local and imported | [`fresh-produce-uy/`](fresh-produce-uy/glossary.md) | Spanish (Río de la Plata) |
 
 ## How an industry glossary is written
 
