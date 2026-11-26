@@ -2,8 +2,8 @@
 title: Review lenses
 description: ARCH-14 · What each hunter looks at, the default checklist of each lens, and how a project adds its own
 owner: Kevin
-version: "1.1"
-updated: "2026-11-20"
+version: "1.2"
+updated: "2026-11-26"
 ---
 
 # ARCH-14 · Review lenses
@@ -18,7 +18,7 @@ foundations of its lens, and nothing else. The defaults come from the correction
 | Permissions | `Roles & Permissions` | Never |
 | State and lifecycle | The `Domain Model` states; the write contract in `Quality Standards` | No writes in the diff |
 | Data and contracts | The contracts, the schema, `Privacy` | No contract or schema touched |
-| Security | `Security Policy`, `Privacy` | Never |
+| Security | `Security Policy`, `Privacy`; the OWASP ASVS 5.0 chapters of the surfaces the area touches, and OWASP's Top 10 for LLM Applications where it calls a model ([below](#security-findings)) | Never |
 | Interface | `Brand System`, `Voice & Tone`, `Quality Standards` | No screen touched |
 | Performance | `Quality Standards` budgets | Never |
 | Change | `Architecture Rules`, `Delivery Pipeline` | Never |
@@ -52,6 +52,24 @@ foundations of its lens, and nothing else. The defaults come from the correction
 | Change | One commit per unit of work, with its test and its doc |
 | Change | The PR says what changes for the user, its migrations and where they are applied, what only moved, and the debts left out, besides its Spec section |
 | Change | Over the line budget of the `Delivery Pipeline` (400 by default), it is split into chained PRs |
+
+## A security finding [#security-findings]
+
+Taken from how agents audit code ([`MKT-19`](../market/security-audit.md), [`DEC-35`](../../decisions/DEC-35-whole-repo-audit.md)):
+
+| It names | For example |
+|---|---|
+| Who, with less trust, sends or does what | A member of another tenant, a URL in a document a model reads |
+| The control that should stop it, and where it is missing | The handler does not check the requester's membership |
+| What is reached, and the result | That tenant's invoices are read |
+
+| Case | Is |
+|---|---|
+| All three named, from the code | A finding, with its severity |
+| The fact that decides is outside the repository (the deployment, a provider's setting, a proxy) | A `Q` for the area with the exact fact missing, and no severity: the hunter does not guess |
+| A missing best practice, with no boundary crossed | Not a finding. It becomes an item only from a correction ([how the rules grow](review.md#how-the-rules-grow)) |
+
+A whole repository is not reviewed here: it is audited by an extension, on request ([`DEC-35`](../../decisions/DEC-35-whole-repo-audit.md)).
 
 ## A project's own items
 
