@@ -46,7 +46,7 @@ export function build(model, sources) {
     }
     for (const x of u.extends ?? []) {
       if (!bucs.has(x.id)) { out.push(loose('use-cases', 'missing-end', { id: `buc:${u.id}`, says: u.name, path: ucPath, line: ucLine(u.id), message: `extends \`${x.id}\`, a business use case that does not exist` })); continue; }
-      edges.push({ from: `buc:${u.id}`, to: `buc:${x.id}`, type: '«extend»', ...(x.when ? { label: `when ${x.when}` } : {}), at: ucPath, line: ucLine(u.id) });
+      edges.push({ from: `buc:${u.id}`, to: `buc:${x.id}`, type: '«extend»', ...(x.when ? { label: `[${x.when}]` } : {}), at: ucPath, line: ucLine(u.id) });
     }
   }
   const uc = (k) => `uc:${k}`;

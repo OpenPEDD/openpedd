@@ -557,6 +557,6 @@ test('FR-VEW-23.AC1: «include» and «extend» between business use cases, the 
   assert.ok(u.edges.some((e) => e.from === 'buc:BUC-01' && e.to === 'buc:BUC-02' && e.type === '«include»'));
   const ext = u.edges.find((e) => e.from === 'buc:BUC-03' && e.to === 'buc:BUC-01');
   assert.equal(ext.type, '«extend»');
-  assert.equal(ext.label, 'when the customer has an account');
+  assert.equal(ext.label, '[the customer has an account]');
   assert.ok(kinds(d, 'use-cases').includes('missing-end buc:BUC-04'));
 });
