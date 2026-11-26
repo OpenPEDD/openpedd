@@ -71,7 +71,7 @@ function entitiesOf(ctx) {
   return out;
 }
 
-const SLUGS = { 'Roles & Permissions': ['roles-and-permissions', 'roles', 'permissions'], 'Security Policy': ['security-policy', 'security'], Integrations: ['integrations'] };
+const SLUGS = { 'Roles & Permissions': ['roles-and-permissions', 'roles', 'permissions'], 'Security Policy': ['security-policy', 'security'], Integrations: ['integrations'], 'Quality Standards': ['quality-standards', 'quality'] };
 
 /** A foundation by its name: a document under `foundations/` titled so, or the README of its folder. */
 function foundationDoc(ctx, name) {

@@ -56,7 +56,7 @@ function find(text, groups) {
   return null;
 }
 
-const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|BUC|SEC|INT|EVT|US)-\d+)\b/g;
+const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|BUC|SEC|INT|EVT|US|RSK)-\d+)\b/g;
 const PATH = /`([\w@.-]+\/[\w@./-]+|[\w-]+\.(?:mjs|js|ts|tsx|sql|md|json|yaml|yml|css))`/g;
 
 /** The files a field names in backticks: `packages/reader/src/map.mjs` (`mapData`) → the path. */

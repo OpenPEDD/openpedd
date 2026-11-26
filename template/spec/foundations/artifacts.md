@@ -4,7 +4,7 @@ description: Every artifact of an OpenPEDD project — what it defines, where it
 owner: <owner>
 version: "1.2"
 updated: "2026-11-25"
-source: spec/foundations/artifacts.md@1.8
+source: spec/foundations/artifacts.md@1.9
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**

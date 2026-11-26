@@ -2,7 +2,7 @@
 title: "DEC-31 · Every client goes through five stages, each read from the spec"
 description: The stages of the work with a client, what each delivers, when it is done, and who approves it and where
 owner: Kevin
-version: "1.1"
+version: "1.2"
 updated: "2026-11-26"
 ---
 
@@ -21,11 +21,11 @@ the `Business Map` of [`DEC-24`](DEC-24-business-map.md).
 |---|---|---|---|---|
 | 0 | Industry | The industry's glossary and its rules, researched before the first meeting | A `Glossary` name linked to `industries/<industry>/` | Nobody: done is enough |
 | 1 | Diagnosis | How the business works today, and where it hurts | The as-is whole (people, business use cases, processes with steps and confirmed, tools, documents, rules, pains), nothing loose in it; the client's `Glossary` | The client |
-| 2 | Project | Where we go and what we build | `Business Context` (goal, metric, what is left out); the entities and their states, as the system will keep them; the to-be (every process marked, modules, order); `Roles & Permissions`; the modules index; the roadmap | The client |
+| 2 | Project | Where we go and what we build | `Business Context` (goal, metric, what is left out); the entities and their states, as the system will keep them; the system's qualities (`Quality Standards`); the to-be (every process marked, modules, order); `Roles & Permissions`; the modules index; the roadmap and its risks and assumptions | The client |
 | 3 | Specification | One PRD per module, in the to-be's order, with its flows | Each module's PRD with flows and requirements | The client, per module, at `spec-approval`: the PRD `specified` |
 | 4 | Construction | Each module built and delivered | Each module `in_review` | The client, per module, at acceptance: the module `accepted` |
 
-**Stages 1 and 2 are approved in `foundations/business/stages.md`**, one row per approval: `Stage` ·
+**Stages 1 and 2 are approved in `foundations/business/stages.md`**, one row per approval, the last in force ([`DEC-34`](DEC-34-dated-stages.md)): `Stage` ·
 `Approved by` · `On` · `Notes`. The template ships it empty. Stages 3 and 4 need no row: each module's
 status already records its approval ([`ENT-03`](../foundations/domain/requirement.md)). An approval of a
 stage that is no longer done does not count until it is done again.

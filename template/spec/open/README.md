@@ -4,7 +4,7 @@ description: How questions, ideas and the roadmap are written
 owner: <owner>
 version: "1.1"
 updated: "2026-11-23"
-source: spec/open/README.md@1.3
+source: spec/open/README.md@1.4
 ---
 
 Nothing here governs ([`ENT-19`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/open-item.md)). An agent never reads it as a

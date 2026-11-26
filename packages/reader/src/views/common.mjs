@@ -3,7 +3,7 @@
 import { code, headingText, slug } from '../markdown.mjs';
 
 /** The kinds of IDs a spec defines (artifacts.md). An `AC` hangs from its requirement: `FR-VEW-01.AC1`. */
-export const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|BUC|SEC|INT|EVT|US)-\d+)\b/g;
+export const ID = /\b(?:N?FR-[A-Z]{2,6}-\d+(?:\.AC\d+)?|(?:BIZ|MKT|MKG|ENT|RULE|ARCH|DEC|ADR|Q|CHG|DLT|PRC|BUC|SEC|INT|EVT|US|RSK)-\d+)\b/g;
 const ONE_ID = new RegExp(`^${ID.source}$`);
 export const isId = (s) => ONE_ID.test(s || '');
 // An ID with a reference's prefix (`openpedd:ENT-20`) is that reference's, never this spec's (FR-VEW-11).
@@ -14,7 +14,7 @@ export const idsIn = (s) => [...new Set((s || '').replace(PREFIXED, ' ').match(I
 export const familyOf = (id) => (/\.AC\d+$/.test(id) ? 'ac' : id.match(/^(N?FR|[A-Z]+)-/)[1].toLowerCase());
 
 /** IDs written as rows of a table rather than as a heading: requirements, criteria, questions, processes, business use cases, providers, events, user stories. */
-const ROW_FAMILIES = new Set(['fr', 'nfr', 'ac', 'q', 'prc', 'buc', 'int', 'evt', 'us']);
+const ROW_FAMILIES = new Set(['fr', 'nfr', 'ac', 'q', 'prc', 'buc', 'int', 'evt', 'us', 'rsk']);
 
 /** A cell as text: code ticks, bold and links dropped. */
 export const clean = (s) => (s ?? '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/`/g, '').replace(/\*\*/g, '').trim();

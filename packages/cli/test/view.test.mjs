@@ -22,7 +22,7 @@ test('pedd view: writes views.json and index.html to .pedd/view/, and opens on c
   const r = await run(['view', '--no-open'], d);
   assert.equal(r.code, 0, r.err);
   const data = JSON.parse(readFileSync(join(d, '.pedd/view/views.json'), 'utf8'));
-  assert.equal(Object.keys(data.views).length, 17);
+  assert.equal(Object.keys(data.views).length, 18);
   assert.equal(data.product, 'acme');
   const html = readFileSync(join(d, '.pedd/view/index.html'), 'utf8');
   assert.match(html, /"open":\{"kind":"context"\}/);

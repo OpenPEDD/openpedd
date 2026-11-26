@@ -2,8 +2,8 @@
 title: Open
 description: How questions, ideas and the roadmap are written
 owner: Kevin
-version: "1.3"
-updated: "2026-11-23"
+version: "1.4"
+updated: "2026-11-26"
 ---
 
 Nothing here governs ([`ENT-19`](../foundations/domain/open-item.md)). An agent never reads it as a
@@ -15,6 +15,7 @@ rule, and it never moves into the body of the spec except through a decision or 
 | [ideas.md](ideas.md) | Loose ideas | A bullet each, one or two lines, no ID |
 | [roadmap.md](roadmap.md) | What comes next, in order | A table: step, what it leaves |
 | [backlog.md](backlog.md) | What was agreed and is not written yet | Tables by subject |
+| `risks.md` | What may stop the project | [Below](#risks) |
 
 ## Rules
 
@@ -34,3 +35,16 @@ Each step is a change, or a group of changes, in the order they land.
 | **A product with screens and no `Brand System` gets a branding change before its first screens**: colors, type, tokens, the logo and the first components in `packages/ui`, extracted from what exists or chosen ([`ENT-02`](../foundations/domain/foundation.md)) | `design` requires it; planned, it does not stop the first screen halfway |
 | A product mapped as a business takes its first steps from the to-be of its `Business Map`: the modules, in its order ([map](../modules/map/prd.md#business-mode)) | The order was approved by the client with the map |
 | The roadmap holds the later modules too; **each PRD is written when its module is next**, not all at the start ([`RULE-30`](../foundations/rules/definition.md#rule-30)) | The foundations hold the whole road; a PRD written early is written without its answers |
+
+## Risks [#risks]
+
+A RAID log ([`MKT-18`](../foundations/market/quality-and-risk.md)): one table `RSK` · `Kind` · `What` · `If it
+happens` · `Probability` · `Impact` · `Owner` · `Response` · `Status`, kept with the project
+([`DEC-34`](../decisions/DEC-34-dated-stages.md)).
+
+| Column | Holds |
+|---|---|
+| `Kind` | `risk` (may happen) · `assumption` (taken as true, to check) · `dependency` (waits on someone) · `issue` (happened) |
+| `Probability` · `Impact` | `low` · `medium` · `high` |
+| `Response` | What is done before it happens, or when it does |
+| `Status` | `open` · `watching` · `closed` |

@@ -97,6 +97,8 @@ const mapped = () => {
 A web app, an API and Postgres; each role sees its rows.
 `;
   f['spec/open/roadmap.md'] = `${fm('Roadmap')}| # | Step | Leaves |\n|---|---|---|\n| 1 | jobs | The posts in the app |\n`;
+  f['spec/foundations/quality.md'] = `${fm('Quality Standards')}| NFR | Quality | The system shall | Measured by |\n|---|---|---|---|\n| \`NFR-SYS-01\` | Performance efficiency | Open a post in under 2 s on a phone | The p95 of the page load |\n`;
+  f['spec/open/risks.md'] = `${fm('Risks')}| RSK | Kind | What | If it happens | Probability | Impact | Owner | Response | Status |\n|---|---|---|---|---|---|---|---|---|\n| \`RSK-01\` | dependency | The job boards open their API | Posts are copied by hand | medium | high | Ana | Ask for it in week 1 | open |\n| \`RSK-02\` | assumption | Recruiters use a phone | The screens are wrong | low | medium | Team | Ask in the first call | watching |\n`;
   return f;
 };
 
@@ -119,7 +121,7 @@ test('FR-VEW-25.AC2: a whole diagnosis approved in stages.md is approved; stage 
   assert.ok(s.stages[0].complete);
   assert.deepEqual(pieces(s.stages[1]), { people: 'done', 'business-use-cases': 'done', processes: 'done', confirmed: 'done', tools: 'done', documents: 'done', rules: 'done', pains: 'done', glossary: 'done', linked: 'done' });
   assert.equal(s.stages[1].state, 'approved');
-  assert.deepEqual(s.stages[1].approval, { by: 'Ana, the owner', on: '2026-11-20', notes: 'In the call', line: 11 });
+  assert.deepEqual(s.stages[1].approval, { by: 'Ana, the owner', on: '2026-11-20', notes: 'In the call', line: 11, earlier: [] });
   assert.equal(s.stages[2].state, 'done');
   assert.equal(s.current, 2);
   assert.match(s.stages[2].next, /The client approves the project/);
@@ -170,4 +172,33 @@ test('FR-VEW-25.AC6: an approval of a stage that does not exist is loose; the vi
   const d = viewData(readSpec(approve(mapped(), ['| Discovery | Ana | 2026-11-20 | |'])));
   assert.deepEqual(d.loose.filter((l) => l.view === 'stages').map((l) => l.kind), ['unknown-stage']);
   assert.match(toMermaid(d.views.stages, 'stages'), /\*\*The stages\*\*/);
+});
+
+test('FR-VEW-30.AC1: the risks of a project, each with its kind, score, owner and response', () => {
+  const d = viewData(readSpec(mapped()));
+  const v = d.views.risks;
+  const one = v.nodes.find((n) => n.id === 'RSK-01');
+  assert.equal(one.group, 'dependency');
+  assert.equal(one.score, 6);
+  assert.equal(one.owner, 'Ana');
+  assert.equal(v.nodes.find((n) => n.id === 'RSK-02').status, 'watching');
+  assert.ok(!d.loose.some((l) => /RSK-0/.test(l.message ?? '')));
+});
+
+test('FR-VEW-31.AC1: the context view carries the system\'s qualities as a table; the project needs them and its risks', () => {
+  const d = viewData(readSpec(mapped()));
+  assert.deepEqual(d.views.context.matrix[0].rows, ['NFR-SYS-01']);
+  assert.equal(d.views.context.matrix[0].cells[0][0], 'Performance efficiency');
+  const s = stagesOf(mapped());
+  assert.equal(pieces(s.stages[2]).quality, 'done');
+  assert.equal(pieces(s.stages[2]).risks, 'done');
+  const f = mapped();
+  delete f['spec/open/risks.md'];
+  assert.equal(pieces(stagesOf(f).stages[2]).risks, 'missing');
+});
+
+test('FR-VEW-32.AC1: a stage approved twice is in force from its last row, the first kept as its history', () => {
+  const s = stagesOf(approve(mapped(), ['| 2 · Project | Ana | 2026-11-21 | The first version |', '| 2 · Project | Ana | 2027-03-01 | Stage 2: payroll |']));
+  assert.equal(s.stages[2].approval.on, '2027-03-01');
+  assert.deepEqual(s.stages[2].approval.earlier, [{ by: 'Ana', on: '2026-11-21', notes: 'The first version' }]);
 });

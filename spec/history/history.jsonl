@@ -576,3 +576,15 @@
 {"path": "modules/views/prd.md", "version": "1.9 → 1.10", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "stories among the business views; seventeen kinds"}
 {"path": "foundations/architecture/views.md", "version": "1.4 → 1.5", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Seventeen kinds"}
 {"path": "decisions/DEC-31-client-stages.md", "version": "1.0 → 1.1", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "The entities move from the diagnosis to the project"}
+{"path": "foundations/market/README.md", "version": "1.14 → 1.15", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "MKT-18"}
+{"path": "foundations/market/quality-and-risk.md", "version": "1.0", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Qualities and risks, surveyed"}
+{"path": "decisions/DEC-34-dated-stages.md", "version": "1.0", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "The diagnosis and the project are dated; the rest stays alive"}
+{"path": "decisions/DEC-31-client-stages.md", "version": "1.1 → 1.2", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "The project holds the qualities and the risks; the last approval is in force"}
+{"path": "foundations/domain/foundation.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Quality Standards: the system's NFR-SYS table"}
+{"path": "foundations/artifacts.md", "version": "1.8 → 1.9", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Risks, RSK-nn"}
+{"path": "open/README.md", "version": "1.3 → 1.4", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "risks.md: the RAID log"}
+{"path": "foundations/glossary.md", "version": "1.24 → 1.25", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "RSK-nn"}
+{"path": "foundations/architecture/definition-map.md", "version": "1.5 → 1.6", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Level 9 holds the system's qualities"}
+{"path": "modules/views/project.md", "version": "1.0", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "FR-VEW-30 to 32: risks, the system's qualities, approvals in force"}
+{"path": "modules/views/prd.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "risks among the views; eighteen kinds"}
+{"path": "foundations/architecture/views.md", "version": "1.5 → 1.6", "date": "2026-11-26", "change": null, "story": null, "stage": "specify", "summary": "Eighteen kinds"}

@@ -20,8 +20,9 @@ export function build(model, sources) {
   const providersT = integ && (tableUnder(integ, 'Providers', ['Provider']) ?? integ.tables.find((t) => t.header.some((h) => /^provider$/i.test(clean(h)))));
   const providers = rowsOf(providersT).map((r) => ({ id: clean(r['int-nn'] ?? r.id ?? r.int ?? Object.values(r)[0]), name: clean(r.provider), usedFor: r['used for'] ?? '', usedBy: clean(r['used by'] ?? ''), line: r.line })).filter((p) => p.name);
   const perms = permissionsOf(c);
+  const quality = qualitiesOf(c);
   const srcs = ['workspace.yaml', c.sources.stack ? '.pedd/stack.json' : null, integ?.path].filter(Boolean);
-  if (!components.length && !stack.length && !providers.length) {
+  if (!components.length && !stack.length && !providers.length && !quality) {
     return { view: view({ sources: srcs, empty: { artifact: '`components` in workspace.yaml · `.pedd/stack.json` · Integrations', fill: '`components` in `workspace.yaml`, `pedd doctor` for the stack, and the `Providers` table of `Integrations`' } }), loose: [] };
   }
 
@@ -53,5 +54,14 @@ export function build(model, sources) {
     if (matched.length) for (const m of matched) edges.push({ from: `component:${m.path}`, to: pid, type: 'talks to', label: clean(p.usedFor) || undefined, at: integ.path, line: p.line });
     else edges.push({ from: `system:${system}`, to: pid, type: 'talks to', label: clean(p.usedFor) || undefined, at: integ.path, line: p.line });
   }
-  return { view: view({ sources: srcs, nodes, edges }), loose: out };
+  return { view: view({ sources: [...srcs, quality?.path].filter(Boolean), nodes, edges, matrix: quality ? [quality.matrix] : null }), loose: out };
+}
+
+/** The system's qualities, the `NFR-SYS` table of `Quality Standards` (MKT-18): what the whole system shall be. */
+function qualitiesOf(c) {
+  const doc = c.foundation('Quality Standards');
+  const t = doc?.tables.find((x) => /^nfr$/i.test(clean(x.header[0])));
+  const rows = rowsOf(t).filter((r) => /^NFR-[A-Z]+-\d+$/.test(clean(r.nfr)));
+  if (!rows.length) return null;
+  return { path: doc.path, matrix: { id: 'quality', title: 'The system\'s qualities', group: 'quality', rows: rows.map((r) => clean(r.nfr)), cols: ['Quality', 'The system shall', 'Measured by'], cells: rows.map((r) => [clean(r.quality ?? ''), clean(r['the system shall'] ?? ''), clean(r['measured by'] ?? '')]), at: at(doc.path, t.section?.anchor ?? null), line: t.line } };
 }

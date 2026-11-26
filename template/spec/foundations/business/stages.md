@@ -4,7 +4,7 @@ description: Who approved each stage of the work with the client, and when
 owner: <owner>
 version: "1.0"
 updated: "2026-11-24"
-source: spec/decisions/DEC-31-client-stages.md@1.1
+source: spec/decisions/DEC-31-client-stages.md@1.2
 ---
 
 The work with a client runs in five stages: industry, diagnosis, project, specification, construction.

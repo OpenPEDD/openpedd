@@ -2,7 +2,7 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.24"
+version: "1.25"
 updated: "2026-11-26"
 ---
 
@@ -123,6 +123,7 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | `FR-<MOD>-nn` · `NFR-<MOD>-nn` · `FR-<MOD>-nn.ACn` | Requirements and criteria |
 | `DEC-nn` · `ADR-nn` | Decisions |
 | `Q-nn` | Open questions |
+| `RSK-nn` | Risks, assumptions, dependencies and issues of a project |
 | `CHG-nnn` · `DLT-nnnn` | Changes and deltas |
 
 Module codes: `CYC` cycle · `TRK` tracks · `WSP` workspace · `MAP` · `SPC` specify · `ARC` architect ·

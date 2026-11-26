@@ -15,7 +15,7 @@ import * as glossary from './glossary.mjs';
 export const STAGES = [
   { n: 0, key: 'industry', name: 'Industry', names: ['industria'], delivers: 'The industry\'s glossary and its rules, researched before the first meeting', approver: 'Nobody: done is enough', approvedIn: 'none' },
   { n: 1, key: 'diagnosis', name: 'Diagnosis', names: ['diagnóstico', 'diagnostico'], delivers: 'How the business works today, and where it hurts: the as-is and the client\'s glossary', approver: 'The client', approvedIn: 'table' },
-  { n: 2, key: 'project', name: 'Project', names: ['proyecto'], delivers: 'Where we go and what we build: the business context, the entities the system keeps, the to-be, roles and permissions, the modules and the roadmap', approver: 'The client', approvedIn: 'table' },
+  { n: 2, key: 'project', name: 'Project', names: ['proyecto'], delivers: 'Where we go and what we build: the business context, the entities the system keeps, the to-be, roles and permissions, what the whole system shall be, the modules, the roadmap and its risks', approver: 'The client', approvedIn: 'table' },
   { n: 3, key: 'specification', name: 'Specification', names: ['especificación', 'especificacion'], delivers: 'One PRD per module, in the to-be\'s order, with its flows', approver: 'The client, per module, at spec-approval', approvedIn: 'modules' },
   { n: 4, key: 'construction', name: 'Construction', names: ['construcción', 'construccion'], delivers: 'Each module built and delivered', approver: 'The client, per module, at acceptance', approvedIn: 'modules' },
 ];
@@ -38,7 +38,9 @@ function approvalsOf(c) {
     const s = n != null ? STAGES.find((x) => x.n === Number(n)) : STAGES.find((x) => [x.name.toLowerCase(), x.key, ...x.names].some((w) => cell.includes(w)));
     if (!s) { bad.push({ cell: clean(r.stage), line: r.line }); continue; }
     if (!has(r['approved by'])) continue;
-    out.set(s.n, { by: clean(r['approved by']), on: clean(r.on ?? '') || null, notes: clean(r.notes ?? '') || null, line: r.line });
+    // The last row of a stage is in force; the earlier ones are its history (DEC-34).
+    const before = out.get(s.n);
+    out.set(s.n, { by: clean(r['approved by']), on: clean(r.on ?? '') || null, notes: clean(r.notes ?? '') || null, line: r.line, earlier: before ? [...before.earlier, { by: before.by, on: before.on, notes: before.notes }] : [] });
   }
   return { path, exists: !!doc, approvals: out, bad };
 }
@@ -117,6 +119,10 @@ function piecesOf(model, sources, c) {
   const roles = c.foundation('Roles & Permissions');
   const archDocs = [...c.docOf.values()].filter((d) => d.path.startsWith(`${c.root}/foundations/architecture/`) && !/README.md$/i.test(d.path));
   const rolesRows = (roles?.tables ?? []).filter((t) => /^action$/i.test(clean(t.header[0]))).flatMap((t) => t.rows);
+  const quality = c.foundation('Quality Standards');
+  const nfrs = (quality?.tables ?? []).filter((t) => /^nfr$/i.test(clean(t.header[0]))).flatMap((t) => t.rows).filter((r) => /^NFR-[A-Z]+-\d+$/.test(clean(r.cells[0])));
+  const risksPath = `${c.root}/open/risks.md`;
+  const risks = (c.docOf.get(risksPath)?.tables ?? []).filter((t) => /^rsk$/i.test(clean(t.header[0]))).flatMap((t) => t.rows).filter((r) => /^RSK-\d+$/.test(clean(r.cells[0])));
   const roadmapPath = `${c.root}/open/roadmap.md`;
   const roadmapRows = (c.docOf.get(roadmapPath)?.tables ?? []).flatMap((t) => t.rows).filter((r) => r.cells.some((x) => clean(x)));
   const s2 = [
@@ -128,7 +134,9 @@ function piecesOf(model, sources, c) {
     piece('roles', 'Roles and permissions', rolesRows.length ? 'done' : 'missing', { at: roles?.path ?? `${c.root}/foundations/`, next: 'Derive `Roles & Permissions` from the people: one column per role, one row per action' }),
     // ARCH-24 level 9: how the system is built and how each piece of data is protected, before any PRD.
     piece('architecture', 'System architecture: context, containers and how data is protected', archDocs.length ? 'done' : 'missing', { at: archDocs[0]?.path ?? `${c.root}/foundations/architecture/`, next: 'Write the system architecture in `foundations/architecture/`: the system in context, its containers, how roles and permissions are enforced, one ADR per decision' }),
+    piece('quality', 'The system\'s qualities', nfrs.length ? 'done' : 'missing', { at: quality?.path ?? `${c.root}/foundations/`, next: 'Write what the whole system shall be in `Quality Standards`: a table `NFR` (`NFR-SYS-nn`) · `Quality` · `The system shall` · `Measured by`' }),
     piece('roadmap', 'Roadmap', roadmapRows.length ? 'done' : 'missing', { at: roadmapPath, next: 'Write the roadmap from the to-be\'s order: one step per delivery' }),
+    piece('risks', 'Risks and assumptions', risks.length ? 'done' : 'missing', { at: risksPath, next: 'List what may stop the project in `open/risks.md`: each risk, assumption or dependency with its probability, impact, owner and response' }),
   ];
 
   // Stage 3 · Specification and 4 · Construction: one piece per module, from its PRD's status.
@@ -176,7 +184,7 @@ export function build(model, sources) {
     const id = `stage:${s.n}`;
     nodes.push({
       id, type: 'stage', label: `${s.n} · ${s.name}`, status: s.state, group: 'stages', at: s.approvedIn === 'table' ? approvalsAt : s.items[0]?.at ?? approvalsAt, line: s.approval?.line ?? 1,
-      key: s.key, delivers: s.delivers, approver: s.approver, approved_by: s.approval?.by, approved_on: s.approval?.on ?? undefined, notes: s.approval?.notes ?? undefined,
+      key: s.key, delivers: s.delivers, approver: s.approver, approved_by: s.approval?.by, approved_on: s.approval?.on ?? undefined, notes: s.approval?.notes ?? undefined, earlier: s.approval?.earlier.length ? s.approval.earlier : undefined,
       next: s.next ?? undefined, progress: `${s.progress.done} of ${s.progress.of}`, current: s.n === current || undefined,
     });
     if (s.n > 0) edges.push({ from: `stage:${s.n - 1}`, to: id, type: 'then', at: approvalsAt, line: 1 });

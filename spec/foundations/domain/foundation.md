@@ -2,7 +2,7 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.10"
+version: "1.11"
 updated: "2026-11-26"
 ---
 
@@ -26,7 +26,7 @@ includes.
 | `Architecture Rules` | Layers, conventions and patterns, why each exists, why the stack was chosen, and what must not be touched | `architect` · `plan` · `build` · `verify` |
 | `Security Policy` | Security rules that always hold | `architect` · `verify` |
 | `Privacy` | Which data is personal, why it is held, how long it is kept, who processes it and how it is deleted | `specify` · `architect` · `verify` |
-| `Quality Standards` | Performance, accessibility and i18n budgets; eval thresholds; the contract every write follows | `architect` · `design` · `verify` |
+| `Quality Standards` | The system's qualities, a table `NFR` (`NFR-SYS-nn`) · `Quality` (one of ISO/IEC 25010's, [`MKT-18`](../market/quality-and-risk.md)) · `The system shall` · `Measured by`; performance, accessibility and i18n budgets; eval thresholds; the contract every write follows | `architect` · `design` · `verify` |
 | `Integrations` | Each external provider: what is used, its sandbox, its limits | `architect` · `build` |
 | `Delivery Pipeline` | CI/CD: checks (among them the one that rejects a change to `plan`'s tests), the mutation tool, what runs at each moment, environments, feature flags, the watch window, rollout | `plan` · `build` · `verify` · `publish` |
 | `Tracking Plan` | The analytics events each metric is measured with | `specify` · `build` · `measure` |

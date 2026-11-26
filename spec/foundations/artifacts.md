@@ -2,8 +2,8 @@
 title: Artifacts
 description: Every artifact of an OpenPEDD project — what it defines, where it lives, who writes it and how
 owner: Kevin
-version: "1.8"
-updated: "2026-11-25"
+version: "1.9"
+updated: "2026-11-26"
 ---
 
 Every kind of artifact a project has, in one table. **Each one defines one thing, and only that.**
@@ -32,6 +32,7 @@ How each is written in detail lives in the guide of its folder (*How* column).
 | Question | Something to decide | `open/questions.md` | `Q-nn` | Any stage | [Open](../open/README.md) |
 | Idea | Something loose, without a decision | `open/ideas.md` | — | Anyone | [Open](../open/README.md) |
 | Roadmap | What comes next, in order | `open/roadmap.md` | — | `specify` | [Open](../open/README.md) |
+| Risks | What may stop the project: risks, assumptions, dependencies and issues | `open/risks.md` | `RSK-nn` | `specify` | [Open](../open/README.md#risks) |
 
 ## Records: what happened
 
