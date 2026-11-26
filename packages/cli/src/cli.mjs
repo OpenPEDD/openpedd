@@ -10,7 +10,7 @@ import { Git } from './git.mjs';
 import { changedPaths, filesAt, viewSources } from './sources.mjs';
 import { RecordsError, records } from './records.mjs';
 import { SweepError, answer as sweepAnswer, sweep as runSweep } from './sweep.mjs';
-import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewTarget, watchViews, writeViews } from './view.mjs';
+import { ViewError, buildViews, firstView, mermaidOf, openInBrowser, viewLocale, viewTarget, watchViews, writeViews } from './view.mjs';
 import { readWorkspace } from './workspace.mjs';
 import { VERSION } from './version.mjs';
 
@@ -41,10 +41,11 @@ const HELP = `pedd ${VERSION}
       The spec checks. --against: the commit the change is compared with (default HEAD): a document
       over budget fails if it grew, a loose item if the change adds or touches it.
 
-  pedd view [<kind> [<id>]] [--depth <n>] [--format mermaid] [--watch] [--no-open] [--root <dir>]
+  pedd view [<kind> [<id>]] [--depth <n>] [--format mermaid] [--locale <code>] [--watch] [--no-open] [--root <dir>]
       Every view of the spec as a map, in .pedd/view/: stages, decisions, entities, states, security,
       context, code, business, org, activity, prd, use-cases, glossary, trace, changes. <kind> <id> opens one view on that ID; --format mermaid
-      prints it instead; --watch rebuilds it on each save.
+      prints it instead; --watch rebuilds it on each save. Names show by their Glossary label in --locale,
+      the prose's language by default.
 
   pedd branch change <slug> [--track full|story|fix|chore|hotfix]    (also: pedd branch request <slug>)
       A change's branch, from the base (a hotfix: from production), numbered CHG-nnn, holding only
@@ -149,13 +150,14 @@ async function view(args, { cwd, out, err }) {
   const { opts, rest } = options(args, ['watch', 'no-open']);
   const root = resolve(cwd, opts.root || '.');
   const target = viewTarget(rest, opts);
-  if (opts.format === 'mermaid') { out(mermaidOf(buildViews(root), target).trimEnd()); return 0; }
+  const locale = viewLocale(root, opts.locale);
+  if (opts.format === 'mermaid') { out(mermaidOf(buildViews(root), target, locale).trimEnd()); return 0; }
   const summary = (data) => {
     const n = data.loose.length;
     out(`${green('✓')} ${Object.values(data.views).filter((v) => !v.empty).length} of ${Object.keys(data.views).length} views, ${n ? yellow(`${n} loose`) : 'nothing loose'}`);
   };
   if (opts.watch) {
-    const w = await watchViews(root, { open: target.kind ? target : null, port: Number(opts.port) || 0, onBuild: (data, e) => (e ? err(red(`✗ ${e.message}`)) : summary(data)) });
+    const w = await watchViews(root, { open: target.kind ? target : null, port: Number(opts.port) || 0, locale, onBuild: (data, e) => (e ? err(red(`✗ ${e.message}`)) : summary(data)) });
     out(`Serving the views on ${w.url} · rebuilt on each save of the spec · ctrl-c to stop`);
     if (!opts['no-open']) openInBrowser(w.url);
     await new Promise((done) => process.once('SIGINT', () => { w.close(); done(); }));
@@ -163,7 +165,7 @@ async function view(args, { cwd, out, err }) {
   }
   const data = buildViews(root);
   const open = target.kind ? target : { kind: firstView(data) };
-  const page = writeViews(root, data, open);
+  const page = writeViews(root, data, open, { locale });
   summary(data);
   out(`  ${page}${target.kind ? ` · opens on ${target.kind}${target.id ? ` ${target.id}` : ''}` : ` · opens on ${open.kind}`}`);
   if (!opts['no-open'] && !process.env.CI) openInBrowser(page);

@@ -125,3 +125,17 @@ test('pedd check: without git, every loose item is the change\'s', async () => {
   const c = await run(['check', '--only', 'loose'], dir(f));
   assert.equal(c.code, 1);
 });
+
+test('FR-VEW-26: pedd view shows names in the prose\'s language, or in --locale', async () => {
+  const f = product();
+  f['workspace.yaml'] = 'project: acme\nlanguage: es\n';
+  f['spec/foundations/glossary.md'] = '---\ntitle: Glossary\ndescription: Glossary\nowner: Ana\nversion: "1.0"\nupdated: "2026-11-22"\n---\n\n## Jobs\n\n| Name | Is | Defined in | en | es |\n|---|---|---|---|---|\n| `draft` · `published` · `closed` | States | [`ENT-01`](domain/job-post.md) | | borrador · publicado · cerrado |\n| company | A role | [`ENT-01`](domain/job-post.md) | | empresa |\n';
+  const d = dir(f);
+  const es = await run(['view', 'states', 'ENT-01', '--format', 'mermaid'], d);
+  assert.equal(es.code, 0, es.err);
+  assert.match(es.out, /borrador/);
+  assert.match(es.out, /by empresa/);
+  assert.doesNotMatch((await run(['view', 'states', 'ENT-01', '--format', 'mermaid', '--locale', 'en'], d)).out, /borrador/);
+  assert.equal((await run(['view', '--no-open'], d)).code, 0);
+  assert.ok(readFileSync(join(d, '.pedd/view/index.html'), 'utf8').includes('"locale":"es"'));
+});

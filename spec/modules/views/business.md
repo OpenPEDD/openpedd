@@ -2,7 +2,7 @@
 title: The business's views
 description: pedd view — the glossary, the organization chart, each process in swimlanes, who uses which flow, and where the work with the client stands
 owner: Kevin
-version: "1.7"
+version: "1.8"
 updated: "2026-11-26"
 status: draft
 ---
@@ -75,7 +75,8 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 | `FR-VEW-23` | When a business use case lists `Includes` or `Extends`, or a step of its processes names a process of another business use case, the system shall draw in `use-cases` an `«include»` from it to the one it runs and an `«extend»` from the extension to its base, labelled with the condition | Who does what, and what each piece of the business always or sometimes runs, from the map alone, before any PRD ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-24` | When a name's `Defined in` links to a web address, the system shall take it as defined there and keep the link | A project's terms are defined once, in its industry's glossary ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-25` | The system shall build the `stages` view from the spec: per stage its state, its pieces with their files, what it delivers, who approves it, and what is next; stages 1 and 2 approved by a row of `foundations/business/stages.md`, stages 3 and 4 by each module's status | The client and the team see the same roadmap, and nobody ticks it by hand ([`DEC-31`](../../decisions/DEC-31-client-stages.md)) | Team · Client | `AC1` · `AC2` | F5 | `draft` |
-| `FR-VEW-26` | The system shall carry in `views.json` each Glossary name with its label per locale column, and a viewer shall show every name of a view (entity, state, field, role) by its label in the reader's locale, the name when it has none | A client reads the diagrams in their language while the spec and the code keep one name ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | Team · Client | `AC1` | F4 | `draft` |
+| `FR-VEW-26` | The system shall carry in `views.json` each Glossary name with its label per locale column, and a viewer shall show every name of a view (entity, state, field, role) by its label in the reader's locale, the name when it has none; `pedd view` opens in `--locale`, else the prose's `language`, and offers the other locales | A client reads the diagrams in their language while the spec and the code keep one name ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | Team · Client | `AC1` · `AC2` | F4 | `draft` |
+| `FR-VEW-27` | When a workspace declares a locale other than `en`, the system shall take as [loose](prd.md#loose-items), in `glossary`, each name with no label in it, each table with no column for it, and each name cell of several names with another count of labels | A name without its label reads in English in a client's diagram; `specify` writes it in the change that adds the name, and the check catches the one it missed ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-17` | When `--format mermaid` is given for these views, the system shall print `flowchart` lanes for `activity`, `usecase-beta` for `use-cases`, a `flowchart` tree for `org`, and a table for `glossary` | The same export as every view ([`FR-VEW-08`](prd.md#requirements)) | Team | `AC1` | F4 | `draft` |
 
 ## Permissions
@@ -99,4 +100,6 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 | `FR-VEW-25.AC1` | A product with its industry glossary linked and the as-is whole but for its documents, a row approving the diagnosis | `stages` opens | Industry `done`; Diagnosis `in progress`, *Documents in and out* missing and what is next naming it; the approval does not count until it is done |
 | `FR-VEW-25.AC2` | Diagnosis and project approved, the PRD of *jobs* `specified` and of *billing* `draft` with its flows | `stages` opens | Specification `done` and current, *jobs* approved, and what is next is the client approving the PRD of *billing* |
 | `FR-VEW-26.AC1` | A Glossary with `Job Post` (`es`: *Aviso*), `open` (`es`: *abierto*) and `Recruiter` with no `es` | The `states` view opens in Spanish | *Aviso* in the list, the state *abierto*, the transition by *Recruiter*; in English, the names as written, or each `en` label |
+| `FR-VEW-26.AC2` | `language: es` in `workspace.yaml`, and the same Glossary | `pedd view states` | The page opens with *abierto*, a selector offers `en`; the state's detail shows `open` as written in the spec; `--locale en` and `--format mermaid` follow the same locale |
+| `FR-VEW-27.AC1` | `locales: [en, es]`, *Recruiter* with no `es`, `` `open` · `closed` `` with only *abierto* | `pedd check` runs on a change that adds *Recruiter* | It fails on *Recruiter* and on the pair; with `locales: [en]`, nothing is loose |
 | `FR-VEW-17.AC1` | The `use-cases` view | `pedd view use-cases --format mermaid` | A `usecase-beta` diagram |

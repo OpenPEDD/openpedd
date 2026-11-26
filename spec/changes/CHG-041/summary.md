@@ -19,7 +19,9 @@ in Spanish. The interface was translated; the names come from each client's spec
 | The `Glossary` foundation holds the locale columns | [`ENT-02`](../../foundations/domain/foundation.md) |
 | `init` asks the locales, proposing the prose's language, and writes a Glossary column for each | [`ENT-16`](../../foundations/domain/workspace.md), [workspace](../../modules/workspace/prd.md#main-flow) |
 | `specify` writes the label of every name a change adds | [specify](../../modules/specify/prd.md) |
-| `views.json` carries the labels and a viewer shows them by the reader's locale | [`FR-VEW-26`](../../modules/views/business.md#requirements) |
+| `views.json` carries the labels and a viewer shows them by the reader's locale; `pedd view` opens in the prose's language or `--locale` | [`FR-VEW-26`](../../modules/views/business.md#requirements) |
+| A name with no label in a declared locale is loose, so `pedd check` fails on the change that adds it | [`FR-VEW-27`](../../modules/views/business.md#requirements) |
 
-Built: `@openpedd/reader` 0.15.0 (`names` in `viewData`), with its test; the template's Glossary has
-an `en` column. Each client's labels are written in the client's own spec repo.
+Built: `@openpedd/reader` 0.16.0 (`names` in `viewData`, `localizeViews`, the page's locale selector and
+the `unlabelled` loose item) and `@openpedd/cli` 0.13.0 (`pedd view --locale`), with their tests; the
+template's Glossary has an `en` column. Each client's labels are written in the client's own spec repo.

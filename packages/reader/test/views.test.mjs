@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { KINDS, firstView, readSpec, renderViews, scopeView, toMermaid, viewData } from '../src/index.mjs';
+import { KINDS, firstView, localizeViews, namesLocales, readSpec, renderViews, scopeView, toMermaid, viewData } from '../src/index.mjs';
+import { localizeLabel } from '../src/views/names.mjs';
 import { readFiles } from '../src/files.mjs';
 import { product } from './views-fixture.mjs';
 
@@ -384,6 +385,56 @@ test('FR-VEW-26.AC1: each Glossary name carries its label per locale column, and
   // The prose's language counts as a locale; a column of a locale not declared is not a label.
   assert.deepEqual(Object.keys(build(f, { workspace: { language: 'es' } }).names.open), ['en', 'es']);
   assert.deepEqual(Object.keys(build(f).names.open), ['en']);
+});
+
+const withLabels = () => {
+  const f = withBusiness();
+  f['spec/foundations/glossary.md'] = f['spec/foundations/glossary.md'].replace(`| Name | Is | Defined in |
+|---|---|---|
+| Job post | What a company publishes | [\`ENT-01\`](domain/job-post.md) |`, `| Name | Is | Defined in | en | es |
+|---|---|---|---|---|
+| Job Post | What a company publishes | [\`ENT-01\`](domain/job-post.md) | Job post | Aviso |
+| \`draft\` · \`published\` | States of a job post | [\`ENT-01\`](domain/job-post.md) | | borrador · publicado |
+| \`title\` | What the role is called | [\`ENT-01\`](domain/job-post.md) | | título |
+| company | A role | [\`ENT-01\`](domain/job-post.md) | | empresa |`);
+  return f;
+};
+
+test('FR-VEW-26.AC2: the views by the labels of a locale; a name with none as written, the IDs unchanged', () => {
+  const d = build(withLabels(), { workspace: { language: 'es' } });
+  const es = localizeViews(d, 'es');
+  const states = es.views.states.nodes.filter((n) => n.group === 'ENT-01' || String(n.id).startsWith('ENT-01:'));
+  assert.ok(states.some((n) => n.id === 'ENT-01:draft' && n.label === 'borrador' && n.written === 'draft'));
+  assert.ok(states.some((n) => n.id === 'ENT-01:closed' && n.label === 'closed' && !('written' in n)));
+  const t = es.views.states.edges.find((e) => e.from === 'ENT-01:draft');
+  assert.equal(t.label, 'The company publishes it · by empresa');
+  const post = es.views.entities.nodes.find((n) => n.id === 'ENT-01');
+  assert.equal(post.label, 'Aviso');
+  assert.ok(post.fields.some((x) => x.name === 'título' && x.written === 'title'));
+  assert.equal(localizeViews(d, 'en').views.entities.nodes.find((n) => n.id === 'ENT-01').label, 'Job post');
+  // Guards are names; the prose around them is the spec's.
+  assert.equal(localizeLabel(d.names, 'es', 'When company leaves [title = draft] · by company'), 'When company leaves [título = borrador] · by empresa');
+  const bare = build(product());
+  assert.equal(localizeViews(bare, 'es'), bare);
+  assert.deepEqual(namesLocales(d.names), ['en', 'es']);
+  // The page carries the locale and the code that applies it, and opens in it.
+  const html = renderViews(d, { locale: 'es' });
+  assert.ok(html.includes('"locale":"es"'));
+  assert.match(html, /function localizeViews\(/);
+  assert.doesNotMatch(html, /^export /m);
+  assert.ok(!renderViews(d).includes('"locale"'));
+});
+
+test('FR-VEW-27.AC1: a name with no label in a declared locale is loose, and none is owed in en', () => {
+  const f = withLabels();
+  assert.deepEqual(kinds(build(f, { workspace: { locales: ['en'] } }), 'glossary'), []);
+  assert.deepEqual(kinds(build(f, { workspace: { language: 'es' } }), 'glossary'), []);
+  f['spec/foundations/glossary.md'] = f['spec/foundations/glossary.md'].replace('| empresa |', '| |').replace('borrador · publicado', 'borrador');
+  const d = build(f, { workspace: { locales: ['en', 'es'] } });
+  assert.deepEqual(kinds(d, 'glossary'), ['unlabelled draft · published', 'unlabelled company']);
+  assert.match(d.loose.find((l) => l.id === 'company').message, /no `es` label/);
+  // A locale the Glossary has no column for is one item per table.
+  assert.deepEqual(kinds(build(f, { workspace: { locales: ['en', 'pt'] } }), 'glossary').filter((k) => / Jobs$/.test(k)), ['unlabelled Jobs']);
 });
 
 test('FR-VEW-14.AC1: the org view is the reporting tree, with each manager\'s span of control', () => {

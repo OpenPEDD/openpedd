@@ -2,7 +2,7 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.17"
+version: "1.18"
 updated: "2026-11-26"
 ---
 
@@ -113,7 +113,7 @@ Branches: one per change, with design, architecture and implementation branches 
 | `pedd check` | Runs the checks |
 | `pedd status` | Where the product stands; `--stale`, `--cost`, `--time`, `--adoption`, `--landing` |
 | `pedd trace <id>` | One requirement's chain |
-| `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid` |
+| `pedd view` | Every view of the spec as a map; `<kind> <id>` scopes it, `--watch`, `--format mermaid`, `--locale` for the names' labels |
 | `pedd impact` | What a change affects; `--tests` selects tests |
 | `pedd sweep <change>` | Every open question of a change, at once, with recommendations: the heavy asked, the rest shown decided; `answer "…"` takes the one reply; `--accept-recommended`, `--ask-all` |
 | `pedd records <change> commit\|pr\|tasks\|report\|accept` | That nothing went unrecorded: each task commit's and the implementation PR's Spec section, the tasks ticked with their commit, the report, every delta decided ([pipeline](foundations/architecture/pipeline.md#nothing-left-unrecorded)) |

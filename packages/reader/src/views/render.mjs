@@ -9,6 +9,7 @@ let parts;
 const load = () => (parts ??= {
   page: readFileSync(new URL('./page.html', import.meta.url), 'utf8'),
   app: readFileSync(new URL('./mount.mjs', import.meta.url), 'utf8').replace(/^import .*$/gm, '').replace(/^export function /m, 'function '),
+  names: readFileSync(new URL('./names.mjs', import.meta.url), 'utf8').replace(/^export /gm, ''),
   css: readFileSync(new URL('./views.css', import.meta.url), 'utf8'),
   elk: readFileSync(require.resolve('elkjs/lib/elk.bundled.js'), 'utf8'),
 });
@@ -25,16 +26,18 @@ const script = (s) => s.replace(/<\/script/gi, '<\\/script');
  * @param opts.open       { kind, id, depth }: the view and scope it opens on; the first with loose items by default.
  * @param opts.sourceBase what a node's `at` is joined to for its link: `../../` from `.pedd/view/`, or a URL.
  * @param opts.live       true when served by `pedd view --watch`: the page reloads when the views are rebuilt.
+ * @param opts.locale     the locale the page shows the spec's names in, by their Glossary label (FR-VEW-26).
  */
 export function renderViews(data, opts = {}) {
-  const { page, app, elk, css } = load();
-  const options = { open: opts.open ?? null, sourceBase: opts.sourceBase ?? '../../', live: !!opts.live };
+  const { page, app, names, elk, css } = load();
+  const options = { open: opts.open ?? null, sourceBase: opts.sourceBase ?? '../../', live: !!opts.live, ...(opts.locale ? { locale: opts.locale } : {}) };
   const title = `${data.product ? `${data.product} · ` : ''}Project views`;
   return page
     .replace('__TITLE__', () => title.replace(/[<&]/g, (c) => (c === '<' ? '&lt;' : '&amp;')))
     .replace('/*__CSS__*/', () => css.replace(/<\/style/gi, '<\\/style'))
     .replace('/*__ELK__*/', () => script(elk))
     .replace('/*__SCOPE__*/', () => script(scopeView.toString()))
+    .replace('/*__NAMES__*/', () => script(names))
     .replace('/*__APP__*/', () => script(app))
     .replace('"__DATA__"', () => inline(data))
     .replace('"__OPTIONS__"', () => inline(options));

@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, statSync, watch, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, sep } from 'node:path';
-import { KINDS, firstView, readSpec, renderViews, scopeView, toMermaid, viewData } from '@openpedd/reader';
+import { KINDS, firstView, localizeViews, readSpec, renderViews, scopeView, toMermaid, viewData } from '@openpedd/reader';
 import { readFiles } from '@openpedd/reader/files';
 import { viewSources } from './sources.mjs';
 import { readWorkspace } from './workspace.mjs';
@@ -20,12 +20,22 @@ export function buildViews(root) {
   return viewData(model, viewSources(root, ws, files));
 }
 
+/**
+ * The locale the views show the spec's names in (FR-VEW-26): `--locale`, else the prose's `language` of
+ * workspace.yaml, else `en`.
+ */
+export function viewLocale(root, locale) {
+  if (locale) return String(locale).toLowerCase();
+  const language = readWorkspace(root).data.language;
+  return typeof language === 'string' && language ? language.toLowerCase() : 'en';
+}
+
 /** Writes `views.json` and `index.html` to `.pedd/view/`; gives the page's path. */
-export function writeViews(root, data, open, { live = false } = {}) {
+export function writeViews(root, data, open, { live = false, locale = null } = {}) {
   const dir = join(root, '.pedd', 'view');
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'views.json'), `${JSON.stringify(data, null, 2)}\n`);
-  writeFileSync(join(dir, 'index.html'), renderViews(data, { open, sourceBase: live ? '/' : '../../', live }));
+  writeFileSync(join(dir, 'index.html'), renderViews(data, { open, sourceBase: live ? '/' : '../../', live, locale }));
   return join(dir, 'index.html');
 }
 
@@ -41,13 +51,13 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.json': 'application/json'
  * `--watch`: serves the page on localhost and rebuilds the views each time a file of the spec is saved;
  * the open page reloads (FR-VEW-07). Gives { url, rebuilt, close }; `rebuilt` counts the rebuilds.
  */
-export async function watchViews(root, { open = null, port = 0, onBuild = () => {} } = {}) {
+export async function watchViews(root, { open = null, port = 0, locale = null, onBuild = () => {} } = {}) {
   const ws = readWorkspace(root);
   const clients = new Set();
   const state = { rebuilt: 0 };
   const build = () => {
     const data = buildViews(root);
-    writeViews(root, data, open, { live: true });
+    writeViews(root, data, open, { live: true, locale });
     onBuild(data);
     for (const res of clients) res.write(`data: ${state.rebuilt}\n\n`);
   };
@@ -90,8 +100,9 @@ export function viewTarget(rest, opts) {
   return { kind: kind || null, id: id.join(' ') || null, depth: Number(opts.depth) || 1 };
 }
 
-/** The text `--format mermaid` prints for one view, scoped. */
-export function mermaidOf(data, { kind, id, depth }) {
+/** The text `--format mermaid` prints for one view, scoped, its names by their label in `locale`. */
+export function mermaidOf(data, { kind, id, depth }, locale = null) {
+  data = localizeViews(data, locale);
   const v = id ? scopeView(data.views[kind], id, depth) : data.views[kind];
   if (id && v.scope && !v.scope.found) throw new ViewError(`pedd view ${kind} ${id}: nothing in this view is ${id}`);
   return toMermaid(v, kind);

@@ -555,3 +555,6 @@
 {"path": "modules/views/business.md", "version": "1.6 → 1.7", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "FR-VEW-26: names shown by their label in the reader's locale"}
 {"path": "capabilities.md", "version": "1.16 → 1.17", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Labels per locale in the Glossary"}
 {"path": "changes/CHG-041/summary.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "Summary of the change"}
+{"path": "modules/views/business.md", "version": "1.7 → 1.8", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "pedd view by locale; a missing label is loose"}
+{"path": "modules/views/prd.md", "version": "1.5 → 1.6", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "A name with no label in a declared locale is a loose item"}
+{"path": "capabilities.md", "version": "1.17 → 1.18", "date": "2026-11-26", "change": "CHG-041", "story": null, "stage": "specify", "summary": "pedd view --locale"}

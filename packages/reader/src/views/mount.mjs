@@ -2,6 +2,7 @@
 // with ELK on every render: no position is stored. `renderViews` inlines it into one page; an app imports
 // it from `@openpedd/reader/mount` and mounts it into one element, with `views.css`.
 import { scopeView } from './scope.mjs';
+import { localizeViews, namesLocales } from './names.mjs';
 
 /**
  * Draws every view into `root`.
@@ -15,12 +16,19 @@ import { scopeView } from './scope.mjs';
  * @param options.diff      what `diffViews(older, data)` gives: added and changed nodes marked, removed ones listed.
  * @param options.labels    the page's words, by key, in the person's language.
  * @param options.hash      false when the host keeps the state in its own URL; `onNavigate(state)` is told.
+ * @param options.locale    the locale to show the spec's names in, by their Glossary label (FR-VEW-26); the page
+ *                          offers the others `data.names` has. Absent: the names as `data` gives them.
  */
 export function mountViews(root, data, options) {
   'use strict';
   options = options || {};
   const ELK = options.ELK ?? globalThis.ELK;
   const L = (key, fallback) => (options.labels && options.labels[key]) || fallback;
+  // The names by their label in the reader's locale (DEC-33); `raw` keeps them as written.
+  const raw = data;
+  const locales = options.locale && raw.names ? namesLocales(raw.names) : [];
+  let locale = options.locale || null;
+  data = localizeViews(raw, locale);
   const useHash = options.hash !== false;
   if (options.sourceBase == null) options = { ...options, sourceBase: '' };
   const KINDS = ['stages', 'decisions', 'entities', 'states', 'security', 'context', 'code', 'business', 'org', 'activity', 'prd', 'use-cases', 'glossary', 'trace', 'changes'];
@@ -88,6 +96,7 @@ export function mountViews(root, data, options) {
     side.replaceChildren(
       el('h1', { text: data.product ? `${data.product} · views` : 'Project views' }),
       el('p', { class: 'meta', text: [data.commit && `commit ${data.commit}`, data.loose ? `${allLoose.length} ${L('loose', 'loose')}` : null].filter(Boolean).join(' · ') }),
+      locales.length > 1 ? el('label', { class: 'locale' }, `${L('namesIn', 'Names in')} `, el('select', { 'aria-label': L('namesIn', 'Names in'), on: { change: (e) => { locale = e.target.value; data = localizeViews(raw, locale); draw(); } } }, locales.map((l) => el('option', { value: l, selected: l === locale, text: l })))) : null,
       ...KINDS.map((k) => {
         const v = data.views[k];
         if (!v) return null;
@@ -268,17 +277,18 @@ export function mountViews(root, data, options) {
     const view = data.views[state.kind];
     const n = view.nodes.find((x) => x.id === state.selected);
     if (!n) { detail.replaceChildren(el('p', { class: 'hint', text: `${SHOWS[state.kind]}. Click an item to read it as written.` })); return; }
-    const skip = new Set(['id', 'label', 'type', 'at', 'line', 'fields']);
+    const skip = new Set(['id', 'label', 'type', 'at', 'line', 'fields', 'written']);
     const linkTo = (id) => { const t = view.nodes.find((x) => x.id === id); return el('button', { class: 'linkish', on: { click: () => select(id) }, text: t ? t.label : id }); };
     const out = view.edges.filter((e) => e.from === n.id), inc = view.edges.filter((e) => e.to === n.id);
     detail.replaceChildren(...[
       el('h3', { text: n.label }),
       /^[a-z]+:/.test(n.id) ? el('div', { class: 'id', text: n.type }) : el('div', { class: 'id', text: `${n.id} · ${n.type}` }),
+      n.written ? el('div', { class: 'id' }, `${L('writtenAs', 'In the spec')}: `, el('code', { text: n.written })) : null,
       ...looseOf(state.kind).filter((l) => l.id === n.id).map((l) => el('div', { class: 'warn', text: `${L('looseOne', 'Loose')}: ${l.message} (${l.at}:${l.line})` })),
       live[n.id] ? el('div', { class: `live-note live-${live[n.id].state}`, text: live[n.id].label || live[n.id].state }) : null,
       options.links ? (() => { const ls = options.links(n) || []; return ls.length ? el('ul', { class: 'links' }, ls.map((x) => el('li', {}, el('a', { href: x.href, text: x.label })))) : null; })() : null,
       el('dl', {}, Object.entries(n).filter(([k, v]) => !skip.has(k) && v != null && v !== '' && !(Array.isArray(v) && !v.length)).flatMap(([k, v]) => [el('dt', { text: k }), el('dd', { text: Array.isArray(v) ? v.join(' · ') : String(v) })])),
-      n.fields && n.fields.length ? el('table', {}, el('thead', {}, el('tr', {}, el('th', { text: 'Field' }), el('th', { text: 'Type' }), el('th', { text: 'What it holds' }))), el('tbody', {}, n.fields.map((f) => el('tr', {}, el('td', {}, el('code', { text: f.name })), el('td', { text: f.type || '' }), el('td', { text: f.holds }))))) : null,
+      n.fields && n.fields.length ? el('table', {}, el('thead', {}, el('tr', {}, el('th', { text: 'Field' }), el('th', { text: 'Type' }), el('th', { text: 'What it holds' }))), el('tbody', {}, n.fields.map((f) => el('tr', {}, el('td', {}, el('code', { text: f.name, title: f.written || null })), el('td', { text: f.type || '' }), el('td', { text: f.holds }))))) : null,
       n.at ? el('p', {}, el('a', { href: options.sourceBase + n.at, text: `Open ${n.at}` }), el('span', { class: 'hint', text: ` · line ${n.line}` })) : null,
       out.length ? el('div', {}, el('strong', { text: 'To' }), el('ul', {}, out.map((e) => el('li', {}, `${e.type}${e.label ? ` (${e.label})` : ''} → `, linkTo(e.to))))) : null,
       inc.length ? el('div', {}, el('strong', { text: 'From' }), el('ul', {}, inc.map((e) => el('li', {}, linkTo(e.from), ` → ${e.type}${e.label ? ` (${e.label})` : ''}`)))) : null,
@@ -289,5 +299,5 @@ export function mountViews(root, data, options) {
   if (useHash) window.addEventListener('hashchange', () => { fromHash(); draw(); });
   if (options.live && typeof EventSource !== 'undefined') new EventSource('/events').onmessage = () => location.reload();
   draw();
-  return { go, data, destroy: () => root.replaceChildren() };
+  return { go, get data() { return data; }, destroy: () => root.replaceChildren() };
 }

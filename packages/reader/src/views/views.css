@@ -25,6 +25,7 @@ button{font:inherit;color:inherit}
 .side{border-right:1px solid var(--line);background:var(--surface);overflow:auto;padding:14px 10px}
 .side h1{font-size:1rem;margin:2px 8px 2px}
 .side .meta{font-size:.75rem;color:var(--muted);margin:0 8px 12px}
+.side .locale{display:block;font-size:.75rem;color:var(--muted);margin:-4px 8px 12px}
 .side button{display:flex;width:100%;align-items:center;gap:8px;border:0;background:none;text-align:left;padding:7px 8px;border-radius:7px;cursor:pointer}
 .side button[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .side button.empty{color:var(--muted)}

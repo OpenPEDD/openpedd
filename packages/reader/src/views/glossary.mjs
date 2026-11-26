@@ -11,6 +11,7 @@ export function build(model, sources) {
   const doc = c.docOf.get(`${c.root}/foundations/glossary.md`) ?? c.foundation('Glossary');
   if (!doc || !doc.tables.some((t) => t.rows.length)) return { view: view({ sources: [`${c.root}/foundations/glossary.md`], empty: { artifact: 'Glossary', fill: 'the `Glossary`: one table per group, a name in its first column, what it is, and where it is defined' } }), loose: [] };
   const matrix = [], out = [];
+  const owed = localesOf(sources?.workspace).filter((l) => l !== 'en');
   for (const t of doc.tables.filter((x) => x.rows.length)) {
     const title = t.section?.text || 'Names';
     if (isOld(t)) {
@@ -19,6 +20,7 @@ export function build(model, sources) {
     }
     const where = colOf(t.header, /^defined in$/i);
     matrix.push({ id: `glossary:${title}`, title, group: 'names', rows: t.rows.map((r) => clean(r.cells[0])), cols: t.header.slice(1).map(clean), cells: t.rows.map((r) => r.cells.slice(1).map(clean)), at: `${doc.path}${t.section ? `#${t.section.anchor}` : ''}`, line: t.line });
+    out.push(...unlabelled(doc, t, title, owed));
     if (where < 0) continue;
     for (const r of t.rows) {
       const cell = r.cells[where] ?? '';
@@ -30,6 +32,29 @@ export function build(model, sources) {
     }
   }
   return { view: view({ sources: [doc.path], matrix }), loose: out };
+}
+
+/**
+ * DEC-33, FR-VEW-27: each name owes a label in every locale the workspace declares but `en`, where a name
+ * with none reads as written. A table with no column for a locale is one loose item; else each name whose
+ * cell is empty, or with a label count that is not its name count (`A · B`), is one.
+ */
+function unlabelled(doc, t, title, owed) {
+  const out = [];
+  const head = t.header.map((h) => clean(h).toLowerCase());
+  const add = (id, line, message) => out.push(loose('glossary', 'unlabelled', { id, says: id, path: doc.path, line, message }));
+  for (const locale of owed) {
+    const i = head.indexOf(locale);
+    if (i <= 0) { add(title, t.line, `has no \`${locale}\` column: its names read as written in \`${locale}\``); continue; }
+    for (const r of t.rows) {
+      const said = clean(r.cells[0]).split(/\s+·\s+/).filter(Boolean);
+      if (!said.length) continue;
+      const labels = clean(r.cells[i] ?? '').split(/\s+·\s+/).filter(Boolean);
+      if (!labels.length) add(clean(r.cells[0]), r.line, `has no \`${locale}\` label: it reads as written`);
+      else if (said.length > 1 && labels.length !== said.length) add(clean(r.cells[0]), r.line, `names ${said.length}, its \`${locale}\` label ${labels.length}: one label per name, in the same order`);
+    }
+  }
+  return out;
 }
 
 /** The locales a Glossary may have a column for: `en`, the workspace's `locales` and its prose `language` (DEC-33). */
