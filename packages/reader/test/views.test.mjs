@@ -576,3 +576,13 @@ test('FR-VEW-26.AC3: a process with its ID in front reads by its label', async (
   const names = { 'Take the supermarket orders': { es: 'Tomar los pedidos de los súper' } };
   assert.equal(labelOf(names, 'es', 'PRC-01 · Take the supermarket orders'), 'PRC-01 · Tomar los pedidos de los súper');
 });
+
+test('FR-VEW-14.AC2: a role that answers to two reports to the first, and also to the second, a dotted line', () => {
+  const f = withBusiness();
+  f['spec/foundations/business-map/as-is.md'] = f['spec/foundations/business-map/as-is.md'].replace('| Product engineer | 2 | Founder |', '| Product engineer | 2 | Founder · Seller |');
+  const v = build(f).views.org;
+  assert.ok(v.edges.some((e) => e.from === 'org:as-is:Product engineer' && e.to === 'org:as-is:Founder' && e.type === 'reports to'));
+  assert.ok(v.edges.some((e) => e.from === 'org:as-is:Product engineer' && e.to === 'org:as-is:Seller' && e.type === 'also reports to'));
+  assert.equal(v.nodes.find((n) => n.id === 'org:as-is:Founder').span, 2);
+  assert.equal(v.nodes.find((n) => n.id === 'org:as-is:Seller').span, undefined);
+});

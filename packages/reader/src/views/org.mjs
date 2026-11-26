@@ -18,13 +18,16 @@ export function build(model, sources) {
     for (const p of f.people) {
       const role = clean(p.role);
       if (!role) continue;
-      const boss = clean(p.reports_to ?? '');
-      const span = f.people.filter((x) => clean(x.reports_to ?? '') === role).length;
+      // Answering to two (`A · B`): the first is its line; the rest, a dotted line (functional reporting).
+      const [boss = '', ...also] = clean(p.reports_to ?? '').split(/\s+·\s+/);
+      const span = f.people.filter((x) => clean(x.reports_to ?? '').split(/\s+·\s+/)[0] === role).length;
       const status = side === 'to-be' && bm.asIs && !asIs.has(role) ? 'new' : side === 'as-is' && bm.toBe && toBe.size && !toBe.has(role) ? 'gone' : undefined;
       nodes.push({ id: `org:${side}:${role}`, type: 'role', label: `${role} · ${side}`, status, group: side, at: f.path, line: line(role), how_many: clean(p.how_many ?? '') || undefined, does: clean(p.does ?? '') || undefined, span: span || undefined });
       if (!boss || boss === '—' || boss === '-') continue;
-      if (!roles.has(boss)) { out.push(loose('org', 'unknown-role', { id: `org:${side}:${role}`, says: role, path: f.path, line: line(role), message: `reports to \`${boss}\`, a role the ${side} does not have` })); continue; }
-      edges.push({ from: `org:${side}:${role}`, to: `org:${side}:${boss}`, type: 'reports to', at: f.path, line: line(role) });
+      for (const [i, b] of [boss, ...also].entries()) {
+        if (!roles.has(b)) { out.push(loose('org', 'unknown-role', { id: `org:${side}:${role}`, says: role, path: f.path, line: line(role), message: `reports to \`${b}\`, a role the ${side} does not have` })); continue; }
+        edges.push({ from: `org:${side}:${role}`, to: `org:${side}:${b}`, type: i ? 'also reports to' : 'reports to', at: f.path, line: line(role) });
+      }
     }
   }
   return { view: view({ sources: sides.map(([, f]) => f.path), nodes, edges }), loose: out };
