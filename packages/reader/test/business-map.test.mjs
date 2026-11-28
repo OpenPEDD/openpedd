@@ -188,3 +188,32 @@ test('readBusinessMap: «include» and «extend» between business use cases, wr
   assert.equal(m.asIs.rules[0].comes_from, 'Ley 22.400');
   assert.equal(m.asIs.documents[0].how_many, '40 a month');
 });
+
+test('readBusinessMap: a step names a process several business use cases hold: no «include» is inferred (FR-VEW-23)', () => {
+  const text = `## Business use cases
+
+| BUC | Business use case | Kind | Business actor | Processes |
+|---|---|---|---|---|
+| \`BUC-01\` | Supply a supermarket | core | Supermarket | \`PRC-01\` · \`PRC-09\` |
+| \`BUC-02\` | Sell at the market | core | Stall | \`PRC-02\` · \`PRC-09\` · \`PRC-08\` |
+| \`BUC-03\` | Import goods | core | Supplier | \`PRC-03\` · \`PRC-08\` |
+
+## Processes
+
+| PRC | Process | Roles |
+|---|---|---|
+| \`PRC-01\` | Take the orders | Supervisor |
+| \`PRC-02\` | Sell | Seller |
+| \`PRC-03\` | Receive | Worker |
+| \`PRC-08\` | Count the stock | Worker |
+| \`PRC-09\` | Keep the accounts | Finance |
+
+### PRC-09 · Keep the accounts
+
+| Step | Role | Does |
+|---|---|---|
+| 1 | Finance | Runs \`PRC-08\` before closing the month |
+`;
+  const m = readBusinessMap(new Map([['spec/foundations/business-map/as-is.md', text]]));
+  for (const u of m.useCases) assert.deepEqual(u.includes, [], u.id);
+});
