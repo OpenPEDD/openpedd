@@ -155,12 +155,16 @@ export function readBusinessMap(files, prefix = 'spec/') {
   const ucRows = [...(map.asIs?.useCases ?? []), ...(map.toBe?.useCases ?? [])].map(useCaseOf).filter(Boolean);
   map.useCases = [...new Map(ucRows.map((u) => [u.id, u])).values()];
   // «include» from the processes too: a step that names a process of another business use case runs
-  // it, so the business use case of the step includes that one (MKT-16).
+  // it, so the business use case of the step includes that one (MKT-16). Only when each process is of
+  // one business use case alone: a process several hold, such as the accounts, says nothing about which
+  // includes which, and every pair of them would be drawn.
   const ucOf = (prc) => map.useCases.filter((u) => u.processes.includes(prc));
   for (const p of map.asIs?.processes ?? []) for (const t of p.tables) for (const row of t.rows) {
     for (const named of (row.does || '').match(/\bPRC-\d+\b/g) ?? []) {
       if (named === p.id) continue;
-      for (const from of ucOf(p.id)) for (const to of ucOf(named)) if (to.id !== from.id && !from.includes.includes(to.id)) from.includes.push(to.id);
+      const [from, ...more] = ucOf(p.id), [to, ...others] = ucOf(named);
+      if (!from || !to || more.length || others.length || to.id === from.id || from.includes.includes(to.id)) continue;
+      from.includes.push(to.id);
     }
   }
   return map;
