@@ -595,5 +595,6 @@
 {"path": "modules/verify/prd.md", "version": "1.10 → 1.11", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "Security's reading points to ARCH-14"}
 {"path": "modules/workspace/prd.md", "version": "1.13 → 1.14", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "adopt offers a whole-repository security audit"}
 {"path": "changes/CHG-042/summary.md", "version": "1.0", "date": "2026-11-26", "change": "CHG-042", "story": null, "stage": "specify", "summary": "Summary of CHG-042"}
+{"path": "modules/views/prd.md", "version": "1.11 → 1.12", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "security: a short column reads as the role its legend names"}
 {"path":"modules/map/prd.md","version":"2.6 → 2.7","date":"2026-11-28","change":null,"story":null,"stage":"specify","summary":"An «include» from a step only between processes of one business use case each"}
 {"path":"modules/views/business.md","version":"1.10 → 1.11","date":"2026-11-28","change":null,"story":null,"stage":"specify","summary":"FR-VEW-23: no «include» inferred from a process several business use cases hold"}

@@ -2,8 +2,8 @@
 title: views
 description: pedd view — every project's spec drawn as maps, generated on every change, and the check that fails on what is loose
 owner: Kevin
-version: "1.11"
-updated: "2026-11-26"
+version: "1.12"
+updated: "2026-11-28"
 status: draft
 ---
 
@@ -45,7 +45,7 @@ no other edit. What each source table holds is defined where its artifact is.
 | `decisions` | Every `DEC` and `ADR`: its status, what supersedes what, the IDs it cites and the modules they belong to | The decision files | [Decisions](../../decisions/README.md#a-decision) |
 | `entities` | Each entity with its fields; a field that names another entity is a relation; the modules whose PRDs cite it | The entity files | [Domain](../../foundations/domain/index.md#how-an-entity-is-written) |
 | `states` | One state machine per entity | The entity's `States` and `Transitions` | [Domain](../../foundations/domain/index.md#how-an-entity-is-written) |
-| `security` | Roles and permissions, and what protects each table | `Roles & Permissions`, `Security Policy`, or files `workspace.yaml` names | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read) |
+| `security` | Who does what, what guards each table; a short column is its legend's role | `Roles & Permissions`, `Security Policy`, or files `workspace.yaml` names | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read) |
 | `context` | The architecture, C4 levels 1 and 2: the system, who uses it, its parts, the services each talks to | `workspace.yaml` components, `.pedd/stack.json`, `Integrations` | [`ENT-02`](../../foundations/domain/foundation.md#tables-the-views-read), [`ENT-16`](../../foundations/domain/workspace.md) |
 | `code` | Modules, packages and their main symbols, each linked to the requirements anchored in it | The code index | [`ARCH-19`](../../foundations/architecture/code-index.md) |
 | `business` | Roles × business processes, as-is and to-be, each process with its mark and the module that takes it | The `Business Map` | [map](../map/prd.md#business-mode) |
