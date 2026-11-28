@@ -4,7 +4,7 @@ description: How a module and its PRDs are written
 owner: <owner>
 version: "1.3"
 updated: "2026-11-23"
-source: spec/modules/README.md@1.5
+source: spec/modules/README.md@1.6
 ---
 
 Each folder here is a [`Module`](https://github.com/openpedd/openpedd/blob/main/spec/foundations/domain/module.md): a part of the product that

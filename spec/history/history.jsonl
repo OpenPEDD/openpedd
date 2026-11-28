@@ -598,3 +598,5 @@
 {"path": "modules/views/prd.md", "version": "1.11 → 1.12", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "security: a short column reads as the role its legend names"}
 {"path":"modules/map/prd.md","version":"2.6 → 2.7","date":"2026-11-28","change":null,"story":null,"stage":"specify","summary":"An «include» from a step only between processes of one business use case each"}
 {"path":"modules/views/business.md","version":"1.10 → 1.11","date":"2026-11-28","change":null,"story":null,"stage":"specify","summary":"FR-VEW-23: no «include» inferred from a process several business use cases hold"}
+{"path": "modules/views/document.md", "version": "1.0", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "A PRD as a document: its sections and what each lacks (FR-VEW-33)"}
+{"path": "modules/README.md", "version": "1.5 → 1.6", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "views lists its document PRD"}
