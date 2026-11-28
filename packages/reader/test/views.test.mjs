@@ -605,3 +605,9 @@ test('RULE-31: two entities that hold many of each other are loose until an asso
   f['spec/foundations/domain/invoice.md'] = f['spec/foundations/domain/invoice.md'].replace('| `posts` | ENT-01[] |', '| `post` | ENT-01 |');
   assert.deepEqual(kinds(build(f), 'entities').filter((k) => k.startsWith('many-to-many')), []);
 });
+
+test('security: a column written short reads as the role its legend names, in the foundation and in a PRD', async () => {
+  const { abbreviationsOf } = await import('../src/views/security.mjs');
+  assert.deepEqual(abbreviationsOf('Columns: **Ops** Operations partner · **Fin** Finance\npartner · **PW** Plant worker.'), { Ops: 'Operations partner', Fin: 'Finance partner', PW: 'Plant worker' });
+  assert.deepEqual(abbreviationsOf('Nothing short here.'), {});
+});

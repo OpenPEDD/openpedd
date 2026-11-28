@@ -3,7 +3,18 @@
 import { at, clean, familyOf, loose, rowsOf, tableUnder, view } from './common.mjs';
 import { prep } from './prep.mjs';
 
-/** The permissions of `Roles & Permissions`: { roles, actions, cells: action → role → value, at, lines }. */
+/**
+ * A column written short, as the document's own legend says it: `**Ops** Operations partner · **Fin** …`,
+ * a bold abbreviation and the role it stands for, up to the next `·` or the end of the sentence.
+ */
+export function abbreviationsOf(text) {
+  const flat = String(text || '').replace(/\s+/g, ' ');
+  const out = {};
+  for (const m of flat.matchAll(/\*\*([A-Za-z][\w-]{0,7})\*\*\s+([^·*.]+?)\s*(?=·|\.(?:\s|$)|$)/g)) out[m[1]] = m[2].trim();
+  return out;
+}
+
+/** The permissions of `Roles & Permissions`: { roles, actions, cells: action → role → value, at, lines, roleOf }. */
 export function permissionsOf(c) {
   const file = c.sources.workspace?.views?.security?.permissions;
   if (file?.path && c.sources.files?.has(file.path)) return fromFile(file.path, file.format, c.sources.files.get(file.path));
@@ -11,7 +22,10 @@ export function permissionsOf(c) {
   if (!doc) return null;
   const t = tableUnder(doc, 'Permissions') ?? doc.tables.find((x) => /^action$/i.test(clean(x.header[0])));
   if (!t) return null;
-  const roles = t.header.slice(1).map(clean);
+  // A short column is the role its legend names, so the views and the Glossary call it by its name.
+  const short = abbreviationsOf(doc.text);
+  const roleOf = (h) => short[clean(h)] ?? clean(h);
+  const roles = t.header.slice(1).map(roleOf);
   const cells = {}, lines = {};
   for (const r of t.rows) {
     const action = clean(r.cells[0]);
@@ -19,7 +33,7 @@ export function permissionsOf(c) {
     cells[action] = Object.fromEntries(roles.map((role, i) => [role, clean(r.cells[i + 1]).toLowerCase()]));
     lines[action] = r.line;
   }
-  return { roles, actions: Object.keys(cells), cells, path: doc.path, anchor: t.section?.anchor ?? null, line: t.line, lines };
+  return { roles, actions: Object.keys(cells), cells, path: doc.path, anchor: t.section?.anchor ?? null, line: t.line, lines, roleOf };
 }
 
 /** role → action → yes · own · no, from a JSON, YAML or TOML file, or what a script printed as JSON. */
@@ -30,7 +44,7 @@ function fromFile(path, format, text) {
   const cells = Object.fromEntries(actions.map((a) => [a, Object.fromEntries(roles.map((r) => [r, String(data[r]?.[a] ?? 'no').toLowerCase()]))]));
   const lines = {};
   text.split('\n').forEach((l, i) => { const k = l.match(/^\s*["']?([^"'=:\s]+)["']?\s*[=:]/)?.[1]; if (k && actions.includes(k) && !(k in lines)) lines[k] = i + 1; });
-  return { roles, actions, cells, path, anchor: null, line: 1, lines };
+  return { roles, actions, cells, path, anchor: null, line: 1, lines, roleOf: (h) => clean(h) };
 }
 
 /** `[role]` sections of `action = "yes"` lines: the TOML a permissions file is written in. */

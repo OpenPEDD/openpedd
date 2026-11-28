@@ -94,7 +94,8 @@ export function build(model, sources) {
     // Use cases: the `Permissions` matrix, roles and actions from `Roles & Permissions`.
     const pt = doc.tables.find((t) => t.section?.text === 'Permissions' && /^action$/i.test(clean(t.header[0])));
     if (pt) {
-      const roles = pt.header.slice(1).map(clean);
+      // A PRD writes its columns as `Roles & Permissions` does, short or whole: both are its roles.
+      const roles = pt.header.slice(1).map((h) => perms?.roleOf(h) ?? clean(h));
       matrix.push({ id: prd.path, title: `Use cases · ${prd.title || mod}`, group, rows: pt.rows.map((r) => clean(r.cells[0])), cols: roles, cells: pt.rows.map((r) => roles.map((_, i) => clean(r.cells[i + 1] ?? ''))), at: at(prd.path, pt.section.anchor), line: pt.line });
       if (perms) {
         for (const role of roles.filter((x) => !perms.roles.includes(x))) out.push(loose('prd', 'unknown-role', { id: prd.path, says: prd.title || mod, path: prd.path, line: pt.line, message: `the role \`${role}\` is not in Roles & Permissions` }));
