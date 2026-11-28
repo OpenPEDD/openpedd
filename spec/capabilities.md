@@ -2,8 +2,8 @@
 title: What OpenPEDD can do
 description: Every capability, procedure and tool of the framework in one place, for whoever wants to use it
 owner: Kevin
-version: "1.18"
-updated: "2026-11-26"
+version: "1.19"
+updated: "2026-11-28"
 ---
 
 # What OpenPEDD can do
@@ -44,6 +44,9 @@ updated: "2026-11-26"
 | Let the agent install safely | `--dry-run`, backups, sensitive paths denied, the agent never installed for you | [Writing safely](modules/workspace/prd.md#writing-safely) |
 | Decide only what nobody defined | One | `pedd records <change> commit|pr|tasks|report|accept` | That nothing went unrecorded: each task commit's and the implementation PR's Spec section, the tasks ticked with their commit, with each assumption and deviation, heaviest first; the light ones accepted in one reply ([weight](foundations/architecture/weight.md)) | [accept](modules/accept/prd.md) |
 | Design with the real brand | A mockup in code, with real components and every state | [design](modules/design/prd.md) |
+| Build or extend the design system | `/design-brand`: tokens in tiers, scales, themes with every contrast pair tested, the first components with a story per state, extracted from what exists | [design](modules/design/prd.md#the-branding-change-and-what-exists) |
+| Measure every screen | The sweep: every screen in every state, role, width and theme, with axe, the keyboard, its actions and the whole product against the base; the closing checklist, each cell with its evidence | [Measuring screens](foundations/architecture/screen-checks.md) |
+| Audit the screens a product has | `/design-audit`: every state, width and theme measured against the product's own system and WCAG 2.2; each cause a proposed `fix` change | [design](modules/design/prd.md#the-branding-change-and-what-exists) |
 | Define what is acceptable before code exists | Tests written red from the criteria, locked from `build` | [plan](modules/plan/prd.md) |
 | Prove the tests can fail | Mutation testing, and each criterion rerun with new data | [verify](modules/verify/prd.md) |
 | Prove who can do what | A role × action matrix, allowed and denied, down to the database | [Testing](foundations/architecture/testing.md#permissions) |
@@ -138,7 +141,7 @@ theirs as [extensions](foundations/business/open-core.md#extensions): the core h
 | `map` | `/map` · `/map-module` · `/map --business` |
 | `specify` | `/specify` · `/specify-interview` · `/specify-flow` · `/specify-story` · `/specify-define` · `/specify-fix-doc` · `/idea` |
 | `architect` | `/architect` · `/architect-research` · `/architect-teardown` · `/architect-adr` · `/architect-fitness` |
-| `design` | `/design` · `/design-inventory` · `/design-variants` · `/design-complete` · `/design-close` |
+| `design` | `/design` · `/design-inventory` · `/design-variants` · `/design-complete` · `/design-close` · `/design-brand` · `/design-audit` |
 | `plan` | `/plan` · `/plan-slice` · `/plan-tests` · `/plan-pack` |
 | `build` | `/build` · `/build-batch` · `/build-findings` |
 | `verify` | `/verify` |

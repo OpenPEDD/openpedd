@@ -2,8 +2,8 @@
 title: Market
 description: How market documents are written — outside facts that expire
 owner: Kevin
-version: "1.16"
-updated: "2026-11-26"
+version: "1.17"
+updated: "2026-11-28"
 ---
 
 **Market holds what we measured outside**: competitors, tools, market size, studies, prices others
@@ -31,6 +31,9 @@ a market document carries the date it was surveyed and is reviewed when it goes 
 | [Domain labels per language](domain-labels.md) | `MKT-17` | How frameworks keep one name in code and show it in each language |
 | [How the industry writes qualities and risks](quality-and-risk.md) | `MKT-18` | ISO/IEC 25010's product quality, and the risk register or RAID log |
 | [How agents audit a codebase's security](security-audit.md) | `MKT-19` | Security review by agents, of a diff or a whole repository, the static analysis they call, and the OWASP standards |
+| [How agents design and audit interfaces](interface-design.md) | `MKT-20` | The skills that give an agent design, UX and frontend instructions, the standards they read, and the tools that measure a rendered screen |
+| [How agents drive a browser](agent-browsers.md) | `MKT-21` | The libraries, CLIs and MCP servers an agent opens, looks at and measures a running screen with |
+| [How interface copy is written and checked](interface-copy.md) | `MKT-22` | What the content guides ask of buttons, links, errors and capitalization, the skills for UX writing, the copy linters, and the i18n rules strings follow |
 
 ## How a market document is written
 

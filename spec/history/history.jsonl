@@ -600,3 +600,23 @@
 {"path":"modules/views/business.md","version":"1.10 → 1.11","date":"2026-11-28","change":null,"story":null,"stage":"specify","summary":"FR-VEW-23: no «include» inferred from a process several business use cases hold"}
 {"path": "modules/views/document.md", "version": "1.0", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "A PRD as a document: its sections and what each lacks (FR-VEW-33)"}
 {"path": "modules/README.md", "version": "1.5 → 1.6", "date": "2026-11-28", "change": null, "story": null, "stage": "specify", "summary": "views lists its document PRD"}
+{"path": "foundations/market/interface-design.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "How agents design and audit interfaces, surveyed"}
+{"path": "foundations/market/README.md", "version": "1.16 → 1.17", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Lists MKT-20, MKT-21 and MKT-22"}
+{"path": "foundations/market/agent-browsers.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "How agents drive a browser, surveyed and run"}
+{"path": "foundations/market/interface-copy.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "How interface copy is written and checked, surveyed"}
+{"path": "foundations/architecture/screen-checks.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "ARCH-25: the URL contract, the sweep, against the base, the checklist"}
+{"path": "foundations/architecture/README.md", "version": "1.14 → 1.15", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Lists ARCH-25"}
+{"path": "decisions/DEC-36-interface-quality.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Interface quality lives in the design stage's skills"}
+{"path": "foundations/rules/interface.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "RULE-32 every state, inline too; RULE-33 made of the system"}
+{"path": "foundations/rules/writing.md", "version": "1.4 → 1.5", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Budget of the Audit Report"}
+{"path": "foundations/rules/README.md", "version": "1.9 → 1.10", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Lists interface.md"}
+{"path": "foundations/architecture/review-lenses.md", "version": "1.2 → 1.3", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "What an interface finding names; the Interface lens reads the interface rules"}
+{"path": "foundations/architecture/agents.md", "version": "1.10 → 1.11", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "A part names the reference it reads and when"}
+{"path": "modules/design/prd.md", "version": "1.6 → 1.7", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Inventory by RULE-32; brand, audit; copy pass; measured as ARCH-25"}
+{"path": "foundations/domain/foundation.md", "version": "1.11 → 1.12", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Brand System tokens in three tiers, DTCG"}
+{"path": "foundations/domain/report.md", "version": "1.2 → 1.3", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Adds the Audit Report"}
+{"path": "modules/workspace/prd.md", "version": "1.14 → 1.15", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "adopt offers /design-audit; doctor names Playwright and jscpd"}
+{"path": "capabilities.md", "version": "1.18 → 1.19", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Design system and screen audit capabilities"}
+{"path": "foundations/glossary.md", "version": "1.25 → 1.26", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Screen states, interface finding, audit, token tiers"}
+{"path": "open/ideas.md", "version": "1.1 → 1.2", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Judge bench, pedd design check, lint per stack, speed in verify"}
+{"path": "changes/CHG-043/summary.md", "version": "1.0", "date": "2026-11-28", "change": "CHG-043", "story": null, "stage": "specify", "summary": "Summary of CHG-043"}

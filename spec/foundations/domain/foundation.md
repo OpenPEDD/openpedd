@@ -2,8 +2,8 @@
 title: Foundation
 description: ENT-02 · A document every stage reads before working
 owner: Kevin
-version: "1.11"
-updated: "2026-11-26"
+version: "1.12"
+updated: "2026-11-28"
 ---
 
 # ENT-02 · Foundation
@@ -20,7 +20,7 @@ includes.
 | `Domain Model` | Each entity (`ENT`), once: fields, states, transitions | All |
 | `Glossary` | What each thing is called in code (`Name`) and on screen, one column per locale headed by its code (`en`, `es`); names no longer used ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | All |
 | `Roles & Permissions` | Which role performs which action | `specify` · `design` · `verify` |
-| `Brand System` | Colors, type, tokens, components, UI libraries and preferences; the pattern each recurring piece follows (filters, badges, toasts, settings, paywalls); the widths a screen is checked at; and its **component catalog**: every reusable piece with a story per state and when to use it, served to agents through an MCP ([`MKT-06`](../market/component-catalogs.md)) | `design` · `build` |
+| `Brand System` | Colors, type, tokens in three tiers (primitive, semantic, component) with a mode per theme, in the W3C DTCG format unless the code keeps them another way ([`MKT-20`](../market/interface-design.md)), components, UI libraries and preferences; the pattern each recurring piece follows (filters, badges, toasts, settings, paywalls); the widths a screen is checked at; and its **component catalog**: every reusable piece with a story per state and when to use it, served to agents through an MCP ([`MKT-06`](../market/component-catalogs.md)) | `design` · `build` |
 | `Voice & Tone` | How the product speaks to its users, inside the product | `design` · `publish` |
 | `Marketing` (optional) | How the product speaks to people who do not know it yet: messages, channels and the rules of each format | `specify` · `publish` |
 | `Architecture Rules` | Layers, conventions and patterns, why each exists, why the stack was chosen, and what must not be touched | `architect` · `plan` · `build` · `verify` |

@@ -2,8 +2,8 @@
 title: Workspace
 description: pedd init and the onboarding — a new or a running project, its repos, its documentation, its stack and the tools each stage needs
 owner: Kevin
-version: "1.14"
-updated: "2026-11-26"
+version: "1.15"
+updated: "2026-11-28"
 status: draft
 ---
 
@@ -115,8 +115,8 @@ missing tool never stops `init`.
 | `specify` · `architect` | Web research | Recommended | Fewer references, and the `Delta Report` says so |
 | `design` | Design system: `Brand System` filled, components in code | Required | A branding change first, planned in the roadmap ([open](../../open/README.md#the-roadmap)): extracted from the code, or chosen |
 | `design` · `build` | A component catalog agents can query: a story per reusable piece, its MCP, its stories run as tests with axe | Recommended | Agents redraw pieces that exist, and contrast is checked by hand |
-| `design` · `verify` | A duplicate check over the whole code: the same markup written by hand in 3+ files | Recommended | Copies are found only inside the change |
-| `design` · `verify` | A browser agents can drive | Required with screens | Screens cannot be walked or captured |
+| `design` · `verify` | A duplicate check over the whole code: the same markup written by hand in 3+ files, and blocks of code copied (`jscpd`) | Recommended | Copies are found only inside the change |
+| `design` · `verify` | A browser agents can drive: Playwright, with its CLI and `@axe-core/playwright` ([`MKT-21`](../../foundations/market/agent-browsers.md)) | Required with screens | Screens cannot be walked or captured |
 | `plan` · `build` | Unit and end-to-end test runners; running locally with a test user | Required | No red tests |
 | `build` · `verify` | A test script for agents that prints only the failures | Recommended | Every passing test is reread on every call |
 | `verify` | Mutation testing | Recommended | Tests are not checked for being able to fail |
@@ -176,6 +176,7 @@ a count and a percentage.
 | A gap is never filled outside a change | Each piece is reviewed, and the trace records it |
 | What `cover` finds wrong is not fixed there | It opens a `Q` or a `fix`; covering and changing are kept apart |
 | With a security-audit extension installed, `adopt` offers to run it once over the whole repository before ordering; each confirmed finding is a `fix`, each it could not validate a `Q` ([`DEC-35`](../../decisions/DEC-35-whole-repo-audit.md)) | The diff review never reads code nobody changes; a running product has never been audited whole |
+| When the product has screens, `adopt` offers `/design-audit` once over them before ordering; each cause it confirms is a `fix`, each fact it could not get a `Q`, and its census is what the branding change extracts the `Brand System` from ([`DEC-36`](../../decisions/DEC-36-interface-quality.md)) | Screens built before the framework were never measured against one system |
 | The order is a proposal; the person may change it | They know what the business needs first |
 
 ## Alternate flows

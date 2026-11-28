@@ -2,8 +2,8 @@
 title: Writing rules
 description: How every document in a spec is written, so the spec does not drift from itself
 owner: Kevin
-version: "1.4"
-updated: "2026-11-26"
+version: "1.5"
+updated: "2026-11-28"
 ---
 
 These rules apply to every document in every spec that uses OpenPEDD, this one included.
@@ -49,6 +49,7 @@ means two topics share a file. **Split by topic, not by size.**
 | A history line | 80 |
 | A `Delta Report` | 2,000 |
 | An `Acceptance Report`, without screenshots | 3,000 |
+| An `Audit Report`, without screenshots | 3,000 |
 | **A task's `Context Pack`** | **12,000 target, 20,000 max** |
 
 The `Context Pack` budget is the one that matters most: it is what the agent holds while it works.
