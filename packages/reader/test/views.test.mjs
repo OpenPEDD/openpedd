@@ -611,3 +611,51 @@ test('security: a column written short reads as the role its legend names, in th
   assert.deepEqual(abbreviationsOf('Columns: **Ops** Operations partner · **Fin** Finance\npartner · **PW** Plant worker.'), { Ops: 'Operations partner', Fin: 'Finance partner', PW: 'Plant worker' });
   assert.deepEqual(abbreviationsOf('Nothing short here.'), {});
 });
+
+test('prd: each PRD comes as a document, its sections in order with what each lacks (FR-VEW-33)', async () => {
+  const { prdDocument } = await import('../src/views/prd-document.mjs');
+  const text = `---
+title: Claims
+---
+
+# Claims
+
+## Frame
+
+Who files a claim.
+
+## Flows
+
+### F1 · File
+
+| Step | Role | Does |
+|---|---|---|
+| 1 | Client | Files it |
+| 2 | | Checks it |
+
+| Flow | From | What changes | Ends in |
+|---|---|---|---|
+| Exception · No policy | F1.1 | Refused | Nothing filed |
+
+## Requirements
+
+| ID | Requirement | Reason | Roles | Criteria | Flows | Status |
+|---|---|---|---|---|---|---|
+| \`FR-CLM-01\` | The system shall file a claim | Why | Client | \`FR-CLM-01.AC1\` | F1 | \`draft\` |
+| \`FR-CLM-02\` | The system shall warn | Why | Client | — | F1 | \`draft\` |
+
+## Acceptance criteria
+
+| ID | Given | When | Then |
+|---|---|---|---|
+| \`FR-CLM-01.AC1\` | A policy | Filed | Saved |
+`;
+  const d = prdDocument(text);
+  assert.deepEqual(d.sections.map((s) => s.key), ['frame', 'metric', 'appetite', 'flows', 'requirements', 'permissions', 'states', 'contracts', 'screens', 'criteria', 'testData', 'variations']);
+  const by = Object.fromEntries(d.sections.map((s) => [s.key, s]));
+  assert.deepEqual(by.states.missing, [{ code: 'absent' }]);
+  assert.deepEqual(by.flows.missing, [{ code: 'step-no-role', id: 'F1.2' }]);
+  assert.equal(by.flows.alternates[0].kind, 'exception');
+  assert.deepEqual(by.requirements.missing, [{ code: 'no-nfr' }, { code: 'no-criterion', id: 'FR-CLM-02' }]);
+  assert.equal(by.criteria.criteria[0].then, 'Saved');
+});

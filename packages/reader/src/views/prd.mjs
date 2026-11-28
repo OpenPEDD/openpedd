@@ -2,6 +2,7 @@
 import { at, clean, code, colOf, idsIn, isId, loose, view } from './common.mjs';
 import { prep } from './prep.mjs';
 import { permissionsOf } from './security.mjs';
+import { prdDocument } from './prd-document.mjs';
 import { stateName } from './entities.mjs';
 import { stateId } from './states.mjs';
 
@@ -25,7 +26,7 @@ export function build(model, sources) {
     const counts = {};
     for (const r of prd.requirements) counts[r.status || 'no status'] = (counts[r.status || 'no status'] || 0) + 1;
     nodes.push({ id: `module:${mod}`, type: 'module', label: mod, group: 'modules', level: 1, at: at(prd.path, null), line: 1 });
-    nodes.push({ id: `prd:${prd.path}`, type: 'prd', label: `${prd.title || prd.path} · ${prd.requirements.length} requirements`, status: prd.status || undefined, group, level: 1, at: at(prd.path, null), line: 1, requirements: Object.entries(counts).sort().map(([k, v]) => `${v} ${k}`) });
+    nodes.push({ id: `prd:${prd.path}`, type: 'prd', label: `${prd.title || prd.path} · ${prd.requirements.length} requirements`, status: prd.status || undefined, group, level: 1, at: at(prd.path, null), line: 1, requirements: Object.entries(counts).sort().map(([k, v]) => `${v} ${k}`), title: prd.title || null, description: prd.description || null, document: prdDocument(c.byPath.get(prd.path)?.text ?? '') });
     edges.push({ from: `module:${mod}`, to: `prd:${prd.path}`, type: 'has', at: prd.path, line: 1 });
 
     // Flows: one `### F<n> · <name>` each, with its `Step · Role · Does` table.
