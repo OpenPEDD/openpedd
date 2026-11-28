@@ -2,8 +2,8 @@
 title: Glossary
 description: What each thing is called, and the names no longer used
 owner: Kevin
-version: "1.25"
-updated: "2026-11-26"
+version: "1.26"
+updated: "2026-11-28"
 ---
 
 Every name used in the framework, with the one way to write it. Definitions live in the domain;
@@ -84,7 +84,12 @@ this page only names ([`RULE-01`](rules/writing.md#rule-01)).
 | Anchor line | The `Spec: CHG-nn` line an issue carries, the key the tracker is searched by | [`ARCH-15`](architecture/tracker.md#created-once-by-one-hand) |
 | `tests.lock` | The path and hash of each test from `plan`; the pipeline rejects a change to them | [plan](../modules/plan/prd.md) |
 | Seam | The one file a mockup's data goes through; `plan` leaves its real version empty and `build` fills it | [design](../modules/design/prd.md) |
-| Closing passes | Mobile, skeletons, writes, refactor, improvements, in that order | [design](../modules/design/prd.md#closing-passes) |
+| Closing passes · closing checklist | Mobile, skeletons and inline states, writes, refactor, copy, improvements, in that order; what they deliver, one row per screen, each cell with its evidence | [design](../modules/design/prd.md#closing-passes) |
+| Screen state: `initial` · `loading` · `empty` · `partial` · `populated` · `error` · `success` · `busy` · `disabled` · `no-permission` · `no-quota` · `offline` | Each condition a screen can reach, designed and checked one by one | [`RULE-32`](rules/interface.md#rule-32) |
+| Development menu · URL contract · design sweep | The menu that opens every state in development; its parameters (`pedd-state`, `pedd-role`, `pedd-theme`, `pedd-delay`, `pedd-fail-writes`); the script that opens every screen in every state, role, width and theme with them, walks the keyboard, runs each action, and compares with the base; its plan, `design-sweep.json`, with every screen of the product | [design](../modules/design/prd.md) |
+| Interface finding | What a review or an audit of screens reports: where, the source it breaks, who it stops | [`ARCH-14`](architecture/review-lenses.md#interface-findings) |
+| `/design-brand` · `/design-audit` · `Audit Report` | Building the design system; measuring the screens that exist; what the audit leaves | [design](../modules/design/prd.md#the-branding-change-and-what-exists) · [`ENT-08`](domain/report.md) |
+| Token tiers: primitive · semantic · component | Raw values; their roles, which code reads; a component's own decisions | [`ENT-02`](domain/foundation.md) |
 | `Merge Gate`: `spec-approval` · `architecture-merge` · `design-merge` · `acceptance-merge` | The way into the spec | [`ENT-09`](domain/merge-gate.md) |
 | `Delta`, with `op` `ADDED` · `MODIFIED` · `REMOVED` | A proposed change | [`ENT-07`](domain/delta.md) |
 | Delta type: `proposal` · `assumption` · `deviation` · `finding` | Why a delta exists | [`ENT-07`](domain/delta.md) |

@@ -2,8 +2,8 @@
 title: Skills, agents and tools
 description: ARCH-04 · What each stage runs with, how judges run on a Claude Code subscription, and the MCP tools
 owner: Kevin
-version: "1.10"
-updated: "2026-11-25"
+version: "1.11"
+updated: "2026-11-28"
 ---
 
 # ARCH-04 · Skills, agents and tools
@@ -23,7 +23,10 @@ Copilot, Codex and others through the same templates, the way Spec Kit does).
 Only the method's skills and judges are in the core; every other skill is an extension
 ([`BIZ-04`](../business/open-core.md#extensions)). Their source is in the framework repo: `skills/<name>/SKILL.md` and `agents/<name>.md`, the layout the
 `skills.sh` registry reads; `pedd init` installs from there. Each one names the spec documents it
-implements, with their version, so it goes `stale` with them ([`ARCH-02`](freshness.md)).
+implements, with their version, so it goes `stale` with them ([`ARCH-02`](freshness.md)). A stage's
+skill may carry `references/` and `scripts/` shared by its parts; **each part names the file it reads
+and the step it reads it at**, because a reference left to be read "on demand" is not read
+([`MKT-20`](../market/interface-design.md), [`DEC-36`](../../decisions/DEC-36-interface-quality.md)).
 
 The skills are also published to the `skills.sh` registry, so `npx skills add openpedd/openpedd`
 installs them without the CLI. `pedd doctor` finds skills installed that way and records them in the

@@ -2,8 +2,8 @@
 title: Review lenses
 description: ARCH-14 · What each hunter looks at, the default checklist of each lens, and how a project adds its own
 owner: Kevin
-version: "1.2"
-updated: "2026-11-26"
+version: "1.3"
+updated: "2026-11-28"
 ---
 
 # ARCH-14 · Review lenses
@@ -19,7 +19,7 @@ foundations of its lens, and nothing else. The defaults come from the correction
 | State and lifecycle | The `Domain Model` states; the write contract in `Quality Standards` | No writes in the diff |
 | Data and contracts | The contracts, the schema, `Privacy` | No contract or schema touched |
 | Security | `Security Policy`, `Privacy`; the OWASP ASVS 5.0 chapters of the surfaces the area touches, and OWASP's Top 10 for LLM Applications where it calls a model ([below](#security-findings)) | Never |
-| Interface | `Brand System`, `Voice & Tone`, `Quality Standards` | No screen touched |
+| Interface | `Brand System`, `Voice & Tone`, `Quality Standards`; the interface rules ([`RULE-32`](../rules/interface.md#rule-32), [`RULE-33`](../rules/interface.md#rule-33)), and what an interface finding names ([below](#interface-findings)) | No screen touched |
 | Performance | `Quality Standards` budgets | Never |
 | Change | `Architecture Rules`, `Delivery Pipeline` | Never |
 
@@ -70,6 +70,23 @@ Taken from how agents audit code ([`MKT-19`](../market/security-audit.md), [`DEC
 | A missing best practice, with no boundary crossed | Not a finding. It becomes an item only from a correction ([how the rules grow](review.md#how-the-rules-grow)) |
 
 A whole repository is not reviewed here: it is audited by an extension, on request ([`DEC-35`](../../decisions/DEC-35-whole-repo-audit.md)).
+
+## An interface finding [#interface-findings]
+
+Shared by the Interface lens, `design-judge` and `/design-audit` ([`DEC-36`](../../decisions/DEC-36-interface-quality.md)), the way a security finding is:
+
+| It names | For example |
+|---|---|
+| Where: the screen, its state, the width and theme, and the element | The invoices list, empty with no results, at 375 px, in dark |
+| The source it breaks: a token, piece or pattern of the `Brand System`, an interface rule, a WCAG 2.2 criterion, or a Nielsen heuristic | WCAG 1.4.3: the muted text is 2.9:1 on its surface |
+| Who it stops, from doing what | A person on a phone cannot reach "Pay" |
+
+| Case | Is |
+|---|---|
+| All three named, measured on the screen or read in the code | A finding. Its severity follows Nielsen's 0 to 4: `high` for 4 and 3 (a task cannot be finished, data or money is lost), `medium` for 2 (finished with friction or doubt), `low` for 1 (seen only side by side); 0 is not reported |
+| The fact that decides is outside the product (real content, how often a flow runs) | A `Q` with the fact missing, and no severity |
+| A preference, with no source broken | Not a finding: at most an improvement in the report ([`RULE-25`](../rules/cycle.md#rule-25)) |
+| One cause seen in many places (a token, a copied piece) | One finding on the cause, listing the places |
 
 ## A project's own items
 

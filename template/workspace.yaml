@@ -57,6 +57,8 @@ branches:                               # ARCH-06
 
 models:
   profile: balanced                     # max · balanced (default) · economy (DEC-07)
+  overrides:
+    design: { judge: sonnet }           # the design judge reads screenshots (DEC-36)
 
 stages:
   architect: { mode: guided }           # guided (default) · delegated (DEC-08)
