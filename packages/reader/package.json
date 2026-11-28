@@ -1,6 +1,6 @@
 {
   "name": "@openpedd/reader",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "description": "Reads an OpenPEDD spec: parses it and reports what is broken, reads the Business Map, reads and writes a change's definition, numbers changes, renders the framework map, and makes and renders every project view",
   "license": "Apache-2.0",
   "type": "module",
