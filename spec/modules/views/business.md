@@ -2,8 +2,8 @@
 title: The business's views
 description: pedd view — the glossary, the organization chart, each process in swimlanes, who uses which flow, and where the work with the client stands
 owner: Kevin
-version: "1.10"
-updated: "2026-11-26"
+version: "1.11"
+updated: "2026-11-28"
 status: draft
 ---
 
@@ -74,7 +74,7 @@ person's name in the chart: the business map holds roles ([map](../map/prd.md#bu
 | `FR-VEW-16` | The system shall build the `use-cases` view with roles as actors, modules as boundaries and flows as use cases | Who uses what, across every PRD | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-21` | When the as-is lists business use cases, the system shall draw them in `use-cases` inside the business's boundary with their business actors, and in `business` each with the processes that realize it | What the business does, for whom, and by which processes, before any system use case | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-22` | The system shall draw, in each process's activity, an object node per entity a step's `Object` names, in its state, and per business use case an overview activity with its processes as macro activities, each linked to its process's diagram | A process shows what it changes, and a business use case how its processes chain, as RUP draws a business use-case realization | Team | `AC1` | F4 | `draft` |
-| `FR-VEW-23` | When a business use case lists `Includes` or `Extends`, or a step of its processes names a process of another business use case, the system shall draw in `use-cases` an `«include»` from it to the one it runs and an `«extend»` from the extension to its base, labelled with its condition as UML writes it, `[<condition>]` | Who does what, and what each piece of the business always or sometimes runs, from the map alone, before any PRD ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | Team | `AC1` | F4 | `draft` |
+| `FR-VEW-23` | When a business use case lists `Includes` or `Extends`, or a step of a process of it alone names a process of another business use case alone, the system shall draw in `use-cases` an `«include»` from it to the one it runs and an `«extend»` from the extension to its base, labelled with its condition as UML writes it, `[<condition>]` | Who does what, and what each piece of the business always or sometimes runs, from the map alone, before any PRD ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-24` | When a name's `Defined in` links to a web address, the system shall take it as defined there and keep the link | A project's terms are defined once, in its industry's glossary ([`DEC-30`](../../decisions/DEC-30-discovery-before-prds.md)) | Team | `AC1` | F4 | `draft` |
 | `FR-VEW-25` | The system shall build the `stages` view from the spec: per stage its state, its pieces with their files, what it delivers, who approves it, and what is next; stages 1 and 2 approved by a row of `foundations/business/stages.md`, stages 3 and 4 by each module's status | The client and the team see the same roadmap, and nobody ticks it by hand ([`DEC-31`](../../decisions/DEC-31-client-stages.md)) | Team · Client | `AC1` · `AC2` | F5 | `draft` |
 | `FR-VEW-26` | The system shall carry in `views.json` each Glossary name with its label per locale column, and a viewer shall show every name of a view (entity, state, field, role) by its label in the reader's locale, the name when it has none; `pedd view` opens in `--locale`, else the prose's `language`, and offers the other locales | A client reads the diagrams in their language while the spec and the code keep one name ([`DEC-33`](../../decisions/DEC-33-names-per-locale.md)) | Team · Client | `AC1` · `AC2` | F4 | `draft` |
